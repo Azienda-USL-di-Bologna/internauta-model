@@ -72,6 +72,8 @@ public class Struttura implements Serializable {
     @NotNull
     @Column(name = "usa_segreteria_bucata_padre")
     private Boolean usaSegreteriaBucataPadre;
+    @Column(name = "foglia")
+    private Boolean foglia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStruttura", fetch = FetchType.LAZY)
     @JsonBackReference(value = "pecStrutturaSet")
     private Set<PecStruttura> pecStrutturaSet;
@@ -208,6 +210,15 @@ public class Struttura implements Serializable {
 
     public void setUsaSegreteriaBucataPadre(Boolean usaSegreteriaBucataPadre) {
         this.usaSegreteriaBucataPadre = usaSegreteriaBucataPadre;
+    }
+    
+    
+    public Boolean getFoglia() {
+        return foglia;
+    }
+
+    public void setFoglia(Boolean foglia) {
+        this.foglia = foglia;
     }
 
     public Set<PecStruttura> getPecStrutturaSet() {
