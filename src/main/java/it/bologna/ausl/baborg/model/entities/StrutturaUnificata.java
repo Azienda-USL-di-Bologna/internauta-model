@@ -8,8 +8,8 @@ package it.bologna.ausl.baborg.model.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,12 +19,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -45,9 +42,12 @@ public class StrutturaUnificata implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_attivazione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime dataAttivazione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dataAttivazione;
+    @Column(name = "tipo_operazione")
+    @Size(max = 100)
+    private String tipoOperazione;
     @JoinColumn(name = "id_struttura_destinazione", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Struttura idStrutturaDestinazione;
@@ -62,7 +62,7 @@ public class StrutturaUnificata implements Serializable {
         this.id = id;
     }
 
-    public StrutturaUnificata(Integer id, LocalDateTime dataAttivazione, Struttura idStrutturaDestinazione, Struttura idStrutturaSorgente) {
+    public StrutturaUnificata(Integer id, LocalDate dataAttivazione, Struttura idStrutturaDestinazione, Struttura idStrutturaSorgente) {
         this.id = id;
         this.dataAttivazione = dataAttivazione;
         this.idStrutturaDestinazione = idStrutturaDestinazione;
@@ -80,12 +80,20 @@ public class StrutturaUnificata implements Serializable {
     }
 
 
-    public LocalDateTime getDataAttivazione() {
+    public LocalDate getDataAttivazione() {
         return dataAttivazione;
     }
 
-    public void setDataAttivazione(LocalDateTime dataAttivazione) {
+    public void setDataAttivazione(LocalDate dataAttivazione) {
         this.dataAttivazione = dataAttivazione;
+    }
+    
+    public String getTipoOperazione() {
+        return tipoOperazione;
+    }
+
+    public void setTipoOperazione(String tipoOperazione) {
+        this.tipoOperazione = tipoOperazione;
     }
 
     public Struttura getIdStrutturaDestinazione() {
