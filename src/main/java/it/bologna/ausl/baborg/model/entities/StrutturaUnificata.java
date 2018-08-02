@@ -43,12 +43,14 @@ public class StrutturaUnificata implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "data_attivazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataAttivazione;
+    @Column(name = "data_inserimento_riga", updatable=false, insertable=false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataInserimentoRiga;
     @Column(name = "tipo_operazione")
     @Size(max = 100)
     private String tipoOperazione;
@@ -90,6 +92,14 @@ public class StrutturaUnificata implements Serializable {
 
     public void setDataAttivazione(LocalDateTime dataAttivazione) {
         this.dataAttivazione = dataAttivazione;
+    }
+    
+    public LocalDateTime getDataInserimentoRiga() {
+        return dataInserimentoRiga;
+    }
+    
+    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+        this.dataInserimentoRiga = dataInserimentoRiga;
     }
     
     public String getTipoOperazione() {
