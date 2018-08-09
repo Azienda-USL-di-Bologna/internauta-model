@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -25,6 +26,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
@@ -112,6 +114,9 @@ public class Utente implements Serializable, UserDetails {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "utenteStrutturaSet")
     private Set<UtenteStruttura> utenteStrutturaSet;
+    
+    @Transient
+    private List<Ruolo> ruoli;
 
     public Utente() {
     }
@@ -313,6 +318,14 @@ public class Utente implements Serializable, UserDetails {
 
     public void setUtenteStrutturaSet(Set<UtenteStruttura> utenteStrutturaSet) {
         this.utenteStrutturaSet = utenteStrutturaSet;
+    }
+    
+    public List<Ruolo> getRuoli() {
+        return this.ruoli;
+    }
+
+    public void setRuoli(List<Ruolo> ruoli) {
+        this.ruoli = ruoli;
     }
     
     @Override
