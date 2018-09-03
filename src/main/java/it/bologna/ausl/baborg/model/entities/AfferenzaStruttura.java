@@ -47,7 +47,7 @@ public class AfferenzaStruttura implements Serializable {
     private Set<UtenteStruttura> utenteStrutturaSet;
 
     public static enum CodiciAfferenzaStruttura {
-        DIRETTA, FUNZIONALE
+        DIRETTA, FUNZIONALE, UNIFICATA
     }
         
     public AfferenzaStruttura() {
