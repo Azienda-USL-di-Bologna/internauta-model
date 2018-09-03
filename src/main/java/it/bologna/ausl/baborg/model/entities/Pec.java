@@ -80,7 +80,7 @@ public class Pec implements Serializable {
     @JoinColumn(name = "id_pec_provider", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PecProvider idPecProvider;
-    @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecUtenteSet")
     private Set<PecUtente> pecUtenteSet;
 

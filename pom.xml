@@ -9,6 +9,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
+        <query.dsl.version>4.2.1</query.dsl.version>
     </properties>
     <dependencies>
          <dependency>
@@ -19,10 +21,29 @@
          <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
-            <version>4.2.1</version>
+            <version>${query.dsl.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.3.3.Final</version>
+            <type>jar</type>
+        </dependency>
+        
+<!--        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>5.0.7.RELEASE</version>
@@ -32,20 +53,28 @@
             <artifactId>spring-core</artifactId>
             <version>5.0.8.RELEASE</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.3.3.Final</version>
+        </dependency>-->
+<!--        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.6</version>
             <type>jar</type>
-        </dependency>
+        </dependency>-->
+
+<!--        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.6</version>
+            <type>jar</type>
+        </dependency>-->
+
     </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.0.4.RELEASE</version>
+                <version>${spring.boot.version}</version>
             </plugin>
             <plugin>
                 <groupId>com.mysema.maven</groupId>
