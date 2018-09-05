@@ -62,7 +62,7 @@ public class IdpEntityId implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (entityId != null ? entityId.hashCode() : 0);
+        hash += (entityId != null ? entityId.hashCode() : super.hashCode());
         return hash;
     }
 

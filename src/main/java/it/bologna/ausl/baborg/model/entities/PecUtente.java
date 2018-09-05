@@ -46,7 +46,7 @@ public class PecUtente implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Pec idPec;
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Utente idUtente;
 
     public PecUtente() {
@@ -91,7 +91,7 @@ public class PecUtente implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : super.hashCode());
         return hash;
     }
 

@@ -101,7 +101,7 @@ public class UtenteStruttura implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : super.hashCode());
         return hash;
     }
 

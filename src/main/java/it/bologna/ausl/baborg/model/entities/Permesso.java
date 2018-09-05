@@ -3,6 +3,7 @@ package it.bologna.ausl.baborg.model.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +39,7 @@ public class Permesso implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private PecUtente idPecUtenti;
     @JoinColumn(name = "id_tipo_permesso", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private TipoPermesso idTipoPermesso;
     @JoinColumn(name = "id_utenti_strutture", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -94,7 +95,7 @@ public class Permesso implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : super.hashCode());
         return hash;
     }
 
