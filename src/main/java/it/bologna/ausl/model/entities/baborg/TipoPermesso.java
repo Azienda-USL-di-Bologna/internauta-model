@@ -3,7 +3,7 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,8 +48,8 @@ public class TipoPermesso implements Serializable {
     @Column(name = "descrizione")
     private String descrizione;
     @OneToMany(mappedBy = "idTipoPermesso", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "permessoSet")
-    private Set<Permesso> permessoSet;
+    @JsonBackReference(value = "permessoList")
+    private List<Permesso> permessoList;
 
     public TipoPermesso() {
     }
@@ -104,12 +104,12 @@ public class TipoPermesso implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public Set<Permesso> getPermessoSet() {
-        return permessoSet;
+    public List<Permesso> getPermessoList() {
+        return permessoList;
     }
 
-    public void setPermessoSet(Set<Permesso> permessoSet) {
-        this.permessoSet = permessoSet;
+    public void setPermessoList(List<Permesso> permessoList) {
+        this.permessoList = permessoList;
     }
 
     @Override

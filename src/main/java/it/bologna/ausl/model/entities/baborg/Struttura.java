@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -75,32 +75,32 @@ public class Struttura implements Serializable {
     @Column(name = "foglia")
     private Boolean foglia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStruttura", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "pecStrutturaSet")
-    private Set<PecStruttura> pecStrutturaSet;
+    @JsonBackReference(value = "pecStrutturaList")
+    private List<PecStruttura> pecStrutturaList;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
     @OneToMany(mappedBy = "idStrutturaPadre", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "struttureFiglieSet")
-    private Set<Struttura> struttureFiglieSet;
+    @JsonBackReference(value = "struttureFiglieList")
+    private List<Struttura> struttureFiglieList;
     @JoinColumn(name = "id_struttura_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Struttura idStrutturaPadre;
     @OneToMany(mappedBy = "idStrutturaSegreteria", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "struttureSegretariateSet")
-    private Set<Struttura> struttureSegretariateSet;
+    @JsonBackReference(value = "struttureSegretariateList")
+    private List<Struttura> struttureSegretariateList;
     @JoinColumn(name = "id_struttura_segreteria", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Struttura idStrutturaSegreteria;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStrutturaDestinazione", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "strutturaUnificataDestinazioneSet")
-    private Set<StrutturaUnificata> strutturaUnificataDestinazioneSet;
+    @JsonBackReference(value = "strutturaUnificataDestinazioneList")
+    private List<StrutturaUnificata> strutturaUnificataDestinazioneList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStrutturaSorgente", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "strutturaUnificataSorgenteSet")
-    private Set<StrutturaUnificata> strutturaUnificataSorgenteSet;
+    @JsonBackReference(value = "strutturaUnificataSorgenteList")
+    private List<StrutturaUnificata> strutturaUnificataSorgenteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStruttura", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "utenteStrutturaSet")
-    private Set<UtenteStruttura> utenteStrutturaSet;
+    @JsonBackReference(value = "utenteStrutturaList")
+    private List<UtenteStruttura> utenteStrutturaList;
 
     public Struttura() {
     }
@@ -109,7 +109,7 @@ public class Struttura implements Serializable {
         this.id = id;
     }
 
-    public Struttura(Integer id, Integer codice, String nome, String codiceDislocazione, String dislocazione, LocalDateTime dataAttivazione, LocalDateTime dataCessazione, Boolean attiva, Boolean spettrale, Boolean usaSegreteriaBucataPadre, Set<PecStruttura> pecStrutturaSet, Azienda idAzienda, Set<Struttura> struttureFiglieSet, Struttura idStrutturaPadre, Set<Struttura> struttureSegretariateSet, Struttura idStrutturaSegreteria, Set<StrutturaUnificata> strutturaUnificataDestinazioneSet, Set<StrutturaUnificata> strutturaUnificataSorgenteSet, Set<UtenteStruttura> utenteStrutturaSet) {
+    public Struttura(Integer id, Integer codice, String nome, String codiceDislocazione, String dislocazione, LocalDateTime dataAttivazione, LocalDateTime dataCessazione, Boolean attiva, Boolean spettrale, Boolean usaSegreteriaBucataPadre, List<PecStruttura> pecStrutturaList, Azienda idAzienda, List<Struttura> struttureFiglieList, Struttura idStrutturaPadre, List<Struttura> struttureSegretariateList, Struttura idStrutturaSegreteria, List<StrutturaUnificata> strutturaUnificataDestinazioneList, List<StrutturaUnificata> strutturaUnificataSorgenteList, List<UtenteStruttura> utenteStrutturaList) {
         this.id = id;
         this.codice = codice;
         this.nome = nome;
@@ -120,15 +120,15 @@ public class Struttura implements Serializable {
         this.attiva = attiva;
         this.spettrale = spettrale;
         this.usaSegreteriaBucataPadre = usaSegreteriaBucataPadre;
-        this.pecStrutturaSet = pecStrutturaSet;
+        this.pecStrutturaList = pecStrutturaList;
         this.idAzienda = idAzienda;
-        this.struttureFiglieSet = struttureFiglieSet;
+        this.struttureFiglieList = struttureFiglieList;
         this.idStrutturaPadre = idStrutturaPadre;
-        this.struttureSegretariateSet = struttureSegretariateSet;
+        this.struttureSegretariateList = struttureSegretariateList;
         this.idStrutturaSegreteria = idStrutturaSegreteria;
-        this.strutturaUnificataDestinazioneSet = strutturaUnificataDestinazioneSet;
-        this.strutturaUnificataSorgenteSet = strutturaUnificataSorgenteSet;
-        this.utenteStrutturaSet = utenteStrutturaSet;
+        this.strutturaUnificataDestinazioneList = strutturaUnificataDestinazioneList;
+        this.strutturaUnificataSorgenteList = strutturaUnificataSorgenteList;
+        this.utenteStrutturaList = utenteStrutturaList;
     }
 
 
@@ -221,12 +221,12 @@ public class Struttura implements Serializable {
         this.foglia = foglia;
     }
 
-    public Set<PecStruttura> getPecStrutturaSet() {
-        return pecStrutturaSet;
+    public List<PecStruttura> getPecStrutturaList() {
+        return pecStrutturaList;
     }
 
-    public void setPecStrutturaSet(Set<PecStruttura> pecStrutturaSet) {
-        this.pecStrutturaSet = pecStrutturaSet;
+    public void setPecStrutturaList(List<PecStruttura> pecStrutturaList) {
+        this.pecStrutturaList = pecStrutturaList;
     }
 
     public Azienda getIdAzienda() {
@@ -237,12 +237,12 @@ public class Struttura implements Serializable {
         this.idAzienda = idAzienda;
     }
 
-    public Set<Struttura> getStruttureFiglieSet() {
-        return struttureFiglieSet;
+    public List<Struttura> getStruttureFiglieList() {
+        return struttureFiglieList;
     }
 
-    public void setStruttureFiglieSet(Set<Struttura> struttureFiglieSet) {
-        this.struttureFiglieSet = struttureFiglieSet;
+    public void setStruttureFiglieList(List<Struttura> struttureFiglieList) {
+        this.struttureFiglieList = struttureFiglieList;
     }
 
     public Struttura getIdStrutturaPadre() {
@@ -253,12 +253,12 @@ public class Struttura implements Serializable {
         this.idStrutturaPadre = idStrutturaPadre;
     }
 
-    public Set<Struttura> getStruttureSegretariateSet() {
-        return struttureSegretariateSet;
+    public List<Struttura> getStruttureSegretariateList() {
+        return struttureSegretariateList;
     }
 
-    public void setStruttureSegretariateSet(Set<Struttura> struttureSegretariateSet) {
-        this.struttureSegretariateSet = struttureSegretariateSet;
+    public void setStruttureSegretariateList(List<Struttura> struttureSegretariateList) {
+        this.struttureSegretariateList = struttureSegretariateList;
     }
 
     public Struttura getIdStrutturaSegreteria() {
@@ -269,28 +269,28 @@ public class Struttura implements Serializable {
         this.idStrutturaSegreteria = idStrutturaSegreteria;
     }
 
-    public Set<StrutturaUnificata> getStrutturaUnificataDestinazioneSet() {
-        return strutturaUnificataDestinazioneSet;
+    public List<StrutturaUnificata> getStrutturaUnificataDestinazioneList() {
+        return strutturaUnificataDestinazioneList;
     }
 
-    public void setStrutturaUnificataDestinazioneSet(Set<StrutturaUnificata> strutturaUnificataDestinazioneSet) {
-        this.strutturaUnificataDestinazioneSet = strutturaUnificataDestinazioneSet;
+    public void setStrutturaUnificataDestinazioneList(List<StrutturaUnificata> strutturaUnificataDestinazioneList) {
+        this.strutturaUnificataDestinazioneList = strutturaUnificataDestinazioneList;
     }
 
-    public Set<StrutturaUnificata> getStrutturaUnificataSorgenteSet() {
-        return strutturaUnificataSorgenteSet;
+    public List<StrutturaUnificata> getStrutturaUnificataSorgenteList() {
+        return strutturaUnificataSorgenteList;
     }
 
-    public void setStrutturaUnificataSorgenteSet(Set<StrutturaUnificata> strutturaUnificataSorgenteSet) {
-        this.strutturaUnificataSorgenteSet = strutturaUnificataSorgenteSet;
+    public void setStrutturaUnificataSorgenteList(List<StrutturaUnificata> strutturaUnificataSorgenteList) {
+        this.strutturaUnificataSorgenteList = strutturaUnificataSorgenteList;
     }
 
-    public Set<UtenteStruttura> getUtenteStrutturaSet() {
-        return utenteStrutturaSet;
+    public List<UtenteStruttura> getUtenteStrutturaList() {
+        return utenteStrutturaList;
     }
 
-    public void setUtenteStrutturaSet(Set<UtenteStruttura> utenteStrutturaSet) {
-        this.utenteStrutturaSet = utenteStrutturaSet;
+    public void setUtenteStrutturaList(List<UtenteStruttura> utenteStrutturaList) {
+        this.utenteStrutturaList = utenteStrutturaList;
     }
 
   

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -41,11 +41,11 @@ public class Applicazione implements Serializable {
     @Column(name = "nome")
     private String nome;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idApplicazione", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "attivitaSet")
-    private Set<Attivita> attivitaSet;
+    @JsonBackReference(value = "attivitaList")
+    private List<Attivita> attivitaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idApplicazione", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "attivitaFattaSet")
-    private Set<AttivitaFatta> attivitaFattaSet;
+    @JsonBackReference(value = "attivitaFattaList")
+    private List<AttivitaFatta> attivitaFattaList;
 
     public Applicazione() {
     }
@@ -75,20 +75,20 @@ public class Applicazione implements Serializable {
         this.nome = nome;
     }
 
-    public Set<Attivita> getAttivitaSet() {
-        return attivitaSet;
+    public List<Attivita> getAttivitaList() {
+        return attivitaList;
     }
 
-    public void setAttivitaSet(Set<Attivita> attivitaSet) {
-        this.attivitaSet = attivitaSet;
+    public void setAttivitaList(List<Attivita> attivitaList) {
+        this.attivitaList = attivitaList;
     }
 
-    public Set<AttivitaFatta> getAttivitaFattaSet() {
-        return attivitaFattaSet;
+    public List<AttivitaFatta> getAttivitaFattaList() {
+        return attivitaFattaList;
     }
 
-    public void setAttivitaFattaSet(Set<AttivitaFatta> attivitaFattaSet) {
-        this.attivitaFattaSet = attivitaFattaSet;
+    public void setAttivitaFattaList(List<AttivitaFatta> attivitaFattaList) {
+        this.attivitaFattaList = attivitaFattaList;
     }
 
     @Override

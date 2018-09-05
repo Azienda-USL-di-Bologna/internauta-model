@@ -8,7 +8,7 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -77,8 +77,8 @@ public class PecProvider implements Serializable {
     @Column(name = "protocol_out")
     private String protocolOut;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPecProvider", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "pecSet")
-    private Set<Pec> pecSet;
+    @JsonBackReference(value = "pecList")
+    private List<Pec> pecList;
 
     public PecProvider() {
     }
@@ -171,12 +171,12 @@ public class PecProvider implements Serializable {
         this.protocolOut = protocolOut;
     }
 
-    public Set<Pec> getPecSet() {
-        return pecSet;
+    public List<Pec> getPecList() {
+        return pecList;
     }
 
-    public void setPecSet(Set<Pec> pecSet) {
-        this.pecSet = pecSet;
+    public void setPecList(List<Pec> pecList) {
+        this.pecList = pecList;
     }
 
     @Override

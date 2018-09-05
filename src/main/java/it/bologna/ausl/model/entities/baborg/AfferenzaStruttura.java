@@ -3,7 +3,7 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,8 +43,8 @@ public class AfferenzaStruttura implements Serializable {
     @Column(name = "codice")
     private String codice;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAfferenzaStruttura", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "utenteStrutturaSet")
-    private Set<UtenteStruttura> utenteStrutturaSet;
+    @JsonBackReference(value = "utenteStrutturaList")
+    private List<UtenteStruttura> utenteStrutturaList;
 
     public static enum CodiciAfferenzaStruttura {
         DIRETTA, FUNZIONALE, UNIFICATA
@@ -87,12 +87,12 @@ public class AfferenzaStruttura implements Serializable {
         this.codice = codice.toString();
     }
 
-    public Set<UtenteStruttura> getUtenteStrutturaSet() {
-        return utenteStrutturaSet;
+    public List<UtenteStruttura> getUtenteStrutturaList() {
+        return utenteStrutturaList;
     }
 
-    public void setUtenteStrutturaSet(Set<UtenteStruttura> utenteStrutturaSet) {
-        this.utenteStrutturaSet = utenteStrutturaSet;
+    public void setUtenteStrutturaList(List<UtenteStruttura> utenteStrutturaList) {
+        this.utenteStrutturaList = utenteStrutturaList;
     }
 
     @Override

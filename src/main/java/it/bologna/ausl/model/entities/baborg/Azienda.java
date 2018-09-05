@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -80,23 +80,23 @@ public class Azienda implements Serializable {
     @Column(name = "path")
     private String path;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "idpEntityIdSet")
-    private Set<IdpEntityId> idpEntityIdSet;
+    @JsonBackReference(value = "idpEntityIdList")
+    private List<IdpEntityId> idpEntityIdList;
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "utenteSet")
-    private Set<Utente> utenteSet;
+    @JsonBackReference(value = "utenteList")
+    private List<Utente> utenteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "strutturaSet")
-    private Set<Struttura> strutturaSet;
+    @JsonBackReference(value = "strutturaList")
+    private List<Struttura> strutturaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "pecSet")
-    private Set<Pec> pecSet;
+    @JsonBackReference(value = "pecList")
+    private List<Pec> pecList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "attivitaSet")
-    private Set<Attivita> attivitaSet;
+    @JsonBackReference(value = "attivitaList")
+    private List<Attivita> attivitaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "attivitaFattaSet")
-    private Set<AttivitaFatta> attivitaFattaSet;
+    @JsonBackReference(value = "attivitaFattaList")
+    private List<AttivitaFatta> attivitaFattaList;
 
     public Azienda() {
     }
@@ -105,7 +105,7 @@ public class Azienda implements Serializable {
         this.id = id;
     }
 
-    public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String schemaGru, Integer idAziendaGru, String parametri, String codiceRegione, Boolean ribaltaInternauta, Boolean ribaltaArgo, String path, Set<IdpEntityId> idpEntityIdSet, Set<Utente> utenteSet, Set<Struttura> strutturaSet, Set<Pec> pecSet, Set<Attivita> attivitaSet) {
+    public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String schemaGru, Integer idAziendaGru, String parametri, String codiceRegione, Boolean ribaltaInternauta, Boolean ribaltaArgo, String path, List<IdpEntityId> idpEntityIdList, List<Utente> utenteList, List<Struttura> strutturaList, List<Pec> pecList, List<Attivita> attivitaList) {
         this.id = id;
         this.codice = codice;
         this.nome = nome;
@@ -118,11 +118,11 @@ public class Azienda implements Serializable {
         this.ribaltaInternauta = ribaltaInternauta;
         this.ribaltaArgo = ribaltaArgo;
         this.path = path;
-        this.idpEntityIdSet = idpEntityIdSet;
-        this.utenteSet = utenteSet;
-        this.strutturaSet = strutturaSet;
-        this.pecSet = pecSet;
-        this.attivitaSet = attivitaSet;
+        this.idpEntityIdList = idpEntityIdList;
+        this.utenteList = utenteList;
+        this.strutturaList = strutturaList;
+        this.pecList = pecList;
+        this.attivitaList = attivitaList;
     }
     
     
@@ -234,52 +234,52 @@ public class Azienda implements Serializable {
         this.path = path;
     }
 
-    public Set<IdpEntityId> getIdpEntityIdSet() {
-        return idpEntityIdSet;
+    public List<IdpEntityId> getIdpEntityIdList() {
+        return idpEntityIdList;
     }
 
-    public void setIdpEntityIdSet(Set<IdpEntityId> idpEntityIdSet) {
-        this.idpEntityIdSet = idpEntityIdSet;
+    public void setIdpEntityIdList(List<IdpEntityId> idpEntityIdList) {
+        this.idpEntityIdList = idpEntityIdList;
     }
 
-    public Set<Utente> getUtenteSet() {
-        return utenteSet;
+    public List<Utente> getUtenteList() {
+        return utenteList;
     }
 
-    public void setUtenteSet(Set<Utente> utenteSet) {
-        this.utenteSet = utenteSet;
+    public void setUtenteList(List<Utente> utenteList) {
+        this.utenteList = utenteList;
     }
 
-    public Set<Struttura> getStrutturaSet() {
-        return strutturaSet;
+    public List<Struttura> getStrutturaList() {
+        return strutturaList;
     }
 
-    public void setStrutturaSet(Set<Struttura> strutturaSet) {
-        this.strutturaSet = strutturaSet;
+    public void setStrutturaList(List<Struttura> strutturaList) {
+        this.strutturaList = strutturaList;
     }
 
-    public Set<Pec> getPecSet() {
-        return pecSet;
+    public List<Pec> getPecList() {
+        return pecList;
     }
 
-    public void setPecSet(Set<Pec> pecSet) {
-        this.pecSet = pecSet;
+    public void setPecList(List<Pec> pecList) {
+        this.pecList = pecList;
     }
 
-    public Set<Attivita> getAttivitaSet() {
-        return attivitaSet;
+    public List<Attivita> getAttivitaList() {
+        return attivitaList;
     }
 
-    public void setAttivitaSet(Set<Attivita> attivitaSet) {
-        this.attivitaSet = attivitaSet;
+    public void setAttivitaList(List<Attivita> attivitaList) {
+        this.attivitaList = attivitaList;
     }
 
-    public Set<AttivitaFatta> getAttivitaFattaSet() {
-        return attivitaFattaSet;
+    public List<AttivitaFatta> getAttivitaFattaList() {
+        return attivitaFattaList;
     }
 
-    public void setAttivitaFattaSet(Set<AttivitaFatta> attivitaFattaSet) {
-        this.attivitaFattaSet = attivitaFattaSet;
+    public void setAttivitaFattaList(List<AttivitaFatta> attivitaFattaList) {
+        this.attivitaFattaList = attivitaFattaList;
     }
 
     @Override

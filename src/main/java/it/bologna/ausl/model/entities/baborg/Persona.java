@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -65,14 +65,14 @@ public class Persona implements Serializable {
     @Column(name = "descrizione")
     private String descrizione;
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "utenteSet")
-    private Set<Utente> utenteSet;
+    @JsonBackReference(value = "utenteList")
+    private List<Utente> utenteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "attivitaSet")
-    private Set<Attivita> attivitaSet;
+    @JsonBackReference(value = "attivitaList")
+    private List<Attivita> attivitaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "attivitaFattaSet")
-    private Set<AttivitaFatta> attivitaFattaSet;
+    @JsonBackReference(value = "attivitaFattaList")
+    private List<AttivitaFatta> attivitaFattaList;
 
     public Persona() {
     }
@@ -81,7 +81,7 @@ public class Persona implements Serializable {
         this.id = id;
     }
 
-    public Persona(Integer id, String nome, String cognome, String codiceFiscale, Integer bitRuoli, Boolean attiva, String descrizione, Set<Utente> utenteSet) {
+    public Persona(Integer id, String nome, String cognome, String codiceFiscale, Integer bitRuoli, Boolean attiva, String descrizione, List<Utente> utenteList) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -89,7 +89,7 @@ public class Persona implements Serializable {
         this.bitRuoli = bitRuoli;
         this.attiva = attiva;
         this.descrizione = descrizione;
-        this.utenteSet = utenteSet;
+        this.utenteList = utenteList;
     }
 
 
@@ -150,28 +150,28 @@ public class Persona implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public Set<Utente> getUtenteSet() {
-        return utenteSet;
+    public List<Utente> getUtenteList() {
+        return utenteList;
     }
 
-    public void setUtenteSet(Set<Utente> utenteSet) {
-        this.utenteSet = utenteSet;
+    public void setUtenteList(List<Utente> utenteList) {
+        this.utenteList = utenteList;
     }
 
-    public Set<Attivita> getAttivitaSet() {
-        return attivitaSet;
+    public List<Attivita> getAttivitaList() {
+        return attivitaList;
     }
 
-    public void setAttivitaSet(Set<Attivita> attivitaSet) {
-        this.attivitaSet = attivitaSet;
+    public void setAttivitaList(List<Attivita> attivitaList) {
+        this.attivitaList = attivitaList;
     }
 
-    public Set<AttivitaFatta> getAttivitaFattaSet() {
-        return attivitaFattaSet;
+    public List<AttivitaFatta> getAttivitaFattaList() {
+        return attivitaFattaList;
     }
 
-    public void setAttivitaFattaSet(Set<AttivitaFatta> attivitaFattaSet) {
-        this.attivitaFattaSet = attivitaFattaSet;
+    public void setAttivitaFattaList(List<AttivitaFatta> attivitaFattaList) {
+        this.attivitaFattaList = attivitaFattaList;
     }
 
     @Override

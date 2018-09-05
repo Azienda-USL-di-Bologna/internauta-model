@@ -8,7 +8,7 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -72,8 +72,8 @@ public class Pec implements Serializable {
     @Column(name = "descrizione")
     private String descrizione;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPec", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "pecStrutturaSet")
-    private Set<PecStruttura> pecStrutturaSet;
+    @JsonBackReference(value = "pecStrutturaList")
+    private List<PecStruttura> pecStrutturaList;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
@@ -81,8 +81,8 @@ public class Pec implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PecProvider idPecProvider;
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "pecUtenteSet")
-    private Set<PecUtente> pecUtenteSet;
+    @JsonBackReference(value = "pecUtenteList")
+    private List<PecUtente> pecUtenteList;
 
     public Pec() {
     }
@@ -165,12 +165,12 @@ public class Pec implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public Set<PecStruttura> getPecStrutturaSet() {
-        return pecStrutturaSet;
+    public List<PecStruttura> getPecStrutturaList() {
+        return pecStrutturaList;
     }
 
-    public void setPecStrutturaSet(Set<PecStruttura> pecStrutturaSet) {
-        this.pecStrutturaSet = pecStrutturaSet;
+    public void setPecStrutturaList(List<PecStruttura> pecStrutturaList) {
+        this.pecStrutturaList = pecStrutturaList;
     }
 
     public Azienda getIdAzienda() {
@@ -189,12 +189,12 @@ public class Pec implements Serializable {
         this.idPecProvider = idPecProvider;
     }
 
-    public Set<PecUtente> getPecUtenteSet() {
-        return pecUtenteSet;
+    public List<PecUtente> getPecUtenteList() {
+        return pecUtenteList;
     }
 
-    public void setPecUtenteSet(Set<PecUtente> pecUtenteSet) {
-        this.pecUtenteSet = pecUtenteSet;
+    public void setPecUtenteList(List<PecUtente> pecUtenteList) {
+        this.pecUtenteList = pecUtenteList;
     }
 
     @Override

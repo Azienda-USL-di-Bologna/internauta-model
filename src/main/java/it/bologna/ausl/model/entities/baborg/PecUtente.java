@@ -8,7 +8,7 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,8 +40,8 @@ public class PecUtente implements Serializable {
     @Column(name = "id")
     private Integer id;
     @OneToMany(mappedBy = "idPecUtenti", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "permessoSet")
-    private Set<Permesso> permessoSet;
+    @JsonBackReference(value = "permessoList")
+    private List<Permesso> permessoList;
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Pec idPec;
@@ -64,12 +64,12 @@ public class PecUtente implements Serializable {
         this.id = id;
     }
 
-    public Set<Permesso> getPermessoSet() {
-        return permessoSet;
+    public List<Permesso> getPermessoList() {
+        return permessoList;
     }
 
-    public void setPermessoSet(Set<Permesso> permessoSet) {
-        this.permessoSet = permessoSet;
+    public void setPermessoList(List<Permesso> permessoList) {
+        this.permessoList = permessoList;
     }
 
     public Pec getIdPec() {

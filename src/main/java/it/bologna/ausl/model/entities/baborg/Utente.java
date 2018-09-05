@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -109,11 +109,11 @@ public class Utente implements Serializable, UserDetails {
     @ManyToOne(fetch = FetchType.LAZY)
     private Persona idPersona;
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "pecUtenteSet")
-    private Set<PecUtente> pecUtenteSet;
+    @JsonBackReference(value = "pecUtenteList")
+    private List<PecUtente> pecUtenteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtente", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "utenteStrutturaSet")
-    private Set<UtenteStruttura> utenteStrutturaSet;
+    @JsonBackReference(value = "utenteStrutturaList")
+    private List<UtenteStruttura> utenteStrutturaList;
     
     @Transient
     private List<Ruolo> ruoli;
@@ -125,7 +125,7 @@ public class Utente implements Serializable, UserDetails {
         this.id = id;
     }
 
-    public Utente(Integer id, String username, String matricola, String nome, String cognome, String codiceFiscale, String descrizione, String email, String idInquadramento, String telefono, String fax, Boolean omonimia, String passwordHash, Integer dominio, Boolean attivo, Integer bitRuoli, Integer idRuoloAziendale, Azienda idAzienda, Persona idPersona, Set<PecUtente> pecUtenteSet, Set<UtenteStruttura> utenteStrutturaSet) {
+    public Utente(Integer id, String username, String matricola, String nome, String cognome, String codiceFiscale, String descrizione, String email, String idInquadramento, String telefono, String fax, Boolean omonimia, String passwordHash, Integer dominio, Boolean attivo, Integer bitRuoli, Integer idRuoloAziendale, Azienda idAzienda, Persona idPersona, List<PecUtente> pecUtenteList, List<UtenteStruttura> utenteStrutturaList) {
         this.id = id;
         this.username = username;
         this.matricola = matricola;
@@ -145,8 +145,8 @@ public class Utente implements Serializable, UserDetails {
         this.idRuoloAziendale = idRuoloAziendale;
         this.idAzienda = idAzienda;
         this.idPersona = idPersona;
-        this.pecUtenteSet = pecUtenteSet;
-        this.utenteStrutturaSet = utenteStrutturaSet;
+        this.pecUtenteList = pecUtenteList;
+        this.utenteStrutturaList = utenteStrutturaList;
     }
 
 
@@ -304,20 +304,20 @@ public class Utente implements Serializable, UserDetails {
         this.idPersona = idPersona;
     }
 
-    public Set<PecUtente> getPecUtenteSet() {
-        return pecUtenteSet;
+    public List<PecUtente> getPecUtenteList() {
+        return pecUtenteList;
     }
 
-    public void setPecUtenteSet(Set<PecUtente> pecUtenteSet) {
-        this.pecUtenteSet = pecUtenteSet;
+    public void setPecUtenteList(List<PecUtente> pecUtenteList) {
+        this.pecUtenteList = pecUtenteList;
     }
 
-    public Set<UtenteStruttura> getUtenteStrutturaSet() {
-        return utenteStrutturaSet;
+    public List<UtenteStruttura> getUtenteStrutturaList() {
+        return utenteStrutturaList;
     }
 
-    public void setUtenteStrutturaSet(Set<UtenteStruttura> utenteStrutturaSet) {
-        this.utenteStrutturaSet = utenteStrutturaSet;
+    public void setUtenteStrutturaList(List<UtenteStruttura> utenteStrutturaList) {
+        this.utenteStrutturaList = utenteStrutturaList;
     }
     
     public List<Ruolo> getRuoli() {
