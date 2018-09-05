@@ -41,10 +41,10 @@ public class StrutturaUnificata implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataAttivazione;
-    @Column(name = "data_inserimento_riga", updatable=false, insertable=false)
+    @Column(name = "data_disattivazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime dataInserimentoRiga;
+    private LocalDateTime dataDisattivazione;
     @Column(name = "tipo_operazione")
     @Size(max = 100)
     private String tipoOperazione;
@@ -54,6 +54,10 @@ public class StrutturaUnificata implements Serializable {
     @JoinColumn(name = "id_struttura_sorgente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Struttura idStrutturaSorgente;
+    @Column(name = "data_inserimento_riga", updatable=false, insertable=false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataInserimentoRiga;
 
     public StrutturaUnificata() {
     }
@@ -88,12 +92,12 @@ public class StrutturaUnificata implements Serializable {
         this.dataAttivazione = dataAttivazione;
     }
     
-    public LocalDateTime getDataInserimentoRiga() {
-        return dataInserimentoRiga;
+    public LocalDateTime getDataDisattivazione() {
+        return dataDisattivazione;
     }
-    
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
-        this.dataInserimentoRiga = dataInserimentoRiga;
+
+    public void setDataDisattivazione(LocalDateTime dataDisattivazione) {
+        this.dataDisattivazione = dataDisattivazione;
     }
     
     public String getTipoOperazione() {
@@ -120,6 +124,14 @@ public class StrutturaUnificata implements Serializable {
         this.idStrutturaSorgente = idStrutturaSorgente;
     }
 
+    public LocalDateTime getDataInserimentoRiga() {
+        return dataInserimentoRiga;
+    }
+    
+    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+        this.dataInserimentoRiga = dataInserimentoRiga;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
