@@ -1,8 +1,9 @@
-package it.bologna.ausl.baborg.model.entities;
+package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import it.bologna.ausl.model.entities.scrivania.Attivita;
+import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -18,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.Proxy;
 
 /**
  *
@@ -61,7 +61,6 @@ public class Azienda implements Serializable {
     private String schemaGru;
     @Column(name = "id_azienda_gru")
     private Integer idAziendaGru;
-
     @Column(name = "parametri")
     private String parametri;
     @Basic(optional = false)
@@ -92,6 +91,12 @@ public class Azienda implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
     @JsonBackReference(value = "pecSet")
     private Set<Pec> pecSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "attivitaSet")
+    private Set<Attivita> attivitaSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "attivitaFattaSet")
+    private Set<AttivitaFatta> attivitaFattaSet;
 
     public Azienda() {
     }
@@ -99,6 +104,28 @@ public class Azienda implements Serializable {
     public Azienda(Integer id) {
         this.id = id;
     }
+
+    public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String schemaGru, Integer idAziendaGru, String parametri, String codiceRegione, Boolean ribaltaInternauta, Boolean ribaltaArgo, String path, Set<IdpEntityId> idpEntityIdSet, Set<Utente> utenteSet, Set<Struttura> strutturaSet, Set<Pec> pecSet, Set<Attivita> attivitaSet) {
+        this.id = id;
+        this.codice = codice;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.aoo = aoo;
+        this.schemaGru = schemaGru;
+        this.idAziendaGru = idAziendaGru;
+        this.parametri = parametri;
+        this.codiceRegione = codiceRegione;
+        this.ribaltaInternauta = ribaltaInternauta;
+        this.ribaltaArgo = ribaltaArgo;
+        this.path = path;
+        this.idpEntityIdSet = idpEntityIdSet;
+        this.utenteSet = utenteSet;
+        this.strutturaSet = strutturaSet;
+        this.pecSet = pecSet;
+        this.attivitaSet = attivitaSet;
+    }
+    
+    
 
     public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String codiceRegione, boolean ribaltaInternauta, boolean ribaltaArgo) {
         this.id = id;
@@ -237,6 +264,22 @@ public class Azienda implements Serializable {
 
     public void setPecSet(Set<Pec> pecSet) {
         this.pecSet = pecSet;
+    }
+
+    public Set<Attivita> getAttivitaSet() {
+        return attivitaSet;
+    }
+
+    public void setAttivitaSet(Set<Attivita> attivitaSet) {
+        this.attivitaSet = attivitaSet;
+    }
+
+    public Set<AttivitaFatta> getAttivitaFattaSet() {
+        return attivitaFattaSet;
+    }
+
+    public void setAttivitaFattaSet(Set<AttivitaFatta> attivitaFattaSet) {
+        this.attivitaFattaSet = attivitaFattaSet;
     }
 
     @Override

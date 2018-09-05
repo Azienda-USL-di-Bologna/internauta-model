@@ -1,4 +1,4 @@
-package it.bologna.ausl.baborg.model.entities;
+package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;

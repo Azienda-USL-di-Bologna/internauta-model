@@ -1,0 +1,356 @@
+package it.bologna.ausl.model.entities.scrivania;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import it.bologna.ausl.model.entities.baborg.Azienda;
+import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.configuration.Applicazione;
+import it.nextsw.common.types.GenericArrayUserType;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import javax.persistence.Basic;
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+import org.springframework.format.annotation.DateTimeFormat;
+
+/**
+ *
+ * @author gus
+ */
+@TypeDefs(
+    {
+        @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+    }
+)
+@Entity
+@Table(name = "attivita", catalog = "internauta", schema = "scrivania")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Cacheable(false)
+public class Attivita implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @JoinColumn(name = "id_azienda", referencedColumnName = "id")
+    @JsonManagedReference(value = "idAzienda")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Azienda idAzienda;
+    @Basic(optional = false)
+    @NotNull
+    @JoinColumn(name = "id_persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona idPersona;
+    @Basic(optional = false)
+    @NotNull
+    @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Applicazione idApplicazione;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = Integer.SIZE)
+    @Column(name = "tipo")
+    private String tipo;
+    @Size(max = Integer.SIZE)
+    @Column(name = "oggetto")
+    private String oggetto;
+    @Size(max = Integer.SIZE)
+    @Column(name = "descrizione")
+    private String descrizione;
+    @Column(name = "urls")
+    private String urls;
+    @Column(name = "aperta")
+    private Boolean aperta;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "data")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime data;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "data_inserimento_riga")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataInserimentoRiga;
+    @Column(name = "data_ultima_modifica")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataUltimaModifica;
+    @Size(max = Integer.SIZE)
+    @Column(name = "note")
+    private String note;
+    @Size(max = Integer.SIZE)
+    @Column(name = "provenienza")
+    private String provenienza;
+    @Column(name = "data_scadenza")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataScadenza;
+    @Column(name = "priorita")
+    private Integer priorita;
+    @Column(name = "tags", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] tags;
+    @Column(name = "oggetto_esterno")
+    private Integer oggettoEsterno;
+    @Size(max = Integer.SIZE)
+    @Column(name = "tipo_oggetto_esterno")
+    private String tipoOggettoEsterno;
+    @Column(name = "oggetto_esterno_secondario")
+    private Integer oggettoEsternoSecondario;
+    @Size(max = Integer.SIZE)
+    @Column(name = "tipo_oggetto_esterno_secondario")
+    private String tipoOggettoEsternoSecondario;
+    @Column(name = "dati_aggiuntivi")
+    private String datiAggiuntivi;
+    @Size(max = Integer.SIZE)
+    @Column(name = "classe")
+    private String classe;
+
+    public Attivita() {
+    }
+
+    public Attivita(Integer id) {
+        this.id = id;
+    }
+
+    public Attivita(Integer id, Azienda idAzienda, String tipo, LocalDateTime data, LocalDateTime dataInserimentoRiga) {
+        this.id = id;
+        this.idAzienda = idAzienda;
+//        this.idPersona = idPersona;
+//        this.idApplicazione = idApplicazione;
+        this.tipo = tipo;
+        this.data = data;
+        this.dataInserimentoRiga = dataInserimentoRiga;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Azienda getIdAzienda() {
+        return idAzienda;
+    }
+
+    public void setIdAzienda(Azienda idAzienda) {
+        this.idAzienda = idAzienda;
+    }
+
+    public Persona getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public Applicazione getIdApplicazione() {
+        return idApplicazione;
+    }
+
+    public void setIdApplicazione(Applicazione idApplicazione) {
+        this.idApplicazione = idApplicazione;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getOggetto() {
+        return oggetto;
+    }
+
+    public void setOggetto(String oggetto) {
+        this.oggetto = oggetto;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public String getUrls() {
+        return urls;
+    }
+
+    public void setUrls(String urls) {
+        this.urls = urls;
+    }
+
+    public Boolean getAperta() {
+        return aperta;
+    }
+
+    public void setAperta(Boolean aperta) {
+        this.aperta = aperta;
+    }
+
+    public LocalDateTime getData() {
+        return data;
+    }
+
+    public void setData(LocalDateTime data) {
+        this.data = data;
+    }
+
+    public LocalDateTime getDataInserimentoRiga() {
+        return dataInserimentoRiga;
+    }
+
+    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+        this.dataInserimentoRiga = dataInserimentoRiga;
+    }
+
+    public LocalDateTime getDataUltimaModifica() {
+        return dataUltimaModifica;
+    }
+
+    public void setDataUltimaModifica(LocalDateTime dataUltimaModifica) {
+        this.dataUltimaModifica = dataUltimaModifica;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getProvenienza() {
+        return provenienza;
+    }
+
+    public void setProvenienza(String provenienza) {
+        this.provenienza = provenienza;
+    }
+
+    public LocalDateTime getDataScadenza() {
+        return dataScadenza;
+    }
+
+    public void setDataScadenza(LocalDateTime dataScadenza) {
+        this.dataScadenza = dataScadenza;
+    }
+
+    public Integer getPriorita() {
+        return priorita;
+    }
+
+    public void setPriorita(Integer priorita) {
+        this.priorita = priorita;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
+    }
+
+    public Integer getOggettoEsterno() {
+        return oggettoEsterno;
+    }
+
+    public void setOggettoEsterno(Integer oggettoEsterno) {
+        this.oggettoEsterno = oggettoEsterno;
+    }
+
+    public String getTipoOggettoEsterno() {
+        return tipoOggettoEsterno;
+    }
+
+    public void setTipoOggettoEsterno(String tipoOggettoEsterno) {
+        this.tipoOggettoEsterno = tipoOggettoEsterno;
+    }
+
+    public Integer getOggettoEsternoSecondario() {
+        return oggettoEsternoSecondario;
+    }
+
+    public void setOggettoEsternoSecondario(Integer oggettoEsternoSecondario) {
+        this.oggettoEsternoSecondario = oggettoEsternoSecondario;
+    }
+
+    public String getTipoOggettoEsternoSecondario() {
+        return tipoOggettoEsternoSecondario;
+    }
+
+    public void setTipoOggettoEsternoSecondario(String tipoOggettoEsternoSecondario) {
+        this.tipoOggettoEsternoSecondario = tipoOggettoEsternoSecondario;
+    }
+
+    public String getDatiAggiuntivi() {
+        return datiAggiuntivi;
+    }
+
+    public void setDatiAggiuntivi(String datiAggiuntivi) {
+        this.datiAggiuntivi = datiAggiuntivi;
+    }
+
+    public String getClasse() {
+        return classe;
+    }
+
+    public void setClasse(String classe) {
+        this.classe = classe;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Attivita)) {
+            return false;
+        }
+        Attivita other = (Attivita) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "it.bologna.ausl.scrivania.model.entities.Attivita[ id=" + id + " ]";
+    }
+    
+}

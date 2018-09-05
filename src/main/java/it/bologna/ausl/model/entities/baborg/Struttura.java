@@ -1,4 +1,4 @@
-package it.bologna.ausl.baborg.model.entities;
+package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -1,11 +1,14 @@
-package it.bologna.ausl.baborg.model.entities;
+package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.scrivania.Attivita;
+import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -64,6 +67,12 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
     @JsonBackReference(value = "utenteSet")
     private Set<Utente> utenteSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "attivitaSet")
+    private Set<Attivita> attivitaSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "attivitaFattaSet")
+    private Set<AttivitaFatta> attivitaFattaSet;
 
     public Persona() {
     }
@@ -147,6 +156,22 @@ public class Persona implements Serializable {
 
     public void setUtenteSet(Set<Utente> utenteSet) {
         this.utenteSet = utenteSet;
+    }
+
+    public Set<Attivita> getAttivitaSet() {
+        return attivitaSet;
+    }
+
+    public void setAttivitaSet(Set<Attivita> attivitaSet) {
+        this.attivitaSet = attivitaSet;
+    }
+
+    public Set<AttivitaFatta> getAttivitaFattaSet() {
+        return attivitaFattaSet;
+    }
+
+    public void setAttivitaFattaSet(Set<AttivitaFatta> attivitaFattaSet) {
+        this.attivitaFattaSet = attivitaFattaSet;
     }
 
     @Override
