@@ -52,7 +52,6 @@ public class AttivitaFatta implements Serializable {
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
-    @JsonManagedReference(value = "idAzienda")
     @ManyToOne(fetch = FetchType.LAZY)
     private Azienda idAzienda;
     @Basic(optional = false)

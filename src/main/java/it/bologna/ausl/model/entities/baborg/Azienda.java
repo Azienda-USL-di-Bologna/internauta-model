@@ -79,22 +79,22 @@ public class Azienda implements Serializable {
     @Basic(optional = true)
     @Column(name = "path")
     private String path;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idpEntityIdList")
     private List<IdpEntityId> idpEntityIdList;
-    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
     private List<Utente> utenteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "strutturaList")
     private List<Struttura> strutturaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecList")
     private List<Pec> pecList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
 

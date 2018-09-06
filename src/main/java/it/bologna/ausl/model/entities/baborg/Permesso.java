@@ -12,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -36,13 +34,13 @@ public class Permesso implements Serializable {
     @Column(name = "provenienza")
     private String provenienza;
     @JoinColumn(name = "id_pec_utenti", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private PecUtente idPecUtenti;
     @JoinColumn(name = "id_tipo_permesso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private TipoPermesso idTipoPermesso;
     @JoinColumn(name = "id_utenti_strutture", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UtenteStruttura idUtentiStrutture;
 
     public Permesso() {

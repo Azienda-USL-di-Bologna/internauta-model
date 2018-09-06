@@ -64,13 +64,13 @@ public class Persona implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
     private List<Utente> utenteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
 

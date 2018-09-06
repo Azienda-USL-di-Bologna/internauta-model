@@ -50,9 +50,9 @@ public class ParametroAziende implements Serializable {
     private String valore;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_applicazioni", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
-    private Integer[] idApplicazioni;
+    @Column(name = "id_applicazioni", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] idApplicazioni;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_aziende", columnDefinition = "integer[]")
@@ -66,7 +66,7 @@ public class ParametroAziende implements Serializable {
         this.id = id;
     }
 
-    public ParametroAziende(Integer id, String nome, String valore, Integer[] idApplicazioni, Integer[] idAziende) {
+    public ParametroAziende(Integer id, String nome, String valore, String[] idApplicazioni, Integer[] idAziende) {
         this.id = id;
         this.nome = nome;
         this.valore = valore;
@@ -98,11 +98,11 @@ public class ParametroAziende implements Serializable {
         this.valore = valore;
     }
 
-    public Integer[] getIdApplicazioni() {
+    public String[] getIdApplicazioni() {
         return idApplicazioni;
     }
 
-    public void setIdApplicazioni(Integer[] idApplicazioni) {
+    public void setIdApplicazioni(String[] idApplicazioni) {
         this.idApplicazioni = idApplicazioni;
     }
 

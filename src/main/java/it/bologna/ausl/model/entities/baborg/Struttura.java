@@ -74,31 +74,31 @@ public class Struttura implements Serializable {
     private Boolean usaSegreteriaBucataPadre;
     @Column(name = "foglia")
     private Boolean foglia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStruttura", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idStruttura", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecStrutturaList")
     private List<PecStruttura> pecStrutturaList;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
-    @OneToMany(mappedBy = "idStrutturaPadre", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idStrutturaPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "struttureFiglieList")
     private List<Struttura> struttureFiglieList;
     @JoinColumn(name = "id_struttura_padre", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Struttura idStrutturaPadre;
-    @OneToMany(mappedBy = "idStrutturaSegreteria", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idStrutturaSegreteria", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "struttureSegretariateList")
     private List<Struttura> struttureSegretariateList;
     @JoinColumn(name = "id_struttura_segreteria", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Struttura idStrutturaSegreteria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStrutturaDestinazione", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idStrutturaDestinazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "strutturaUnificataDestinazioneList")
     private List<StrutturaUnificata> strutturaUnificataDestinazioneList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStrutturaSorgente", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idStrutturaSorgente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "strutturaUnificataSorgenteList")
     private List<StrutturaUnificata> strutturaUnificataSorgenteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStruttura", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idStruttura", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
 

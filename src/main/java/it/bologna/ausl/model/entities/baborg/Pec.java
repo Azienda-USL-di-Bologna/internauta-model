@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -19,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -71,14 +64,14 @@ public class Pec implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPec", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPec", fetch = FetchType.LAZY)
     @JsonBackReference(value = "pecStrutturaList")
     private List<PecStruttura> pecStrutturaList;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
     @JoinColumn(name = "id_pec_provider", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private PecProvider idPecProvider;
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecUtenteList")

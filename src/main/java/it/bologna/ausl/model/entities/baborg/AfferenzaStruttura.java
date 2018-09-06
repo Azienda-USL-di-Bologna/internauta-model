@@ -42,7 +42,7 @@ public class AfferenzaStruttura implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "codice")
     private String codice;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAfferenzaStruttura", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idAfferenzaStruttura", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +48,7 @@ public class TipoPermesso implements Serializable {
     @Size(max = 300)
     @Column(name = "descrizione")
     private String descrizione;
-    @OneToMany(mappedBy = "idTipoPermesso", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idTipoPermesso", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "permessoList")
     private List<Permesso> permessoList;
 
