@@ -50,10 +50,15 @@ public class StrutturaUnificata implements Serializable {
     @JoinColumn(name = "id_struttura_sorgente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Struttura idStrutturaSorgente;
+    @Column(name = "data_accensione_attivazione")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataAccensioneAttivazione;
     @Column(name = "data_inserimento_riga", updatable=false, insertable=false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataInserimentoRiga;
+    
 
     public StrutturaUnificata() {
     }
@@ -126,6 +131,14 @@ public class StrutturaUnificata implements Serializable {
     
     public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
+    }
+
+    public LocalDateTime getDataAccensioneAttivazione() {
+        return dataAccensioneAttivazione;
+    }
+
+    public void setDataAccensioneAttivazione(LocalDateTime dataAccensioneAttivazione) {
+        this.dataAccensioneAttivazione = dataAccensioneAttivazione;
     }
     
     @Override
