@@ -91,7 +91,7 @@ public class Azienda implements Serializable {
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecList")
     private List<Pec> pecList;
-    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})

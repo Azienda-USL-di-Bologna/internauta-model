@@ -2,7 +2,6 @@ package it.bologna.ausl.model.entities.scrivania;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
@@ -11,6 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,17 +52,17 @@ public class Attivita implements Serializable {
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Persona idPersona;
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Applicazione idApplicazione;
     @Basic(optional = false)
     @NotNull

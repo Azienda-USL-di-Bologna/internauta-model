@@ -40,10 +40,10 @@ public class Applicazione implements Serializable {
     @Size(min = 1, max = Integer.SIZE)
     @Column(name = "nome")
     private String nome;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idApplicazione", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idApplicazione", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
 
