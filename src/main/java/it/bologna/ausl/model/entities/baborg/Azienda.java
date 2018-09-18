@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
+import it.nextsw.common.types.GenericArrayUserType;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -19,11 +20,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
 /**
  *
  * @author solidus83
  */
+@TypeDefs(
+        {
+            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+        }
+)
 @Entity
 @Table(name = "aziende", catalog = "internauta", schema = "organigramma")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -77,8 +87,9 @@ public class Azienda implements Serializable {
     @Column(name = "ribalta_argo")
     private Boolean ribaltaArgo;
     @Basic(optional = true)
-    @Column(name = "path")
-    private String path;
+    @Column(name = "path", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] path;
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idpEntityIdList")
     private List<IdpEntityId> idpEntityIdList;
@@ -105,7 +116,7 @@ public class Azienda implements Serializable {
         this.id = id;
     }
 
-    public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String schemaGru, Integer idAziendaGru, String parametri, String codiceRegione, Boolean ribaltaInternauta, Boolean ribaltaArgo, String path, List<IdpEntityId> idpEntityIdList, List<Utente> utenteList, List<Struttura> strutturaList, List<Pec> pecList, List<Attivita> attivitaList) {
+    public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String schemaGru, Integer idAziendaGru, String parametri, String codiceRegione, Boolean ribaltaInternauta, Boolean ribaltaArgo, String[] path, List<IdpEntityId> idpEntityIdList, List<Utente> utenteList, List<Struttura> strutturaList, List<Pec> pecList, List<Attivita> attivitaList) {
         this.id = id;
         this.codice = codice;
         this.nome = nome;
@@ -124,8 +135,6 @@ public class Azienda implements Serializable {
         this.pecList = pecList;
         this.attivitaList = attivitaList;
     }
-    
-    
 
     public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String codiceRegione, boolean ribaltaInternauta, boolean ribaltaArgo) {
         this.id = id;
@@ -226,11 +235,11 @@ public class Azienda implements Serializable {
         this.ribaltaArgo = ribaltaArgo;
     }
 
-    public String getPath() {
+    public String[] getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(String[] path) {
         this.path = path;
     }
 
@@ -306,5 +315,5 @@ public class Azienda implements Serializable {
     public String toString() {
         return "it.bologna.ausl.baborg.model.entities.Azienda[ id=" + id + " ]";
     }
-    
+
 }
