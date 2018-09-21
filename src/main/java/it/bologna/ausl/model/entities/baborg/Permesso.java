@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -31,7 +32,8 @@ public class Permesso implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 300)
-    @Column(name = "provenienza")
+    @Column(name = "provenienza", nullable = false)
+    @NotNull
     private String provenienza;
     @JoinColumn(name = "id_pec_utenti", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
