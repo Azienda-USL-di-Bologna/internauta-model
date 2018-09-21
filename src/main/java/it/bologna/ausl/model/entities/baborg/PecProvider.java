@@ -34,8 +34,7 @@ public class PecProvider implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "descrizione")
+    @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
     @Basic(optional = false)
     @NotNull
@@ -43,8 +42,7 @@ public class PecProvider implements Serializable {
     private Boolean pec;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "host")
+    @Column(name = "host", columnDefinition = "text")
     private String host;
     @Basic(optional = false)
     @NotNull
@@ -52,13 +50,11 @@ public class PecProvider implements Serializable {
     private Integer port;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "protocol")
+    @Column(name = "protocol", columnDefinition = "text")
     private String protocol;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "host_out")
+    @Column(name = "host_out", columnDefinition = "text")
     private String hostOut;
     @Basic(optional = false)
     @NotNull
@@ -66,8 +62,7 @@ public class PecProvider implements Serializable {
     private Integer portOut;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "protocol_out")
+    @Column(name = "protocol_out", columnDefinition = "text")
     private String protocolOut;
     @OneToMany(mappedBy = "idPecProvider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecList")
@@ -196,5 +191,5 @@ public class PecProvider implements Serializable {
     public String toString() {
         return "it.bologna.ausl.baborg.model.entities.PecProvider[ id=" + id + " ]";
     }
-    
+
 }

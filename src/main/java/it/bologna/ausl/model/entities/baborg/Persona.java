@@ -38,18 +38,15 @@ public class Persona implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "nome")
+    @Column(name = "nome", columnDefinition = "text")
     private String nome;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "cognome")
+    @Column(name = "cognome", columnDefinition = "text")
     private String cognome;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "codice_fiscale")
+    @Column(name = "codice_fiscale", columnDefinition = "text")
     private String codiceFiscale;
     @Basic(optional = false)
     @NotNull
@@ -61,8 +58,7 @@ public class Persona implements Serializable {
     private Boolean attiva;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "descrizione")
+    @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
@@ -91,8 +87,6 @@ public class Persona implements Serializable {
         this.descrizione = descrizione;
         this.utenteList = utenteList;
     }
-
-
 
     public Integer getId() {
         return id;
@@ -198,5 +192,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "it.bologna.ausl.baborg.model.entities.Persona[ id=" + id + " ]";
     }
-    
+
 }

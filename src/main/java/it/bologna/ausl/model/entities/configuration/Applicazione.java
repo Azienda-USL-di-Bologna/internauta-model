@@ -32,13 +32,11 @@ public class Applicazione implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = Integer.SIZE)
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "text")
     private String id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = Integer.SIZE)
-    @Column(name = "nome")
+    @Column(name = "nome", columnDefinition = "text")
     private String nome;
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
@@ -115,5 +113,5 @@ public class Applicazione implements Serializable {
     public String toString() {
         return "it.bologna.ausl.configuration.model.entities.Applicazioni[ id=" + id + " ]";
     }
-    
+
 }

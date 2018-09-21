@@ -42,15 +42,12 @@ public class RibaltoniDaLanciare implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 2147483647)
-    @Column(name = "codice_azienda")
+    @Column(name = "codice_azienda", columnDefinition = "text")
     private String codiceAzienda;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 2147483647)
-    @Column(name = "email")
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Column(name = "email", columnDefinition = "text")
     private String email;
-    @Size(max = 2147483647)
-    @Column(name = "stato")
+    @Column(name = "stato", columnDefinition = "text")
     private String stato;
     @Column(name = "data_inserimento_riga")
     @Temporal(TemporalType.TIMESTAMP)
@@ -138,5 +135,5 @@ public class RibaltoniDaLanciare implements Serializable {
     public String toString() {
         return "it.bologna.ausl.baborg.model.entities.RibaltoniDaLanciare[ id=" + id + " ]";
     }
-    
+
 }

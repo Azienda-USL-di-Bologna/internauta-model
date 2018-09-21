@@ -33,9 +33,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gus
  */
 @TypeDefs(
-    {
-        @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-    }
+        {
+            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+        }
 )
 @Entity
 @Table(name = "attivita", catalog = "internauta", schema = "scrivania")
@@ -66,16 +66,13 @@ public class Attivita implements Serializable {
     private Applicazione idApplicazione;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = Integer.SIZE)
-    @Column(name = "tipo")
+    @Column(name = "tipo", columnDefinition = "text")
     private String tipo;
-    @Size(max = Integer.SIZE)
-    @Column(name = "oggetto")
+    @Column(name = "oggetto", columnDefinition = "text")
     private String oggetto;
-    @Size(max = Integer.SIZE)
-    @Column(name = "descrizione")
+    @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
-    @Column(name = "urls")
+    @Column(name = "urls", columnDefinition = "text")
     private String urls;
     @Column(name = "aperta")
     private Boolean aperta;
@@ -95,11 +92,9 @@ public class Attivita implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataUltimaModifica;
-    @Size(max = Integer.SIZE)
-    @Column(name = "note")
+    @Column(name = "note", columnDefinition = "text")
     private String note;
-    @Size(max = Integer.SIZE)
-    @Column(name = "provenienza")
+    @Column(name = "provenienza", columnDefinition = "text")
     private String provenienza;
     @Column(name = "data_scadenza")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -112,18 +107,15 @@ public class Attivita implements Serializable {
     private String[] tags;
     @Column(name = "oggetto_esterno")
     private Integer oggettoEsterno;
-    @Size(max = Integer.SIZE)
-    @Column(name = "tipo_oggetto_esterno")
+    @Column(name = "tipo_oggetto_esterno", columnDefinition = "text")
     private String tipoOggettoEsterno;
     @Column(name = "oggetto_esterno_secondario")
     private Integer oggettoEsternoSecondario;
-    @Size(max = Integer.SIZE)
-    @Column(name = "tipo_oggetto_esterno_secondario")
+    @Column(name = "tipo_oggetto_esterno_secondario", columnDefinition = "text")
     private String tipoOggettoEsternoSecondario;
-    @Column(name = "dati_aggiuntivi")
+    @Column(name = "dati_aggiuntivi", columnDefinition = "text")
     private String datiAggiuntivi;
-    @Size(max = Integer.SIZE)
-    @Column(name = "classe")
+    @Column(name = "classe", columnDefinition = "text")
     private String classe;
 
     public Attivita() {
@@ -351,5 +343,5 @@ public class Attivita implements Serializable {
     public String toString() {
         return "it.bologna.ausl.scrivania.model.entities.Attivita[ id=" + id + " ]";
     }
-    
+
 }

@@ -36,18 +36,15 @@ public class Pec implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "indirizzo")
+    @Column(name = "indirizzo", columnDefinition = "text")
     private String indirizzo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "username")
+    @Column(name = "username", columnDefinition = "text")
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "password")
+    @Column(name = "password", columnDefinition = "text")
     private String password;
     @Basic(optional = false)
     @NotNull
@@ -61,8 +58,7 @@ public class Pec implements Serializable {
     @NotNull
     @Column(name = "per_riservato")
     private Boolean perRiservato;
-    @Size(max = 2147483647)
-    @Column(name = "descrizione")
+    @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPec", fetch = FetchType.LAZY)
     @JsonBackReference(value = "pecStrutturaList")
@@ -214,5 +210,5 @@ public class Pec implements Serializable {
     public String toString() {
         return "it.bologna.ausl.baborg.model.entities.Pec[ id=" + id + " ]";
     }
-    
+
 }

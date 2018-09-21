@@ -29,13 +29,11 @@ public class Ruolo implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "nome")
+    @Column(name = "nome", columnDefinition = "text")
     private String nome;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "nome_breve")
+    @Column(name = "nome_breve", columnDefinition = "text")
     private String nomeBreve;
     @Basic(optional = false)
     @NotNull
@@ -49,7 +47,7 @@ public class Ruolo implements Serializable {
     public static enum CodiciRuolo {
         UG, MOS, OS, CA, CI, AS, SD
     }
-    
+
     public Ruolo() {
     }
 
@@ -64,8 +62,6 @@ public class Ruolo implements Serializable {
         this.mascheraBit = mascheraBit;
         this.superAziendale = superAziendale;
     }
-
-
 
     public Integer getId() {
         return id;
@@ -131,5 +127,5 @@ public class Ruolo implements Serializable {
     public String toString() {
         return "it.bologna.ausl.baborg.model.entities.Ruolo[ id=" + id + " ]";
     }
-    
+
 }

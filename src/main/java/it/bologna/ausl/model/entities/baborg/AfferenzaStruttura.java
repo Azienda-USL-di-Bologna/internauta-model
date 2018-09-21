@@ -34,13 +34,11 @@ public class AfferenzaStruttura implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "descrizione")
+    @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "codice")
+    @Column(name = "codice", columnDefinition = "text")
     private String codice;
     @OneToMany(mappedBy = "idAfferenzaStruttura", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
@@ -49,7 +47,7 @@ public class AfferenzaStruttura implements Serializable {
     public static enum CodiciAfferenzaStruttura {
         DIRETTA, FUNZIONALE, UNIFICATA
     }
-        
+
     public AfferenzaStruttura() {
     }
 
@@ -119,5 +117,5 @@ public class AfferenzaStruttura implements Serializable {
     public String toString() {
         return "it.bologna.ausl.baborg.model.entities.AfferenzaStruttura[ id=" + id + " ]";
     }
-    
+
 }

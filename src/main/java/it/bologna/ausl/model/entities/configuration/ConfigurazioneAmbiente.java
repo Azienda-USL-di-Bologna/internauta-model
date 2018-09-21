@@ -28,11 +28,9 @@ public class ConfigurazioneAmbiente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 2147483647)
-    @Column(name = "nome")
+    @Column(name = "nome", columnDefinition = "text")
     private String nome;
-    @Size(max = 2147483647)
-    @Column(name = "valore")
+    @Column(name = "valore", columnDefinition = "text")
     private String valore;
     @Column(name = "attiva")
     private Boolean attiva;
@@ -100,5 +98,5 @@ public class ConfigurazioneAmbiente implements Serializable {
     public String toString() {
         return "it.bologna.ausl.configuration.model.entities.ConfigurazioniAmbiente[ id=" + id + " ]";
     }
-    
+
 }

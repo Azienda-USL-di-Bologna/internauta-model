@@ -41,12 +41,11 @@ public class ParametroAziende implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = Integer.SIZE)
-    @Column(name = "nome")
+    @Column(name = "nome", columnDefinition = "text")
     private String nome;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "valore")
+    @Column(name = "valore", columnDefinition = "text")
     private String valore;
     @Basic(optional = false)
     @NotNull
@@ -138,5 +137,5 @@ public class ParametroAziende implements Serializable {
     public String toString() {
         return "it.bologna.ausl.configuration.model.entities.ParametriAziende[ id=" + id + " ]";
     }
-    
+
 }
