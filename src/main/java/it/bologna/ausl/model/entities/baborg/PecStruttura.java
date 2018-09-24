@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
  * @author solidus83
  */
 @Entity
-@Table(name = "pec_struttura", catalog = "internauta", schema = "organigramma")
+@Table(name = "pec_struttura", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PecStruttura implements Serializable {
 

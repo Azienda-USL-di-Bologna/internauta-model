@@ -22,7 +22,7 @@ import javax.persistence.Table;
  * @author solidus83
  */
 @Entity
-@Table(name = "utenti_strutture", catalog = "internauta", schema = "organigramma")
+@Table(name = "utenti_strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UtenteStruttura implements Serializable {
 

@@ -27,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author solidus83
  */
 @Entity
-@Table(name = "strutture", catalog = "internauta", schema = "organigramma")
+@Table(name = "strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Struttura implements Serializable {
 

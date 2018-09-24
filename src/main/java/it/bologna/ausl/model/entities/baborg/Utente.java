@@ -32,7 +32,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author solidus83
  */
 @Entity
-@Table(name = "utenti", catalog = "internauta", schema = "organigramma")
+@Table(name = "utenti", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
 @Cacheable(false)
 public class Utente implements Serializable, UserDetails {

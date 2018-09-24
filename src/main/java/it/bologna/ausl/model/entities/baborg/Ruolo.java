@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
  * @author solidus83
  */
 @Entity
-@Table(name = "ruoli", catalog = "internauta", schema = "organigramma")
+@Table(name = "ruoli", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Ruolo implements Serializable {
 

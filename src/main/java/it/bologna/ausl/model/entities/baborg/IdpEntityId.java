@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
  * @author solidus83
  */
 @Entity
-@Table(name = "idp_entity_id", catalog = "internauta", schema = "organigramma")
+@Table(name = "idp_entity_id", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class IdpEntityId implements Serializable {
 

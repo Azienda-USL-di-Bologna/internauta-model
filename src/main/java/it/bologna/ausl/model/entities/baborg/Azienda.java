@@ -35,7 +35,7 @@ import org.hibernate.annotations.TypeDefs;
         }
 )
 @Entity
-@Table(name = "aziende", catalog = "internauta", schema = "organigramma")
+@Table(name = "aziende", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Azienda implements Serializable {

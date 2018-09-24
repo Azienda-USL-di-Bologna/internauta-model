@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
  * @author solidus83
  */
 @Entity
-@Table(name = "afferenza_struttura", catalog = "internauta", schema = "organigramma")
+@Table(name = "afferenza_struttura", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AfferenzaStruttura implements Serializable {
 
