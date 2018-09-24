@@ -32,8 +32,7 @@ public class Permesso implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 300)
-    @Column(name = "provenienza", nullable = false)
-    @NotNull
+    @Column(name = "provenienza")
     private String provenienza;
     @JoinColumn(name = "id_pec_utenti", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
