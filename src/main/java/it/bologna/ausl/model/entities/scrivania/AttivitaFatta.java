@@ -105,17 +105,19 @@ public class AttivitaFatta implements Serializable {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] tags;
     @Column(name = "oggetto_esterno")
-    private Integer oggettoEsterno;
+    private String oggettoEsterno;
     @Column(name = "tipo_oggetto_esterno", columnDefinition = "text")
     private String tipoOggettoEsterno;
     @Column(name = "oggetto_esterno_secondario")
-    private Integer oggettoEsternoSecondario;
+    private String oggettoEsternoSecondario;
     @Column(name = "tipo_oggetto_esterno_secondario", columnDefinition = "text")
     private String tipoOggettoEsternoSecondario;
     @Column(name = "dati_aggiuntivi", columnDefinition = "text")
     private String datiAggiuntivi;
     @Column(name = "classe", columnDefinition = "text")
     private String classe;
+    @Column(name = "allegati", columnDefinition = "text")
+    private String allegati;
 
     public AttivitaFatta() {
     }
@@ -270,11 +272,11 @@ public class AttivitaFatta implements Serializable {
         this.tags = tags;
     }
 
-    public Integer getOggettoEsterno() {
+    public String getOggettoEsterno() {
         return oggettoEsterno;
     }
 
-    public void setOggettoEsterno(Integer oggettoEsterno) {
+    public void setOggettoEsterno(String oggettoEsterno) {
         this.oggettoEsterno = oggettoEsterno;
     }
 
@@ -286,11 +288,11 @@ public class AttivitaFatta implements Serializable {
         this.tipoOggettoEsterno = tipoOggettoEsterno;
     }
 
-    public Integer getOggettoEsternoSecondario() {
+    public String getOggettoEsternoSecondario() {
         return oggettoEsternoSecondario;
     }
 
-    public void setOggettoEsternoSecondario(Integer oggettoEsternoSecondario) {
+    public void setOggettoEsternoSecondario(String oggettoEsternoSecondario) {
         this.oggettoEsternoSecondario = oggettoEsternoSecondario;
     }
 
@@ -316,6 +318,14 @@ public class AttivitaFatta implements Serializable {
 
     public void setClasse(String classe) {
         this.classe = classe;
+    }
+
+    public String getAllegati() {
+        return allegati;
+    }
+
+    public void setAllegati(String allegati) {
+        this.allegati = allegati;
     }
 
     @Override
