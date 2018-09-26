@@ -85,12 +85,14 @@ public class Struttura implements Serializable {
     private List<Struttura> struttureFiglieList;
     @JoinColumn(name = "id_struttura_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value="idStrutturaPadre")
     private Struttura idStrutturaPadre;
     @OneToMany(mappedBy = "idStrutturaSegreteria", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "struttureSegretariateList")
     private List<Struttura> struttureSegretariateList;
     @JoinColumn(name = "id_struttura_segreteria", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value="idStrutturaSegreteria")
     private Struttura idStrutturaSegreteria;
     @OneToMany(mappedBy = "idStrutturaDestinazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "strutturaUnificataDestinazioneList")
