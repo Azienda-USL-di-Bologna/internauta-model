@@ -38,6 +38,8 @@ public class Applicazione implements Serializable {
     @NotNull
     @Column(name = "nome", columnDefinition = "text")
     private String nome;
+    @Column(name = "url", columnDefinition = "text")
+    private String url;
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
@@ -71,6 +73,14 @@ public class Applicazione implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public List<Attivita> getAttivitaList() {
