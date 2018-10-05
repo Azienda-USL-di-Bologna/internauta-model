@@ -105,11 +105,11 @@ public class Attivita implements Serializable {
     @Column(name = "tags", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] tags;
-    @Column(name = "oggetto_esterno")
+    @Column(name = "oggetto_esterno", columnDefinition = "text")
     private String oggettoEsterno;
     @Column(name = "tipo_oggetto_esterno", columnDefinition = "text")
     private String tipoOggettoEsterno;
-    @Column(name = "oggetto_esterno_secondario")
+    @Column(name = "oggetto_esterno_secondario", columnDefinition = "text")
     private String oggettoEsternoSecondario;
     @Column(name = "tipo_oggetto_esterno_secondario", columnDefinition = "text")
     private String tipoOggettoEsternoSecondario;
@@ -119,7 +119,7 @@ public class Attivita implements Serializable {
     private String classe;
     @Column(name = "allegati", columnDefinition = "text")
     private String allegati;
-    
+
     public Attivita() {
     }
 
