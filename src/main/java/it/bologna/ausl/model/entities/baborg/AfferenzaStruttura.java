@@ -115,7 +115,7 @@ public class AfferenzaStruttura implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.AfferenzaStruttura[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.AfferenzaStruttura[ id=" + id + " ]";
     }
 
 }

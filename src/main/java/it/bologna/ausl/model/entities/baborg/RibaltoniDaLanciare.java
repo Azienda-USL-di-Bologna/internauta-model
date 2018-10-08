@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -133,7 +132,7 @@ public class RibaltoniDaLanciare implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.RibaltoniDaLanciare[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.RibaltoniDaLanciare[ id=" + id + " ]";
     }
 
 }

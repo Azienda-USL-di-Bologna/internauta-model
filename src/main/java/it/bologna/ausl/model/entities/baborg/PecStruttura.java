@@ -107,7 +107,7 @@ public class PecStruttura implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.PecStruttura[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.PecStruttura[ id=" + id + " ]";
     }
-    
+
 }

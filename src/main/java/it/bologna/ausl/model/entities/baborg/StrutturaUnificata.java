@@ -54,11 +54,10 @@ public class StrutturaUnificata implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataAccensioneAttivazione;
-    @Column(name = "data_inserimento_riga", updatable=false, insertable=false)
+    @Column(name = "data_inserimento_riga", updatable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataInserimentoRiga;
-    
 
     public StrutturaUnificata() {
     }
@@ -74,8 +73,6 @@ public class StrutturaUnificata implements Serializable {
         this.idStrutturaSorgente = idStrutturaSorgente;
     }
 
-
-
     public Integer getId() {
         return id;
     }
@@ -84,7 +81,6 @@ public class StrutturaUnificata implements Serializable {
         this.id = id;
     }
 
-
     public LocalDateTime getDataAttivazione() {
         return dataAttivazione;
     }
@@ -92,7 +88,7 @@ public class StrutturaUnificata implements Serializable {
     public void setDataAttivazione(LocalDateTime dataAttivazione) {
         this.dataAttivazione = dataAttivazione;
     }
-    
+
     public LocalDateTime getDataDisattivazione() {
         return dataDisattivazione;
     }
@@ -100,7 +96,7 @@ public class StrutturaUnificata implements Serializable {
     public void setDataDisattivazione(LocalDateTime dataDisattivazione) {
         this.dataDisattivazione = dataDisattivazione;
     }
-    
+
     public String getTipoOperazione() {
         return tipoOperazione;
     }
@@ -128,7 +124,7 @@ public class StrutturaUnificata implements Serializable {
     public LocalDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
-    
+
     public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
@@ -140,7 +136,7 @@ public class StrutturaUnificata implements Serializable {
     public void setDataAccensioneAttivazione(LocalDateTime dataAccensioneAttivazione) {
         this.dataAccensioneAttivazione = dataAccensioneAttivazione;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -163,7 +159,7 @@ public class StrutturaUnificata implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.StrutturaUnificata[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.StrutturaUnificata[ id=" + id + " ]";
     }
-    
+
 }

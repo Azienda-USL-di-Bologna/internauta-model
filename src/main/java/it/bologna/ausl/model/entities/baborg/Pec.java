@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -208,7 +207,7 @@ public class Pec implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.Pec[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.Pec[ id=" + id + " ]";
     }
 
 }

@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -125,7 +124,7 @@ public class Ruolo implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.Ruolo[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.Ruolo[ id=" + id + " ]";
     }
 
 }

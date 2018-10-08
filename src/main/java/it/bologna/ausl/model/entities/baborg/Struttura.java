@@ -85,14 +85,14 @@ public class Struttura implements Serializable {
     private List<Struttura> struttureFiglieList;
     @JoinColumn(name = "id_struttura_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value="idStrutturaPadre")
+    @JsonBackReference(value = "idStrutturaPadre")
     private Struttura idStrutturaPadre;
     @OneToMany(mappedBy = "idStrutturaSegreteria", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "struttureSegretariateList")
     private List<Struttura> struttureSegretariateList;
     @JoinColumn(name = "id_struttura_segreteria", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value="idStrutturaSegreteria")
+    @JsonBackReference(value = "idStrutturaSegreteria")
     private Struttura idStrutturaSegreteria;
     @OneToMany(mappedBy = "idStrutturaDestinazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "strutturaUnificataDestinazioneList")
@@ -132,7 +132,6 @@ public class Struttura implements Serializable {
         this.strutturaUnificataSorgenteList = strutturaUnificataSorgenteList;
         this.utenteStrutturaList = utenteStrutturaList;
     }
-
 
     public Integer getId() {
         return id;
@@ -213,8 +212,7 @@ public class Struttura implements Serializable {
     public void setUsaSegreteriaBucataPadre(Boolean usaSegreteriaBucataPadre) {
         this.usaSegreteriaBucataPadre = usaSegreteriaBucataPadre;
     }
-    
-    
+
     public Boolean getFoglia() {
         return foglia;
     }
@@ -295,10 +293,6 @@ public class Struttura implements Serializable {
         this.utenteStrutturaList = utenteStrutturaList;
     }
 
-  
-
-    
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -321,7 +315,7 @@ public class Struttura implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.Struttura[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.Struttura[ id=" + id + " ]";
     }
-    
+
 }

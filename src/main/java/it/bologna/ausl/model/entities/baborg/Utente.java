@@ -108,7 +108,7 @@ public class Utente implements Serializable, UserDetails {
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
-    
+
     @Transient
     private List<Ruolo> ruoli;
 
@@ -142,8 +142,6 @@ public class Utente implements Serializable, UserDetails {
         this.pecUtenteList = pecUtenteList;
         this.utenteStrutturaList = utenteStrutturaList;
     }
-
-
 
     public Integer getId() {
         return id;
@@ -313,7 +311,7 @@ public class Utente implements Serializable, UserDetails {
     public void setUtenteStrutturaList(List<UtenteStruttura> utenteStrutturaList) {
         this.utenteStrutturaList = utenteStrutturaList;
     }
-    
+
     public List<Ruolo> getRuoli() {
         return this.ruoli;
     }
@@ -321,7 +319,7 @@ public class Utente implements Serializable, UserDetails {
     public void setRuoli(List<Ruolo> ruoli) {
         this.ruoli = ruoli;
     }
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("gdm"));
@@ -379,7 +377,7 @@ public class Utente implements Serializable, UserDetails {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.Utente[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.Utente[ id=" + id + " ]";
     }
-    
+
 }

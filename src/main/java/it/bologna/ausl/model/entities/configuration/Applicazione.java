@@ -130,7 +130,7 @@ public class Applicazione implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.configuration.model.entities.Applicazioni[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.configuration.Applicazioni[ id=" + id + " ]";
     }
 
 }

@@ -20,7 +20,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -350,7 +349,7 @@ public class AttivitaFatta implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.scrivania.model.entities.AttivitaFatte[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.scrivania.AttivitaFatte[ id=" + id + " ]";
     }
 
 }

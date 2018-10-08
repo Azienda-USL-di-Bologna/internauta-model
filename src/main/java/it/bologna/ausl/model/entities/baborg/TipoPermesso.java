@@ -135,7 +135,7 @@ public class TipoPermesso implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.TipoPermesso[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.TipoPermesso[ id=" + id + " ]";
     }
-    
+
 }

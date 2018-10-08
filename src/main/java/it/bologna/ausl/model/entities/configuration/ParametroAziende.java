@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -135,7 +134,7 @@ public class ParametroAziende implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.configuration.model.entities.ParametriAziende[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.configuration.ParametriAziende[ id=" + id + " ]";
     }
 
 }

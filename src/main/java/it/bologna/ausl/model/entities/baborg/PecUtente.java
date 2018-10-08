@@ -103,7 +103,7 @@ public class PecUtente implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.PecUtente[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.PecUtente[ id=" + id + " ]";
     }
-    
+
 }

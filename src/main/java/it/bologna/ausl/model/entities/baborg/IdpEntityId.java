@@ -79,7 +79,7 @@ public class IdpEntityId implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.IdpEntityId[ entityId=" + entityId + " ]";
+        return "it.bologna.ausl.model.entities.baborg.IdpEntityId[ entityId=" + entityId + " ]";
     }
-    
+
 }

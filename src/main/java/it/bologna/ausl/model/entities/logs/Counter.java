@@ -1,5 +1,9 @@
-package it.bologna.ausl.model.entities.configuration;
+package it.bologna.ausl.model.entities.logs;
 
+/**
+ *
+ * @author spritz
+ */
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -11,15 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- *
- * @author spritz
- */
 @Entity
-@Table(name = "configurazioni_ambiente", catalog = "internauta", schema = "configurazione")
+@Table(name = "counter", catalog = "internauta", schema = "logs")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-public class ConfigurazioneAmbiente implements Serializable {
+public class Counter implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,17 +27,13 @@ public class ConfigurazioneAmbiente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "nome", columnDefinition = "text")
-    private String nome;
-    @Column(name = "valore", columnDefinition = "text")
-    private String valore;
-    @Column(name = "attiva")
-    private Boolean attiva;
+    @Column(name = "oggetto", columnDefinition = "text")
+    private String oggetto;
 
-    public ConfigurazioneAmbiente() {
+    public Counter() {
     }
 
-    public ConfigurazioneAmbiente(Integer id) {
+    public Counter(Integer id) {
         this.id = id;
     }
 
@@ -49,28 +45,12 @@ public class ConfigurazioneAmbiente implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getOggetto() {
+        return oggetto;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getValore() {
-        return valore;
-    }
-
-    public void setValore(String valore) {
-        this.valore = valore;
-    }
-
-    public Boolean getAttiva() {
-        return attiva;
-    }
-
-    public void setAttiva(Boolean attiva) {
-        this.attiva = attiva;
+    public void setOggetto(String oggetto) {
+        this.oggetto = oggetto;
     }
 
     @Override
@@ -83,10 +63,10 @@ public class ConfigurazioneAmbiente implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ConfigurazioneAmbiente)) {
+        if (!(object instanceof Counter)) {
             return false;
         }
-        ConfigurazioneAmbiente other = (ConfigurazioneAmbiente) object;
+        Counter other = (Counter) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -95,7 +75,6 @@ public class ConfigurazioneAmbiente implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.configuration.ConfigurazioniAmbiente[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.logs.Counter[ id=" + id + " ]";
     }
-
 }

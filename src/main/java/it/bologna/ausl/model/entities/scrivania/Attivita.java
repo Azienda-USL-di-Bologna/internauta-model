@@ -376,7 +376,7 @@ public class Attivita implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.scrivania.model.entities.Attivita[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.scrivania.Attivita[ id=" + id + " ]";
     }
 
 }

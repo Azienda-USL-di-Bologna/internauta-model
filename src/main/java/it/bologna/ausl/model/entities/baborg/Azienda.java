@@ -313,7 +313,7 @@ public class Azienda implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.Azienda[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.Azienda[ id=" + id + " ]";
     }
 
 }

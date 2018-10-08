@@ -114,7 +114,7 @@ public class UtenteStruttura implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.baborg.model.entities.UtenteStruttura[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.UtenteStruttura[ id=" + id + " ]";
     }
-    
+
 }
