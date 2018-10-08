@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -38,8 +37,10 @@ public class Applicazione implements Serializable {
     @NotNull
     @Column(name = "nome", columnDefinition = "text")
     private String nome;
-    @Column(name = "url", columnDefinition = "text")
-    private String url;
+    @Column(name = "base_url", columnDefinition = "text")
+    private String baseUrl;
+    @Column(name = "index_page", columnDefinition = "text")
+    private String indexPage;
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
@@ -75,12 +76,20 @@ public class Applicazione implements Serializable {
         this.nome = nome;
     }
 
-    public String getUrl() {
-        return url;
+    public String getBaseUrl() {
+        return baseUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    public String getIndexPage() {
+        return indexPage;
+    }
+
+    public void setIndexPage(String indexPage) {
+        this.indexPage = indexPage;
     }
 
     public List<Attivita> getAttivitaList() {

@@ -21,7 +21,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -42,6 +41,32 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Attivita implements Serializable {
+
+    public enum TipoAttivita {
+        ATTIVITA("attivita"),
+        NOTIFICA("notifica");
+
+        private final String key;
+
+        TipoAttivita(String key) {
+            this.key = key;
+        }
+
+        public static Attivita.TipoAttivita fromString(String key) {
+            return key == null
+                    ? null
+                    : Attivita.TipoAttivita.valueOf(key.toUpperCase());
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        @Override
+        public String toString() {
+            return getKey();
+        }
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
