@@ -41,6 +41,32 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 public class AttivitaFatta implements Serializable {
 
+    public enum TipoAttivitaFatta {
+        ATTIVITA("attivita"),
+        NOTIFICA("notifica");
+
+        private final String key;
+
+        TipoAttivitaFatta(String key) {
+            this.key = key;
+        }
+
+        public static AttivitaFatta.TipoAttivitaFatta fromString(String key) {
+            return key == null
+                    ? null
+                    : AttivitaFatta.TipoAttivitaFatta.valueOf(key.toUpperCase());
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        @Override
+        public String toString() {
+            return getKey();
+        }
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
