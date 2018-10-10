@@ -67,6 +67,32 @@ public class Attivita implements Serializable {
             return getKey();
         }
     }
+    
+    public enum IdApplicazione{
+        PICO("pico"),
+        DETE("dete"),
+        DELI("deli");
+        
+        private final String key;
+        
+        IdApplicazione(String key) {
+            this.key = key;
+        }
+        public static Attivita.IdApplicazione fromString(String key) {
+            return key == null
+                    ? null
+                    : Attivita.IdApplicazione.valueOf(key.toUpperCase());
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        @Override
+        public String toString() {
+            return getKey();
+        }
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
