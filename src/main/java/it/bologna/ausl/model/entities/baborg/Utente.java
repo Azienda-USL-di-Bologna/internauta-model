@@ -48,21 +48,6 @@ public class Utente implements Serializable, UserDetails {
     @Size(min = 1, max = 250)
     @Column(name = "username")
     private String username;
-    @Size(max = 100)
-    @Column(name = "matricola")
-    private String matricola;
-    @Size(max = 100)
-    @Column(name = "nome")
-    private String nome;
-    @Size(max = 100)
-    @Column(name = "cognome")
-    private String cognome;
-    @Size(max = 16)
-    @Column(name = "codice_fiscale")
-    private String codiceFiscale;
-    @Size(max = 200)
-    @Column(name = "descrizione")
-    private String descrizione;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 400)
     @Column(name = "email")
@@ -94,8 +79,6 @@ public class Utente implements Serializable, UserDetails {
     @NotNull
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
-    @Column(name = "id_ruolo_aziendale")
-    private Integer idRuoloAziendale;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
@@ -119,14 +102,9 @@ public class Utente implements Serializable, UserDetails {
         this.id = id;
     }
 
-    public Utente(Integer id, String username, String matricola, String nome, String cognome, String codiceFiscale, String descrizione, String email, String idInquadramento, String telefono, String fax, Boolean omonimia, String passwordHash, Integer dominio, Boolean attivo, Integer bitRuoli, Integer idRuoloAziendale, Azienda idAzienda, Persona idPersona, List<PecUtente> pecUtenteList, List<UtenteStruttura> utenteStrutturaList) {
+    public Utente(Integer id, String username, String email, String idInquadramento, String telefono, String fax, Boolean omonimia, String passwordHash, Integer dominio, Boolean attivo, Integer bitRuoli, Azienda idAzienda, Persona idPersona, List<PecUtente> pecUtenteList, List<UtenteStruttura> utenteStrutturaList) {
         this.id = id;
         this.username = username;
-        this.matricola = matricola;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.codiceFiscale = codiceFiscale;
-        this.descrizione = descrizione;
         this.email = email;
         this.idInquadramento = idInquadramento;
         this.telefono = telefono;
@@ -136,7 +114,6 @@ public class Utente implements Serializable, UserDetails {
         this.dominio = dominio;
         this.attivo = attivo;
         this.bitRuoli = bitRuoli;
-        this.idRuoloAziendale = idRuoloAziendale;
         this.idAzienda = idAzienda;
         this.idPersona = idPersona;
         this.pecUtenteList = pecUtenteList;
@@ -158,46 +135,6 @@ public class Utente implements Serializable, UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getMatricola() {
-        return matricola;
-    }
-
-    public void setMatricola(String matricola) {
-        this.matricola = matricola;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public String getCodiceFiscale() {
-        return codiceFiscale;
-    }
-
-    public void setCodiceFiscale(String codiceFiscale) {
-        this.codiceFiscale = codiceFiscale;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
     }
 
     public String getEmail() {
@@ -270,14 +207,6 @@ public class Utente implements Serializable, UserDetails {
 
     public void setBitRuoli(Integer bitRuoli) {
         this.bitRuoli = bitRuoli;
-    }
-
-    public Integer getIdRuoloAziendale() {
-        return idRuoloAziendale;
-    }
-
-    public void setIdRuoloAziendale(Integer idRuoloAziendale) {
-        this.idRuoloAziendale = idRuoloAziendale;
     }
 
     public Azienda getIdAzienda() {
