@@ -103,6 +103,10 @@ public class Struttura implements Serializable {
     @OneToMany(mappedBy = "idStruttura", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
+    @JoinColumn(name = "id_struttura_replicata", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idStrutturaReplicata")
+    private Struttura idStrutturaReplicata;
 
     public Struttura() {
     }
@@ -110,6 +114,7 @@ public class Struttura implements Serializable {
     public Struttura(Integer id) {
         this.id = id;
     }
+
 
     public Struttura(Integer id, Integer codice, String nome, String codiceDislocazione, String dislocazione, LocalDateTime dataAttivazione, LocalDateTime dataCessazione, Boolean attiva, Boolean spettrale, Boolean usaSegreteriaBucataPadre, List<PecStruttura> pecStrutturaList, Azienda idAzienda, List<Struttura> struttureFiglieList, Struttura idStrutturaPadre, List<Struttura> struttureSegretariateList, Struttura idStrutturaSegreteria, List<StrutturaUnificata> strutturaUnificataDestinazioneList, List<StrutturaUnificata> strutturaUnificataSorgenteList, List<UtenteStruttura> utenteStrutturaList) {
         this.id = id;
@@ -291,6 +296,14 @@ public class Struttura implements Serializable {
 
     public void setUtenteStrutturaList(List<UtenteStruttura> utenteStrutturaList) {
         this.utenteStrutturaList = utenteStrutturaList;
+    }
+    
+    public Struttura getIdStrutturaReplicata() {
+        return idStrutturaReplicata;
+    }
+
+    public void setIdStrutturaReplicata(Struttura idStrutturaReplicata) {
+        this.idStrutturaReplicata = idStrutturaReplicata;
     }
 
     @Override

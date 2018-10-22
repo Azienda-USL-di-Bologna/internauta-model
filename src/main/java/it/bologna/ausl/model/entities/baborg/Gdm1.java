@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -14,14 +9,15 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  *
@@ -32,7 +28,34 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Gdm1 implements Serializable {
+    
+    public enum UtenteRole implements GrantedAuthority{
+        ROLE_ADMIN(true,true),
+        ROLE_USER(true,true);
 
+        private boolean canAccessBackOffice;
+        private boolean canAccessFrontOffice;
+
+
+        UtenteRole(boolean canAccessBackOffice, boolean canAccessFrontOffice) {
+            this.canAccessBackOffice = canAccessBackOffice;
+            this.canAccessFrontOffice = canAccessFrontOffice;
+        }
+
+        @Override
+        public String getAuthority() {
+            return this.name();
+        }
+
+        public boolean isCanAccessBackOffice() {
+            return canAccessBackOffice;
+        }
+
+        public boolean isCanAccessFrontOffice() {
+            return canAccessFrontOffice;
+        }
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -43,6 +66,10 @@ public class Gdm1 implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
+    
+//    @Column(name = "UTENTE_ROLE", nullable = false, length = 2000)
+//    @Enumerated(EnumType.STRING)
+//    private UtenteRole utenteRole;
 
     public String getNecessario() {
         return necessario;
