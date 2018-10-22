@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
+import it.bologna.ausl.model.entities.scrivania.Menu;
 import it.nextsw.common.types.GenericArrayUserType;
 import java.io.Serializable;
 import java.util.List;
@@ -108,6 +109,9 @@ public class Azienda implements Serializable {
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "menuList")
+    private List<Menu> menuList;
 
     public Azienda() {
     }
@@ -289,6 +293,14 @@ public class Azienda implements Serializable {
 
     public void setAttivitaFattaList(List<AttivitaFatta> attivitaFattaList) {
         this.attivitaFattaList = attivitaFattaList;
+    }
+
+    public List<Menu> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
     }
 
     @Override
