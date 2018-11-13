@@ -69,7 +69,7 @@ public class Attivita implements Serializable {
     }
     
     public enum IdApplicazione{
-        PICO("pico"),
+        PICO("procton"),
         DETE("dete"),
         DELI("deli");
         
