@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.bologna.ausl.model.entities.scrivania;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -24,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
@@ -66,7 +63,10 @@ public class Menu implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "open_command")
     private String openCommand;
-
+    @Column(name = "permessi_necessari", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] permessiNecessari;    
+    
     public Menu() {
     }
 
@@ -104,7 +104,30 @@ public class Menu implements Serializable {
     public void setIdApplicazione(Applicazione idApplicazione) {
         this.idApplicazione = idApplicazione;
     }
+    
+    public String getDescrizione() {
+        return descrizione;
+    }
 
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public String getOpenCommand() {
+        return openCommand;
+    }
+
+    public void setOpenCommand(String openCommand) {
+        this.openCommand = openCommand;
+    }
+
+    public String[] getPermessiNecessari() {
+        return permessiNecessari;
+    }
+
+    public void setPermessiNecessari(String[] permessiNecessari) {
+        this.permessiNecessari = permessiNecessari;
+    }
 
     @Override
     public int hashCode() {
@@ -130,21 +153,4 @@ public class Menu implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.scrivania.Menu[ id=" + id + " ]";
     }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-
-    public String getOpenCommand() {
-        return openCommand;
-    }
-
-    public void setOpenCommand(String openCommand) {
-        this.openCommand = openCommand;
-    }
-    
 }
