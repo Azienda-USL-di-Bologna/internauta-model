@@ -63,9 +63,9 @@ public class Menu implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "open_command")
     private String openCommand;
-    @Column(name = "permessi_necessari", columnDefinition = "text[]")
+    @Column(name = "permessi_sufficienti", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
-    private String[] permessiNecessari;    
+    private String[] permessiSufficienti;    
     
     public Menu() {
     }
@@ -121,12 +121,12 @@ public class Menu implements Serializable {
         this.openCommand = openCommand;
     }
 
-    public String[] getPermessiNecessari() {
-        return permessiNecessari;
+    public String[] getPermessiSufficienti() {
+        return permessiSufficienti;
     }
 
-    public void setPermessiNecessari(String[] permessiNecessari) {
-        this.permessiNecessari = permessiNecessari;
+    public void setPermessiSufficienti(String[] permessiSufficienti) {
+        this.permessiSufficienti = permessiSufficienti;
     }
 
     @Override
