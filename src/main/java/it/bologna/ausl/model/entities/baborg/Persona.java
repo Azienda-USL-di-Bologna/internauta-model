@@ -2,6 +2,11 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryTransient;
+import com.querydsl.core.annotations.QueryType;
+import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.blackbox.types.PermessoStoredProcedure;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
@@ -17,6 +22,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -68,6 +74,9 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private List<PermessoEntitaStoredProcedure> permessi;
 
     public Persona() {
     }
@@ -165,6 +174,14 @@ public class Persona implements Serializable {
 
     public void setAttivitaFattaList(List<AttivitaFatta> attivitaFattaList) {
         this.attivitaFattaList = attivitaFattaList;
+    }
+
+    public List<PermessoEntitaStoredProcedure> getPermessi() {
+        return permessi;
+    }
+
+    public void setPermessi(List<PermessoEntitaStoredProcedure> permessi) {
+        this.permessi = permessi;
     }
 
     @Override
