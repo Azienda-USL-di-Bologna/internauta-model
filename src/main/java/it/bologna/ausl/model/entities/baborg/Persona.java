@@ -2,6 +2,9 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryTransient;
+import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.blackbox.types.PermessoStoredProcedure;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
@@ -72,6 +75,7 @@ public class Persona implements Serializable {
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
     @Transient
+    @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
 
     public Persona() {
