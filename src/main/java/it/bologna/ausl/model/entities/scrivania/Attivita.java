@@ -170,8 +170,6 @@ public class Attivita implements Serializable {
     private String classe;
     @Column(name = "allegati", columnDefinition = "text")
     private String allegati;
-    @Column(name = "gia_aperta", columnDefinition = "boolean")
-    private Boolean giaAperta;
 
     public Attivita() {
     }
@@ -380,14 +378,6 @@ public class Attivita implements Serializable {
 
     public void setAllegati(String allegati) {
         this.allegati = allegati;
-    }
-
-    public Boolean getGiaAperta() {
-        return giaAperta;
-    }
-
-    public void setGiaAperta(Boolean giaAperta) {
-        this.giaAperta = giaAperta;
     }
 
     @Override
