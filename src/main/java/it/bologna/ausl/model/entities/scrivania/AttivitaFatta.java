@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -170,6 +171,9 @@ public class AttivitaFatta implements Serializable {
     @Column(name = "allegati", columnDefinition = "text")
     private String allegati;
 
+    @Transient
+    private String compiledUrls;
+        
     public AttivitaFatta() {
     }
 
@@ -377,6 +381,14 @@ public class AttivitaFatta implements Serializable {
 
     public void setAllegati(String allegati) {
         this.allegati = allegati;
+    }
+
+    public String getCompiledUrls() {
+        return compiledUrls;
+    }
+
+    public void setCompiledUrls(String compiledUrls) {
+        this.compiledUrls = compiledUrls;
     }
 
     @Override

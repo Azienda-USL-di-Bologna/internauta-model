@@ -16,11 +16,14 @@ public class AziendaParametriJson implements Serializable {
     private String loginDBFieldBaborg;
     private String shalboApiUrl;
     private MasterChefParmas masterchefParams;
+    private String entityId;
+    private String loginPath;
+    private String crossLoginUrlTemplate;
 
     public AziendaParametriJson() {
     }
 
-    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, String loginSSOField, String loginDBField, String loginDBFieldBaborg, String shalboApiUrl, MasterChefParmas masterchefParams) {
+    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, String loginSSOField, String loginDBField, String loginDBFieldBaborg, String shalboApiUrl, MasterChefParmas masterchefParams, String entityId, String loginPath, String crossLoginUrlTemplate) {
         this.babelSuiteBdsToolsUrl = babelSuiteBdsToolsUrl;
         this.babelSuiteWebApiUrl = babelSuiteWebApiUrl;
         this.loginSSOField = loginSSOField;
@@ -28,7 +31,11 @@ public class AziendaParametriJson implements Serializable {
         this.loginDBFieldBaborg = loginDBFieldBaborg;
         this.shalboApiUrl = shalboApiUrl;
         this.masterchefParams = masterchefParams;
+        this.entityId = entityId;
+        this.loginPath = loginPath;
+        this.crossLoginUrlTemplate = crossLoginUrlTemplate;
     }
+
 
     public String getBabelSuiteBdsToolsUrl() {
         return babelSuiteBdsToolsUrl;
@@ -84,6 +91,30 @@ public class AziendaParametriJson implements Serializable {
 
     public void setMasterchefParams(MasterChefParmas masterchefParams) {
         this.masterchefParams = masterchefParams;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
+    }
+
+    public String getLoginPath() {
+        return loginPath;
+    }
+
+    public void setLoginPath(String loginPath) {
+        this.loginPath = loginPath;
+    }
+
+    public String getCrossLoginUrlTemplate() {
+        return crossLoginUrlTemplate;
+    }
+
+    public void setCrossLoginUrlTemplate(String crossLoginUrlTemplate) {
+        this.crossLoginUrlTemplate = crossLoginUrlTemplate;
     }
 
     public static AziendaParametriJson parse(ObjectMapper objectMapper, String src) throws IOException {

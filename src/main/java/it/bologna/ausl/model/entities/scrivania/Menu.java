@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
@@ -67,6 +68,9 @@ public class Menu implements Serializable {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] permessiSufficienti;    
     
+    @Transient
+    private String compiledUrls;
+        
     public Menu() {
     }
 
@@ -127,6 +131,14 @@ public class Menu implements Serializable {
 
     public void setPermessiSufficienti(String[] permessiSufficienti) {
         this.permessiSufficienti = permessiSufficienti;
+    }
+
+    public String getCompiledUrls() {
+        return compiledUrls;
+    }
+
+    public void setCompiledUrls(String compiledUrls) {
+        this.compiledUrls = compiledUrls;
     }
 
     @Override
