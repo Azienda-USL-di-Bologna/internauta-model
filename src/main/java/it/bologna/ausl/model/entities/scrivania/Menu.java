@@ -69,7 +69,7 @@ public class Menu implements Serializable {
     private String[] permessiSufficienti;    
     
     @Transient
-    private String compiledUrls;
+    private String compiledUrl;
         
     public Menu() {
     }
@@ -133,12 +133,12 @@ public class Menu implements Serializable {
         this.permessiSufficienti = permessiSufficienti;
     }
 
-    public String getCompiledUrls() {
-        return compiledUrls;
+    public String getCompiledUrl() {
+        return compiledUrl;
     }
 
-    public void setCompiledUrls(String compiledUrls) {
-        this.compiledUrls = compiledUrls;
+    public void setCompiledUrl(String compiledUrls) {
+        this.compiledUrl = compiledUrls;
     }
 
     @Override

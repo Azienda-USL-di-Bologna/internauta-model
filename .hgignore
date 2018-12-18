@@ -1,2 +1,4 @@
 syntax: glob
 target
+nbactions.xml
+nbactions.tmp
