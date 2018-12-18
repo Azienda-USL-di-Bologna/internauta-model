@@ -63,7 +63,7 @@ public class Pec implements Serializable {
     @JsonBackReference(value = "pecStrutturaList")
     private List<PecStruttura> pecStrutturaList;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
     @JoinColumn(name = "id_pec_provider", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
