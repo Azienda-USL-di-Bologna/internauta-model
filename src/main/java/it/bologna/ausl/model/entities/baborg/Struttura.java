@@ -3,6 +3,9 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryType;
+import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -107,6 +111,9 @@ public class Struttura implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idStrutturaReplicata")
     private Struttura idStrutturaReplicata;
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private List<PermessoEntitaStoredProcedure> permessi;
 
     public Struttura() {
     }
@@ -304,6 +311,14 @@ public class Struttura implements Serializable {
 
     public void setIdStrutturaReplicata(Struttura idStrutturaReplicata) {
         this.idStrutturaReplicata = idStrutturaReplicata;
+    }
+    
+    public List<PermessoEntitaStoredProcedure> getPermessi() {
+        return permessi;
+    }
+
+    public void setPermessi(List<PermessoEntitaStoredProcedure> permessi) {
+        this.permessi = permessi;
     }
 
     @Override

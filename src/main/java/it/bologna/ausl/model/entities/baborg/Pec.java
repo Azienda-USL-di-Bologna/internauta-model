@@ -2,6 +2,9 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryType;
+import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -16,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -71,6 +75,12 @@ public class Pec implements Serializable {
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JsonBackReference(value = "pecUtenteList")
     private List<PecUtente> pecUtenteList;
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private List<PermessoEntitaStoredProcedure> permessi;
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private List<Persona> gestori;
 
     public Pec() {
     }
@@ -183,6 +193,22 @@ public class Pec implements Serializable {
 
     public void setPecUtenteList(List<PecUtente> pecUtenteList) {
         this.pecUtenteList = pecUtenteList;
+    }
+
+    public List<PermessoEntitaStoredProcedure> getPermessi() {
+        return permessi;
+    }
+
+    public void setPermessi(List<PermessoEntitaStoredProcedure> permessi) {
+        this.permessi = permessi;
+    }
+
+    public List<Persona> getGestori() {
+        return gestori;
+    }
+
+    public void setGestori(List<Persona> gestori) {
+        this.gestori = gestori;
     }
 
     @Override
