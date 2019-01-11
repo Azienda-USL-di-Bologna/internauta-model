@@ -75,6 +75,10 @@ public class Pec implements Serializable {
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JsonBackReference(value = "pecUtenteList")
     private List<PecUtente> pecUtenteList;
+    @Column(name = "massiva")
+    private Boolean massiva;
+    @Column(name = "chiusa")
+    private Boolean chiusa;
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
@@ -195,6 +199,22 @@ public class Pec implements Serializable {
         this.pecUtenteList = pecUtenteList;
     }
 
+    public Boolean getMassiva() {
+        return massiva;
+    }
+
+    public void setMassiva(Boolean massiva) {
+        this.massiva = massiva;
+    }
+
+    public Boolean getChiusa() {
+        return chiusa;
+    }
+
+    public void setChiusa(Boolean chiusa) {
+        this.chiusa = chiusa;
+    }
+    
     public List<PermessoEntitaStoredProcedure> getPermessi() {
         return permessi;
     }
