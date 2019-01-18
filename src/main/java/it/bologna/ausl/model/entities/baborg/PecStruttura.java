@@ -1,7 +1,9 @@
 package it.bologna.ausl.model.entities.baborg;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -40,6 +43,10 @@ public class PecStruttura implements Serializable {
     @JoinColumn(name = "id_struttura", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Struttura idStruttura;
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "pecAziendaList")
+    private List<PecAzienda> pecAziendaList;
+
 
     public PecStruttura() {
     }
@@ -83,6 +90,14 @@ public class PecStruttura implements Serializable {
 
     public void setIdStruttura(Struttura idStruttura) {
         this.idStruttura = idStruttura;
+    }
+    
+    public List<PecAzienda> getPecAziendaList() {
+        return pecAziendaList;
+    }
+
+    public void setPecAziendaList(List<PecAzienda> pecAziendaList) {
+        this.pecAziendaList = pecAziendaList;
     }
 
     @Override
