@@ -94,6 +94,9 @@ public class Utente implements Serializable, UserDetails {
 
     @Transient
     private List<Ruolo> ruoli;
+    
+    @Transient
+    private Utente utenteReale;
 
     public Utente() {
     }
@@ -247,6 +250,14 @@ public class Utente implements Serializable, UserDetails {
 
     public void setRuoli(List<Ruolo> ruoli) {
         this.ruoli = ruoli;
+    }
+
+    public Utente getUtenteReale() {
+        return utenteReale;
+    }
+
+    public void setUtenteReale(Utente utenteReale) {
+        this.utenteReale = utenteReale;
     }
 
     @Override

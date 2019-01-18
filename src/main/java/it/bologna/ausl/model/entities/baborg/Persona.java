@@ -3,10 +3,9 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
-import com.querydsl.core.annotations.QueryTransient;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
-import it.bologna.ausl.blackbox.types.PermessoStoredProcedure;
+import it.bologna.ausl.model.entities.configuration.ImpostazioniApplicazioni;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
@@ -36,44 +35,59 @@ import javax.validation.constraints.NotNull;
 public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "nome", columnDefinition = "text")
     private String nome;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "cognome", columnDefinition = "text")
     private String cognome;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "codice_fiscale", columnDefinition = "text")
     private String codiceFiscale;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "attiva")
     private Boolean attiva;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
+    
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
     private List<Utente> utenteList;
+    
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
+    
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
+    
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "impostazioniApplicazioniList")
+    private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
+    
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
@@ -174,6 +188,14 @@ public class Persona implements Serializable {
 
     public void setAttivitaFattaList(List<AttivitaFatta> attivitaFattaList) {
         this.attivitaFattaList = attivitaFattaList;
+    }
+
+    public List<ImpostazioniApplicazioni> getImpostazioniApplicazioniList() {
+        return impostazioniApplicazioniList;
+    }
+
+    public void setImpostazioniApplicazioniList(List<ImpostazioniApplicazioni> impostazioniApplicazioniList) {
+        this.impostazioniApplicazioniList = impostazioniApplicazioniList;
     }
 
     public List<PermessoEntitaStoredProcedure> getPermessi() {
