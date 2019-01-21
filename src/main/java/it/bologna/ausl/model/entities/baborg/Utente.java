@@ -102,7 +102,7 @@ public class Utente implements Serializable, UserDetails {
     private Utente utenteReale;
     @Transient
     @QueryType(PropertyType.SIMPLE)
-    private List<PermessoEntitaStoredProcedure> permessi;
+    private List<PermessoEntitaStoredProcedure> permessiDiFlusso;
 
     public Utente() {
     }
@@ -266,12 +266,12 @@ public class Utente implements Serializable, UserDetails {
         this.utenteReale = utenteReale;
     }
 
-    public List<PermessoEntitaStoredProcedure> getPermessi() {
-        return permessi;
+    public List<PermessoEntitaStoredProcedure> getPermessiDiFlusso() {
+        return permessiDiFlusso;
     }
 
-    public void setPermessi(List<PermessoEntitaStoredProcedure> permessi) {
-        this.permessi = permessi;
+    public void setPermessiDiFlusso(List<PermessoEntitaStoredProcedure> permessiDiFlusso) {
+        this.permessiDiFlusso = permessiDiFlusso;
     }
 
     @Override
