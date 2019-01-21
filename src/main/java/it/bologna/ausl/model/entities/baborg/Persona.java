@@ -91,6 +91,10 @@ public class Persona implements Serializable {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
+    
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private String applicazione;
 
     public Persona() {
     }
@@ -204,6 +208,14 @@ public class Persona implements Serializable {
 
     public void setPermessi(List<PermessoEntitaStoredProcedure> permessi) {
         this.permessi = permessi;
+    }
+
+    public String getApplicazione() {
+        return applicazione;
+    }
+
+    public void setApplicazione(String applicazione) {
+        this.applicazione = applicazione;
     }
 
     @Override
