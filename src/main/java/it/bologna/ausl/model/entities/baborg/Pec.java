@@ -67,14 +67,21 @@ public class Pec implements Serializable {
     @JsonBackReference(value = "pecStrutturaList")
     private List<PecStruttura> pecStrutturaList;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private Azienda idAzienda;
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Azienda idAzienda; // da eliminare, trasformato in lista
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPec", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "pecAziendaList")
+    private List<PecAzienda> pecAziendaList;
     @JoinColumn(name = "id_pec_provider", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private PecProvider idPecProvider;
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JsonBackReference(value = "pecUtenteList")
     private List<PecUtente> pecUtenteList;
+    @Column(name = "massiva")
+    private Boolean massiva;
+    @Column(name = "chiusa")
+    private Boolean chiusa;
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
@@ -179,6 +186,14 @@ public class Pec implements Serializable {
         this.idAzienda = idAzienda;
     }
 
+    public List<PecAzienda> getPecAziendaList() {
+        return pecAziendaList;
+    }
+
+    public void setPecAziendaList(List<PecAzienda> pecAziendaList) {
+        this.pecAziendaList = pecAziendaList;
+    }
+    
     public PecProvider getIdPecProvider() {
         return idPecProvider;
     }
@@ -195,6 +210,22 @@ public class Pec implements Serializable {
         this.pecUtenteList = pecUtenteList;
     }
 
+    public Boolean getMassiva() {
+        return massiva;
+    }
+
+    public void setMassiva(Boolean massiva) {
+        this.massiva = massiva;
+    }
+
+    public Boolean getChiusa() {
+        return chiusa;
+    }
+
+    public void setChiusa(Boolean chiusa) {
+        this.chiusa = chiusa;
+    }
+    
     public List<PermessoEntitaStoredProcedure> getPermessi() {
         return permessi;
     }

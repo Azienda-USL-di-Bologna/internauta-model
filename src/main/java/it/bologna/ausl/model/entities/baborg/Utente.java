@@ -3,6 +3,9 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryType;
+import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -94,6 +97,12 @@ public class Utente implements Serializable, UserDetails {
 
     @Transient
     private List<Ruolo> ruoli;
+    
+    @Transient
+    private Utente utenteReale;
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private List<PermessoEntitaStoredProcedure> permessiDiFlusso;
 
     public Utente() {
     }
@@ -247,6 +256,22 @@ public class Utente implements Serializable, UserDetails {
 
     public void setRuoli(List<Ruolo> ruoli) {
         this.ruoli = ruoli;
+    }
+
+    public Utente getUtenteReale() {
+        return utenteReale;
+    }
+
+    public void setUtenteReale(Utente utenteReale) {
+        this.utenteReale = utenteReale;
+    }
+
+    public List<PermessoEntitaStoredProcedure> getPermessiDiFlusso() {
+        return permessiDiFlusso;
+    }
+
+    public void setPermessiDiFlusso(List<PermessoEntitaStoredProcedure> permessiDiFlusso) {
+        this.permessiDiFlusso = permessiDiFlusso;
     }
 
     @Override
