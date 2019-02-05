@@ -105,7 +105,7 @@ public class Utente implements Serializable, UserDetails {
      * nel caso dei ruoli interaziendali la chiave è 'interaziendali'
      */
     @Transient
-    private Map<String, List<Ruolo.CodiciRuolo>> ruoliUtentiPersona;
+    private Map<String, List<String>> ruoliUtentiPersona;
 
     @Transient
     private Utente utenteReale;
@@ -267,11 +267,11 @@ public class Utente implements Serializable, UserDetails {
         this.ruoli = ruoli;
     }
     
-    public Map<String, List<Ruolo.CodiciRuolo>> getRuoliUtentiPersona() {
+    public Map<String, List<String>> getRuoliUtentiPersona() {
         return ruoliUtentiPersona;
     }
 
-    public void setRuoliUtentiPersona(Map<String, List<Ruolo.CodiciRuolo>> ruoliUtentiPersona) {
+    public void setRuoliUtentiPersona(Map<String, List<String>> ruoliUtentiPersona) {
         this.ruoliUtentiPersona = ruoliUtentiPersona;
     }
     
