@@ -5,8 +5,10 @@
  */
 package it.bologna.ausl.model.entities.baborg;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -23,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -39,11 +42,10 @@ public class PecAzienda implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "data_inserimento_riga")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInserimentoRiga;
+    @Column(name = "data_inserimento_riga", updatable = false, insertable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataInserimentoRiga;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Azienda idAzienda;
@@ -58,11 +60,6 @@ public class PecAzienda implements Serializable {
         this.id = id;
     }
 
-    public PecAzienda(Integer id, Date dataInserimentoRiga) {
-        this.id = id;
-        this.dataInserimentoRiga = dataInserimentoRiga;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -71,13 +68,14 @@ public class PecAzienda implements Serializable {
         this.id = id;
     }
 
-    public Date getDataInserimentoRiga() {
+    public LocalDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(Date dataInserimentoRiga) {
+    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
+
 
     public Azienda getIdAzienda() {
         return idAzienda;

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -98,6 +99,14 @@ public class Utente implements Serializable, UserDetails {
     @Transient
     private List<Ruolo> ruoli;
     
+    /**
+     * tutti i ruoli di tutte le aziende della persona dell'utente, divisi per interaziendali e aziendali.
+     * mappa in cui la chiave è il codiceAzienda e il valore la lista dei codici ruolo per quell'azienda
+     * nel caso dei ruoli interaziendali la chiave è 'interaziendali'
+     */
+    @Transient
+    private Map<String, List<Ruolo.CodiciRuolo>> ruoliUtentiPersona;
+
     @Transient
     private Utente utenteReale;
     @Transient
@@ -257,6 +266,15 @@ public class Utente implements Serializable, UserDetails {
     public void setRuoli(List<Ruolo> ruoli) {
         this.ruoli = ruoli;
     }
+    
+    public Map<String, List<Ruolo.CodiciRuolo>> getRuoliUtentiPersona() {
+        return ruoliUtentiPersona;
+    }
+
+    public void setRuoliUtentiPersona(Map<String, List<Ruolo.CodiciRuolo>> ruoliUtentiPersona) {
+        this.ruoliUtentiPersona = ruoliUtentiPersona;
+    }
+    
 
     public Utente getUtenteReale() {
         return utenteReale;

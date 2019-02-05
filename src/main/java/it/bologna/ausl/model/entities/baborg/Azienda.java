@@ -51,6 +51,7 @@ public class Azienda implements Serializable {
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "codice")
+    // TODO: sostituire i codiciAzienda con un enum
     private String codice;
     @Basic(optional = false)
     @NotNull

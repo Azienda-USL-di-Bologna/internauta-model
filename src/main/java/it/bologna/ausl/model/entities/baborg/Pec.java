@@ -69,7 +69,7 @@ public class Pec implements Serializable {
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda; // da eliminare, trasformato in lista
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPec", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPec", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "pecAziendaList")
     private List<PecAzienda> pecAziendaList;
     @JoinColumn(name = "id_pec_provider", referencedColumnName = "id")
