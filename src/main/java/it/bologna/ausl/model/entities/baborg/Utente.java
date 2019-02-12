@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -83,10 +84,10 @@ public class Utente implements Serializable, UserDetails {
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Persona idPersona;
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecUtenteList")
@@ -98,6 +99,14 @@ public class Utente implements Serializable, UserDetails {
     @Transient
     private List<Ruolo> ruoli;
     
+    /**
+     * tutti i ruoli di tutte le aziende della persona dell'utente, divisi per interaziendali e aziendali.
+     * mappa in cui la chiave è il codiceAzienda e il valore la lista dei codici ruolo per quell'azienda
+     * nel caso dei ruoli interaziendali la chiave è 'interaziendali'
+     */
+    @Transient
+    private Map<String, List<String>> ruoliUtentiPersona;
+
     @Transient
     private Utente utenteReale;
     @Transient
@@ -257,6 +266,15 @@ public class Utente implements Serializable, UserDetails {
     public void setRuoli(List<Ruolo> ruoli) {
         this.ruoli = ruoli;
     }
+    
+    public Map<String, List<String>> getRuoliUtentiPersona() {
+        return ruoliUtentiPersona;
+    }
+
+    public void setRuoliUtentiPersona(Map<String, List<String>> ruoliUtentiPersona) {
+        this.ruoliUtentiPersona = ruoliUtentiPersona;
+    }
+    
 
     public Utente getUtenteReale() {
         return utenteReale;

@@ -30,7 +30,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "persone", catalog = "internauta", schema = "baborg")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @Cacheable(false)
 public class Persona implements Serializable {
 
@@ -72,7 +72,7 @@ public class Persona implements Serializable {
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
     
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
     private List<Utente> utenteList;
     

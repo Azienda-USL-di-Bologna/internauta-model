@@ -24,7 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "strutture_unificate", catalog = "internauta", schema = "baborg")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 public class StrutturaUnificata implements Serializable {
 
     private static final long serialVersionUID = 1L;
