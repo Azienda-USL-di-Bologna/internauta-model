@@ -28,7 +28,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "pec", catalog = "internauta", schema = "baborg")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 public class Pec implements Serializable {
 
     private static final long serialVersionUID = 1L;
