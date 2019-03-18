@@ -42,7 +42,8 @@ public class Recepit extends Message implements Serializable {
     public Recepit() {
     }
 
-    public Recepit(String recepitType) {
+    public Recepit(Integer id, String uuidMessage, int idMailConfig, Date createTime, Date updateTime, boolean isPec, int nAttachments, Date receiveDate, String recepitType) {
+        super(id, uuidMessage, idMailConfig, createTime, updateTime, isPec, nAttachments, receiveDate);
         this.recepitType = recepitType;
     }
 
