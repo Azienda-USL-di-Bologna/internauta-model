@@ -5,6 +5,7 @@
  */
 package it.bologna.ausl.model.entities.pecgw;
 
+import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -54,9 +55,9 @@ public class Tag implements Serializable {
     private boolean isBySystem;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTag", fetch = FetchType.LAZY)
     private List<MessageTag> messageTagList;
-    @JoinColumn(name = "id_mail_config", referencedColumnName = "id")
+    @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private MailConfig idMailConfig;
+    private Pec idPec;
 
     public Tag() {
     }
@@ -111,14 +112,14 @@ public class Tag implements Serializable {
         this.messageTagList = messageTagList;
     }
 
-    public MailConfig getIdMailConfig() {
-        return idMailConfig;
+    public Pec getIdPec() {
+        return idPec;
     }
 
-    public void setIdMailConfig(MailConfig idMailConfig) {
-        this.idMailConfig = idMailConfig;
+    public void setIdPec(Pec idPec) {
+        this.idPec = idPec;
     }
-
+  
     @Override
     public int hashCode() {
         int hash = 0;
