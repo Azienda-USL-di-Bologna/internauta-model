@@ -5,6 +5,7 @@
  */
 package it.bologna.ausl.model.entities.pecgw;
 
+import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -29,14 +30,9 @@ import javax.validation.constraints.NotNull;
 @Table(name = "mail_config")
 @NamedQueries({
     @NamedQuery(name = "MailConfig.findAll", query = "SELECT m FROM MailConfig m")})
-public class MailConfig implements Serializable {
+public class MailConfig extends Pec implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Column(name = "is_pec")
     private Boolean isPec;
     @Basic(optional = false)
@@ -55,22 +51,10 @@ public class MailConfig implements Serializable {
     public MailConfig() {
     }
 
-    public MailConfig(Integer id) {
-        this.id = id;
-    }
-
     public MailConfig(Integer id, long lastuid, int sendDelay) {
-        this.id = id;
+        super.id = id;
         this.lastuid = lastuid;
         this.sendDelay = sendDelay;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Boolean getIsPec() {
@@ -121,21 +105,8 @@ public class MailConfig implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MailConfig)) {
-            return false;
-        }
-        MailConfig other = (MailConfig) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.MailConfig[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.pecgw.MailConfig[ id=" + super.getId() + " ]";
     }
     
 }
