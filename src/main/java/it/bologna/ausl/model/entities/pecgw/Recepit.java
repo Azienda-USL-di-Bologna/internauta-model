@@ -6,6 +6,7 @@
 package it.bologna.ausl.model.entities.pecgw;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -42,7 +43,7 @@ public class Recepit extends Message implements Serializable {
     public Recepit() {
     }
 
-    public Recepit(Integer id, String uuidMessage, int idMailConfig, Date createTime, Date updateTime, boolean isPec, int nAttachments, Date receiveDate, String recepitType) {
+    public Recepit(Integer id, String uuidMessage, Integer idMailConfig, LocalDateTime createTime, LocalDateTime updateTime, boolean isPec, Integer nAttachments, LocalDateTime receiveDate, String recepitType) {
         super(id, uuidMessage, idMailConfig, createTime, updateTime, isPec, nAttachments, receiveDate);
         this.recepitType = recepitType;
     }

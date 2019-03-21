@@ -87,11 +87,11 @@ public class Pec implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "lastuid")
-    private long lastuid;
+    private Long lastuid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "send_delay")
-    private int sendDelay;
+    private Integer sendDelay;
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
@@ -106,7 +106,7 @@ public class Pec implements Serializable {
         this.id = id;
     }
 
-    public Pec(Integer id, String indirizzo, String username, String password, boolean attiva, int messagePolicy, boolean perRiservato) {
+    public Pec(Integer id, String indirizzo, String username, String password, Boolean attiva, Integer messagePolicy, Boolean perRiservato) {
         this.id = id;
         this.indirizzo = indirizzo;
         this.username = username;
@@ -260,19 +260,19 @@ public class Pec implements Serializable {
         this.isPec = isPec;
     }
 
-    public long getLastuid() {
+    public Long getLastuid() {
         return lastuid;
     }
 
-    public void setLastuid(long lastuid) {
+    public void setLastuid(Long lastuid) {
         this.lastuid = lastuid;
     }
 
-    public int getSendDelay() {
+    public Integer getSendDelay() {
         return sendDelay;
     }
 
-    public void setSendDelay(int sendDelay) {
+    public void setSendDelay(Integer sendDelay) {
         this.sendDelay = sendDelay;
     }
 
