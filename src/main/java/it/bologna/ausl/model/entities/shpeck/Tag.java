@@ -45,7 +45,7 @@ public class Tag implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_by_system")
-    private boolean isBySystem;
+    private Boolean isBySystem;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTag", fetch = FetchType.LAZY)
     private List<MessageTag> messageTagList;
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
@@ -59,7 +59,7 @@ public class Tag implements Serializable {
         this.id = id;
     }
 
-    public Tag(Integer id, String name, boolean isBySystem) {
+    public Tag(Integer id, String name, Boolean isBySystem) {
         this.id = id;
         this.name = name;
         this.isBySystem = isBySystem;
@@ -89,11 +89,11 @@ public class Tag implements Serializable {
         this.description = description;
     }
 
-    public boolean getIsBySystem() {
+    public Boolean getIsBySystem() {
         return isBySystem;
     }
 
-    public void setIsBySystem(boolean isBySystem) {
+    public void setIsBySystem(Boolean isBySystem) {
         this.isBySystem = isBySystem;
     }
 
