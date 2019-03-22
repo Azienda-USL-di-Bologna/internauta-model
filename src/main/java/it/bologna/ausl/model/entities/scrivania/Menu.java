@@ -66,7 +66,10 @@ public class Menu implements Serializable {
     private String openCommand;
     @Column(name = "permessi_sufficienti", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
-    private String[] permessiSufficienti;    
+    private String[] permessiSufficienti;
+    @Column(name = "ruoli_sufficienti", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] ruoliSufficienti;
     
     @Transient
     private String compiledUrl;
@@ -131,6 +134,14 @@ public class Menu implements Serializable {
 
     public void setPermessiSufficienti(String[] permessiSufficienti) {
         this.permessiSufficienti = permessiSufficienti;
+    }
+
+    public String[] getRuoliSufficienti() {
+        return ruoliSufficienti;
+    }
+
+    public void setRuoliSufficienti(String[] ruoliSufficienti) {
+        this.ruoliSufficienti = ruoliSufficienti;
     }
 
     public String getCompiledUrl() {
