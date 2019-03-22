@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.bologna.ausl.model.entities.pecgw;
+package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,33 +25,35 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "message_status")
-@NamedQueries({
-    @NamedQuery(name = "MessageStatus.findAll", query = "SELECT m FROM MessageStatus m")})
-public class MessageStatus implements Serializable {
+@Table(name = "inbox", catalog = "internauta", schema = "pecgw")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Inbox implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
-    @Column(name = "label")
-    private String label;
+    @Column(name = "raw_message")
+    private String rawMessage;
+    @JoinColumn(name = "id_message", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Message idMessage;
 
-    public MessageStatus() {
+    public Inbox() {
     }
 
-    public MessageStatus(Integer id) {
+    public Inbox(Integer id) {
         this.id = id;
     }
 
-    public MessageStatus(Integer id, String label) {
+    public Inbox(Integer id, String rawMessage) {
         this.id = id;
-        this.label = label;
+        this.rawMessage = rawMessage;
     }
 
     public Integer getId() {
@@ -58,12 +64,20 @@ public class MessageStatus implements Serializable {
         this.id = id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getRawMessage() {
+        return rawMessage;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setRawMessage(String rawMessage) {
+        this.rawMessage = rawMessage;
+    }
+
+    public Message getIdMessage() {
+        return idMessage;
+    }
+
+    public void setIdMessage(Message idMessage) {
+        this.idMessage = idMessage;
     }
 
     @Override
@@ -76,10 +90,10 @@ public class MessageStatus implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MessageStatus)) {
+        if (!(object instanceof Inbox)) {
             return false;
         }
-        MessageStatus other = (MessageStatus) object;
+        Inbox other = (Inbox) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -88,7 +102,7 @@ public class MessageStatus implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.MessageStatus[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.pecgw.Inbox[ id=" + id + " ]";
     }
     
 }

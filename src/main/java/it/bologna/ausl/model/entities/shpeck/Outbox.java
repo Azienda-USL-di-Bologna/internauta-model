@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package it.bologna.ausl.model.entities.pecgw;
+package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,10 +20,9 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "inbox")
-@NamedQueries({
-    @NamedQuery(name = "Inbox.findAll", query = "SELECT i FROM Inbox i")})
-public class Inbox implements Serializable {
+@Table(name = "outbox", catalog = "internauta", schema = "pecgw")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Outbox implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,20 +35,26 @@ public class Inbox implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "raw_message")
     private String rawMessage;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "id_application")
+    private String idApplication;
     @JoinColumn(name = "id_message", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Message idMessage;
 
-    public Inbox() {
+    public Outbox() {
     }
 
-    public Inbox(Integer id) {
+    public Outbox(Integer id) {
         this.id = id;
     }
 
-    public Inbox(Integer id, String rawMessage) {
+    public Outbox(Integer id, String rawMessage, String idApplication) {
         this.id = id;
         this.rawMessage = rawMessage;
+        this.idApplication = idApplication;
     }
 
     public Integer getId() {
@@ -72,6 +71,14 @@ public class Inbox implements Serializable {
 
     public void setRawMessage(String rawMessage) {
         this.rawMessage = rawMessage;
+    }
+
+    public String getIdApplication() {
+        return idApplication;
+    }
+
+    public void setIdApplication(String idApplication) {
+        this.idApplication = idApplication;
     }
 
     public Message getIdMessage() {
@@ -92,10 +99,10 @@ public class Inbox implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Inbox)) {
+        if (!(object instanceof Outbox)) {
             return false;
         }
-        Inbox other = (Inbox) object;
+        Outbox other = (Outbox) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -104,7 +111,7 @@ public class Inbox implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.Inbox[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.pecgw.Outbox[ id=" + id + " ]";
     }
     
 }
