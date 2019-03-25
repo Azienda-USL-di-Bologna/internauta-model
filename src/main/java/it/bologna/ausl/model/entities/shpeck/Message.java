@@ -166,9 +166,6 @@ public class Message implements Serializable {
         this.mongoPath = mongoPath;
         this.name = name;
         this.receiveDate = receiveDate;
-        this.messageTagList = messageTagList;
-        this.inboxList = inboxList;
-        this.outboxList = outboxList;
     }
 
     public Integer getId() {
