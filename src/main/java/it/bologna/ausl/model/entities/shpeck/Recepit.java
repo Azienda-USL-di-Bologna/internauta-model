@@ -1,25 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package it.bologna.ausl.model.entities.pecgw;
+package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
+import it.bologna.ausl.model.entities.configuration.Applicazione;
+import it.bologna.ausl.model.entities.shpeck.Message;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,7 +23,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "recepits", catalog = "internauta", schema = "pecgw")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "recepits")
 @NamedQueries({
     @NamedQuery(name = "Recepit.findAll", query = "SELECT r FROM Recepit r")})
 public class Recepit extends Message implements Serializable {
@@ -46,8 +38,8 @@ public class Recepit extends Message implements Serializable {
     public Recepit() {
     }
 
-    public Recepit(Integer id, String uuidMessage, Pec idPec, Date createTime, Date updateTime, boolean isPec, int nAttachments, Date receiveDate, String recepitType) {
-        super(id, uuidMessage, idPec, createTime, updateTime, isPec, nAttachments, receiveDate);
+    public Recepit(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer nAttachments, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate, String recepitType) {
+        super(id, uuidMessage, idPec, idApplicazione, idRelated, subject, messageStatus, inOut, createTime, updateTime, messageType, isPec, nAttachments, uuidMongo, mongoPath, name, receiveDate);
         this.recepitType = recepitType;
     }
 
@@ -67,8 +59,23 @@ public class Recepit extends Message implements Serializable {
     }  
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Recepit other = (Recepit) obj;
+        return Objects.equals(this.recepitType, other.recepitType);
+    }
+
+    @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.Recepit[ id=" + super.getId() + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.Recepit[ id=" + super.getId() + " ]";
     }
     
 }
