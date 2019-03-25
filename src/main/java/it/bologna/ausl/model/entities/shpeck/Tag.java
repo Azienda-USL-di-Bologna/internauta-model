@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package it.bologna.ausl.model.entities.pecgw;
+package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
 import java.util.List;
@@ -18,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -30,9 +24,8 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "tags")
-@NamedQueries({
-    @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t")})
+@Table(name = "tags", catalog = "internauta", schema = "pecgw")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Tag implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,7 +45,7 @@ public class Tag implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_by_system")
-    private boolean isBySystem;
+    private Boolean isBySystem;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTag", fetch = FetchType.LAZY)
     private List<MessageTag> messageTagList;
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
@@ -66,7 +59,7 @@ public class Tag implements Serializable {
         this.id = id;
     }
 
-    public Tag(Integer id, String name, boolean isBySystem) {
+    public Tag(Integer id, String name, Boolean isBySystem) {
         this.id = id;
         this.name = name;
         this.isBySystem = isBySystem;
@@ -96,11 +89,11 @@ public class Tag implements Serializable {
         this.description = description;
     }
 
-    public boolean getIsBySystem() {
+    public Boolean getIsBySystem() {
         return isBySystem;
     }
 
-    public void setIsBySystem(boolean isBySystem) {
+    public void setIsBySystem(Boolean isBySystem) {
         this.isBySystem = isBySystem;
     }
 

@@ -7,6 +7,7 @@ package it.bologna.ausl.model.entities.pecgw;
 
 import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -27,6 +28,8 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
+@Table(name = "recepits", catalog = "internauta", schema = "pecgw")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "recepits")
 @NamedQueries({
     @NamedQuery(name = "Recepit.findAll", query = "SELECT r FROM Recepit r")})

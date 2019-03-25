@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.model.entities.shpeck.Tag;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -32,69 +33,93 @@ import javax.validation.constraints.NotNull;
 public class Pec implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     protected Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "indirizzo", columnDefinition = "text")
     private String indirizzo;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "username", columnDefinition = "text")
     private String username;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "password", columnDefinition = "text")
     private String password;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "attiva")
     private Boolean attiva;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "message_policy")
     private Integer messagePolicy;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "per_riservato")
     private Boolean perRiservato;
+    
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPec", fetch = FetchType.LAZY)
     @JsonBackReference(value = "pecStrutturaList")
     private List<PecStruttura> pecStrutturaList;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda; // da eliminare, trasformato in lista
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPec", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "pecAziendaList")
     private List<PecAzienda> pecAziendaList;
+    
     @JoinColumn(name = "id_pec_provider", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private PecProvider idPecProvider;
+    
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JsonBackReference(value = "pecUtenteList")
     private List<PecUtente> pecUtenteList;
+    
+    @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @JsonBackReference(value = "tagList")
+    private List<Tag> tagList;
+    
     @Column(name = "massiva")
     private Boolean massiva;
+    
     @Column(name = "chiusa")
     private Boolean chiusa;
+    
     @Column(name = "is_pec")
     private Boolean isPec;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "lastuid")
-    private long lastuid;
+    private Long lastuid;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "send_delay")
-    private int sendDelay;
+    private Integer sendDelay;
+    
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
+    
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<Persona> gestori;
@@ -106,7 +131,7 @@ public class Pec implements Serializable {
         this.id = id;
     }
 
-    public Pec(Integer id, String indirizzo, String username, String password, boolean attiva, int messagePolicy, boolean perRiservato) {
+    public Pec(Integer id, String indirizzo, String username, String password, Boolean attiva, Integer messagePolicy, Boolean perRiservato) {
         this.id = id;
         this.indirizzo = indirizzo;
         this.username = username;
@@ -220,6 +245,14 @@ public class Pec implements Serializable {
         this.pecUtenteList = pecUtenteList;
     }
 
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
+    }
+
     public Boolean getMassiva() {
         return massiva;
     }
@@ -260,19 +293,19 @@ public class Pec implements Serializable {
         this.isPec = isPec;
     }
 
-    public long getLastuid() {
+    public Long getLastuid() {
         return lastuid;
     }
 
-    public void setLastuid(long lastuid) {
+    public void setLastuid(Long lastuid) {
         this.lastuid = lastuid;
     }
 
-    public int getSendDelay() {
+    public Integer getSendDelay() {
         return sendDelay;
     }
 
-    public void setSendDelay(int sendDelay) {
+    public void setSendDelay(Integer sendDelay) {
         this.sendDelay = sendDelay;
     }
 

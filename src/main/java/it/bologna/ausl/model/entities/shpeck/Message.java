@@ -1,16 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package it.bologna.ausl.model.entities.pecgw;
+package it.bologna.ausl.model.entities.shpeck;
 
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,15 +24,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author Salo
  */
 @Entity
-@Table(name = "messages")
-@NamedQueries({
-    @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m")})
+@Table(name = "messages", catalog = "internauta", schema = "pecgw")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Cacheable(false)
 public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,24 +69,26 @@ public class Message implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "create_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime createTime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "update_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime updateTime;
     @Size(max = 2147483647)
     @Column(name = "message_type")
     private String messageType;
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_pec")
-    private boolean isPec;
+    private Boolean isPec;
     @Basic(optional = false)
     @NotNull
     @Column(name = "n_attachments")
-    private int nAttachments;
+    private Integer nAttachments;
     @Size(max = 2147483647)
     @Column(name = "uuid_mongo")
     private String uuidMongo;
@@ -102,8 +101,9 @@ public class Message implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "receive_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date receiveDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime receiveDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     private List<MessageTag> messageTagList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
@@ -205,19 +205,19 @@ public class Message implements Serializable {
         this.inOut = inOut;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -229,19 +229,19 @@ public class Message implements Serializable {
         this.messageType = messageType;
     }
 
-    public boolean getIsPec() {
+    public Boolean getIsPec() {
         return isPec;
     }
 
-    public void setIsPec(boolean isPec) {
+    public void setIsPec(Boolean isPec) {
         this.isPec = isPec;
     }
 
-    public int getNAttachments() {
+    public Integer getNAttachments() {
         return nAttachments;
     }
 
-    public void setNAttachments(int nAttachments) {
+    public void setNAttachments(Integer nAttachments) {
         this.nAttachments = nAttachments;
     }
 
@@ -269,11 +269,11 @@ public class Message implements Serializable {
         this.name = name;
     }
 
-    public Date getReceiveDate() {
+    public LocalDateTime getReceiveDate() {
         return receiveDate;
     }
 
-    public void setReceiveDate(Date receiveDate) {
+    public void setReceiveDate(LocalDateTime receiveDate) {
         this.receiveDate = receiveDate;
     }
 

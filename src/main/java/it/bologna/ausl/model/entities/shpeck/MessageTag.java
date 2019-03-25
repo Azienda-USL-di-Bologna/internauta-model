@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package it.bologna.ausl.model.entities.pecgw;
+package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -29,9 +25,8 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "messages_tags")
-@NamedQueries({
-    @NamedQuery(name = "MessageTag.findAll", query = "SELECT m FROM MessageTag m")})
+@Table(name = "messages_tags", catalog = "internauta", schema = "pecgw")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MessageTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
