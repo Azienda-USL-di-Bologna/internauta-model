@@ -33,21 +33,25 @@ public class Recepit extends Message implements Serializable {
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "recepit_type")
-    private String recepitType;
+    private RecepitType recepitType;
+    
+    public static enum RecepitType {
+        ACCETTAZIONE, CONSEGNA, ERRORE_PRESA_IN_CARICO, ERRORE_CONSEGNA
+    }
 
     public Recepit() {
     }
 
-    public Recepit(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer nAttachments, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate, String recepitType) {
+    public Recepit(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer nAttachments, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate, RecepitType recepitType) {
         super(id, uuidMessage, idPec, idApplicazione, idRelated, subject, messageStatus, inOut, createTime, updateTime, messageType, isPec, nAttachments, uuidMongo, mongoPath, name, receiveDate);
         this.recepitType = recepitType;
     }
 
-    public String getRecepitType() {
+    public RecepitType getRecepitType() {
         return recepitType;
     }
 
-    public void setRecepitType(String recepitType) {
+    public void setRecepitType(RecepitType recepitType) {
         this.recepitType = recepitType;
     }
 
