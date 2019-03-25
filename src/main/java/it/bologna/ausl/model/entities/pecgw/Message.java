@@ -5,6 +5,8 @@
  */
 package it.bologna.ausl.model.entities.pecgw;
 
+import it.bologna.ausl.model.entities.baborg.Pec;
+import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +18,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -48,17 +52,20 @@ public class Message implements Serializable {
     private String uuidMessage;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_mail_config")
-    private int idMailConfig;
-    @Column(name = "id_sender_app")
-    private Integer idSenderApp;
-    @Column(name = "id_related")
-    private Integer idRelated;
+    @JoinColumn(name = "id_pec", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Pec idPec;
+    @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Applicazione idApplicazione;
+    @JoinColumn(name = "id_related", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Message idRelated;
     @Size(max = 2147483647)
     @Column(name = "subject")
     private String subject;
-    @Column(name = "id_message_status")
-    private Integer idMessageStatus;
+    @Column(name = "message_status")
+    private MessageStatus messageStatus;
     @Size(max = 2147483647)
     @Column(name = "in_out")
     private String inOut;
@@ -103,6 +110,18 @@ public class Message implements Serializable {
     private List<Inbox> inboxList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     private List<Outbox> outboxList;
+    
+    public static enum InOut {
+        IN, OUT
+    }
+    
+    public static enum MessageStatus {
+        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED
+    }
+    
+    public static enum MessageType {
+        ERRORE, MAIL, PEC, RICEVUTA
+    }
 
     public Message() {
     }
@@ -111,10 +130,10 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public Message(Integer id, String uuidMessage, int idMailConfig, Date createTime, Date updateTime, boolean isPec, int nAttachments, Date receiveDate) {
+    public Message(Integer id, String uuidMessage, Pec idPec, Date createTime, Date updateTime, boolean isPec, int nAttachments, Date receiveDate) {
         this.id = id;
         this.uuidMessage = uuidMessage;
-        this.idMailConfig = idMailConfig;
+        this.idPec = idPec;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.isPec = isPec;
@@ -138,27 +157,27 @@ public class Message implements Serializable {
         this.uuidMessage = uuidMessage;
     }
 
-    public int getIdMailConfig() {
-        return idMailConfig;
+    public Pec getIdPec() {
+        return idPec;
     }
 
-    public void setIdMailConfig(int idMailConfig) {
-        this.idMailConfig = idMailConfig;
+    public void setIdPec(Pec idPec) {
+        this.idPec = idPec;
     }
 
-    public Integer getIdSenderApp() {
-        return idSenderApp;
+    public Applicazione getIdSenderApp() {
+        return idApplicazione;
     }
 
-    public void setIdSenderApp(Integer idSenderApp) {
-        this.idSenderApp = idSenderApp;
+    public void setIdApplicazione(Applicazione idApplicazione) {
+        this.idApplicazione = idApplicazione;
     }
 
-    public Integer getIdRelated() {
+    public Message getIdRelated() {
         return idRelated;
     }
 
-    public void setIdRelated(Integer idRelated) {
+    public void setIdRelated(Message idRelated) {
         this.idRelated = idRelated;
     }
 
@@ -170,12 +189,12 @@ public class Message implements Serializable {
         this.subject = subject;
     }
 
-    public Integer getIdMessageStatus() {
-        return idMessageStatus;
+    public String getIdMessageStatus() {
+        return messageStatus.toString();
     }
 
-    public void setIdMessageStatus(Integer idMessageStatus) {
-        this.idMessageStatus = idMessageStatus;
+    public void setIdMessageStatus(MessageStatus messageStatus) {
+        this.messageStatus = messageStatus;
     }
 
     public String getInOut() {

@@ -5,6 +5,7 @@
  */
 package it.bologna.ausl.model.entities.pecgw;
 
+import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -42,8 +43,8 @@ public class Recepit extends Message implements Serializable {
     public Recepit() {
     }
 
-    public Recepit(Integer id, String uuidMessage, int idMailConfig, Date createTime, Date updateTime, boolean isPec, int nAttachments, Date receiveDate, String recepitType) {
-        super(id, uuidMessage, idMailConfig, createTime, updateTime, isPec, nAttachments, receiveDate);
+    public Recepit(Integer id, String uuidMessage, Pec idPec, Date createTime, Date updateTime, boolean isPec, int nAttachments, Date receiveDate, String recepitType) {
+        super(id, uuidMessage, idPec, createTime, updateTime, isPec, nAttachments, receiveDate);
         this.recepitType = recepitType;
     }
 
