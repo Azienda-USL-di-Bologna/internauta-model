@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
-import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.model.entities.shpeck.Tag;
 import java.io.Serializable;
 import java.util.List;
