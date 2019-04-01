@@ -3,15 +3,17 @@ package it.bologna.ausl.model.entities.shpeck;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
-import it.bologna.ausl.model.entities.shpeck.Message;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,20 +23,32 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "recepits", catalog = "internauta", schema = "pecgw")
+@Table(name = "recepits", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@NamedQueries({
-    @NamedQuery(name = "Recepit.findAll", query = "SELECT r FROM Recepit r")})
-public class Recepit extends Message implements Serializable {
+public class Recepit implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    
+//    @Id
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    @MapsId
+    private Message idMessage;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "recepit_type")
     private String recepitType;
-    
+
+
     public static enum RecepitType {
         ACCETTAZIONE, CONSEGNA, ERRORE_PRESA_IN_CARICO, ERRORE_CONSEGNA
     }
@@ -43,8 +57,24 @@ public class Recepit extends Message implements Serializable {
     }
 
     public Recepit(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer nAttachments, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate, RecepitType recepitType) {
-        super(id, uuidMessage, idPec, idApplicazione, idRelated, subject, messageStatus, inOut, createTime, updateTime, messageType, isPec, nAttachments, uuidMongo, mongoPath, name, receiveDate);
         this.recepitType = recepitType.toString();
+        this.idMessage = new Message(id, uuidMessage, idPec, idApplicazione, idRelated, subject, messageStatus, inOut, createTime, updateTime, messageType, isPec, nAttachments, uuidMongo, mongoPath, name, receiveDate);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Message getIdMessage() {
+        return idMessage;
+    }
+
+    public void setIdMessage(Message idMessage) {
+        this.idMessage = idMessage;
     }
 
     public RecepitType getRecepitType() {
@@ -58,7 +88,7 @@ public class Recepit extends Message implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (super.getId() != null ? super.getId().hashCode() : 0);
+        hash += (this.idMessage.getId() != null ? this.idMessage.hashCode() : 0);
         return hash;
     }  
 
@@ -79,7 +109,7 @@ public class Recepit extends Message implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.shpeck.Recepit[ id=" + super.getId() + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.Recepit[ id=" + this.idMessage.getId() + " ]";
     }
     
 }

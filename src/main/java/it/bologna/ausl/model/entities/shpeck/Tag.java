@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "tags", catalog = "internauta", schema = "pecgw")
+@Table(name = "tags", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Tag implements Serializable {
 

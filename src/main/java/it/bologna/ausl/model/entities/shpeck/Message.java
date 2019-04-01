@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,14 +30,12 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Salo
  */
 @Entity
-@Table(name = "messages", catalog = "internauta", schema = "pecgw")
+@Table(name = "messages", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Message implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    public static enum InOut {
+        public static enum InOut {
         IN, OUT
     }
     
@@ -111,15 +110,15 @@ public class Message implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "n_attachments")
-    private Integer nAttachments;
+    private Integer attachmentsNumber;
     
     @Size(max = 2147483647)
-    @Column(name = "uuid_mongo")
-    private String uuidMongo;
+    @Column(name = "uuid_repository")
+    private String uuidRepository;
     
     @Size(max = 2147483647)
-    @Column(name = "mongo_path")
-    private String mongoPath;
+    @Column(name = "path_repository")
+    private String pathRepository;
     
     @Size(max = 2147483647)
     @Column(name = "name")
@@ -141,6 +140,10 @@ public class Message implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     private List<Outbox> outboxList;
 
+    @OneToOne(optional=true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.JOIN)
+    private Recepit idRecepit;
+    
     public Message() {
     }
 
@@ -148,7 +151,7 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer nAttachments, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate) {
+    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate) {
         this.id = id;
         this.uuidMessage = uuidMessage;
         this.idPec = idPec;
@@ -161,9 +164,9 @@ public class Message implements Serializable {
         this.updateTime = updateTime;
         this.messageType = messageType;
         this.isPec = isPec;
-        this.nAttachments = nAttachments;
-        this.uuidMongo = uuidMongo;
-        this.mongoPath = mongoPath;
+        this.attachmentsNumber = attachmentsNumber;
+        this.uuidRepository = uuidMongo;
+        this.pathRepository = mongoPath;
         this.name = name;
         this.receiveDate = receiveDate;
     }
@@ -192,7 +195,7 @@ public class Message implements Serializable {
         this.idPec = idPec;
     }
 
-    public Applicazione getIdSenderApp() {
+    public Applicazione getIdApplicazione() {
         return idApplicazione;
     }
 
@@ -220,7 +223,7 @@ public class Message implements Serializable {
         return MessageStatus.valueOf(messageStatus);
     }
 
-    public void setIdMessageStatus(MessageStatus messageStatus) {
+    public void setMessageStatus(MessageStatus messageStatus) {
         this.messageStatus = messageStatus.toString();
     }
 
@@ -264,28 +267,28 @@ public class Message implements Serializable {
         this.isPec = isPec;
     }
 
-    public Integer getNAttachments() {
-        return nAttachments;
+    public Integer getAttachmentsNumber() {
+        return attachmentsNumber;
     }
 
-    public void setNAttachments(Integer nAttachments) {
-        this.nAttachments = nAttachments;
+    public void setAttachmentsNumber(Integer attachmentsNumber) {
+        this.attachmentsNumber = attachmentsNumber;
     }
 
-    public String getUuidMongo() {
-        return uuidMongo;
+    public String getUuidRepository() {
+        return uuidRepository;
     }
 
-    public void setUuidMongo(String uuidMongo) {
-        this.uuidMongo = uuidMongo;
+    public void setUuidRepository(String uuidRepository) {
+        this.uuidRepository = uuidRepository;
     }
 
-    public String getMongoPath() {
-        return mongoPath;
+    public String getPathRepository() {
+        return pathRepository;
     }
 
-    public void setMongoPath(String mongoPath) {
-        this.mongoPath = mongoPath;
+    public void setPathRepository(String pathRepository) {
+        this.pathRepository = pathRepository;
     }
 
     public String getName() {
@@ -326,6 +329,14 @@ public class Message implements Serializable {
 
     public void setOutboxList(List<Outbox> outboxList) {
         this.outboxList = outboxList;
+    }
+
+    public Recepit getIdRecepit() {
+        return idRecepit;
+    }
+
+    public void setIdRecepit(Recepit idRecepit) {
+        this.idRecepit = idRecepit;
     }
 
     @Override

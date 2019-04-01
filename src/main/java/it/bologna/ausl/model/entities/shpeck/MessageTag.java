@@ -12,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +23,7 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "messages_tags", catalog = "internauta", schema = "pecgw")
+@Table(name = "messages_tags", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MessageTag implements Serializable {
 

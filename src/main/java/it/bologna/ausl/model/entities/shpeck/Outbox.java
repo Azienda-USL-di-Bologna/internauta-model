@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "outbox", catalog = "internauta", schema = "pecgw")
+@Table(name = "outbox", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Outbox implements Serializable {
 
