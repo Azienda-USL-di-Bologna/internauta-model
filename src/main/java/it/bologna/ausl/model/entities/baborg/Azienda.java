@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
-import it.nextsw.common.types.GenericArrayUserType;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

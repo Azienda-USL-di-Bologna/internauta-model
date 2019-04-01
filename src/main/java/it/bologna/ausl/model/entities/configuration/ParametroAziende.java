@@ -1,7 +1,7 @@
 package it.bologna.ausl.model.entities.configuration;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.nextsw.common.types.GenericArrayUserType;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;

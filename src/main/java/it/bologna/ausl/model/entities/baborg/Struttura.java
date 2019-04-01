@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
-import it.bologna.ausl.blackbox.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
