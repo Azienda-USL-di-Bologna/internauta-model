@@ -3,7 +3,7 @@ package it.bologna.ausl.model.entities.scrivania;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
-import it.nextsw.common.types.GenericArrayUserType;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;

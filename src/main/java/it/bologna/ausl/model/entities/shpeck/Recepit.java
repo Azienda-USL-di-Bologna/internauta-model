@@ -1,12 +1,19 @@
 package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.baborg.Pec;
+import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,11 +23,24 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "recepits", catalog = "internauta", schema = "pecgw")
+@Table(name = "recepits", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Recepit extends Message implements Serializable {
+public class Recepit implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    
+//    @Id
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    @MapsId
+    private Message idMessage;
     
     @Basic(optional = false)
     @NotNull
@@ -28,32 +48,68 @@ public class Recepit extends Message implements Serializable {
     @Column(name = "recepit_type")
     private String recepitType;
 
+
+    public static enum RecepitType {
+        ACCETTAZIONE, CONSEGNA, ERRORE_PRESA_IN_CARICO, ERRORE_CONSEGNA
+    }
+
     public Recepit() {
     }
 
-    public Recepit(Integer id, String uuidMessage, Integer idMailConfig, LocalDateTime createTime, LocalDateTime updateTime, boolean isPec, Integer nAttachments, LocalDateTime receiveDate, String recepitType) {
-        super(id, uuidMessage, idMailConfig, createTime, updateTime, isPec, nAttachments, receiveDate);
-        this.recepitType = recepitType;
+    public Recepit(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer nAttachments, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate, RecepitType recepitType) {
+        this.recepitType = recepitType.toString();
+        this.idMessage = new Message(id, uuidMessage, idPec, idApplicazione, idRelated, subject, messageStatus, inOut, createTime, updateTime, messageType, isPec, nAttachments, uuidMongo, mongoPath, name, receiveDate);
     }
 
-    public String getRecepitType() {
-        return recepitType;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRecepitType(String recepitType) {
-        this.recepitType = recepitType;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Message getIdMessage() {
+        return idMessage;
+    }
+
+    public void setIdMessage(Message idMessage) {
+        this.idMessage = idMessage;
+    }
+
+    public RecepitType getRecepitType() {
+        return RecepitType.valueOf(recepitType);
+    }
+
+    public void setRecepitType(RecepitType recepitType) {
+        this.recepitType = recepitType.toString();
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (super.getId() != null ? super.getId().hashCode() : 0);
+        hash += (this.idMessage.getId() != null ? this.idMessage.hashCode() : 0);
         return hash;
     }  
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Recepit other = (Recepit) obj;
+        return Objects.equals(this.recepitType, other.recepitType);
+    }
+
+    @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.Recepit[ id=" + super.getId() + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.Recepit[ id=" + this.idMessage.getId() + " ]";
     }
     
 }
