@@ -39,13 +39,9 @@ public class MessageAddress implements Serializable {
     @JoinColumn(name = "address", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Address address;
-    
-    @JoinColumn(name = "original_address", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Address originalAddress;
-    
-    @Column(name = "role")
-    private String role;
+
+    @Column(name = "address_role")
+    private String addressRole;
 
     public MessageAddress() {
     }
@@ -66,20 +62,12 @@ public class MessageAddress implements Serializable {
         this.address = address;
     }
 
-    public Address getOriginalAddress() {
-        return originalAddress;
-    }
-
-    public void setOriginalAddress(Address originalAddress) {
-        this.originalAddress = originalAddress;
-    }
-
     public AddressRoleType getRecipientType() {
-        return AddressRoleType.valueOf(role);
+        return AddressRoleType.valueOf(addressRole);
     }
 
     public void setRecipientType(AddressRoleType recipientType) {
-        this.role = recipientType.toString();
+        this.addressRole = recipientType.toString();
     }
 
     @Override
