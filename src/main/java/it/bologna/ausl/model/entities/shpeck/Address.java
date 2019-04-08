@@ -2,13 +2,17 @@ package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -41,6 +45,9 @@ public class Address implements Serializable {
     
     @Column(name = "recipient_type")
     private String recipientType;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAddress", fetch = FetchType.LAZY)
+    private List<MessageAddress> messageAddressList;
 
     public Address() {
     }
@@ -76,7 +83,15 @@ public class Address implements Serializable {
     public void setRecipientType(RecipientType recipientType) {
         this.recipientType = recipientType.toString();
     }
-    
+
+    public List<MessageAddress> getMessageAddressList() {
+        return messageAddressList;
+    }
+
+    public void setMessageAddressList(List<MessageAddress> messageAddressList) {
+        this.messageAddressList = messageAddressList;
+    }
+ 
     @Override
     public String toString() {
         return "it.bologna.ausl.model.entities.shpeck.Address[ id=" + id + " ]";
