@@ -38,7 +38,7 @@ public class MessageAddress implements Serializable {
     
     @JoinColumn(name = "address", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Address address;
+    private Address idAddress;
 
     @Column(name = "address_role")
     private String addressRole;
@@ -54,12 +54,12 @@ public class MessageAddress implements Serializable {
         this.id = id;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getIdAddress() {
+        return idAddress;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setIdAddress(Address address) {
+        this.idAddress = address;
     }
 
     public AddressRoleType getRecipientType() {
