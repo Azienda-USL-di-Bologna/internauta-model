@@ -1,15 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,19 +16,22 @@ import javax.persistence.Table;
  * @author Salo
  */
 @Entity
-@Table(name = "addresses", catalog = "internauta", schema = "pecgw")
+@Table(name = "addresses", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Address implements Serializable {
 
     private  static final long serialVersionUID = 1L;
-    // ('ACCETTAZIONE', 'CONSEGNA', 'ERRORE_PRESA_IN_CARICO', 'ERRORE_CONSEGNA');
+
     public static enum RecipientType {
         ACCETTAZIONE, CONSEGNA, ERRORE_PRESA_IN_CARICO, ERRORE_CONSEGNA
     }
     
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     
     @Column(name = "address")
     private String address;
@@ -41,11 +42,14 @@ public class Address implements Serializable {
     @Column(name = "recipient_type")
     private RecipientType recipientType;
 
-    public Long getId() {
+    public Address() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -75,6 +79,6 @@ public class Address implements Serializable {
     
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.Address[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.Address[ id=" + id + " ]";
     }
 }

@@ -122,7 +122,7 @@ public class MessageTag implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.MessageTag[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.MessageTag[ id=" + id + " ]";
     }
     
 }

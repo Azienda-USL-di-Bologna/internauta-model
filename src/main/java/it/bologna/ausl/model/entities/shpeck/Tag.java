@@ -146,7 +146,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.Tag[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.Tag[ id=" + id + " ]";
     }
     
 }

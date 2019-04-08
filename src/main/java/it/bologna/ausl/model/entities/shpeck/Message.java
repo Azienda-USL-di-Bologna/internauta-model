@@ -350,7 +350,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.Message[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.Message[ id=" + id + " ]";
     }
     
 }

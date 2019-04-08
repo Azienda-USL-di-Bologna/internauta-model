@@ -97,7 +97,7 @@ public class RawMessage implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.RawMessage[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.RawMessage[ id=" + id + " ]";
     }
     
 }
