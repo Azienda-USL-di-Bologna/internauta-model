@@ -126,10 +126,10 @@ public class Message implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "receive_date")
+    @Column(name = "receive_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime receiveDate;
+    private LocalDateTime receiveTime;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     private List<MessageTag> messageTagList;
@@ -148,7 +148,7 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate) {
+    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveTime) {
         this.id = id;
         this.uuidMessage = uuidMessage;
         this.idPec = idPec;
@@ -165,7 +165,7 @@ public class Message implements Serializable {
         this.uuidRepository = uuidMongo;
         this.pathRepository = mongoPath;
         this.name = name;
-        this.receiveDate = receiveDate;
+        this.receiveTime = receiveTime;
     }
 
     public Integer getId() {
@@ -296,12 +296,12 @@ public class Message implements Serializable {
         this.name = name;
     }
 
-    public LocalDateTime getReceiveDate() {
-        return receiveDate;
+    public LocalDateTime getReceiveTime() {
+        return receiveTime;
     }
 
-    public void setReceiveDate(LocalDateTime receiveDate) {
-        this.receiveDate = receiveDate;
+    public void setReceiveDate(LocalDateTime receiveTime) {
+        this.receiveTime = receiveTime;
     }
 
     public List<MessageTag> getMessageTagList() {
