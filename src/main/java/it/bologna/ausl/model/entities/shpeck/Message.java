@@ -44,7 +44,7 @@ public class Message implements Serializable {
     }
     
     public static enum MessageType {
-        ERRORE, MAIL, PEC, RICEVUTA
+        ERROR, MAIL, PEC, RECEPIT, DRAFT
     }
     
     @Id
@@ -109,7 +109,7 @@ public class Message implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "n_attachments")
+    @Column(name = "attachments_number")
     private Integer attachmentsNumber;
     
     @Size(max = 2147483647)
@@ -135,10 +135,7 @@ public class Message implements Serializable {
     private List<MessageTag> messageTagList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
-    private List<Inbox> inboxList;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
-    private List<Outbox> outboxList;
+    private List<RawMessage> rawMessageList;
 
     @OneToOne(optional=true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
@@ -315,20 +312,12 @@ public class Message implements Serializable {
         this.messageTagList = messageTagList;
     }
 
-    public List<Inbox> getInboxList() {
-        return inboxList;
+    public List<RawMessage> getRawMessageList() {
+        return rawMessageList;
     }
 
-    public void setInboxList(List<Inbox> inboxList) {
-        this.inboxList = inboxList;
-    }
-
-    public List<Outbox> getOutboxList() {
-        return outboxList;
-    }
-
-    public void setOutboxList(List<Outbox> outboxList) {
-        this.outboxList = outboxList;
+    public void setRawMessageList(List<RawMessage> rawMessageList) {
+        this.rawMessageList = rawMessageList;
     }
 
     public Recepit getIdRecepit() {

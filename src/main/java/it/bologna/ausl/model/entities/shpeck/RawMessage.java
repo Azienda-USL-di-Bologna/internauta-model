@@ -20,9 +20,9 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "outbox", catalog = "internauta", schema = "shpeck")
+@Table(name = "raw_messages", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Outbox implements Serializable {
+public class RawMessage implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,26 +35,20 @@ public class Outbox implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "raw_message")
     private String rawMessage;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "id_application")
-    private String idApplication;
     @JoinColumn(name = "id_message", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Message idMessage;
 
-    public Outbox() {
+    public RawMessage() {
     }
 
-    public Outbox(Integer id) {
+    public RawMessage(Integer id) {
         this.id = id;
     }
 
-    public Outbox(Integer id, String rawMessage, String idApplication) {
+    public RawMessage(Integer id, String rawMessage) {
         this.id = id;
         this.rawMessage = rawMessage;
-        this.idApplication = idApplication;
     }
 
     public Integer getId() {
@@ -71,14 +65,6 @@ public class Outbox implements Serializable {
 
     public void setRawMessage(String rawMessage) {
         this.rawMessage = rawMessage;
-    }
-
-    public String getIdApplication() {
-        return idApplication;
-    }
-
-    public void setIdApplication(String idApplication) {
-        this.idApplication = idApplication;
     }
 
     public Message getIdMessage() {
@@ -99,10 +85,10 @@ public class Outbox implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Outbox)) {
+        if (!(object instanceof RawMessage)) {
             return false;
         }
-        Outbox other = (Outbox) object;
+        RawMessage other = (RawMessage) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +97,7 @@ public class Outbox implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.Outbox[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.pecgw.RawMessage[ id=" + id + " ]";
     }
     
 }
