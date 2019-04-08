@@ -24,7 +24,7 @@ public class Address implements Serializable {
     private  static final long serialVersionUID = 1L;
 
     public static enum RecipientType {
-        ACCETTAZIONE, CONSEGNA, ERRORE_PRESA_IN_CARICO, ERRORE_CONSEGNA
+        PEC, REGULAR_EMAIL, UNKNOWN
     }
     
     @Id
@@ -40,7 +40,7 @@ public class Address implements Serializable {
     private String originalAddress;
     
     @Column(name = "recipient_type")
-    private RecipientType recipientType;
+    private String recipientType;
 
     public Address() {
     }
@@ -70,11 +70,11 @@ public class Address implements Serializable {
     }
 
     public RecipientType getRecipientType() {
-        return recipientType;
+        return RecipientType.valueOf(recipientType);
     }
 
     public void setRecipientType(RecipientType recipientType) {
-        this.recipientType = recipientType;
+        this.recipientType = recipientType.toString();
     }
     
     @Override
