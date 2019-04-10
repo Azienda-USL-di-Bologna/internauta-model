@@ -41,6 +41,10 @@ public class MessageTag implements Serializable {
     @JoinColumn(name = "id_tag", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Tag idTag;
+    
+    @JoinColumn(name = "id_utente", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Utente idUtente;
 
     @Basic(optional = false)
     @NotNull
@@ -48,11 +52,7 @@ public class MessageTag implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime inserted;
-    
-    @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Utente idUtente;
-    
+
     public MessageTag() {
     }
 

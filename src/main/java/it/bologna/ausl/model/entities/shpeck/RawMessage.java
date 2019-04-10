@@ -36,6 +36,8 @@ public class RawMessage implements Serializable {
     @Column(name = "raw_message")
     private String rawMessage;
     @JoinColumn(name = "id_message", referencedColumnName = "id")
+    
+    // dovrebbe essere OneToOne, ma mettendolo Hibernate lo caricherebbe sempre non stante il Lazy
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Message idMessage;
 

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,21 +42,14 @@ public class MessageFolder implements Serializable {
     @JoinColumn(name = "id_folder", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Folder idFolder;
-    
-//    @Column(name = "client_status")
-//    private Integer clientStatus;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "inserted")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime inserted;
-    
-    @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Utente idUtente;
-    
+
     @Column(name = "deleted")
     private Boolean deleted;
 
@@ -67,6 +57,13 @@ public class MessageFolder implements Serializable {
     @Column(name = "notes")
     private String notes;
     
+//    @Column(name = "client_status")
+//    private Integer clientStatus;
+    
+    @JoinColumn(name = "id_utente", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Utente idUtente;
+
     public MessageFolder() {
     }
 
