@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.List;
@@ -37,8 +38,8 @@ public class Address implements Serializable {
     @Column(name = "id")
     private Integer id;
     
-    @Column(name = "address")
-    private String address;
+    @Column(name = "mail_address")
+    private String mailAddress;
     
     @Column(name = "original_address")
     private String originalAddress;
@@ -47,6 +48,7 @@ public class Address implements Serializable {
     private String recipientType;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAddress", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageAddressList")
     private List<MessageAddress> messageAddressList;
 
     public Address() {
@@ -60,12 +62,12 @@ public class Address implements Serializable {
         this.id = id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getMailAddress() {
+        return mailAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
     }
 
     public String getOriginalAddress() {

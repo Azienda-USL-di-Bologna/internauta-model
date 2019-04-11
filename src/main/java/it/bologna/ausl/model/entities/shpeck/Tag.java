@@ -29,7 +29,11 @@ import javax.validation.constraints.Size;
 public class Tag implements Serializable {
 
     public static enum TagType {
-        SYSTEM_DELETABLE, SYSTEM_NOT_DELETABLE, CUSTOM
+        SYSTEM_INSERTABLE_DELETABLE,
+	SYSTEM_INSERTABLE_NOT_DELETABLE,
+	SYSTEM_NOT_INSERTABLE_DELETABLE,
+	SYSTEM_NOT_INSERTABLE_NOT_DELETABLE,
+	CUSTOM
     }
     
     private static final long serialVersionUID = 1L;

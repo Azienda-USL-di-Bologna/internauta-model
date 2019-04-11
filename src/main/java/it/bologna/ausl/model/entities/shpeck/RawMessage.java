@@ -33,8 +33,8 @@ public class RawMessage implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
-    @Column(name = "raw_message")
-    private String rawMessage;
+    @Column(name = "raw_data")
+    private String rawData;
     @JoinColumn(name = "id_message", referencedColumnName = "id")
     
     // dovrebbe essere OneToOne, ma mettendolo Hibernate lo caricherebbe sempre nonostante il Lazy
@@ -48,9 +48,9 @@ public class RawMessage implements Serializable {
         this.id = id;
     }
 
-    public RawMessage(Integer id, String rawMessage) {
+    public RawMessage(Integer id, String rawData) {
         this.id = id;
-        this.rawMessage = rawMessage;
+        this.rawData = rawData;
     }
 
     public Integer getId() {
@@ -61,12 +61,12 @@ public class RawMessage implements Serializable {
         this.id = id;
     }
 
-    public String getRawMessage() {
-        return rawMessage;
+    public String getRawData() {
+        return rawData;
     }
 
-    public void setRawMessage(String rawMessage) {
-        this.rawMessage = rawMessage;
+    public void setRawData(String rawData) {
+        this.rawData = rawData;
     }
 
     public Message getIdMessage() {

@@ -24,7 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Salo
  */
 @Entity
-@Table(name = "messages_tags", catalog = "internauta", schema = "shpeck")
+@Table(name = "messages_folders", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MessageFolder implements Serializable {
 

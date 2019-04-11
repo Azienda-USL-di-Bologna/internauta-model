@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
@@ -131,11 +132,30 @@ public class Message implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime receiveTime;
     
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "seen")
+    private Boolean seen;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageAddressList")
+    private List<MessageAddress> messageAddressList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageFolderList")
+    private List<MessageFolder> messageFolderList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "rawMessageList")
     private List<RawMessage> rawMessageList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRelated", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "idRelatedList")
+    private List<Message> idRelatedList;
 
     @OneToOne(optional=true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
@@ -304,6 +324,22 @@ public class Message implements Serializable {
         this.receiveTime = receiveTime;
     }
 
+    public Boolean getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Boolean seen) {
+        this.seen = seen;
+    }
+
+    public List<MessageAddress> getMessageAddressList() {
+        return messageAddressList;
+    }
+
+    public void setMessageAddressList(List<MessageAddress> messageAddressList) {
+        this.messageAddressList = messageAddressList;
+    }
+
     public List<MessageTag> getMessageTagList() {
         return messageTagList;
     }
@@ -312,12 +348,28 @@ public class Message implements Serializable {
         this.messageTagList = messageTagList;
     }
 
+    public List<MessageFolder> getMessageFolderList() {
+        return messageFolderList;
+    }
+
+    public void setMessageFolderList(List<MessageFolder> messageFolderList) {
+        this.messageFolderList = messageFolderList;
+    }
+
     public List<RawMessage> getRawMessageList() {
         return rawMessageList;
     }
 
     public void setRawMessageList(List<RawMessage> rawMessageList) {
         this.rawMessageList = rawMessageList;
+    }
+
+    public List<Message> getIdRelatedList() {
+        return idRelatedList;
+    }
+
+    public void setIdRelatedList(List<Message> idRelatedList) {
+        this.idRelatedList = idRelatedList;
     }
 
     public Recepit getIdRecepit() {

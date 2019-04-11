@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @author Salo
  */
 @Entity
-@Table(name = "addresses", catalog = "internauta", schema = "shpeck")
+@Table(name = "messages_addresses", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class MessageAddress implements Serializable {
@@ -39,6 +39,10 @@ public class MessageAddress implements Serializable {
     @JoinColumn(name = "address", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Address idAddress;
+    
+    @JoinColumn(name = "message", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Message idMessage;
 
     @Column(name = "address_role")
     private String addressRole;
@@ -60,6 +64,14 @@ public class MessageAddress implements Serializable {
 
     public void setIdAddress(Address address) {
         this.idAddress = address;
+    }
+
+    public Message getIdMessage() {
+        return idMessage;
+    }
+
+    public void setIdMessage(Message idMessage) {
+        this.idMessage = idMessage;
     }
 
     public AddressRoleType getRecipientType() {
