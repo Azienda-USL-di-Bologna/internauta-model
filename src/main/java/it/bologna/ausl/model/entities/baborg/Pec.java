@@ -103,18 +103,20 @@ public class Pec implements Serializable {
     @Column(name = "chiusa")
     private Boolean chiusa;
     
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "is_pec")
-    private Boolean isPec;
+    private Boolean isPec = false;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "lastuid")
-    private Long lastuid;
+    private Long lastuid = 0L;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "send_delay")
-    private Integer sendDelay;
+    private Integer sendDelay = -1;
     
     @Transient
     @QueryType(PropertyType.SIMPLE)
