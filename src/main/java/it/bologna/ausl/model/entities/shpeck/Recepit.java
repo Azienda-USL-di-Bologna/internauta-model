@@ -28,7 +28,13 @@ import javax.validation.constraints.Size;
 public class Recepit implements Serializable {
 
     public static enum RecepitType {
-        ACCETTAZIONE, CONSEGNA, ERRORE_PRESA_IN_CARICO, ERRORE_CONSEGNA
+        ACCETTAZIONE,
+        PREAVVISO_ERRORE_CONSEGNA,
+        PRESA_IN_CARICO,
+        NON_ACCETTAZIONE, 
+        RILEVAZIONE_VIRUS,
+        ERRORE_CONSEGNA,
+        CONSEGNA
     }
     
     private static final long serialVersionUID = 1L;

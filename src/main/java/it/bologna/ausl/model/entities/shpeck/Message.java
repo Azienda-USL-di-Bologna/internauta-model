@@ -7,6 +7,7 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -47,7 +48,7 @@ public class Message implements Serializable {
     public static enum MessageType {
         ERROR, MAIL, PEC, RECEPIT, DRAFT
     }
-    
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -90,14 +91,14 @@ public class Message implements Serializable {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime createTime;
+    private LocalDateTime createTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime updateTime;
+    private LocalDateTime updateTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
     
     @Size(max = 2147483647)
     @Column(name = "message_type")
@@ -130,12 +131,12 @@ public class Message implements Serializable {
     @Column(name = "receive_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime receiveTime;
+    private LocalDateTime receiveTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "seen")
-    private Boolean seen;
+    private Boolean seen = false;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageAddressList")
