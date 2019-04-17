@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
@@ -65,6 +66,7 @@ public class Tag implements Serializable {
     private Pec idPec;
         
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTag", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
 
     public Tag() {

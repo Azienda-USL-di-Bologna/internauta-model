@@ -159,6 +159,7 @@ public class Message implements Serializable {
 
     @OneToOne(optional=true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
+    @JsonBackReference(value = "idRecepit")
     private Recepit idRecepit;
     
     public Message() {
