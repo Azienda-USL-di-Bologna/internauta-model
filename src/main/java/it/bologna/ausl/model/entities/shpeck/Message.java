@@ -1,11 +1,13 @@
 package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -44,9 +46,9 @@ public class Message implements Serializable {
     }
     
     public static enum MessageType {
-        ERRORE, MAIL, PEC, RICEVUTA
+        ERROR, MAIL, PEC, RECEPIT, DRAFT
     }
-    
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -89,14 +91,14 @@ public class Message implements Serializable {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime createTime;
+    private LocalDateTime createTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime updateTime;
+    private LocalDateTime updateTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
     
     @Size(max = 2147483647)
     @Column(name = "message_type")
@@ -109,7 +111,7 @@ public class Message implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "n_attachments")
+    @Column(name = "attachments_number")
     private Integer attachmentsNumber;
     
     @Size(max = 2147483647)
@@ -126,22 +128,39 @@ public class Message implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "receive_date")
+    @Column(name = "receive_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime receiveDate;
+    private LocalDateTime receiveTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
     
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "seen")
+    private Boolean seen = false;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageAddressList")
+    private List<MessageAddress> messageAddressList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
-    private List<Inbox> inboxList;
+    @JsonBackReference(value = "messageFolderList")
+    private List<MessageFolder> messageFolderList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
-    private List<Outbox> outboxList;
+    @JsonBackReference(value = "rawMessageList")
+    private List<RawMessage> rawMessageList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRelated", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "idRelatedList")
+    private List<Message> idRelatedList;
 
     @OneToOne(optional=true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
+    @JsonBackReference(value = "idRecepit")
     private Recepit idRecepit;
     
     public Message() {
@@ -151,7 +170,7 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate) {
+    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveTime) {
         this.id = id;
         this.uuidMessage = uuidMessage;
         this.idPec = idPec;
@@ -168,7 +187,7 @@ public class Message implements Serializable {
         this.uuidRepository = uuidMongo;
         this.pathRepository = mongoPath;
         this.name = name;
-        this.receiveDate = receiveDate;
+        this.receiveTime = receiveTime;
     }
 
     public Integer getId() {
@@ -299,12 +318,28 @@ public class Message implements Serializable {
         this.name = name;
     }
 
-    public LocalDateTime getReceiveDate() {
-        return receiveDate;
+    public LocalDateTime getReceiveTime() {
+        return receiveTime;
     }
 
-    public void setReceiveDate(LocalDateTime receiveDate) {
-        this.receiveDate = receiveDate;
+    public void setReceiveDate(LocalDateTime receiveTime) {
+        this.receiveTime = receiveTime;
+    }
+
+    public Boolean getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Boolean seen) {
+        this.seen = seen;
+    }
+
+    public List<MessageAddress> getMessageAddressList() {
+        return messageAddressList;
+    }
+
+    public void setMessageAddressList(List<MessageAddress> messageAddressList) {
+        this.messageAddressList = messageAddressList;
     }
 
     public List<MessageTag> getMessageTagList() {
@@ -315,20 +350,28 @@ public class Message implements Serializable {
         this.messageTagList = messageTagList;
     }
 
-    public List<Inbox> getInboxList() {
-        return inboxList;
+    public List<MessageFolder> getMessageFolderList() {
+        return messageFolderList;
     }
 
-    public void setInboxList(List<Inbox> inboxList) {
-        this.inboxList = inboxList;
+    public void setMessageFolderList(List<MessageFolder> messageFolderList) {
+        this.messageFolderList = messageFolderList;
     }
 
-    public List<Outbox> getOutboxList() {
-        return outboxList;
+    public List<RawMessage> getRawMessageList() {
+        return rawMessageList;
     }
 
-    public void setOutboxList(List<Outbox> outboxList) {
-        this.outboxList = outboxList;
+    public void setRawMessageList(List<RawMessage> rawMessageList) {
+        this.rawMessageList = rawMessageList;
+    }
+
+    public List<Message> getIdRelatedList() {
+        return idRelatedList;
+    }
+
+    public void setIdRelatedList(List<Message> idRelatedList) {
+        this.idRelatedList = idRelatedList;
     }
 
     public Recepit getIdRecepit() {
@@ -361,7 +404,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.Message[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.Message[ id=" + id + " ]";
     }
     
 }

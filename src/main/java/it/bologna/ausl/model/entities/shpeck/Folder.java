@@ -1,6 +1,5 @@
 package it.bologna.ausl.model.entities.shpeck;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
@@ -25,16 +24,12 @@ import javax.validation.constraints.Size;
  * @author Salo
  */
 @Entity
-@Table(name = "tags", catalog = "internauta", schema = "shpeck")
+@Table(name = "folders", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Tag implements Serializable {
+public class Folder implements Serializable {
 
-    public static enum TagType {
-        SYSTEM_INSERTABLE_DELETABLE,
-	SYSTEM_INSERTABLE_NOT_DELETABLE,
-	SYSTEM_NOT_INSERTABLE_DELETABLE,
-	SYSTEM_NOT_INSERTABLE_NOT_DELETABLE,
-	CUSTOM
+    public static enum FolderType {
+        DRAFT, INBOX, OUTBOX, TRASH, SPAM, CUSTOM
     }
     
     private static final long serialVersionUID = 1L;
@@ -65,18 +60,17 @@ public class Tag implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pec idPec;
         
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTag", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "messageTagList")
-    private List<MessageTag> messageTagList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFolder", fetch = FetchType.LAZY)
+    private List<MessageFolder> messageFolderList;
 
-    public Tag() {
+    public Folder() {
     }
 
-    public Tag(Integer id) {
+    public Folder(Integer id) {
         this.id = id;
     }
 
-    public Tag(Integer id, String name, TagType type) {
+    public Folder(Integer id, String name, FolderType type) {
         this.id = id;
         this.name = name;
         this.type = type.toString();
@@ -106,11 +100,11 @@ public class Tag implements Serializable {
         this.description = description;
     }
 
-    public TagType getType() {
-        return TagType.valueOf(type);
+    public FolderType getType() {
+        return FolderType.valueOf(type);
     }
 
-    public void setType(TagType type) {
+    public void setType(FolderType type) {
         this.type = type.toString();
     }
 
@@ -122,12 +116,12 @@ public class Tag implements Serializable {
         this.idPec = idPec;
     }
 
-    public List<MessageTag> getMessageTagList() {
-        return messageTagList;
+    public List<MessageFolder> getMessageTagList() {
+        return messageFolderList;
     }
 
-    public void setMessageTagList(List<MessageTag> messageTagList) {
-        this.messageTagList = messageTagList;
+    public void setMessageTagList(List<MessageFolder> messageFolderList) {
+        this.messageFolderList = messageFolderList;
     }
   
     @Override
@@ -140,10 +134,10 @@ public class Tag implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tag)) {
+        if (!(object instanceof Folder)) {
             return false;
         }
-        Tag other = (Tag) object;
+        Folder other = (Folder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -152,7 +146,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.shpeck.Tag[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpec.Folder[ id=" + id + " ]";
     }
     
 }

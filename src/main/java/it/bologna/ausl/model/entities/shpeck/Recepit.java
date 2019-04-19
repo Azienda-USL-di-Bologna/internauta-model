@@ -27,6 +27,16 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Recepit implements Serializable {
 
+    public static enum RecepitType {
+        ACCETTAZIONE,
+        PREAVVISO_ERRORE_CONSEGNA,
+        PRESA_IN_CARICO,
+        NON_ACCETTAZIONE, 
+        RILEVAZIONE_VIRUS,
+        ERRORE_CONSEGNA,
+        CONSEGNA
+    }
+    
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -48,10 +58,6 @@ public class Recepit implements Serializable {
     @Column(name = "recepit_type")
     private String recepitType;
 
-
-    public static enum RecepitType {
-        ACCETTAZIONE, CONSEGNA, ERRORE_PRESA_IN_CARICO, ERRORE_CONSEGNA
-    }
 
     public Recepit() {
     }

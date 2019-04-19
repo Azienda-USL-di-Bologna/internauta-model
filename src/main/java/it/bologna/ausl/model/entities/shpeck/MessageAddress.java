@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,65 +19,71 @@ import javax.persistence.Table;
  * @author Salo
  */
 @Entity
-@Table(name = "addresses", catalog = "internauta", schema = "pecgw")
+@Table(name = "messages_addresses", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class MessageAddress implements Serializable {
     
     private  static final long serialVersionUID = 1L;
     
-    public static enum RoletType {
+    public static enum AddressRoleType {
         FROM, TO, CC
     }
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     
     @JoinColumn(name = "address", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Address address;
+    private Address idAddress;
     
-    @JoinColumn(name = "original_address", referencedColumnName = "id")
+    @JoinColumn(name = "message", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Address originalAddress;
-    
-    @Column(name = "role")
-    private RoletType recipientType;
+    private Message idMessage;
 
-    public Long getId() {
+    @Column(name = "address_role")
+    private String addressRole;
+
+    public MessageAddress() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getIdAddress() {
+        return idAddress;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setIdAddress(Address address) {
+        this.idAddress = address;
     }
 
-    public Address getOriginalAddress() {
-        return originalAddress;
+    public Message getIdMessage() {
+        return idMessage;
     }
 
-    public void setOriginalAddress(Address originalAddress) {
-        this.originalAddress = originalAddress;
+    public void setIdMessage(Message idMessage) {
+        this.idMessage = idMessage;
     }
 
-    public RoletType getRecipientType() {
-        return recipientType;
+    public AddressRoleType getRecipientType() {
+        return AddressRoleType.valueOf(addressRole);
     }
 
-    public void setRecipientType(RoletType recipientType) {
-        this.recipientType = recipientType;
+    public void setRecipientType(AddressRoleType recipientType) {
+        this.addressRole = recipientType.toString();
     }
-    
+
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.pecgw.MessageAddress[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.MessageAddress[ id=" + id + " ]";
     }
 }

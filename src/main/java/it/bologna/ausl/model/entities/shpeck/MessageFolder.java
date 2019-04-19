@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -23,9 +24,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Salo
  */
 @Entity
-@Table(name = "messages_tags", catalog = "internauta", schema = "shpeck")
+@Table(name = "messages_folders", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class MessageTag implements Serializable {
+public class MessageFolder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,13 +39,9 @@ public class MessageTag implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Message idMessage;
     
-    @JoinColumn(name = "id_tag", referencedColumnName = "id")
+    @JoinColumn(name = "id_folder", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Tag idTag;
-    
-    @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Utente idUtente;
+    private Folder idFolder;
 
     @Basic(optional = false)
     @NotNull
@@ -53,11 +50,30 @@ public class MessageTag implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime inserted;
 
-    public MessageTag() {
+    @Column(name = "deleted")
+    private Boolean deleted;
+
+    @Size(max = 2147483647)
+    @Column(name = "notes")
+    private String notes;
+    
+//    @Column(name = "client_status")
+//    private Integer clientStatus;
+    
+    @JoinColumn(name = "id_utente", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Utente idUtente;
+
+    public MessageFolder() {
     }
 
-    public MessageTag(Integer id) {
+    public MessageFolder(Integer id) {
         this.id = id;
+    }
+
+    public MessageFolder(Integer id, LocalDateTime inserted) {
+        this.id = id;
+        this.inserted = inserted;
     }
 
     public Integer getId() {
@@ -84,6 +100,22 @@ public class MessageTag implements Serializable {
         this.idUtente = idUtente;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public Message getIdMessage() {
         return idMessage;
     }
@@ -92,12 +124,12 @@ public class MessageTag implements Serializable {
         this.idMessage = idMessage;
     }
 
-    public Tag getIdTag() {
-        return idTag;
+    public Folder getIdFolder() {
+        return idFolder;
     }
 
-    public void setIdTag(Tag idTag) {
-        this.idTag = idTag;
+    public void setIdFolder(Folder idFolder) {
+        this.idFolder = idFolder;
     }
 
     @Override
@@ -110,10 +142,10 @@ public class MessageTag implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MessageTag)) {
+        if (!(object instanceof MessageFolder)) {
             return false;
         }
-        MessageTag other = (MessageTag) object;
+        MessageFolder other = (MessageFolder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -122,7 +154,7 @@ public class MessageTag implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.shpeck.MessageTag[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.shpeck.MessageFolder[ id=" + id + " ]";
     }
     
 }

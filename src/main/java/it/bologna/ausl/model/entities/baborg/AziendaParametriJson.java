@@ -19,11 +19,16 @@ public class AziendaParametriJson implements Serializable {
     private String entityId;
     private String loginPath;
     private String crossLoginUrlTemplate;
+    private String mongoConnectionString;
 
     public AziendaParametriJson() {
     }
 
-    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, String loginSSOField, String loginDBField, String loginDBFieldBaborg, String shalboApiUrl, MasterChefParmas masterchefParams, String entityId, String loginPath, String crossLoginUrlTemplate) {
+    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, 
+            String loginSSOField, String loginDBField, String loginDBFieldBaborg, 
+            String shalboApiUrl, MasterChefParmas masterchefParams, 
+            String entityId, String loginPath, String crossLoginUrlTemplate,
+            String mongoConnectionString) {
         this.babelSuiteBdsToolsUrl = babelSuiteBdsToolsUrl;
         this.babelSuiteWebApiUrl = babelSuiteWebApiUrl;
         this.loginSSOField = loginSSOField;
@@ -34,6 +39,7 @@ public class AziendaParametriJson implements Serializable {
         this.entityId = entityId;
         this.loginPath = loginPath;
         this.crossLoginUrlTemplate = crossLoginUrlTemplate;
+        this.mongoConnectionString = mongoConnectionString;
     }
 
 
@@ -115,6 +121,14 @@ public class AziendaParametriJson implements Serializable {
 
     public void setCrossLoginUrlTemplate(String crossLoginUrlTemplate) {
         this.crossLoginUrlTemplate = crossLoginUrlTemplate;
+    }
+    
+    public String getMongoConnectionString() {
+        return mongoConnectionString;
+    }
+
+    public void setMongoConnectionString(String mongoConnectionString) {
+        this.mongoConnectionString = mongoConnectionString;
     }
 
     public static AziendaParametriJson parse(ObjectMapper objectMapper, String src) throws IOException {
