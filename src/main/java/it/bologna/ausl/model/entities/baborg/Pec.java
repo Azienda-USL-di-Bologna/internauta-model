@@ -78,9 +78,9 @@ public class Pec implements Serializable {
     @JsonBackReference(value = "pecStrutturaList")
     private List<PecStruttura> pecStrutturaList;
     
-    @JoinColumn(name = "id_azienda", referencedColumnName = "id")
+    @JoinColumn(name = "id_azienda_repository", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private Azienda idAzienda; // da eliminare, trasformato in lista
+    private Azienda idAziendaRepository; // da eliminare, trasformato in lista
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPec", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "pecAziendaList")
@@ -220,12 +220,12 @@ public class Pec implements Serializable {
         this.pecStrutturaList = pecStrutturaList;
     }
 
-    public Azienda getIdAzienda() {
-        return idAzienda;
+    public Azienda getIdAziendaRepository() {
+        return idAziendaRepository;
     }
 
-    public void setIdAzienda(Azienda idAzienda) {
-        this.idAzienda = idAzienda;
+    public void setIdAziendaRepository(Azienda idAziendaRepository) {
+        this.idAziendaRepository = idAziendaRepository;
     }
 
     public List<PecAzienda> getPecAziendaList() {
