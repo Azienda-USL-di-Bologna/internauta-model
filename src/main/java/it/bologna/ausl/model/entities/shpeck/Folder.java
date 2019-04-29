@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
@@ -58,9 +59,11 @@ public class Folder implements Serializable {
 
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference(value = "idPec")
     private Pec idPec;
         
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFolder", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageFolderList")
     private List<MessageFolder> messageFolderList;
 
     public Folder() {
@@ -116,11 +119,11 @@ public class Folder implements Serializable {
         this.idPec = idPec;
     }
 
-    public List<MessageFolder> getMessageTagList() {
+    public List<MessageFolder> getMessageFolderList() {
         return messageFolderList;
     }
 
-    public void setMessageTagList(List<MessageFolder> messageFolderList) {
+    public void setMessageFolderList(List<MessageFolder> messageFolderList) {
         this.messageFolderList = messageFolderList;
     }
   
