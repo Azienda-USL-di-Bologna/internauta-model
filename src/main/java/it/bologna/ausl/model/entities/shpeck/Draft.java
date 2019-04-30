@@ -90,6 +90,12 @@ public class Draft implements Serializable {
     @Column(name = "eml")
     private byte[] eml;
     
+    @Basic(optional = true)
+    @NotNull
+    @JoinColumn(name = "id_message_replied", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Message idMessageReplied;
+    
     public Draft() {
     }
 
@@ -97,7 +103,9 @@ public class Draft implements Serializable {
         this.id = id;
     }
 
-    public Draft(Integer id, Pec idPec, String subject, String[] toAddresses, String[] ccAddresses, Boolean hiddenRecipients, LocalDateTime createTime, LocalDateTime updateTime, Integer attachmentsNumber, String[] attachmentsName, String body, byte[] eml) {
+    public Draft(Integer id, Pec idPec, String subject, String[] toAddresses, String[] ccAddresses, 
+            Boolean hiddenRecipients, LocalDateTime createTime, LocalDateTime updateTime, Integer attachmentsNumber, 
+            String[] attachmentsName, String body, byte[] eml, Message idMessageReplied) {
         this.id = id;
         this.idPec = idPec;
         this.subject = subject;
@@ -110,6 +118,7 @@ public class Draft implements Serializable {
         this.attachmentsName = attachmentsName;
         this.body = body;
         this.eml = eml;
+        this.idMessageReplied = idMessageReplied;
     }
 
     public Integer getId() {
@@ -206,6 +215,14 @@ public class Draft implements Serializable {
 
     public void setEml(byte[] eml) {
         this.eml = eml;
+    }
+
+    public Message getIdMessageReplied() {
+        return idMessageReplied;
+    }
+
+    public void setIdMessageReplied(Message idMessageReplied) {
+        this.idMessageReplied = idMessageReplied;
     }
 
     @Override
