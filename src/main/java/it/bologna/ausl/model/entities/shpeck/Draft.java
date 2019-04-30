@@ -60,21 +60,19 @@ public class Draft implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "hidden_recipients")
-    private Boolean hiddenRecipients;
+    private Boolean hiddenRecipients = false;
     
     @Basic(optional = false)
-    @NotNull
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime createTime;
+    private LocalDateTime createTime = LocalDateTime.now();
     
     @Basic(optional = false)
-    @NotNull
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime updateTime;
+    private LocalDateTime updateTime = LocalDateTime.now();
     
     @Column(name = "attachments_number")
     private Integer attachmentsNumber;
@@ -91,7 +89,6 @@ public class Draft implements Serializable {
     private byte[] eml;
     
     @Basic(optional = true)
-    @NotNull
     @JoinColumn(name = "id_message_replied", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Message idMessageReplied;
