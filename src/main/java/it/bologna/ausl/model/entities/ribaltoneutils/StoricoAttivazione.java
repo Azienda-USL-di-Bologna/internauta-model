@@ -1,8 +1,8 @@
 package it.bologna.ausl.model.entities.ribaltoneutils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,13 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Utente;
+import java.time.LocalDateTime;
 import javax.persistence.Cacheable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -44,16 +44,17 @@ public class StoricoAttivazione implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInserimentoRiga;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataInserimentoRiga;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ribalta_internauta")
-    private boolean ribaltaInternauta;
+    private Boolean ribaltaInternauta;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ribalta_argo")
-    private boolean ribaltaArgo;
+    private Boolean ribaltaArgo;
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Utente idUtente;
@@ -68,7 +69,7 @@ public class StoricoAttivazione implements Serializable {
         this.id = id;
     }
 
-    public StoricoAttivazione(Integer id, Azienda idAzienda, Date dataInserimentoRiga, boolean ribaltaInternauta, boolean ribaltaArgo, Utente idUtente) {
+    public StoricoAttivazione(Integer id, Azienda idAzienda, LocalDateTime dataInserimentoRiga, boolean ribaltaInternauta, boolean ribaltaArgo, Utente idUtente) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.dataInserimentoRiga = dataInserimentoRiga;
@@ -93,27 +94,27 @@ public class StoricoAttivazione implements Serializable {
         this.idAzienda = idAzienda;
     }
 
-    public Date getDataInserimentoRiga() {
+    public LocalDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(Date dataInserimentoRiga) {
+    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public boolean getRibaltaInternauta() {
+    public Boolean getRibaltaInternauta() {
         return ribaltaInternauta;
     }
 
-    public void setRibaltaInternauta(boolean ribaltaInternauta) {
+    public void setRibaltaInternauta(Boolean ribaltaInternauta) {
         this.ribaltaInternauta = ribaltaInternauta;
     }
 
-    public boolean getRibaltaArgo() {
+    public Boolean getRibaltaArgo() {
         return ribaltaArgo;
     }
 
-    public void setRibaltaArgo(boolean ribaltaArgo) {
+    public void setRibaltaArgo(Boolean ribaltaArgo) {
         this.ribaltaArgo = ribaltaArgo;
     }
 
