@@ -41,6 +41,10 @@ public class Outbox implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "raw_data")
     private String rawData;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ignore")
+    private Boolean ignore = false;
 
     public Outbox() {
     }
@@ -75,8 +79,16 @@ public class Outbox implements Serializable {
         this.rawData = rawData;
     }
 
+    public Boolean getIgnore() {
+        return ignore;
+    }
+
+    public void setIgnore(Boolean ignore) {
+        this.ignore = ignore;
+    }
+
     @Override
     public String toString() {
-        return "Outbox{" + "id=" + id + ", idPec=" + idPec + ", rawData=" + rawData + '}';
-    }    
+        return "Outbox{" + "id=" + id + ", idPec=" + idPec + ", rawData=" + rawData + ", ignore=" + ignore + '}';
+    }
 }
