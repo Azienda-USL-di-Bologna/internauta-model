@@ -74,16 +74,16 @@ public class MessageAddress implements Serializable {
         this.idMessage = idMessage;
     }
 
-    public AddressRoleType getRecipientType() {
+    public AddressRoleType getAddressRole() {
         return AddressRoleType.valueOf(addressRole);
     }
 
-    public void setRecipientType(AddressRoleType recipientType) {
-        this.addressRole = recipientType.toString();
+    public void setAddressRole(AddressRoleType roleType) {
+        this.addressRole = roleType.toString();
     }
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.shpeck.MessageAddress[ id=" + id + " ]";
+        return "MessageAddress{" + "id=" + id + ", idAddress=" + idAddress + ", idMessage=" + idMessage + ", addressRole=" + addressRole + '}';
     }
 }
