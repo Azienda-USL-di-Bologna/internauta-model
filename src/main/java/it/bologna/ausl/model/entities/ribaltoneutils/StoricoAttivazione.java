@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +38,7 @@ public class StoricoAttivazione implements Serializable {
     @Column(name = "id")
     private Integer id;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
     @Basic(optional = false)
     @NotNull
@@ -56,7 +55,7 @@ public class StoricoAttivazione implements Serializable {
     @Column(name = "ribalta_argo")
     private Boolean ribaltaArgo;
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Utente idUtente;
     @Size(max = 2147483647)
     @Column(name = "note")
