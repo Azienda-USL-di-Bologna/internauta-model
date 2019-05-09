@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
+import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -95,6 +97,12 @@ public class Utente implements Serializable, UserDetails {
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
+    @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "storicoAttivazioneList")
+    private List<StoricoAttivazione> storicoAttivazioneList;
+    @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "ribaltoneDaLanciareList")
+    private List<RibaltoneDaLanciare> ribaltoneDaLanciareList;
 
     @Transient
     private List<Ruolo> ruoli;
@@ -290,6 +298,22 @@ public class Utente implements Serializable, UserDetails {
 
     public void setPermessiDiFlusso(List<PermessoEntitaStoredProcedure> permessiDiFlusso) {
         this.permessiDiFlusso = permessiDiFlusso;
+    }
+
+    public List<StoricoAttivazione> getStoricoAttivazioneList() {
+        return storicoAttivazioneList;
+    }
+
+    public void setStoricoAttivazioneList(List<StoricoAttivazione> storicoAttivazioneList) {
+        this.storicoAttivazioneList = storicoAttivazioneList;
+    }
+
+    public List<RibaltoneDaLanciare> getRibaltoneDaLanciareList() {
+        return ribaltoneDaLanciareList;
+    }
+
+    public void setRibaltoneDaLanciareList(List<RibaltoneDaLanciare> ribaltoneDaLanciareList) {
+        this.ribaltoneDaLanciareList = ribaltoneDaLanciareList;
     }
 
     @Override
