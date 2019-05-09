@@ -404,7 +404,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.shpeck.Message[ id=" + id + " ]";
+        return "Message{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", idPec=" + idPec + ", idRelated=" + idRelated + ", subject=" + subject + ", messageStatus=" + messageStatus + ", inOut=" + inOut + ", messageType=" + messageType + ", isPec=" + isPec + '}';
     }
     
 }
