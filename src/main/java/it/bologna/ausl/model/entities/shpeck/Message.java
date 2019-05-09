@@ -7,7 +7,6 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -91,14 +90,14 @@ public class Message implements Serializable {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime createTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
+    private LocalDateTime createTime = LocalDateTime.now();
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime updateTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
+    private LocalDateTime updateTime = LocalDateTime.now();
     
     @Size(max = 2147483647)
     @Column(name = "message_type")
@@ -125,18 +124,22 @@ public class Message implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "name")
     private String name;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "receive_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime receiveTime = new java.sql.Timestamp(new Date().getTime()).toLocalDateTime();
+    private LocalDateTime receiveTime = LocalDateTime.now();
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "seen")
     private Boolean seen = false;
+
+    @Size(max = 2147483647)
+    @Column(name = "tscol", columnDefinition = "tsvector")
+    private String tscol;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageAddressList")
@@ -316,6 +319,14 @@ public class Message implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTscol() {
+        return tscol;
+    }
+
+    public void setTscol(String tscol) {
+        this.tscol = tscol;
     }
 
     public LocalDateTime getReceiveTime() {
