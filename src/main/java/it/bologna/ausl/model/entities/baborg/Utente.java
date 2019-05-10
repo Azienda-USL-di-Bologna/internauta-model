@@ -73,6 +73,7 @@ public class Utente implements Serializable, UserDetails {
     @Column(name = "omonimia")
     private Boolean omonimia;
     @Size(max = 200)
+    @JsonIgnoreProperties
     @Column(name = "password_hash")
     private String passwordHash;
     @Column(name = "dominio")

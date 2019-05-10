@@ -115,7 +115,7 @@ public class Azienda implements Serializable {
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "menuList")
     private List<Menu> menuList;
-    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "storicoAttivazioneList")
     private List<StoricoAttivazione> storicoAttivazioneList;
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY)
