@@ -36,91 +36,96 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 public class Message implements Serializable {
 
-        public static enum InOut {
+    public static enum InOut {
         IN, OUT
     }
-    
+
     public static enum MessageStatus {
         RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED
     }
-    
+
     public static enum MessageType {
         ERROR, MAIL, PEC, RECEPIT, DRAFT
     }
+
+    public static enum RelationType {
+        RICEVUTA, INOLTRA, RISPONDI, RISPONDI_TUTTI, REINDIRIZZA
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "uuid_message")
     private String uuidMessage;
-    
+
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pec idPec;
-    
+
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Applicazione idApplicazione;
-    
+
     @JoinColumn(name = "id_related", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Message idRelated;
-    
+
     @Size(max = 2147483647)
     @Column(name = "subject")
     private String subject;
-    
+
     @Column(name = "message_status")
     private String messageStatus;
-    
+
     @Size(max = 2147483647)
     @Column(name = "in_out")
     private String inOut;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createTime = LocalDateTime.now();
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updateTime = LocalDateTime.now();
-    
+
     @Size(max = 2147483647)
     @Column(name = "message_type")
     private String messageType;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_pec")
     private Boolean isPec;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "attachments_number")
     private Integer attachmentsNumber;
-    
+
     @Size(max = 2147483647)
     @Column(name = "uuid_repository")
     private String uuidRepository;
-    
+
     @Size(max = 2147483647)
     @Column(name = "path_repository")
     private String pathRepository;
-    
+
     @Size(max = 2147483647)
     @Column(name = "name")
     private String name;
@@ -131,7 +136,7 @@ public class Message implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime receiveTime = LocalDateTime.now();
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "seen")
@@ -148,24 +153,30 @@ public class Message implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageFolderList")
     private List<MessageFolder> messageFolderList;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "rawMessageList")
     private List<RawMessage> rawMessageList;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRelated", fetch = FetchType.LAZY)
     @JsonBackReference(value = "idRelatedList")
     private List<Message> idRelatedList;
 
-    @OneToOne(optional=true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
     @JsonBackReference(value = "idRecepit")
     private Recepit idRecepit;
-    
+
+    @JsonBackReference(value = "in_reply_to")
+    private String inReplyTo;
+
+    @JsonBackReference(value = "relation_type")
+    private String relationType;
+
     public Message() {
     }
 
@@ -393,6 +404,22 @@ public class Message implements Serializable {
         this.idRecepit = idRecepit;
     }
 
+    public String getInReplyTo() {
+        return inReplyTo;
+    }
+
+    public void setInReplyTo(String inReplyTo) {
+        this.inReplyTo = inReplyTo;
+    }
+
+    public String getRelationType() {
+        return relationType;
+    }
+
+    public void setRelationType(String relationType) {
+        this.relationType = relationType;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -415,7 +442,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", idPec=" + idPec + ", idRelated=" + idRelated + ", subject=" + subject + ", messageStatus=" + messageStatus + ", inOut=" + inOut + ", messageType=" + messageType + ", isPec=" + isPec + '}';
+        return "Message{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", idPec=" + idPec + ", idRelated=" + idRelated + ", subject=" + subject + ", messageStatus=" + messageStatus + ", inOut=" + inOut + ", createTime=" + createTime + ", updateTime=" + updateTime + ", messageType=" + messageType + ", attachmentsNumber=" + attachmentsNumber + ", uuidRepository=" + uuidRepository + ", pathRepository=" + pathRepository + ", receiveTime=" + receiveTime + ", seen=" + seen + ", idRecepit=" + idRecepit + ", inReplyTo=" + inReplyTo + ", relationType=" + relationType + '}';
     }
-    
+
 }
