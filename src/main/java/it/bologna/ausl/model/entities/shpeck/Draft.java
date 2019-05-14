@@ -34,7 +34,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Draft implements Serializable {
     
     public static enum MessageRelatedType {
-        REPLIED, FORWARDED
+        REPLIED, REPLIED_ALL, FORWARDED
     }
 
     @Id
