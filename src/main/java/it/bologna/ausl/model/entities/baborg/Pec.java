@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.model.entities.shpeck.Draft;
 import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Tag;
 import java.io.Serializable;
@@ -101,6 +102,10 @@ public class Pec implements Serializable {
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JsonBackReference(value = "folderList")
     private List<Folder> folderList;
+    
+    @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonBackReference(value = "draftList")
+    private List<Draft> draftList;
     
     @Column(name = "massiva")
     private Boolean massiva;
@@ -266,6 +271,14 @@ public class Pec implements Serializable {
 
     public void setFolderList(List<Folder> folderList) {
         this.folderList = folderList;
+    }
+
+    public List<Draft> getDraftList() {
+        return draftList;
+    }
+
+    public void setDraftList(List<Draft> draftList) {
+        this.draftList = draftList;
     }
 
     public Boolean getMassiva() {
