@@ -71,7 +71,10 @@ public class RibaltoneDaLanciare implements Serializable {
     private Boolean ribaltaArgo;
     @Column(name = "ribalta_rubriche")
     private Boolean ribaltaRubriche;
-
+    @Size(max = 2147483647)
+    @Column(name = "log")
+    private String log;
+    
     public RibaltoneDaLanciare() {
     }
 
@@ -181,6 +184,14 @@ public class RibaltoneDaLanciare implements Serializable {
 
     public void setRibaltaRubriche(Boolean ribaltaRubriche) {
         this.ribaltaRubriche = ribaltaRubriche;
+    }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
     }
 
     @Override
