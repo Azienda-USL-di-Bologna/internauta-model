@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
+import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ import javax.validation.constraints.Size;
 @Table(name = "outbox", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Outbox implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +47,10 @@ public class Outbox implements Serializable {
     @Column(name = "ignore")
     private Boolean ignore = false;
 
+    @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Applicazione idApplicazione;
+
     public Outbox() {
     }
 
@@ -54,7 +59,7 @@ public class Outbox implements Serializable {
         this.idPec = idPec;
         this.rawData = rawData;
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -87,8 +92,16 @@ public class Outbox implements Serializable {
         this.ignore = ignore;
     }
 
+    public Applicazione getIdApplicazione() {
+        return idApplicazione;
+    }
+
+    public void setIdApplicazione(Applicazione idApplicazione) {
+        this.idApplicazione = idApplicazione;
+    }
+
     @Override
     public String toString() {
-        return "Outbox{" + "id=" + id + ", idPec=" + idPec + ", rawData=" + rawData + ", ignore=" + ignore + '}';
+        return "Outbox{" + "id=" + id + ", idPec=" + idPec + ", rawData=" + rawData + ", ignore=" + ignore + ", idApplicazione=" + idApplicazione + '}';
     }
 }
