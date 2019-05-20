@@ -188,7 +188,7 @@ public class PecProvider implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.baborg.PecProvider[ id=" + id + " ]";
+        return "PecProvider{" + "id=" + id + ", descrizione=" + descrizione + ", pec=" + pec + ", host=" + host + ", port=" + port + ", protocol=" + protocol + ", hostOut=" + hostOut + ", portOut=" + portOut + ", protocolOut=" + protocolOut + '}';
     }
 
 }

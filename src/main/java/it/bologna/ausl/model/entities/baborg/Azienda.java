@@ -6,6 +6,8 @@ import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
+import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -113,7 +115,13 @@ public class Azienda implements Serializable {
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "menuList")
     private List<Menu> menuList;
-
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "storicoAttivazioneList")
+    private List<StoricoAttivazione> storicoAttivazioneList;
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "ribaltoneDaLanciareList")
+    private List<RibaltoneDaLanciare> ribaltoneDaLanciareList;
+    
     public Azienda() {
     }
 
@@ -302,6 +310,22 @@ public class Azienda implements Serializable {
 
     public void setMenuList(List<Menu> menuList) {
         this.menuList = menuList;
+    }
+
+    public List<StoricoAttivazione> getStoricoAttivazioneList() {
+        return storicoAttivazioneList;
+    }
+
+    public void setStoricoAttivazioneList(List<StoricoAttivazione> storicoAttivazioneList) {
+        this.storicoAttivazioneList = storicoAttivazioneList;
+    }
+
+    public List<RibaltoneDaLanciare> getRibaltoneDaLanciareList() {
+        return ribaltoneDaLanciareList;
+    }
+
+    public void setRibaltoneDaLanciareList(List<RibaltoneDaLanciare> ribaltoneDaLanciareList) {
+        this.ribaltoneDaLanciareList = ribaltoneDaLanciareList;
     }
 
     @Override

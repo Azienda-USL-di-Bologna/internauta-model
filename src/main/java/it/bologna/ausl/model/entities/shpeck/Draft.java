@@ -32,6 +32,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Draft implements Serializable {
+    
+    public static enum MessageRelatedType {
+        REPLIED, REPLIED_ALL, FORWARDED
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,9 +93,12 @@ public class Draft implements Serializable {
     private byte[] eml;
     
     @Basic(optional = true)
-    @JoinColumn(name = "id_message_replied", referencedColumnName = "id")
+    @JoinColumn(name = "id_message_related", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Message idMessageReplied;
+    private Message idMessageRelated;
+    
+    @Column(name = "message_related_type")
+    private String messageRelatedType;
     
     public Draft() {
     }
@@ -102,7 +109,7 @@ public class Draft implements Serializable {
 
     public Draft(Integer id, Pec idPec, String subject, String[] toAddresses, String[] ccAddresses, 
             Boolean hiddenRecipients, LocalDateTime createTime, LocalDateTime updateTime, Integer attachmentsNumber, 
-            String[] attachmentsName, String body, byte[] eml, Message idMessageReplied) {
+            String[] attachmentsName, String body, byte[] eml, Message idMessageRelated, String messageRelatedType) {
         this.id = id;
         this.idPec = idPec;
         this.subject = subject;
@@ -115,7 +122,8 @@ public class Draft implements Serializable {
         this.attachmentsName = attachmentsName;
         this.body = body;
         this.eml = eml;
-        this.idMessageReplied = idMessageReplied;
+        this.idMessageRelated = idMessageRelated;
+        this.messageRelatedType = messageRelatedType;
     }
 
     public Integer getId() {
@@ -214,12 +222,24 @@ public class Draft implements Serializable {
         this.eml = eml;
     }
 
-    public Message getIdMessageReplied() {
-        return idMessageReplied;
+    public Message getIdMessageRelated() {
+        return idMessageRelated;
     }
 
-    public void setIdMessageReplied(Message idMessageReplied) {
-        this.idMessageReplied = idMessageReplied;
+    public void setIdMessageRelated(Message idMessageRelated) {
+        this.idMessageRelated = idMessageRelated;
+    }
+
+    public MessageRelatedType getMessageRelatedType() {
+        if (this.messageRelatedType != null) {
+            return MessageRelatedType.valueOf(messageRelatedType);
+        } else {
+            return null;
+        }
+    }
+
+    public void setMessageRelatedType(MessageRelatedType messageRelatedType) {
+        this.messageRelatedType = messageRelatedType.toString();
     }
 
     @Override

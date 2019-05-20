@@ -37,6 +37,14 @@ public class Tag implements Serializable {
 	CUSTOM
     }
     
+    public static enum SystemTagName{
+        replied,
+        assigned,
+        replied_all,
+        readdressed,
+        forwarded
+    }
+    
     private static final long serialVersionUID = 1L;
     
     @Id
