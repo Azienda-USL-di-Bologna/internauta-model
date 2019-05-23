@@ -177,6 +177,12 @@ public class Message implements Serializable {
     @JsonBackReference(value = "relation_type")
     private String relationType;
 
+    @JoinColumn(name = "id_outbox", referencedColumnName = "id")
+    private Outbox idOutbox;
+
+    @Column(name = "id_message_vecchio")
+    private String idMessageVecchio;
+
     public Message() {
     }
 
@@ -420,6 +426,22 @@ public class Message implements Serializable {
         this.relationType = relationType;
     }
 
+    public Outbox getIdOutbox() {
+        return idOutbox;
+    }
+
+    public void setIdOutbox(Outbox idOutbox) {
+        this.idOutbox = idOutbox;
+    }
+
+    public String getIdMessageVecchio() {
+        return idMessageVecchio;
+    }
+
+    public void setIdMessageVecchio(String idMessageVecchio) {
+        this.idMessageVecchio = idMessageVecchio;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -442,7 +464,14 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", idPec=" + idPec + ", idRelated=" + idRelated + ", subject=" + subject + ", messageStatus=" + messageStatus + ", inOut=" + inOut + ", createTime=" + createTime + ", updateTime=" + updateTime + ", messageType=" + messageType + ", attachmentsNumber=" + attachmentsNumber + ", uuidRepository=" + uuidRepository + ", pathRepository=" + pathRepository + ", receiveTime=" + receiveTime + ", seen=" + seen + ", idRecepit=" + idRecepit + ", inReplyTo=" + inReplyTo + ", relationType=" + relationType + '}';
+        return "Message{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", idPec=" + idPec
+                + ", idRelated=" + idRelated + ", subject=" + subject + ", messageStatus=" + messageStatus
+                + ", inOut=" + inOut + ", createTime=" + createTime + ", updateTime=" + updateTime
+                + ", messageType=" + messageType + ", attachmentsNumber=" + attachmentsNumber
+                + ", uuidRepository=" + uuidRepository + ", pathRepository=" + pathRepository
+                + ", receiveTime=" + receiveTime + ", seen=" + seen + ", idRecepit=" + idRecepit
+                + ", inReplyTo=" + inReplyTo + ", relationType=" + relationType
+                + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessageVecchio + '}';
     }
 
 }
