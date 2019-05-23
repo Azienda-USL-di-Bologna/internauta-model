@@ -177,11 +177,11 @@ public class Message implements Serializable {
     @JsonBackReference(value = "relation_type")
     private String relationType;
 
-    @JoinColumn(name = "id_outbox", referencedColumnName = "id")
-    private Outbox idOutbox;
+    @Column(name = "id_outbox")
+    private Integer idOutbox;
 
-    @Column(name = "id_message_vecchio")
-    private String idMessageVecchio;
+    @Column(name = "id_message_pecgw")
+    private String idMessagePecgw;
 
     public Message() {
     }
@@ -426,20 +426,20 @@ public class Message implements Serializable {
         this.relationType = relationType;
     }
 
-    public Outbox getIdOutbox() {
+    public Integer getIdOutbox() {
         return idOutbox;
     }
 
-    public void setIdOutbox(Outbox idOutbox) {
+    public void setIdOutbox(Integer idOutbox) {
         this.idOutbox = idOutbox;
     }
 
-    public String getIdMessageVecchio() {
-        return idMessageVecchio;
+    public String getIdMessagePecgw() {
+        return idMessagePecgw;
     }
 
-    public void setIdMessageVecchio(String idMessageVecchio) {
-        this.idMessageVecchio = idMessageVecchio;
+    public void setIdMessageVecchio(String idMessagePecgw) {
+        this.idMessagePecgw = idMessagePecgw;
     }
 
     @Override
@@ -471,7 +471,7 @@ public class Message implements Serializable {
                 + ", uuidRepository=" + uuidRepository + ", pathRepository=" + pathRepository
                 + ", receiveTime=" + receiveTime + ", seen=" + seen + ", idRecepit=" + idRecepit
                 + ", inReplyTo=" + inReplyTo + ", relationType=" + relationType
-                + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessageVecchio + '}';
+                + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessagePecgw + '}';
     }
 
 }
