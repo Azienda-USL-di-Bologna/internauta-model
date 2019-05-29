@@ -65,6 +65,10 @@ public class Folder implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFolder", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageFolderList")
     private List<MessageFolder> messageFolderList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPreviousFolder", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messagePreviousFolderList")
+    private List<MessageFolder> messagePreviousFolderList;
 
     public Folder() {
     }
@@ -125,6 +129,14 @@ public class Folder implements Serializable {
 
     public void setMessageFolderList(List<MessageFolder> messageFolderList) {
         this.messageFolderList = messageFolderList;
+    }
+
+    public List<MessageFolder> getMessagePreviousFolderList() {
+        return messagePreviousFolderList;
+    }
+
+    public void setMessagePreviousFolderList(List<MessageFolder> messagePreviousFolderList) {
+        this.messagePreviousFolderList = messagePreviousFolderList;
     }
   
     @Override
