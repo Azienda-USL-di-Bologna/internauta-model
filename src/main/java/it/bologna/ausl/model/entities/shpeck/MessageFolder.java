@@ -63,6 +63,10 @@ public class MessageFolder implements Serializable {
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Utente idUtente;
+    
+    @JoinColumn(name = "id_previous_folder", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Folder idPreviousFolder;
 
     public MessageFolder() {
     }
@@ -130,6 +134,14 @@ public class MessageFolder implements Serializable {
 
     public void setIdFolder(Folder idFolder) {
         this.idFolder = idFolder;
+    }
+
+    public Folder getIdPreviousFolder() {
+        return idPreviousFolder;
+    }
+
+    public void setIdPreviousFolder(Folder idPreviousFolder) {
+        this.idPreviousFolder = idPreviousFolder;
     }
 
     @Override

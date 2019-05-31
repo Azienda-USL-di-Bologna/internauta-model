@@ -115,6 +115,10 @@ public class Utente implements Serializable, UserDetails {
      */
     @Transient
     private Map<String, List<String>> ruoliUtentiPersona;
+    
+    @Transient
+    private Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda;
+
 
     @Transient
     private Utente utenteReale;
@@ -300,6 +304,15 @@ public class Utente implements Serializable, UserDetails {
     public void setPermessiDiFlusso(List<PermessoEntitaStoredProcedure> permessiDiFlusso) {
         this.permessiDiFlusso = permessiDiFlusso;
     }
+    
+    public Map<String, List<PermessoEntitaStoredProcedure>> getPermessiDiFlussoByCodiceAzienda() {
+        return permessiDiFlussoByCodiceAzienda;
+    }
+
+    public void setPermessiDiFlussoByCodiceAzienda(Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda) {
+        this.permessiDiFlussoByCodiceAzienda = permessiDiFlussoByCodiceAzienda;
+    }
+
 
     public List<StoricoAttivazione> getStoricoAttivazioneList() {
         return storicoAttivazioneList;
