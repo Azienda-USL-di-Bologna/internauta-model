@@ -41,7 +41,7 @@ public class Message implements Serializable {
     }
 
     public static enum MessageStatus {
-        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED
+        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED, ACCEPTED
     }
 
     public static enum MessageType {
@@ -438,7 +438,7 @@ public class Message implements Serializable {
         return idMessagePecgw;
     }
 
-    public void setIdMessageVecchio(String idMessagePecgw) {
+    public void setIdMessagePecgw(String idMessagePecgw) {
         this.idMessagePecgw = idMessagePecgw;
     }
 
