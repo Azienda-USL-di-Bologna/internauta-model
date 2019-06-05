@@ -150,25 +150,29 @@ public class Message implements Serializable {
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageAddressList")
     private List<MessageAddress> messageAddressList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageFolderList")
     private List<MessageFolder> messageFolderList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "rawMessageList")
     private List<RawMessage> rawMessageList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRelated", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idRelated", fetch = FetchType.LAZY)
     @JsonBackReference(value = "idRelatedList")
     private List<Message> idRelatedList;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "noteList")
+    private List<Note> noteList;
 
     @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
@@ -412,6 +416,14 @@ public class Message implements Serializable {
 
     public void setIdRelatedList(List<Message> idRelatedList) {
         this.idRelatedList = idRelatedList;
+    }
+
+    public List<Note> getNoteList() {
+        return noteList;
+    }
+
+    public void setNoteList(List<Note> noteList) {
+        this.noteList = noteList;
     }
 
     public Recepit getIdRecepit() {
