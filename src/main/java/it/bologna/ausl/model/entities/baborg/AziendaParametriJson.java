@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class AziendaParametriJson implements Serializable {
     private String babelSuiteBdsToolsUrl;
     private String babelSuiteWebApiUrl;
+    private String descBreve;
     private String loginSSOField;
     private String loginDBField;
     private String loginDBFieldBaborg;
@@ -25,13 +26,12 @@ public class AziendaParametriJson implements Serializable {
     public AziendaParametriJson() {
     }
 
-    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, 
-            String loginSSOField, String loginDBField, String loginDBFieldBaborg, 
-            String shalboApiUrl, MasterChefParmas masterchefParams, 
-            String entityId, String loginPath, String crossLoginUrlTemplate,
-            MongoParams mongoParams) {
+    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, String descBreve, String loginSSOField, String loginDBField, 
+                                String loginDBFieldBaborg, String shalboApiUrl, MasterChefParmas masterchefParams, String entityId, String loginPath, 
+                                String crossLoginUrlTemplate, MongoParams mongoParams) {
         this.babelSuiteBdsToolsUrl = babelSuiteBdsToolsUrl;
         this.babelSuiteWebApiUrl = babelSuiteWebApiUrl;
+        this.descBreve = descBreve;
         this.loginSSOField = loginSSOField;
         this.loginDBField = loginDBField;
         this.loginDBFieldBaborg = loginDBFieldBaborg;
@@ -41,7 +41,6 @@ public class AziendaParametriJson implements Serializable {
         this.loginPath = loginPath;
         this.crossLoginUrlTemplate = crossLoginUrlTemplate;
         this.mongoParams = mongoParams;
-        //this.mongoConnectionString = mongoConnectionString;
     }
 
 
@@ -59,6 +58,14 @@ public class AziendaParametriJson implements Serializable {
 
     public void setBabelSuiteWebApiUrl(String babelSuiteWebApiUrl) {
         this.babelSuiteWebApiUrl = babelSuiteWebApiUrl;
+    }
+    
+        public String getDescBreve() {
+        return descBreve;
+    }
+
+    public void setDescBreve(String descBreve) {
+        this.descBreve = descBreve;
     }
 
     public String getLoginSSOField() {
