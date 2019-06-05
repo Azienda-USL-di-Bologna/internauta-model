@@ -137,6 +137,10 @@ public class Message implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime receiveTime = LocalDateTime.now();
 
+    @Size(max = 2147483647)
+    @Column(name = "external_id")
+    private String externalId;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "seen")
@@ -336,6 +340,14 @@ public class Message implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     public String getTscol() {
