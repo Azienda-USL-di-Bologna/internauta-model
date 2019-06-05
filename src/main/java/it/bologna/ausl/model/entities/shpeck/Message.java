@@ -41,7 +41,7 @@ public class Message implements Serializable {
     }
 
     public static enum MessageStatus {
-        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED
+        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED, ACCEPTED
     }
 
     public static enum MessageType {
@@ -136,6 +136,10 @@ public class Message implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime receiveTime = LocalDateTime.now();
+
+    @Size(max = 2147483647)
+    @Column(name = "external_id")
+    private String externalId;
 
     @Basic(optional = false)
     @NotNull
@@ -338,6 +342,14 @@ public class Message implements Serializable {
         this.name = name;
     }
 
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
     public String getTscol() {
         return tscol;
     }
@@ -438,7 +450,7 @@ public class Message implements Serializable {
         return idMessagePecgw;
     }
 
-    public void setIdMessageVecchio(String idMessagePecgw) {
+    public void setIdMessagePecgw(String idMessagePecgw) {
         this.idMessagePecgw = idMessagePecgw;
     }
 
