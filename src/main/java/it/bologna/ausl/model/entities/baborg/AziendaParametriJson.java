@@ -21,14 +21,15 @@ public class AziendaParametriJson implements Serializable {
     private String loginPath;
     private String crossLoginUrlTemplate;
     private MongoParams mongoParams;
+    private String logoutUrl;
     //private String mongoConnectionString;
+
+
 
     public AziendaParametriJson() {
     }
 
-    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, String descBreve, String loginSSOField, String loginDBField, 
-                                String loginDBFieldBaborg, String shalboApiUrl, MasterChefParmas masterchefParams, String entityId, String loginPath, 
-                                String crossLoginUrlTemplate, MongoParams mongoParams) {
+    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, String descBreve, String loginSSOField, String loginDBField, String loginDBFieldBaborg, String shalboApiUrl, MasterChefParmas masterchefParams, String entityId, String loginPath, String crossLoginUrlTemplate, MongoParams mongoParams, String logoutUrl) {
         this.babelSuiteBdsToolsUrl = babelSuiteBdsToolsUrl;
         this.babelSuiteWebApiUrl = babelSuiteWebApiUrl;
         this.descBreve = descBreve;
@@ -41,8 +42,8 @@ public class AziendaParametriJson implements Serializable {
         this.loginPath = loginPath;
         this.crossLoginUrlTemplate = crossLoginUrlTemplate;
         this.mongoParams = mongoParams;
+        this.logoutUrl = logoutUrl;
     }
-
 
     public String getBabelSuiteBdsToolsUrl() {
         return babelSuiteBdsToolsUrl;
@@ -138,6 +139,14 @@ public class AziendaParametriJson implements Serializable {
 
     public void setCrossLoginUrlTemplate(String crossLoginUrlTemplate) {
         this.crossLoginUrlTemplate = crossLoginUrlTemplate;
+    }
+    
+    public String getLogoutUrl() {
+        return logoutUrl;
+    }
+
+    public void setLogoutUrl(String logoutUrl) {
+        this.logoutUrl = logoutUrl;
     }
     
 //    public String getMongoConnectionString() {
