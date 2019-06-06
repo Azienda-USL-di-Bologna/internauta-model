@@ -27,102 +27,112 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MessageTag implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    
-    @JoinColumn(name = "id_message", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Message idMessage;
-    
-    @JoinColumn(name = "id_tag", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Tag idTag;
-    
-    @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Utente idUtente;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Basic(optional = false)
+  @Column(name = "id")
+  private Integer id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "inserted")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  @JoinColumn(name = "id_message", referencedColumnName = "id")
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  private Message idMessage;
+
+  @JoinColumn(name = "id_tag", referencedColumnName = "id")
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  private Tag idTag;
+
+  @JoinColumn(name = "id_utente", referencedColumnName = "id")
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  private Utente idUtente;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "inserted")
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime inserted = LocalDateTime.now();
 
-    public MessageTag() {
-    }
+  public MessageTag() {
+  }
 
-    public MessageTag(Integer id) {
-        this.id = id;
-    }
+  public MessageTag(Integer id) {
+    this.id = id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public LocalDateTime getInserted() {
-        return inserted;
-    }
+  public LocalDateTime getInserted() {
+    return inserted;
+  }
 
-    public void setInserted(LocalDateTime inserted) {
-        this.inserted = inserted;
-    }
+  public void setInserted(LocalDateTime inserted) {
+    this.inserted = inserted;
+  }
 
-    public Utente getIdUtente() {
-        return idUtente;
-    }
+  public Utente getIdUtente() {
+    return idUtente;
+  }
 
-    public void setIdUtente(Utente idUtente) {
-        this.idUtente = idUtente;
-    }
+  public void setIdUtente(Utente idUtente) {
+    this.idUtente = idUtente;
+  }
 
-    public Message getIdMessage() {
-        return idMessage;
-    }
+  public Message getIdMessage() {
+    return idMessage;
+  }
 
-    public void setIdMessage(Message idMessage) {
-        this.idMessage = idMessage;
-    }
+  public void setIdMessage(Message idMessage) {
+    this.idMessage = idMessage;
+  }
 
-    public Tag getIdTag() {
-        return idTag;
-    }
+  public Tag getIdTag() {
+    return idTag;
+  }
 
-    public void setIdTag(Tag idTag) {
-        this.idTag = idTag;
-    }
+  public void setIdTag(Tag idTag) {
+    this.idTag = idTag;
+  }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+  @Override
+  public int hashCode() {
+    int hash = 0;
+    hash += (id != null ? id.hashCode() : 0);
+    return hash;
+  }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MessageTag)) {
-            return false;
-        }
-        MessageTag other = (MessageTag) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+  @Override
+  public boolean equals(Object object) {
+    // TODO: Warning - this method won't work in the case the id fields are not set
+    if (!(object instanceof MessageTag)) {
+      return false;
     }
+    MessageTag other = (MessageTag) object;
+    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+      return false;
+    }
+    return true;
+  }
 
-    @Override
-    public String toString() {
-        return "it.bologna.ausl.model.entities.shpeck.MessageTag[ id=" + id + " ]";
-    }
-    
+  @Override
+  public String toString() {
+    return "it.bologna.ausl.model.entities.shpeck.MessageTag[ id=" + id + " ]";
+  }
+
+  @Override
+  public MessageTag clone() throws CloneNotSupportedException {
+    MessageTag mt = new MessageTag();
+    mt.setIdMessage(this.getIdMessage());
+    mt.setIdTag(this.getIdTag());
+    mt.setIdUtente(this.getIdUtente());
+    mt.setInserted(this.getInserted());
+
+    return mt;
+  }
 }
