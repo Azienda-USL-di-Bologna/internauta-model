@@ -44,7 +44,8 @@ public class Tag implements Serializable {
     readdressed_in,
     readdressed_out,
     forwarded,
-    annotated
+    annotated,
+    error
   }
 
   private static final long serialVersionUID = 1L;
@@ -74,6 +75,16 @@ public class Tag implements Serializable {
   @JoinColumn(name = "id_pec", referencedColumnName = "id")
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
   private Pec idPec;
+  
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "visible")
+  private Boolean visible = false;
+  
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "first_level")
+  private Boolean firstLevel = false;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTag", fetch = FetchType.LAZY)
   @JsonBackReference(value = "messageTagList")
@@ -130,6 +141,22 @@ public class Tag implements Serializable {
 
   public void setIdPec(Pec idPec) {
     this.idPec = idPec;
+  }
+
+  public Boolean getVisible() {
+      return visible;
+  }
+
+  public void setVisible(Boolean visible) {
+      this.visible = visible;
+  }
+
+  public Boolean getFirstLevel() {
+      return firstLevel;
+  }
+
+  public void setFirstLevel(Boolean firstLevel) {
+      this.firstLevel = firstLevel;
   }
 
   public List<MessageTag> getMessageTagList() {
