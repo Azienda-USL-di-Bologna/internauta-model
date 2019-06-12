@@ -48,7 +48,7 @@ public class MessageFolder implements Serializable {
     @Column(name = "inserted")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime inserted;
+    private LocalDateTime inserted = LocalDateTime.now();
 
     @Column(name = "deleted")
     private Boolean deleted;
