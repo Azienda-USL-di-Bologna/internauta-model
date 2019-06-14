@@ -107,9 +107,9 @@ public class MessageComplete implements Serializable {
     @Column(name = "seen")
     private Boolean seen;
 
-    @JoinColumn(name = "id_raw_message", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private RawMessage idRawMessage;
+//    @JoinColumn(name = "id_raw_message", referencedColumnName = "id")
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    private RawMessage idRawMessage;
 
     @Column(name = "folderType")
     private String folderType;
@@ -256,14 +256,6 @@ public class MessageComplete implements Serializable {
 
     public void setSeen(Boolean seen) {
         this.seen = seen;
-    }
-
-    public RawMessage getIdRawMessage() {
-        return idRawMessage;
-    }
-
-    public void setIdRawMessage(RawMessage idRawMessage) {
-        this.idRawMessage = idRawMessage;
     }
 
     public Folder.FolderType getFolderType() {
