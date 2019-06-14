@@ -7,6 +7,7 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -41,7 +42,7 @@ public class Message implements Serializable {
     }
 
     public static enum MessageStatus {
-        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED
+        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED, ACCEPTED
     }
 
     public static enum MessageType {
@@ -137,6 +138,10 @@ public class Message implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime receiveTime = LocalDateTime.now();
 
+    @Size(max = 2147483647)
+    @Column(name = "external_id")
+    private String externalId;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "seen")
@@ -146,25 +151,29 @@ public class Message implements Serializable {
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageAddressList")
     private List<MessageAddress> messageAddressList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageFolderList")
     private List<MessageFolder> messageFolderList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "rawMessageList")
     private List<RawMessage> rawMessageList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRelated", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idRelated", fetch = FetchType.LAZY)
     @JsonBackReference(value = "idRelatedList")
     private List<Message> idRelatedList;
+
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "noteList")
+    private List<Note> noteList;
 
     @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
@@ -338,6 +347,14 @@ public class Message implements Serializable {
         this.name = name;
     }
 
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
     public String getTscol() {
         return tscol;
     }
@@ -350,7 +367,7 @@ public class Message implements Serializable {
         return receiveTime;
     }
 
-    public void setReceiveDate(LocalDateTime receiveTime) {
+    public void setReceiveTime(LocalDateTime receiveTime) {
         this.receiveTime = receiveTime;
     }
 
@@ -402,6 +419,14 @@ public class Message implements Serializable {
         this.idRelatedList = idRelatedList;
     }
 
+    public List<Note> getNoteList() {
+        return noteList;
+    }
+
+    public void setNoteList(List<Note> noteList) {
+        this.noteList = noteList;
+    }
+
     public Recepit getIdRecepit() {
         return idRecepit;
     }
@@ -438,7 +463,7 @@ public class Message implements Serializable {
         return idMessagePecgw;
     }
 
-    public void setIdMessageVecchio(String idMessagePecgw) {
+    public void setIdMessagePecgw(String idMessagePecgw) {
         this.idMessagePecgw = idMessagePecgw;
     }
 
@@ -472,6 +497,54 @@ public class Message implements Serializable {
                 + ", receiveTime=" + receiveTime + ", seen=" + seen + ", idRecepit=" + idRecepit
                 + ", inReplyTo=" + inReplyTo + ", relationType=" + relationType
                 + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessagePecgw + '}';
+    }
+
+    @Override
+    public Message clone() throws CloneNotSupportedException {
+
+        // (Message) super.clone();
+        Message m = new Message();
+        m.setIdPec(this.getIdPec());
+        m.setIdApplicazione(this.getIdApplicazione());
+        m.setIdRelated(this.getIdRelated());
+        m.setSubject(this.getSubject());
+        m.setMessageStatus(this.getMessageStatus());
+        m.setInOut(this.getInOut());
+        m.setCreateTime(this.getCreateTime());
+        m.setMessageType(this.getMessageType());
+        m.setIsPec(this.getIsPec());
+        m.setAttachmentsNumber(this.getAttachmentsNumber());
+        m.setUuidRepository(this.getUuidRepository());
+        m.setPathRepository(this.getPathRepository());
+        m.setName(this.getName());
+        m.setReceiveTime(this.getReceiveTime());
+        m.setIdMessagePecgw(this.getIdMessagePecgw());
+        m.setIdOutbox(this.getIdOutbox());
+        m.setIdRecepit(this.getIdRecepit());
+        m.setInReplyTo(this.getInReplyTo());
+
+        List<MessageAddress> maList = new ArrayList();
+        MessageAddress mma;
+        for (MessageAddress ma : this.getMessageAddressList()) {
+            mma = ma.clone();
+            mma.setIdMessage(m);
+            maList.add(mma);
+        }
+        m.setMessageAddressList(maList);
+
+        List<MessageTag> mtList = new ArrayList();
+        for (MessageTag mt : this.getMessageTagList()) {
+            mtList.add(mt.clone());
+        }
+        m.setMessageTagList(mtList);
+
+        m.setRelationType(this.getRelationType());
+        m.setSeen(this.getSeen());
+        m.setTscol(this.getTscol());
+        m.setUuidMessage(this.getUuidMessage());
+        m.setMessageStatus(this.getMessageStatus());
+
+        return m;
     }
 
 }

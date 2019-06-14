@@ -31,38 +31,41 @@ public class Tag implements Serializable {
 
     public static enum TagType {
         SYSTEM_INSERTABLE_DELETABLE,
-	SYSTEM_INSERTABLE_NOT_DELETABLE,
-	SYSTEM_NOT_INSERTABLE_DELETABLE,
-	SYSTEM_NOT_INSERTABLE_NOT_DELETABLE,
-	CUSTOM
+        SYSTEM_INSERTABLE_NOT_DELETABLE,
+        SYSTEM_NOT_INSERTABLE_DELETABLE,
+        SYSTEM_NOT_INSERTABLE_NOT_DELETABLE,
+        CUSTOM
     }
-    
-    public static enum SystemTagName{
+
+    public static enum SystemTagName {
         replied,
         assigned,
         replied_all,
-        readdressed,
-        forwarded
+        readdressed_in,
+        readdressed_out,
+        forwarded,
+        annotated,
+        in_error
     }
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "name")
     private String name;
-    
+
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -72,7 +75,17 @@ public class Tag implements Serializable {
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pec idPec;
-        
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "visible")
+    private Boolean visible = false;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "first_level")
+    private Boolean firstLevel = false;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTag", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
@@ -130,6 +143,22 @@ public class Tag implements Serializable {
         this.idPec = idPec;
     }
 
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
+    }
+
+    public Boolean getFirstLevel() {
+        return firstLevel;
+    }
+
+    public void setFirstLevel(Boolean firstLevel) {
+        this.firstLevel = firstLevel;
+    }
+
     public List<MessageTag> getMessageTagList() {
         return messageTagList;
     }
@@ -137,7 +166,7 @@ public class Tag implements Serializable {
     public void setMessageTagList(List<MessageTag> messageTagList) {
         this.messageTagList = messageTagList;
     }
-  
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -162,5 +191,5 @@ public class Tag implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.shpeck.Tag[ id=" + id + " ]";
     }
-    
+
 }

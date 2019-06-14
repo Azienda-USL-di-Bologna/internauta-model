@@ -8,6 +8,7 @@ import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -21,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
@@ -86,9 +88,11 @@ public class Persona implements Serializable {
     @JsonBackReference(value = "impostazioniApplicazioniList")
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
     
-    @Transient
-//    @QueryType(PropertyType.SIMPLE)
+    @Transient //TODO: togliere e usare permessiPec (è usato in PersonaInterceptor)
     private List<PermessoEntitaStoredProcedure> permessi;
+
+    @Transient
+    private Map<Integer, List<String>> permessiPec;
     
     @Transient
 //    @QueryType(PropertyType.SIMPLE)
@@ -206,6 +210,14 @@ public class Persona implements Serializable {
 
     public void setPermessi(List<PermessoEntitaStoredProcedure> permessi) {
         this.permessi = permessi;
+    }
+
+    public Map<Integer, List<String>> getPermessiPec() {
+        return permessiPec;
+    }
+
+    public void setPermessiPec(Map<Integer, List<String>> permessiPec) {
+        this.permessiPec = permessiPec;
     }
 
     public String getApplicazione() {

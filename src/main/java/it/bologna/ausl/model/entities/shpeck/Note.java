@@ -6,6 +6,7 @@ import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,51 +17,60 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author Salo
+ * @author Giuseppe Russo <g.russo@nsi.it>
  */
 @Entity
-@Table(name = "messages_tags", catalog = "internauta", schema = "shpeck")
+@Table(name = "notes", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class MessageTag implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Cacheable(false)
+public class Note implements Serializable{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-
+    
+    @Basic(optional = false)
+    @NotNull
     @JoinColumn(name = "id_message", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Message idMessage;
-
-    @JoinColumn(name = "id_tag", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Tag idTag;
-
+    
+    @Basic(optional = false)
+    @NotNull
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Utente idUtente;
-
+    
+    @Size(max = 2147483647)
+    @Column(name = "memo")
+    private String memo;
+    
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "inserted")
+    @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime inserted = LocalDateTime.now();
+    private LocalDateTime createTime = LocalDateTime.now();
+    
+    @Basic(optional = false)
+    @Column(name = "update_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime updateTime = LocalDateTime.now();
 
-    @Column(name = "additional_data", columnDefinition = "jsonb")
-    private String additionalData;
-
-    public MessageTag() {
+    public Note() {
     }
 
-    public MessageTag(Integer id) {
-        this.id = id;
+    public Note(Message idMessage, Utente idUtente, String memo) {
+        this.idMessage = idMessage;
+        this.idUtente = idUtente;
+        this.memo = memo;
     }
 
     public Integer getId() {
@@ -71,12 +81,12 @@ public class MessageTag implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getInserted() {
-        return inserted;
+    public Message getIdMessage() {
+        return idMessage;
     }
 
-    public void setInserted(LocalDateTime inserted) {
-        this.inserted = inserted;
+    public void setIdMessage(Message idMessage) {
+        this.idMessage = idMessage;
     }
 
     public Utente getIdUtente() {
@@ -87,30 +97,30 @@ public class MessageTag implements Serializable {
         this.idUtente = idUtente;
     }
 
-    public Message getIdMessage() {
-        return idMessage;
+    public String getMemo() {
+        return memo;
     }
 
-    public void setIdMessage(Message idMessage) {
-        this.idMessage = idMessage;
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
-    public Tag getIdTag() {
-        return idTag;
+    public LocalDateTime getCreateTime() {
+        return createTime;
     }
 
-    public void setIdTag(Tag idTag) {
-        this.idTag = idTag;
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
-    public String getAdditionalData() {
-        return additionalData;
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
     }
 
-    public void setAdditionalData(String additionalData) {
-        this.additionalData = additionalData;
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,10 +131,10 @@ public class MessageTag implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MessageTag)) {
+        if (!(object instanceof Draft)) {
             return false;
         }
-        MessageTag other = (MessageTag) object;
+        Note other = (Note) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -133,17 +143,6 @@ public class MessageTag implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.shpeck.MessageTag[ id=" + id + " ]";
-    }
-
-    @Override
-    public MessageTag clone() throws CloneNotSupportedException {
-        MessageTag mt = new MessageTag();
-        mt.setIdMessage(this.getIdMessage());
-        mt.setIdTag(this.getIdTag());
-        mt.setIdUtente(this.getIdUtente());
-        mt.setInserted(this.getInserted());
-
-        return mt;
-    }
+        return "it.bologna.ausl.model.entities.shpeck.Note[ id=" + id + " ]";
+    }    
 }
