@@ -53,7 +53,7 @@ public class MessageTag implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime inserted = LocalDateTime.now();
 
-    @Column(name = "additional_data", columnDefinition = "text")
+    @Column(name = "additional_data", columnDefinition = "jsonb")
     private String additionalData;
 
     public MessageTag() {
