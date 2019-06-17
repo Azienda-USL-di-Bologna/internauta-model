@@ -51,7 +51,9 @@ public class Message implements Serializable {
 
     public static enum RelationType {
         RICEVUTA, INOLTRA, RISPONDI, RISPONDI_TUTTI, REINDIRIZZA
-    }
+    }    
+    
+    
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -45,7 +45,9 @@ public class Tag implements Serializable {
         readdressed_out,
         forwarded,
         annotated,
-        in_error
+        in_error,
+        registered,
+        in_registration
     }
 
     private static final long serialVersionUID = 1L;
