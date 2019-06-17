@@ -30,8 +30,8 @@ import javax.validation.constraints.Size;
 public class Folder implements Serializable {
 
     public static enum FolderType {
-        DRAFT, INBOX, OUTBOX, TRASH, SPAM, CUSTOM, SENT, REGISTERED,
-        READDRESSED
+        DRAFT, INBOX, OUTBOX, TRASH, SPAM, CUSTOM, SENT, REGISTERED
+        // READDRESSED
     }
     
     private static final long serialVersionUID = 1L;
