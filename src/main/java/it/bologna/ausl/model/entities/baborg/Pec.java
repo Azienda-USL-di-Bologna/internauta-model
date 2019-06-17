@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
@@ -52,11 +53,13 @@ public class Pec implements Serializable {
 
     @Basic(optional = false)
     @NotNull
+    @JsonIgnore
     @Column(name = "username", columnDefinition = "text")
     private String username;
 
     @Basic(optional = false)
     @NotNull
+    @JsonIgnore
     @Column(name = "password", columnDefinition = "text")
     private String password;
 
