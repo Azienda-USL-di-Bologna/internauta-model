@@ -45,11 +45,11 @@ public class Krint implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_sessione")
-    private int idSessione;
+    private Integer idSessione;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_utente")
-    private int idUtente;
+    private Integer idUtente;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
