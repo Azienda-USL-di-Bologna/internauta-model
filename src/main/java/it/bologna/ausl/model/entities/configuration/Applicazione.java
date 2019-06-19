@@ -30,7 +30,11 @@ import javax.validation.constraints.Size;
 @Cacheable(false)
 public class Applicazione implements Serializable {
     private static final long serialVersionUID = 1L;
-
+            
+    public static enum Applicazioni {
+        baborg, shpeck, scrivania
+    }
+    
     @Id
     @Basic(optional = false)
     @NotNull

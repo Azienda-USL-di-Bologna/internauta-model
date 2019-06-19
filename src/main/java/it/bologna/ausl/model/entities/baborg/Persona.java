@@ -94,9 +94,9 @@ public class Persona implements Serializable {
     @Transient
     private Map<Integer, List<String>> permessiPec;
     
-    @Transient
+//    @Transient
 //    @QueryType(PropertyType.SIMPLE)
-    private String applicazione;
+//    private String applicazione;
 
     public Persona() {
     }
@@ -220,13 +220,13 @@ public class Persona implements Serializable {
         this.permessiPec = permessiPec;
     }
 
-    public String getApplicazione() {
-        return applicazione;
-    }
-
-    public void setApplicazione(String applicazione) {
-        this.applicazione = applicazione;
-    }
+//    public String getApplicazione() {
+//        return applicazione;
+//    }
+//
+//    public void setApplicazione(String applicazione) {
+//        this.applicazione = applicazione;
+//    }
 
     @Override
     public int hashCode() {

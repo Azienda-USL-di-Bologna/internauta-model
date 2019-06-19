@@ -119,9 +119,9 @@ public class Utente implements Serializable, UserDetails {
     @Transient
     private Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda;
 
-
     @Transient
     private Utente utenteReale;
+    
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessiDiFlusso;
