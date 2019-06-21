@@ -42,7 +42,7 @@ public class Message implements Serializable {
     }
 
     public static enum MessageStatus {
-        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED, ACCEPTED
+        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED, ACCEPTED, RESENT
     }
 
     public static enum MessageType {
@@ -51,9 +51,7 @@ public class Message implements Serializable {
 
     public static enum RelationType {
         RICEVUTA, INOLTRA, RISPONDI, RISPONDI_TUTTI, REINDIRIZZA
-    }    
-    
-    
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
