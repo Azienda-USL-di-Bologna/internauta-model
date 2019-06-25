@@ -6,7 +6,6 @@ import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -18,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -30,7 +28,11 @@ import javax.validation.constraints.Size;
 @Cacheable(false)
 public class Applicazione implements Serializable {
     private static final long serialVersionUID = 1L;
-
+            
+    public static enum Applicazioni {
+        scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo
+    }
+    
     @Id
     @Basic(optional = false)
     @NotNull

@@ -51,6 +51,10 @@ public class Outbox implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Applicazione idApplicazione;
 
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "external_id")
+    private String externalId;
+
     public Outbox() {
     }
 
@@ -100,8 +104,16 @@ public class Outbox implements Serializable {
         this.idApplicazione = idApplicazione;
     }
 
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
     @Override
     public String toString() {
-        return "Outbox{" + "id=" + id + ", idPec=" + idPec + ", rawData=" + rawData + ", ignore=" + ignore + ", idApplicazione=" + idApplicazione + '}';
+        return "Outbox{" + "id=" + id + ", idPec=" + idPec + ", rawData=" + rawData + ", ignore=" + ignore + ", idApplicazione=" + idApplicazione + ", externalId=" + externalId + '}';
     }
 }

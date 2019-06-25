@@ -42,7 +42,7 @@ public class Message implements Serializable {
     }
 
     public static enum MessageStatus {
-        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED, ACCEPTED
+        RECEIVED, SENT, TO_SEND, WAITING_RECEPIT, ERROR, CONFIRMED, ACCEPTED, RESENT
     }
 
     public static enum MessageType {

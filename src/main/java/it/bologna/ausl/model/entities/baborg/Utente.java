@@ -73,7 +73,7 @@ public class Utente implements Serializable, UserDetails {
     @Column(name = "omonimia")
     private Boolean omonimia;
     @Size(max = 200)
-    @JsonIgnoreProperties
+    @JsonIgnore
     @Column(name = "password_hash")
     private String passwordHash;
     @Column(name = "dominio")
@@ -119,9 +119,9 @@ public class Utente implements Serializable, UserDetails {
     @Transient
     private Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda;
 
-
     @Transient
     private Utente utenteReale;
+    
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessiDiFlusso;
