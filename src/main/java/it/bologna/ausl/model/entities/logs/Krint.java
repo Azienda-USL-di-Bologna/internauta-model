@@ -32,6 +32,13 @@ public class Krint implements Serializable {
     public static enum TipoOggettoKrint {
         PEC_MESSAGE
     };
+    
+    public static enum KrintField {
+        idSessione, idUtente, descrizioneUtente, informazioniUtente,
+        idRealUser, descrizioneRealUser, informazioniRealUser, idOggetto,
+        tipoOggetto, informazioniOggetto, idOggettoCollegato, tipoOggettoCollegato,
+        informazioniOggettoCollegato, idOperazione         
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,7 +75,10 @@ public class Krint implements Serializable {
     private String idOggetto;
     @Size(max = 2147483647)
     @Column(name = "tipo_oggetto")
-    private String tipoOggetto;  
+    private String tipoOggetto;
+    @Size(max = 2147483647)
+    @Column(name = "descrizione_oggetto")
+    private String descrizioneOggetto;
     @Column(name = "informazioni_oggetto", columnDefinition = "jsonb")  
     private String informazioniOggetto;
     @Size(max = 100)
@@ -77,11 +87,14 @@ public class Krint implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "tipo_oggetto_collegato")
     private String tipoOggettoCollegato;
+    @Size(max = 2147483647)
+    @Column(name = "descrizione_oggetto_collegato")
+    private String descrizioneOggettoCollegato;
     @Column(name = "informazioni_oggetto_collegato", columnDefinition = "jsonb")
     private String informazioniOggettoCollegato;
     @JoinColumn(name = "id_operazione", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private OperazioniKrint idOperazione;
+    private OperazioneKrint idOperazione;
     @Column(name = "dataora_operazione", updatable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -91,17 +104,15 @@ public class Krint implements Serializable {
     public Krint() {
     }
 
-    public Krint(Integer id) {
-        this.id = id;
-    }
 
-    public Krint(Integer id, int idSessione, int idUtente, String descrizioneUtente, String informazioniUtente) {
-        this.id = id;
+
+    public Krint(Integer idSessione, Integer idUtente, String descrizioneUtente, String informazioniUtente) {
         this.idSessione = idSessione;
         this.idUtente = idUtente;
         this.descrizioneUtente = descrizioneUtente;
         this.informazioniUtente = informazioniUtente;
     }
+    
 
     public Integer getId() {
         return id;
@@ -111,11 +122,11 @@ public class Krint implements Serializable {
         this.id = id;
     }
 
-    public int getIdSessione() {
+    public Integer getIdSessione() {
         return idSessione;
     }
 
-    public void setIdSessione(int idSessione) {
+    public void setIdSessione(Integer idSessione) {
         this.idSessione = idSessione;
     }
 
@@ -123,7 +134,7 @@ public class Krint implements Serializable {
         return idUtente;
     }
 
-    public void setIdUtente(int idUtente) {
+    public void setIdUtente(Integer idUtente) {
         this.idUtente = idUtente;
     }
 
@@ -175,12 +186,21 @@ public class Krint implements Serializable {
         this.idOggetto = idOggetto;
     }
 
-    public String getTipoOggetto() {
-        return tipoOggetto;
+    public TipoOggettoKrint getTipoOggetto() {
+        return TipoOggettoKrint.valueOf(tipoOggetto);
     }
 
-    public void setTipoOggetto(String tipoOggetto) {
-        this.tipoOggetto = tipoOggetto;
+    public void setTipoOggetto(TipoOggettoKrint tipoOggetto) {
+        this.tipoOggetto = tipoOggetto.name();
+    }
+    
+    
+    public String getDescrizioneOggetto() {
+        return descrizioneOggetto;
+    }
+
+    public void setDescrizioneOggetto(String descrizioneOggetto) {
+        this.descrizioneOggetto = descrizioneOggetto;
     }
 
     public Object getInformazioniOggetto() {
@@ -206,6 +226,15 @@ public class Krint implements Serializable {
     public void setTipoOggettoCollegato(String tipoOggettoCollegato) {
         this.tipoOggettoCollegato = tipoOggettoCollegato;
     }
+    
+    public String getDescrizioneOggettoCollegato() {
+        return descrizioneOggettoCollegato;
+    }
+
+    public void setDescrizioneOggettoCollegato(String descrizioneOggettoCollegato) {
+        this.descrizioneOggettoCollegato = descrizioneOggettoCollegato;
+    }
+
 
     public Object getInformazioniOggettoCollegato() {
         return informazioniOggettoCollegato;
@@ -223,11 +252,11 @@ public class Krint implements Serializable {
         this.dataoraOperazione = dataoraOperazione;
     }
 
-    public OperazioniKrint getIdOperazione() {
+    public OperazioneKrint getIdOperazione() {
         return idOperazione;
     }
 
-    public void setIdOperazione(OperazioniKrint idOperazione) {
+    public void setIdOperazione(OperazioneKrint idOperazione) {
         this.idOperazione = idOperazione;
     }
 
