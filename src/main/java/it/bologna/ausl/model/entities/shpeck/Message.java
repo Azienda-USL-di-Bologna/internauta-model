@@ -489,14 +489,12 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", idPec=" + idPec
-                + ", idRelated=" + idRelated + ", subject=" + subject + ", messageStatus=" + messageStatus
+        return "Message{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", subject=" + subject + ", messageStatus=" + messageStatus
                 + ", inOut=" + inOut + ", createTime=" + createTime + ", updateTime=" + updateTime
                 + ", messageType=" + messageType + ", attachmentsNumber=" + attachmentsNumber
                 + ", uuidRepository=" + uuidRepository + ", pathRepository=" + pathRepository
-                + ", receiveTime=" + receiveTime + ", seen=" + seen + ", idRecepit=" + idRecepit
-                + ", inReplyTo=" + inReplyTo + ", relationType=" + relationType
-                + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessagePecgw + '}';
+                + ", receiveTime=" + receiveTime + ", seen=" + seen + ", inReplyTo=" + inReplyTo
+                + ", relationType=" + relationType + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessagePecgw + '}';
     }
 
     @Override
