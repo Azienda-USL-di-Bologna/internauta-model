@@ -41,35 +41,49 @@ import org.hibernate.annotations.TypeDefs;
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
+    
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Applicazione idApplicazione;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
+    
     @Size(max = 2147483647)
     @Column(name = "open_command")
     private String openCommand;
     @Column(name = "permessi_sufficienti", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] permessiSufficienti;
+    
     @Column(name = "ruoli_sufficienti", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] ruoliSufficienti;
+    
+    @Column(name = "visibile_aziende", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] visibileAziende;
+    
+    @Basic(optional = false)
+    @Column(name = "ordinale")
+    private Integer ordinale;
     
     @Transient
     private String compiledUrl;
@@ -142,6 +156,22 @@ public class Menu implements Serializable {
 
     public void setRuoliSufficienti(String[] ruoliSufficienti) {
         this.ruoliSufficienti = ruoliSufficienti;
+    }
+
+    public String[] getVisibileAziende() {
+        return visibileAziende;
+    }
+
+    public void setVisibileAziende(String[] visibileAziende) {
+        this.visibileAziende = visibileAziende;
+    }
+
+    public Integer getOrdinale() {
+        return ordinale;
+    }
+
+    public void setOrdinale(Integer ordinale) {
+        this.ordinale = ordinale;
     }
 
     public String getCompiledUrl() {
