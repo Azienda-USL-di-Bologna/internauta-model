@@ -58,8 +58,6 @@ public class OperazioneKrint implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOperazione")
-    private List<Krint> krintList;
 
     public OperazioneKrint() {
     }
@@ -97,14 +95,6 @@ public class OperazioneKrint implements Serializable {
         this.descrizione = descrizione;
     }
 
-    @XmlTransient
-    public List<Krint> getKrintList() {
-        return krintList;
-    }
-
-    public void setKrintList(List<Krint> krintList) {
-        this.krintList = krintList;
-    }
 
     @Override
     public int hashCode() {

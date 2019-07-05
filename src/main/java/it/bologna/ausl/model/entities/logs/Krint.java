@@ -30,15 +30,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Krint implements Serializable {
     
     public static enum TipoOggettoKrint {
-        PEC_MESSAGE
+        PEC, PEC_MESSAGE
     };
     
-    public static enum KrintField {
-        idSessione, idUtente, descrizioneUtente, informazioniUtente,
-        idRealUser, descrizioneRealUser, informazioniRealUser, idOggetto,
-        tipoOggetto, informazioniOggetto, idOggettoCollegato, tipoOggettoCollegato,
-        informazioniOggettoCollegato, idOperazione         
-    }
+//    public static enum KrintField {
+//        idSessione, idUtente, descrizioneUtente, informazioniUtente,
+//        idRealUser, descrizioneRealUser, informazioniRealUser, idOggetto,
+//        tipoOggetto, informazioniOggetto, idOggettoCollegato, tipoOggettoCollegato,
+//        informazioniOggettoCollegato, idOperazione         
+//    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -82,23 +82,25 @@ public class Krint implements Serializable {
     @Column(name = "informazioni_oggetto", columnDefinition = "jsonb")  
     private String informazioniOggetto;
     @Size(max = 100)
-    @Column(name = "id_oggetto_collegato")
-    private String idOggettoCollegato;
+    @Column(name = "id_oggetto_contenitore")
+    private String idOggettoContenitore;
     @Size(max = 2147483647)
-    @Column(name = "tipo_oggetto_collegato")
-    private String tipoOggettoCollegato;
+    @Column(name = "tipo_oggetto_contenitore")
+    private String tipoOggettoContenitore;
     @Size(max = 2147483647)
-    @Column(name = "descrizione_oggetto_collegato")
-    private String descrizioneOggettoCollegato;
-    @Column(name = "informazioni_oggetto_collegato", columnDefinition = "jsonb")
-    private String informazioniOggettoCollegato;
-    @JoinColumn(name = "id_operazione", referencedColumnName = "id")
+    @Column(name = "descrizione_oggetto_contenitore")
+    private String descrizioneOggettoContenitore;
+    @Column(name = "informazioni_oggetto_contenitore", columnDefinition = "jsonb")
+    private String informazioniOggettoContenitore;
+    @JoinColumn(name = "id_operazione_versionata", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private OperazioneKrint idOperazione;
+    private OperazioneVersionataKrint idOperazioneVersionata;
     @Column(name = "dataora_operazione", updatable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataoraOperazione;
+
+
     
     
     public Krint() {
@@ -211,37 +213,37 @@ public class Krint implements Serializable {
         this.informazioniOggetto = informazioniOggetto;
     }
 
-    public String getIdOggettoCollegato() {
-        return idOggettoCollegato;
+    public String getIdOggettoContenitore() {
+        return idOggettoContenitore;
     }
 
-    public void setIdOggettoCollegato(String idOggettoCollegato) {
-        this.idOggettoCollegato = idOggettoCollegato;
+    public void setIdOggettoContenitore(String idOggettoContenitore) {
+        this.idOggettoContenitore = idOggettoContenitore;
     }
 
-    public String getTipoOggettoCollegato() {
-        return tipoOggettoCollegato;
+    public TipoOggettoKrint getTipoOggettoContenitore() {
+        return TipoOggettoKrint.valueOf(tipoOggettoContenitore);
     }
 
-    public void setTipoOggettoCollegato(String tipoOggettoCollegato) {
-        this.tipoOggettoCollegato = tipoOggettoCollegato;
+    public void setTipoOggettoCollegato(TipoOggettoKrint tipoOggettoContenitore) {
+        this.tipoOggettoContenitore = tipoOggettoContenitore.name();
     }
     
     public String getDescrizioneOggettoCollegato() {
-        return descrizioneOggettoCollegato;
+        return descrizioneOggettoContenitore;
     }
 
-    public void setDescrizioneOggettoCollegato(String descrizioneOggettoCollegato) {
-        this.descrizioneOggettoCollegato = descrizioneOggettoCollegato;
+    public void setDescrizioneOggettoCollegato(String descrizioneOggettoContenitore) {
+        this.descrizioneOggettoContenitore = descrizioneOggettoContenitore;
     }
 
 
-    public Object getInformazioniOggettoCollegato() {
-        return informazioniOggettoCollegato;
+    public Object getInformazioniOggettoContenitore() {
+        return informazioniOggettoContenitore;
     }
 
-    public void setInformazioniOggettoCollegato(String informazioniOggettoCollegato) {
-        this.informazioniOggettoCollegato = informazioniOggettoCollegato;
+    public void setInformazioniOggettoCollegato(String informazioniOggettoContenitore) {
+        this.informazioniOggettoContenitore = informazioniOggettoContenitore;
     }
 
     public LocalDateTime getDataoraOperazione() {
@@ -252,12 +254,12 @@ public class Krint implements Serializable {
         this.dataoraOperazione = dataoraOperazione;
     }
 
-    public OperazioneKrint getIdOperazione() {
-        return idOperazione;
+    public OperazioneVersionataKrint getIdOperazioneVersionata() {
+        return idOperazioneVersionata;
     }
 
-    public void setIdOperazione(OperazioneKrint idOperazione) {
-        this.idOperazione = idOperazione;
+    public void setIdOperazioneVersionata(OperazioneVersionataKrint idOperazioneVersionata) {
+        this.idOperazioneVersionata = idOperazioneVersionata;
     }
 
     @Override
