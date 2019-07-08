@@ -1,0 +1,101 @@
+package it.bologna.ausl.model.entities.shpeck;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author Salo
+ */
+@Entity
+@Table(name = "addresses", catalog = "internauta", schema = "shpeck")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Cacheable(false)
+public class Address implements Serializable {
+
+    private  static final long serialVersionUID = 1L;
+
+    public static enum RecipientType {
+        PEC, REGULAR_EMAIL, UNKNOWN
+    }
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    
+    @Column(name = "mail_address")
+    private String mailAddress;
+    
+    @Column(name = "original_address")
+    private String originalAddress;
+    
+    @Column(name = "recipient_type")
+    private String recipientType;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAddress", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageAddressList")
+    private List<MessageAddress> messageAddressList;
+
+    public Address() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getMailAddress() {
+        return mailAddress;
+    }
+
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
+    }
+
+    public String getOriginalAddress() {
+        return originalAddress;
+    }
+
+    public void setOriginalAddress(String originalAddress) {
+        this.originalAddress = originalAddress;
+    }
+
+    public RecipientType getRecipientType() {
+        return RecipientType.valueOf(recipientType);
+    }
+
+    public void setRecipientType(RecipientType recipientType) {
+        this.recipientType = recipientType.toString();
+    }
+
+    public List<MessageAddress> getMessageAddressList() {
+        return messageAddressList;
+    }
+
+    public void setMessageAddressList(List<MessageAddress> messageAddressList) {
+        this.messageAddressList = messageAddressList;
+    }
+ 
+    @Override
+    public String toString() {
+        return "it.bologna.ausl.model.entities.shpeck.Address[ id=" + id + " ]";
+    }
+}
