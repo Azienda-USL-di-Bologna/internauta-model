@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.logs;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
@@ -50,6 +51,10 @@ public class Krint implements Serializable {
     @NotNull
     @Column(name = "id_sessione")
     private Integer idSessione;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "applicazione")
+    private String applicazione;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_utente")
@@ -108,7 +113,8 @@ public class Krint implements Serializable {
 
 
 
-    public Krint(Integer idSessione, Integer idUtente, String descrizioneUtente, String informazioniUtente) {
+    public Krint(Integer idSessione, Applicazione.Applicazioni applicazione, Integer idUtente, String descrizioneUtente, String informazioniUtente) {
+        this.applicazione = applicazione.name();
         this.idSessione = idSessione;
         this.idUtente = idUtente;
         this.descrizioneUtente = descrizioneUtente;
@@ -132,6 +138,14 @@ public class Krint implements Serializable {
         this.idSessione = idSessione;
     }
 
+    public Applicazione.Applicazioni getApplicazione() {
+        return Applicazione.Applicazioni.valueOf(applicazione);
+    }
+
+    public void setApplicazione(Applicazione.Applicazioni applicazione) {
+        this.applicazione = applicazione.name();
+    }
+    
     public int getIdUtente() {
         return idUtente;
     }
@@ -225,15 +239,15 @@ public class Krint implements Serializable {
         return TipoOggettoKrint.valueOf(tipoOggettoContenitore);
     }
 
-    public void setTipoOggettoCollegato(TipoOggettoKrint tipoOggettoContenitore) {
+    public void setTipoOggettoContenitore(TipoOggettoKrint tipoOggettoContenitore) {
         this.tipoOggettoContenitore = tipoOggettoContenitore.name();
     }
     
-    public String getDescrizioneOggettoCollegato() {
+    public String getDescrizioneOggettoContenitore() {
         return descrizioneOggettoContenitore;
     }
 
-    public void setDescrizioneOggettoCollegato(String descrizioneOggettoContenitore) {
+    public void setDescrizioneOggettoContenitore(String descrizioneOggettoContenitore) {
         this.descrizioneOggettoContenitore = descrizioneOggettoContenitore;
     }
 
@@ -242,7 +256,7 @@ public class Krint implements Serializable {
         return informazioniOggettoContenitore;
     }
 
-    public void setInformazioniOggettoCollegato(String informazioniOggettoContenitore) {
+    public void setInformazioniOggettoContenitore(String informazioniOggettoContenitore) {
         this.informazioniOggettoContenitore = informazioniOggettoContenitore;
     }
 
