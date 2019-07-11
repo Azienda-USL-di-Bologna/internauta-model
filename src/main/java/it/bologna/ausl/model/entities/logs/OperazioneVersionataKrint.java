@@ -40,7 +40,7 @@ public class OperazioneVersionataKrint implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "versione")
-    private int versione;
+    private Integer versione;
     @Size(max = 2147483647)
     @Column(name = "template_descrizione_operazione")
     private String templateDescrizioneOperazione;

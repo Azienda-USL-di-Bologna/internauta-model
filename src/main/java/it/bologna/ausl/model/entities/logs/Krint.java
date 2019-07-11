@@ -207,7 +207,7 @@ public class Krint implements Serializable {
     }
 
     public void setTipoOggetto(TipoOggettoKrint tipoOggetto) {
-        this.tipoOggetto = tipoOggetto.name();
+        this.tipoOggetto = tipoOggetto.toString();
     }
     
     
@@ -240,7 +240,7 @@ public class Krint implements Serializable {
     }
 
     public void setTipoOggettoContenitore(TipoOggettoKrint tipoOggettoContenitore) {
-        this.tipoOggettoContenitore = tipoOggettoContenitore.name();
+        this.tipoOggettoContenitore = tipoOggettoContenitore.toString();
     }
     
     public String getDescrizioneOggettoContenitore() {
