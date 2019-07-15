@@ -57,6 +57,11 @@ public class Folder implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "type")
     private String type;
+    
+    @Basic(optional = true)
+    @Column(name = "order")
+    private Integer order;
+
 
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -114,6 +119,14 @@ public class Folder implements Serializable {
 
     public void setType(FolderType type) {
         this.type = type.toString();
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     public Pec getIdPec() {

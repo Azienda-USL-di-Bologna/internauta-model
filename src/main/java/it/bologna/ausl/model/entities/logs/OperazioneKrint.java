@@ -29,7 +29,20 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "operazioni_krint", catalog = "internauta", schema = "logs")
-public class OperazioniKrint implements Serializable {
+public class OperazioneKrint implements Serializable {
+    
+    public static enum CodiceOperazione{
+        PEC_MESSAGE_SPOSTAMENTO,
+        PEC_MESSAGE_PROTOCOLLAZIONE, 
+        PEC_MESSAGE_REINDIRIZZAMENTO,
+        PEC_MESSAGE_RISPOSTA, 
+        PEC_MESSAGE_RISPOSTA_A_TUTTI, 
+        PEC_MESSAGE_INOLTRO, 
+        PEC_MESSAGE_AGGIUNTA_TAG,
+        PEC_MESSAGE_ELIMINAZIONE_TAG,
+        PEC_MESSAGE_LETTO,
+        PEC_MESSAGE_DA_LEGGERE
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,14 +61,14 @@ public class OperazioniKrint implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOperazione")
     private List<Krint> krintList;
 
-    public OperazioniKrint() {
+    public OperazioneKrint() {
     }
 
-    public OperazioniKrint(Integer id) {
+    public OperazioneKrint(Integer id) {
         this.id = id;
     }
 
-    public OperazioniKrint(Integer id, String codice) {
+    public OperazioneKrint(Integer id, String codice) {
         this.id = id;
         this.codice = codice;
     }
@@ -103,10 +116,10 @@ public class OperazioniKrint implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OperazioniKrint)) {
+        if (!(object instanceof OperazioneKrint)) {
             return false;
         }
-        OperazioniKrint other = (OperazioniKrint) object;
+        OperazioneKrint other = (OperazioneKrint) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
