@@ -154,7 +154,19 @@ public class Message implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageAddressList")
     private List<MessageAddress> messageAddressList;
-
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "id", fetch = FetchType.EAGER)
+    @JsonBackReference(value = "messageExtensionList")
+    private List<MessageExtension> messageExtensionList;
+    
+//    @Formula("(select shpeck.messages_addresses ma where ma.address_role = 'FROM' and ma.message = id)")
+//    private MessageAddress messageAddressFrom;
+    
+//    @JsonIgnore
+//    @Formula("(select a.mail_address from shpeck.messages_addresses ma join shpeck.addresses a on a.id = ma.address where ma.address_role = 'FROM' and ma.message = id)")
+//    private String addressFrom;
+    
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
@@ -386,6 +398,29 @@ public class Message implements Serializable {
     public void setMessageAddressList(List<MessageAddress> messageAddressList) {
         this.messageAddressList = messageAddressList;
     }
+
+    public List<MessageExtension> getMessageExtensionList() {
+        return messageExtensionList;
+    }
+
+    public void setMessageExtensionList(List<MessageExtension> messageExtensionList) {
+        this.messageExtensionList = messageExtensionList;
+    }
+
+//    public String getAddressFrom() {
+//        return addressFrom;
+//    }
+
+//    public MessageAddress getMessageAddressFrom() {
+//        return messageAddressFrom;
+//    }
+//
+//    public void setMessageAddressFrom(MessageAddress messageAddressFrom) {
+//        this.messageAddressFrom = messageAddressFrom;
+//    }
+//    public void setAddressFrom(String addressFrom) {
+//        this.addressFrom = addressFrom;
+//    }
 
     public List<MessageTag> getMessageTagList() {
         return messageTagList;
