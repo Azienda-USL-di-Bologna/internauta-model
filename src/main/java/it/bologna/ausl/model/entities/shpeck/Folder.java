@@ -59,7 +59,7 @@ public class Folder implements Serializable {
     private String type;
     
     @Basic(optional = true)
-    @Column(name = "order")
+    @Column(name = "`order`")
     private Integer order;
 
 
