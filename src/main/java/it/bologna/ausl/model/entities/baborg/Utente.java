@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import java.io.Serializable;
@@ -29,6 +30,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -104,7 +107,10 @@ public class Utente implements Serializable, UserDetails {
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "ribaltoneDaLanciareList")
     private List<RibaltoneDaLanciare> ribaltoneDaLanciareList;
-
+    @Column(name = "messaggi_visti", columnDefinition = "messaggi_visti[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] messaggiVisti;
+    
     @Transient
     private List<Ruolo> ruoli;
     
@@ -328,6 +334,14 @@ public class Utente implements Serializable, UserDetails {
 
     public void setRibaltoneDaLanciareList(List<RibaltoneDaLanciare> ribaltoneDaLanciareList) {
         this.ribaltoneDaLanciareList = ribaltoneDaLanciareList;
+    }
+
+    public Integer[] getMessaggiVisti() {
+        return messaggiVisti;
+    }
+
+    public void setMessaggiVisti(Integer[] messaggiVisti) {
+        this.messaggiVisti = messaggiVisti;
     }
 
     @Override
