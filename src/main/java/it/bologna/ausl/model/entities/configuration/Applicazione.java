@@ -62,7 +62,7 @@ public class Applicazione implements Serializable {
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
     
-    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "menuList")
     private List<Menu> menuList;
     
