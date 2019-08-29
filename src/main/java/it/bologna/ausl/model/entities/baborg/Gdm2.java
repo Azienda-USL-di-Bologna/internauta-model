@@ -7,18 +7,22 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,25 +31,30 @@ import javax.validation.constraints.Size;
  * @author gdm
  */
 @Entity
-@Table(name = "gdm2", catalog = "internauta", schema = "organigramma")
+@Table(name = "gdm2", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Gdm2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
     @Column(name = "id")
-    private String id;
+    private Integer id;
+    
     @Size(max = 2147483647)
     @Column(name = "oggetto")
     private String oggetto;
+    
     @Size(max = 2147483647)
     @Column(name = "obbligatorio", nullable = false)
     @NotNull
     private String obbligatorio;
+    
+    @Version()
+    private LocalDateTime version;
 
     public String getObbligatorio() {
         return obbligatorio;
@@ -61,15 +70,15 @@ public class Gdm2 implements Serializable {
     public Gdm2() {
     }
 
-    public Gdm2(String id) {
+    public Gdm2(Integer id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -79,6 +88,14 @@ public class Gdm2 implements Serializable {
 
     public void setOggetto(String oggetto) {
         this.oggetto = oggetto;
+    }
+
+    public LocalDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(LocalDateTime version) {
+        this.version = version;
     }
 
     public Gdm1 getIdGdm1() {
