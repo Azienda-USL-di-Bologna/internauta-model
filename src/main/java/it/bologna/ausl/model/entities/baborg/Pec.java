@@ -160,6 +160,10 @@ public class Pec implements Serializable {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<Persona> gestori;
+    
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private List<Struttura> strutture;
 
     public Pec() {
     }
@@ -338,6 +342,14 @@ public class Pec implements Serializable {
         this.gestori = gestori;
     }
 
+    public List<Struttura> getStrutture() {
+        return strutture;
+    }
+
+    public void setStrutture(List<Struttura> strutture) {
+        this.strutture = strutture;
+    }
+    
     public Boolean getIsPec() {
         return isPec;
     }
