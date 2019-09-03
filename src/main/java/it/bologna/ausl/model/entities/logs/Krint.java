@@ -32,7 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Krint implements Serializable {
     
     public static enum TipoOggettoKrint {
-        PEC, PEC_MESSAGE
+        PEC, PEC_MESSAGE, PEC_DRAFT
     };
     
 //    public static enum KrintField {
