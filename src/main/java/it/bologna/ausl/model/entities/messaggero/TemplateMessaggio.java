@@ -2,6 +2,8 @@ package it.bologna.ausl.model.entities.messaggero;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.InvasivitaEnum;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.TipologiaEnum;
@@ -179,7 +181,7 @@ public class TemplateMessaggio implements Serializable {
     public void setPerTutti(Boolean perTutti) {
         this.perTutti = perTutti;
     }
-
+    
     public InvasivitaEnum getInvasivita() {
         if (this.invasivita != null) {
             return InvasivitaEnum.valueOf(invasivita);
@@ -188,6 +190,7 @@ public class TemplateMessaggio implements Serializable {
         }
     }
 
+    @JsonSetter(nulls = Nulls.SKIP)
     public void setInvasivita(InvasivitaEnum invasivita) {
         this.invasivita = invasivita.toString();
     }
@@ -199,7 +202,8 @@ public class TemplateMessaggio implements Serializable {
             return null;
         }
     }
-
+    
+    @JsonSetter(nulls = Nulls.SKIP)
     public void setTipologia(TipologiaEnum tipologia) {
         this.tipologia = tipologia.toString();
     }
