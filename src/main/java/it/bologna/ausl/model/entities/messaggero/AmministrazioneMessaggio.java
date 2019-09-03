@@ -2,6 +2,8 @@ package it.bologna.ausl.model.entities.messaggero;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -34,6 +36,10 @@ public class AmministrazioneMessaggio implements Serializable {
         LOGIN, POPUP
     }
     
+    public static enum SeveritaEnum {
+        INFO, WARNING, ERROR
+    }
+    
     public static enum TipologiaEnum {
         RIPRESENTA_CON_INTERVALLO, MOSTRA_UNA_SOLA_VOLTA, CONSENTI_SCELTA
     }
@@ -44,6 +50,10 @@ public class AmministrazioneMessaggio implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    @Size(max = 2147483647)
+    @Column(name = "titolo")
+    private String titolo;
     
     @Size(max = 2147483647)
     @Column(name = "testo")
@@ -78,6 +88,9 @@ public class AmministrazioneMessaggio implements Serializable {
     
     @Column(name = "tipologia")
     private String tipologia;
+    
+    @Column(name = "severita")
+    private String severita;
     
     @Column(name = "intervallo")
     private Integer intervallo;
@@ -115,7 +128,8 @@ public class AmministrazioneMessaggio implements Serializable {
     public AmministrazioneMessaggio() {
     }
 
-    public AmministrazioneMessaggio(String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idUtenti, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
+    public AmministrazioneMessaggio(String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idUtenti, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
+        this.titolo = titolo;
         this.testo = testo;
         this.idApplicazioni = idApplicazioni;
         this.idAziende = idAziende;
@@ -135,6 +149,14 @@ public class AmministrazioneMessaggio implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
     }
 
     public String getTesto() {
@@ -205,6 +227,7 @@ public class AmministrazioneMessaggio implements Serializable {
         this.invasivita = invasivita.toString();
     }
 
+    @JsonSetter(nulls = Nulls.SKIP)
     public TipologiaEnum getTipologia() {
         if (this.tipologia != null) {
             return TipologiaEnum.valueOf(tipologia);
@@ -213,8 +236,22 @@ public class AmministrazioneMessaggio implements Serializable {
         }
     }
 
+    @JsonSetter(nulls = Nulls.SKIP)
     public void setTipologia(TipologiaEnum tipologia) {
         this.tipologia = tipologia.toString();
+    }
+    
+    public SeveritaEnum getSeverita() {
+        if (this.severita != null) {
+            return SeveritaEnum.valueOf(severita);
+        } else {
+            return null;
+        }
+    }
+
+    @JsonSetter(nulls = Nulls.SKIP)
+    public void setSeverita(SeveritaEnum severita) {
+        this.severita = severita.toString();
     }
 
     public Integer getIntervallo() {
