@@ -18,6 +18,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -74,7 +75,20 @@ public class RibaltoneDaLanciare implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "log")
     private String log;
-    
+
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private LocalDateTime version;
+
+    public LocalDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(LocalDateTime version) {
+        this.version = version;
+    }
+ 
     public RibaltoneDaLanciare() {
     }
 

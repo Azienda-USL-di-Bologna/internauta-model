@@ -115,6 +115,14 @@ public class Struttura implements Serializable {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private Boolean isPermessoPecPrincipale;
+    @Transient
+    @QueryType(PropertyType.SIMPLE)
+    private Boolean propagaPermessoPec;
+
+
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -334,6 +342,24 @@ public class Struttura implements Serializable {
     public void setPermessi(List<PermessoEntitaStoredProcedure> permessi) {
         this.permessi = permessi;
     }
+    
+    public Boolean getIsPermessoPecPrincipale() {
+        return isPermessoPecPrincipale;
+    }
+
+    public void setIsPermessoPecPrincipale(Boolean isPermessoPecPrincipale) {
+        this.isPermessoPecPrincipale = isPermessoPecPrincipale;
+    }
+
+    public Boolean getPropagaPermessoPec() {
+        return propagaPermessoPec;
+    }
+
+    public void setPropagaPermessoPec(Boolean propagaPermessoPec) {
+        this.propagaPermessoPec = propagaPermessoPec;
+    }
+
+
 
     @Override
     public int hashCode() {
