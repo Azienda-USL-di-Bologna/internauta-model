@@ -1,4 +1,9 @@
-package it.bologna.ausl.model.entities.shpeck;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package it.bologna.ausl.model.entities.shpeck.views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,16 +13,14 @@ import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
@@ -26,32 +29,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author Salo
+ * @author Top
  */
 @Entity
-@Table(name = "outbox", catalog = "internauta", schema = "shpeck")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Outbox implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Table(name = "outbox_lite", schema = "shpeck")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
+@Cacheable(false)
+public class OutboxLite implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
 
-    @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pec idPec;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "raw_data")
-    private String rawData;
 
     @Basic(optional = false)
     @NotNull
@@ -65,7 +58,12 @@ public class Outbox implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "external_id")
     private String externalId;
-        
+
+    @Column(name = "inserted")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime inserted = LocalDateTime.now();
+
     @Size(max = 2147483647)
     @Column(name = "subject")
     private String subject;
@@ -102,36 +100,20 @@ public class Outbox implements Serializable {
     @Column(name = "body")
     private String body;
 
-    @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
-
-    public LocalDateTime getVersion() {
-        return version;
+    public OutboxLite() {
     }
 
-    public void setVersion(LocalDateTime version) {
-        this.version = version;
-    }
-    
-    public Outbox() {
-    }
-
-    public Outbox(Integer id, Pec idPec, String rawData) {
+    public OutboxLite(Integer id) {
         this.id = id;
-        this.idPec = idPec;
-        this.rawData = rawData;
     }
 
-    public Outbox(Integer id, Pec idPec, Boolean ignore, String rawData, Applicazione idApplicazione,
+    public OutboxLite(Integer id, Pec idPec, Boolean ignore, Applicazione idApplicazione,
             String externalId, LocalDateTime inserted, String subject, String[] toAddresses, String[] ccAddresses,
             Boolean hiddenRecipients, LocalDateTime createTime, LocalDateTime updateTime,
             Integer attachmentsNumber, String[] attachmentsName) {
         this.id = id;
         this.idPec = idPec;
         this.ignore = ignore;
-        this.rawData = rawData;
         this.idApplicazione = idApplicazione;
         this.externalId = externalId;
         this.subject = subject;
@@ -160,14 +142,6 @@ public class Outbox implements Serializable {
         this.idPec = idPec;
     }
 
-    public String getRawData() {
-        return rawData;
-    }
-
-    public void setRawData(String rawData) {
-        this.rawData = rawData;
-    }
-
     public Boolean getIgnore() {
         return ignore;
     }
@@ -190,6 +164,14 @@ public class Outbox implements Serializable {
 
     public void setExternalId(String externalId) {
         this.externalId = externalId;
+    }
+
+    public LocalDateTime getInserted() {
+        return inserted;
+    }
+
+    public void setInserted(LocalDateTime inserted) {
+        this.inserted = inserted;
     }
 
     public String getSubject() {
@@ -264,8 +246,4 @@ public class Outbox implements Serializable {
         this.body = body;
     }
 
-    @Override
-    public String toString() {
-        return "Outbox{" + "id=" + id + ", idPec=" + idPec + ", rawData=" + rawData + ", ignore=" + ignore + ", idApplicazione=" + idApplicazione + ", externalId=" + externalId + '}';
-    }
 }

@@ -1,10 +1,12 @@
 package it.bologna.ausl.model.entities.scrivania;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -18,12 +20,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -84,6 +88,19 @@ public class Menu implements Serializable {
     @Basic(optional = false)
     @Column(name = "ordinale")
     private Integer ordinale;
+         
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private LocalDateTime version;
+
+    public LocalDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(LocalDateTime version) {
+        this.version = version;
+    }
     
     @Transient
     private String compiledUrl;

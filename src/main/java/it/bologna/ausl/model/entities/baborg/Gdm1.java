@@ -1,8 +1,10 @@
 package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -12,11 +14,15 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -24,7 +30,7 @@ import org.springframework.security.core.GrantedAuthority;
  * @author gdm
  */
 @Entity
-@Table(name = "gdm1", catalog = "internauta", schema = "organigramma")
+@Table(name = "gdm1", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Gdm1 implements Serializable {
@@ -56,13 +62,12 @@ public class Gdm1 implements Serializable {
         }
     }
     
-    private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
     @Column(name = "id")
-    private String id;
+    private Integer id;
+        
     @Size(max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
@@ -70,34 +75,32 @@ public class Gdm1 implements Serializable {
 //    @Column(name = "UTENTE_ROLE", nullable = false, length = 2000)
 //    @Enumerated(EnumType.STRING)
 //    private UtenteRole utenteRole;
-
-    public String getNecessario() {
-        return necessario;
-    }
-
-    public void setNecessario(String necessario) {
-        this.necessario = necessario;
-    }
     @Size(max = 2147483647)
     @Column(name = "necessario", nullable = false)
     @NotNull
     private String necessario;
+    
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private LocalDateTime version;
+    
     @OneToMany(mappedBy = "idGdm1", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, targetEntity = Gdm2.class)
     @JsonBackReference(value = "gdm2List")
     private List<Gdm2> gdm2List;
-
+   
     public Gdm1() {
     }
 
-    public Gdm1(String id) {
+    public Gdm1(Integer id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -108,13 +111,29 @@ public class Gdm1 implements Serializable {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
+    public String getNecessario() {
+        return necessario;
+    }
+    
 
+    public void setNecessario(String necessario) {
+        this.necessario = necessario;
+    }
+//
     public List<Gdm2> getGdm2List() {
         return gdm2List;
     }
 
     public void setGdm2List(List<Gdm2> gdm2List) {
         this.gdm2List = gdm2List;
+    }
+
+    public LocalDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(LocalDateTime version) {
+        this.version = version;
     }
 
     @Override

@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -67,7 +68,20 @@ public class MessageFolder implements Serializable {
     @JoinColumn(name = "id_previous_folder", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Folder idPreviousFolder;
+        
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private LocalDateTime version;
 
+    public LocalDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(LocalDateTime version) {
+        this.version = version;
+    }
+ 
     public MessageFolder() {
     }
 

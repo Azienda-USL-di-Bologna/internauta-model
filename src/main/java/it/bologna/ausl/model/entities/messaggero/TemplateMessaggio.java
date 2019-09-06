@@ -2,8 +2,11 @@ package it.bologna.ausl.model.entities.messaggero;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.InvasivitaEnum;
+import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.SeveritaEnum;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.TipologiaEnum;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -41,6 +45,10 @@ public class TemplateMessaggio implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "nome_template")
     private String nomeTemplate;
+    
+    @Size(max = 2147483647)
+    @Column(name = "titolo")
+    private String titolo;
     
     @Size(max = 2147483647)
     @Column(name = "testo")
@@ -71,6 +79,9 @@ public class TemplateMessaggio implements Serializable {
     @Column(name = "tipologia")
     private String tipologia;
     
+    @Column(name = "severita")
+    private String severita;
+    
     @Column(name = "intervallo")
     private Integer intervallo;
     
@@ -85,12 +96,26 @@ public class TemplateMessaggio implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataUltimaModifica = LocalDateTime.now();
+        
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private LocalDateTime version;
 
+    public LocalDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(LocalDateTime version) {
+        this.version = version;
+    }
+ 
     public TemplateMessaggio() {
     }
 
-    public TemplateMessaggio(String nomeTemplate, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idUtenti, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
+    public TemplateMessaggio(String nomeTemplate, String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idUtenti, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
         this.nomeTemplate = nomeTemplate;
+        this.titolo = titolo;
         this.testo = testo;
         this.idApplicazioni = idApplicazioni;
         this.idAziende = idAziende;
@@ -116,6 +141,14 @@ public class TemplateMessaggio implements Serializable {
 
     public void setNomeTemplate(String nomeTemplate) {
         this.nomeTemplate = nomeTemplate;
+    }
+
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
     }
 
     public String getTesto() {
@@ -165,7 +198,7 @@ public class TemplateMessaggio implements Serializable {
     public void setPerTutti(Boolean perTutti) {
         this.perTutti = perTutti;
     }
-
+    
     public InvasivitaEnum getInvasivita() {
         if (this.invasivita != null) {
             return InvasivitaEnum.valueOf(invasivita);
@@ -174,6 +207,7 @@ public class TemplateMessaggio implements Serializable {
         }
     }
 
+    @JsonSetter(nulls = Nulls.SKIP)
     public void setInvasivita(InvasivitaEnum invasivita) {
         this.invasivita = invasivita.toString();
     }
@@ -185,11 +219,25 @@ public class TemplateMessaggio implements Serializable {
             return null;
         }
     }
-
+    
+    @JsonSetter(nulls = Nulls.SKIP)
     public void setTipologia(TipologiaEnum tipologia) {
         this.tipologia = tipologia.toString();
     }
+    
+    public SeveritaEnum getSeverita() {
+        if (this.severita != null) {
+            return AmministrazioneMessaggio.SeveritaEnum.valueOf(severita);
+        } else {
+            return null;
+        }
+    }
 
+    @JsonSetter(nulls = Nulls.SKIP)
+    public void setSeverita(SeveritaEnum severita) {
+        this.severita = severita.toString();
+    }
+    
     public Integer getIntervallo() {
         return intervallo;
     }
