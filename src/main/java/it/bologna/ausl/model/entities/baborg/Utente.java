@@ -111,9 +111,6 @@ public class Utente implements Serializable, UserDetails {
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "ribaltoneDaLanciareList")
     private List<RibaltoneDaLanciare> ribaltoneDaLanciareList;
-    @Column(name = "messaggi_visti", columnDefinition = "messaggi_visti[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
-    private Integer[] messaggiVisti;
          
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -351,14 +348,6 @@ public class Utente implements Serializable, UserDetails {
 
     public void setRibaltoneDaLanciareList(List<RibaltoneDaLanciare> ribaltoneDaLanciareList) {
         this.ribaltoneDaLanciareList = ribaltoneDaLanciareList;
-    }
-
-    public Integer[] getMessaggiVisti() {
-        return messaggiVisti;
-    }
-
-    public void setMessaggiVisti(Integer[] messaggiVisti) {
-        this.messaggiVisti = messaggiVisti;
     }
 
     @Override

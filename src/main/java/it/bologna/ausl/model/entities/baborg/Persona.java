@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.configuration.ImpostazioniApplicazioni;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
@@ -25,6 +26,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,6 +37,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author solidus83
  */
+@TypeDefs(
+    {
+        @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+    }
+)
 @Entity
 @Table(name = "persone", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -91,7 +101,11 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "impostazioniApplicazioniList")
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
-          
+
+    @Column(name = "messaggi_visti", columnDefinition = "messaggi_visti[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] messaggiVisti;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -219,6 +233,14 @@ public class Persona implements Serializable {
 
     public void setImpostazioniApplicazioniList(List<ImpostazioniApplicazioni> impostazioniApplicazioniList) {
         this.impostazioniApplicazioniList = impostazioniApplicazioniList;
+    }
+
+    public Integer[] getMessaggiVisti() {
+        return messaggiVisti;
+    }
+
+    public void setMessaggiVisti(Integer[] messaggiVisti) {
+        this.messaggiVisti = messaggiVisti;
     }
 
     public List<PermessoEntitaStoredProcedure> getPermessi() {

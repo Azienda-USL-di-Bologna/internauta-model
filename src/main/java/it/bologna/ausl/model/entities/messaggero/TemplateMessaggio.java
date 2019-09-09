@@ -22,13 +22,19 @@ import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author Giuseppe Russo <g.russo@nsi.it>
  */
-
+@TypeDefs(
+    {
+        @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+    }
+)
 @Entity
 @Table(name = "template_messaggi", catalog = "internauta", schema = "messaggero")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
