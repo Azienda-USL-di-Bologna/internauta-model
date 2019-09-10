@@ -1,10 +1,8 @@
 package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -16,9 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -70,20 +66,19 @@ public class PecProvider implements Serializable {
     @OneToMany(mappedBy = "idPecProvider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecList")
     private List<Pec> pecList;
-        
-    @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
 
-    public LocalDateTime getVersion() {
-        return version;
-    }
-
-    public void setVersion(LocalDateTime version) {
-        this.version = version;
-    }
-    
+//    @Version()
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    private LocalDateTime version;
+//
+//    public LocalDateTime getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(LocalDateTime version) {
+//        this.version = version;
+//    }
     public PecProvider() {
     }
 

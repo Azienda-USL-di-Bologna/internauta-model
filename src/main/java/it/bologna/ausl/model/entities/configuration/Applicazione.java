@@ -1,13 +1,11 @@
 package it.bologna.ausl.model.entities.configuration;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -18,9 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -31,18 +27,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Applicazione implements Serializable {
+
     private static final long serialVersionUID = 1L;
-            
+
     public static enum Applicazioni {
         scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo
     }
-    
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id", columnDefinition = "text")
     private String id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "nome", columnDefinition = "text")
@@ -50,39 +47,38 @@ public class Applicazione implements Serializable {
 
     @Column(name = "base_url", columnDefinition = "text")
     private String baseUrl;
-    
+
     @Column(name = "index_page", columnDefinition = "text")
     private String indexPage;
-    
+
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
-    
+
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
-    
+
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "menuList")
     private List<Menu> menuList;
-    
+
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "impostazioniApplicazioniList")
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
-        
-    @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
 
-    public LocalDateTime getVersion() {
-        return version;
-    }
-
-    public void setVersion(LocalDateTime version) {
-        this.version = version;
-    }
-    
+//    @Version()
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    private LocalDateTime version;
+//
+//    public LocalDateTime getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(LocalDateTime version) {
+//        this.version = version;
+//    }
     public Applicazione() {
     }
 

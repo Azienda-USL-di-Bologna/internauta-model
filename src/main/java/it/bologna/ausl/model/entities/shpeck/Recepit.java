@@ -1,6 +1,5 @@
 package it.bologna.ausl.model.entities.shpeck;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
@@ -16,10 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -34,46 +31,45 @@ public class Recepit implements Serializable {
         ACCETTAZIONE,
         PREAVVISO_ERRORE_CONSEGNA,
         PRESA_IN_CARICO,
-        NON_ACCETTAZIONE, 
+        NON_ACCETTAZIONE,
         RILEVAZIONE_VIRUS,
         ERRORE_CONSEGNA,
         CONSEGNA
     }
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
 //    @Id
     @OneToOne(optional = false, fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "id", referencedColumnName = "id")
     @MapsId
     private Message idMessage;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "recepit_type")
     private String recepitType;
-        
-    @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
 
-    public LocalDateTime getVersion() {
-        return version;
-    }
-
-    public void setVersion(LocalDateTime version) {
-        this.version = version;
-    }
- 
+//    @Version()
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    private LocalDateTime version;
+//
+//    public LocalDateTime getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(LocalDateTime version) {
+//        this.version = version;
+//    }
     public Recepit() {
     }
 
@@ -111,7 +107,7 @@ public class Recepit implements Serializable {
         int hash = 0;
         hash += (this.idMessage.getId() != null ? this.idMessage.hashCode() : 0);
         return hash;
-    }  
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -132,5 +128,5 @@ public class Recepit implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.shpeck.Recepit[ id=" + this.idMessage.getId() + " ]";
     }
-    
+
 }

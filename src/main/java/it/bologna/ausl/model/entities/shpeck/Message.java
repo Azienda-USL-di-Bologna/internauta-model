@@ -23,7 +23,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -155,19 +154,16 @@ public class Message implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageAddressList")
     private List<MessageAddress> messageAddressList;
-    
+
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "id", fetch = FetchType.EAGER)
     @JsonBackReference(value = "messageExtensionList")
     private List<MessageExtension> messageExtensionList;
-    
+
 //    @Formula("(select shpeck.messages_addresses ma where ma.address_role = 'FROM' and ma.message = id)")
 //    private MessageAddress messageAddressFrom;
-    
 //    @JsonIgnore
 //    @Formula("(select a.mail_address from shpeck.messages_addresses ma join shpeck.addresses a on a.id = ma.address where ma.address_role = 'FROM' and ma.message = id)")
 //    private String addressFrom;
-    
-    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
@@ -204,20 +200,19 @@ public class Message implements Serializable {
 
     @Column(name = "id_message_pecgw")
     private String idMessagePecgw;
-        
-    @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
 
-    public LocalDateTime getVersion() {
-        return version;
-    }
-
-    public void setVersion(LocalDateTime version) {
-        this.version = version;
-    }
- 
+//    @Version()
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    private LocalDateTime version;
+//
+//    public LocalDateTime getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(LocalDateTime version) {
+//        this.version = version;
+//    }
     public Message() {
     }
 
@@ -424,7 +419,6 @@ public class Message implements Serializable {
 //    public String getAddressFrom() {
 //        return addressFrom;
 //    }
-
 //    public MessageAddress getMessageAddressFrom() {
 //        return messageAddressFrom;
 //    }
@@ -435,7 +429,6 @@ public class Message implements Serializable {
 //    public void setAddressFrom(String addressFrom) {
 //        this.addressFrom = addressFrom;
 //    }
-
     public List<MessageTag> getMessageTagList() {
         return messageTagList;
     }

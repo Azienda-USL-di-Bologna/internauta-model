@@ -26,7 +26,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -139,20 +138,19 @@ public class Pec implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime resetLastuidTime;
-        
-    @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
 
-    public LocalDateTime getVersion() {
-        return version;
-    }
-
-    public void setVersion(LocalDateTime version) {
-        this.version = version;
-    }
-    
+//    @Version()
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+//    private LocalDateTime version;
+//
+//    public LocalDateTime getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(LocalDateTime version) {
+//        this.version = version;
+//    }
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
@@ -160,7 +158,7 @@ public class Pec implements Serializable {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<Persona> gestori;
-    
+
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<Struttura> strutture;
@@ -349,7 +347,7 @@ public class Pec implements Serializable {
     public void setStrutture(List<Struttura> strutture) {
         this.strutture = strutture;
     }
-    
+
     public Boolean getIsPec() {
         return isPec;
     }
