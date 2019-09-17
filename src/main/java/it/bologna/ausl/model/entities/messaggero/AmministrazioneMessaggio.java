@@ -2,6 +2,8 @@ package it.bologna.ausl.model.entities.messaggero;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,16 +15,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author Giuseppe Russo <g.russo@nsi.it>
  */
-
+@TypeDefs(
+    {
+        @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+    }
+)
 @Entity
 @Table(name = "amministrazione_messaggi", catalog = "internauta", schema = "messaggero")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
@@ -31,6 +40,10 @@ public class AmministrazioneMessaggio implements Serializable {
     
     public static enum InvasivitaEnum {
         LOGIN, POPUP
+    }
+    
+    public static enum SeveritaEnum {
+        INFO, WARNING, ERROR
     }
     
     public static enum TipologiaEnum {
@@ -43,6 +56,10 @@ public class AmministrazioneMessaggio implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    @Size(max = 2147483647)
+    @Column(name = "titolo")
+    private String titolo;
     
     @Size(max = 2147483647)
     @Column(name = "testo")
@@ -60,9 +77,9 @@ public class AmministrazioneMessaggio implements Serializable {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idStrutture;
     
-    @Column(name = "id_utenti", columnDefinition = "id_utenti[]")
+    @Column(name = "id_persone", columnDefinition = "id_persone[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
-    private Integer[] idUtenti;
+    private Integer[] idPersone;
    
     @Column(name = "per_tutti")
     private Boolean perTutti;
@@ -77,6 +94,9 @@ public class AmministrazioneMessaggio implements Serializable {
     
     @Column(name = "tipologia")
     private String tipologia;
+    
+    @Column(name = "severita")
+    private String severita;
     
     @Column(name = "intervallo")
     private Integer intervallo;
@@ -97,16 +117,30 @@ public class AmministrazioneMessaggio implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataUltimaModifica = LocalDateTime.now();
+        
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private LocalDateTime version;
 
+    public LocalDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(LocalDateTime version) {
+        this.version = version;
+    }
+ 
     public AmministrazioneMessaggio() {
     }
 
-    public AmministrazioneMessaggio(String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idUtenti, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
+    public AmministrazioneMessaggio(String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idPersone, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
+        this.titolo = titolo;
         this.testo = testo;
         this.idApplicazioni = idApplicazioni;
         this.idAziende = idAziende;
         this.idStrutture = idStrutture;
-        this.idUtenti = idUtenti;
+        this.idPersone = idPersone;
         this.perTutti = perTutti;
         this.dataPubblicazione = dataPubblicazione;
         this.invasivita = invasivita;
@@ -121,6 +155,14 @@ public class AmministrazioneMessaggio implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
     }
 
     public String getTesto() {
@@ -155,12 +197,12 @@ public class AmministrazioneMessaggio implements Serializable {
         this.idStrutture = idStrutture;
     }
 
-    public Integer[] getIdUtenti() {
-        return idUtenti;
+    public Integer[] getIdPersone() {
+        return idPersone;
     }
 
-    public void setIdUtenti(Integer[] idUtenti) {
-        this.idUtenti = idUtenti;
+    public void setIdPersone(Integer[] idPersone) {
+        this.idPersone = idPersone;
     }
 
     public Boolean getPerTutti() {
@@ -191,6 +233,7 @@ public class AmministrazioneMessaggio implements Serializable {
         this.invasivita = invasivita.toString();
     }
 
+    @JsonSetter(nulls = Nulls.SKIP)
     public TipologiaEnum getTipologia() {
         if (this.tipologia != null) {
             return TipologiaEnum.valueOf(tipologia);
@@ -199,8 +242,22 @@ public class AmministrazioneMessaggio implements Serializable {
         }
     }
 
+    @JsonSetter(nulls = Nulls.SKIP)
     public void setTipologia(TipologiaEnum tipologia) {
         this.tipologia = tipologia.toString();
+    }
+    
+    public SeveritaEnum getSeverita() {
+        if (this.severita != null) {
+            return SeveritaEnum.valueOf(severita);
+        } else {
+            return null;
+        }
+    }
+
+    @JsonSetter(nulls = Nulls.SKIP)
+    public void setSeverita(SeveritaEnum severita) {
+        this.severita = severita.toString();
     }
 
     public Integer getIntervallo() {
@@ -257,6 +314,6 @@ public class AmministrazioneMessaggio implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.baborg.CentroNotifiche[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.baborg.AmministrazioneMessaggio[ id=" + id + " ]";
     } 
 }

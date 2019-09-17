@@ -1,7 +1,9 @@
 package it.bologna.ausl.model.entities.shpeck;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -13,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -24,76 +28,89 @@ import javax.persistence.Table;
 @Cacheable(false)
 public class MessageAddress implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  public static enum AddressRoleType {
-    FROM, TO, CC
-  }
+    public static enum AddressRoleType {
+        FROM, TO, CC
+    }
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Basic(optional = false)
-  @Column(name = "id")
-  private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
 
-  @JoinColumn(name = "address", referencedColumnName = "id")
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  private Address idAddress;
+    @JoinColumn(name = "address", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Address idAddress;
 
-  @JoinColumn(name = "message", referencedColumnName = "id")
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  private Message idMessage;
+    @JoinColumn(name = "message", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Message idMessage;
 
-  @Column(name = "address_role")
-  private String addressRole;
+    @Column(name = "address_role")
+    private String addressRole;
 
-  public MessageAddress() {
-  }
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private LocalDateTime version;
 
-  public Integer getId() {
-    return id;
-  }
+    public LocalDateTime getVersion() {
+        return version;
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public void setVersion(LocalDateTime version) {
+        this.version = version;
+    }
 
-  public Address getIdAddress() {
-    return idAddress;
-  }
+    public MessageAddress() {
+    }
 
-  public void setIdAddress(Address address) {
-    this.idAddress = address;
-  }
+    public Integer getId() {
+        return id;
+    }
 
-  public Message getIdMessage() {
-    return idMessage;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public void setIdMessage(Message idMessage) {
-    this.idMessage = idMessage;
-  }
+    public Address getIdAddress() {
+        return idAddress;
+    }
 
-  public AddressRoleType getAddressRole() {
-    return AddressRoleType.valueOf(addressRole);
-  }
+    public void setIdAddress(Address address) {
+        this.idAddress = address;
+    }
 
-  public void setAddressRole(AddressRoleType roleType) {
-    this.addressRole = roleType.toString();
-  }
+    public Message getIdMessage() {
+        return idMessage;
+    }
 
-  @Override
-  public String toString() {
-    return "MessageAddress{" + "id=" + id + ", idAddress=" + idAddress + ", idMessage=" + idMessage + ", addressRole=" + addressRole + '}';
-  }
+    public void setIdMessage(Message idMessage) {
+        this.idMessage = idMessage;
+    }
 
-  @Override
-  public MessageAddress clone() throws CloneNotSupportedException {
-    MessageAddress ma = new MessageAddress();
-    ma.setAddressRole(this.getAddressRole());
-    ma.setIdAddress(this.getIdAddress());
-    //ma.setIdMessage(this.getIdMessage());
+    public AddressRoleType getAddressRole() {
+        return AddressRoleType.valueOf(addressRole);
+    }
 
-    return ma;
-  }
+    public void setAddressRole(AddressRoleType roleType) {
+        this.addressRole = roleType.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "MessageAddress{" + "id=" + id + ", idAddress=" + idAddress + ", idMessage=" + idMessage + ", addressRole=" + addressRole + '}';
+    }
+
+    @Override
+    public MessageAddress clone() throws CloneNotSupportedException {
+        MessageAddress ma = new MessageAddress();
+        ma.setAddressRole(this.getAddressRole());
+        ma.setIdAddress(this.getIdAddress());
+        //ma.setIdMessage(this.getIdMessage());
+
+        return ma;
+    }
 }
