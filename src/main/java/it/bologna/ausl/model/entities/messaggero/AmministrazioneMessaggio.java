@@ -19,19 +19,13 @@ import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author Giuseppe Russo <g.russo@nsi.it>
  */
-@TypeDefs(
-    {
-        @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-    }
-)
+
 @Entity
 @Table(name = "amministrazione_messaggi", catalog = "internauta", schema = "messaggero")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
@@ -77,9 +71,9 @@ public class AmministrazioneMessaggio implements Serializable {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idStrutture;
     
-    @Column(name = "id_persone", columnDefinition = "id_persone[]")
+    @Column(name = "id_utenti", columnDefinition = "id_utenti[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
-    private Integer[] idPersone;
+    private Integer[] idUtenti;
    
     @Column(name = "per_tutti")
     private Boolean perTutti;
@@ -134,13 +128,13 @@ public class AmministrazioneMessaggio implements Serializable {
     public AmministrazioneMessaggio() {
     }
 
-    public AmministrazioneMessaggio(String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idPersone, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
+    public AmministrazioneMessaggio(String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idUtenti, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
         this.titolo = titolo;
         this.testo = testo;
         this.idApplicazioni = idApplicazioni;
         this.idAziende = idAziende;
         this.idStrutture = idStrutture;
-        this.idPersone = idPersone;
+        this.idUtenti = idUtenti;
         this.perTutti = perTutti;
         this.dataPubblicazione = dataPubblicazione;
         this.invasivita = invasivita;
@@ -197,12 +191,12 @@ public class AmministrazioneMessaggio implements Serializable {
         this.idStrutture = idStrutture;
     }
 
-    public Integer[] getIdPersone() {
-        return idPersone;
+    public Integer[] getIdUtenti() {
+        return idUtenti;
     }
 
-    public void setIdPersone(Integer[] idPersone) {
-        this.idPersone = idPersone;
+    public void setIdUtenti(Integer[] idUtenti) {
+        this.idUtenti = idUtenti;
     }
 
     public Boolean getPerTutti() {
