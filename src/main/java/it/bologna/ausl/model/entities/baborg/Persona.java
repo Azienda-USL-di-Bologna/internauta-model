@@ -90,11 +90,11 @@ public class Persona implements Serializable {
     @JsonBackReference(value = "utenteList")
     private List<Utente> utenteList;
     
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
     
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
     
