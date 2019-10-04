@@ -75,7 +75,11 @@ public class RibaltoneDaLanciare implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "log")
     private String log;
-
+    @Column(name = "ribaltato_internauta")
+    private Boolean ribaltatoInternauta;
+    @Column(name = "ribaltato_argo")
+    private Boolean ribaltatoArgo;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -206,6 +210,22 @@ public class RibaltoneDaLanciare implements Serializable {
 
     public void setLog(String log) {
         this.log = log;
+    }
+
+    public Boolean getRibaltatoInternauta() {
+        return ribaltatoInternauta;
+    }
+
+    public void setRibaltatoInternauta(Boolean ribaltatoInternauta) {
+        this.ribaltatoInternauta = ribaltatoInternauta;
+    }
+
+    public Boolean getRibaltatoArgo() {
+        return ribaltatoArgo;
+    }
+
+    public void setRibaltatoArgo(Boolean ribaltatoArgo) {
+        this.ribaltatoArgo = ribaltatoArgo;
     }
 
     @Override
