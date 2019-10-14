@@ -26,6 +26,7 @@ public class OperazioneKrint implements Serializable {
     public static enum CodiceOperazione{
         PEC_MESSAGE_SPOSTAMENTO,
         PEC_MESSAGE_PROTOCOLLAZIONE,
+        PEC_MESSAGE_REMOVE_PROTOCOLLAZIONE,
         PEC_MESSAGE_IN_PROTOCOLLAZIONE,
         PEC_MESSAGE_REMOVE_IN_PROTOCOLLAZIONE,
         PEC_MESSAGE_REINDIRIZZAMENTO_IN,
