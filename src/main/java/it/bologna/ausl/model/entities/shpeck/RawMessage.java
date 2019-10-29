@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,15 +47,15 @@ public class RawMessage implements Serializable {
     private Message idMessage;
         
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    private ZonedDateTime version;
 
-    public LocalDateTime getVersion() {
+    public ZonedDateTime getVersion() {
         return version;
     }
 
-    public void setVersion(LocalDateTime version) {
+    public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
  

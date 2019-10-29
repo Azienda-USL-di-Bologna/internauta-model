@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,10 +56,12 @@ public class Massimario implements Serializable {
     private String descrizioneTenuta;
     @Column(name = "anni_tenuta")
     private Integer anniTenuta;
+    
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    private ZonedDateTime version;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
@@ -117,11 +120,11 @@ public class Massimario implements Serializable {
         this.anniTenuta = anniTenuta;
     }
 
-    public LocalDateTime getVersion() {
+    public ZonedDateTime getVersion() {
         return version;
     }
 
-    public void setVersion(LocalDateTime version) {
+    public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
 
