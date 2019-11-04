@@ -2,3 +2,4 @@ syntax: glob
 target
 nbactions.xml
 nbactions.tmp
+nb-configuration.xml

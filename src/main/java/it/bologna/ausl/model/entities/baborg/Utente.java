@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import java.io.Serializable;
@@ -33,8 +32,6 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -111,7 +108,7 @@ public class Utente implements Serializable, UserDetails {
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "ribaltoneDaLanciareList")
     private List<RibaltoneDaLanciare> ribaltoneDaLanciareList;
-         
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -124,24 +121,25 @@ public class Utente implements Serializable, UserDetails {
     public void setVersion(LocalDateTime version) {
         this.version = version;
     }
-       
+
     @Transient
     private List<Ruolo> ruoli;
-    
+
     /**
-     * tutti i ruoli di tutte le aziende della persona dell'utente, divisi per interaziendali e aziendali.
-     * mappa in cui la chiave è il codiceAzienda e il valore la lista dei codici ruolo per quell'azienda
-     * nel caso dei ruoli interaziendali la chiave è 'interaziendali'
+     * tutti i ruoli di tutte le aziende della persona dell'utente, divisi per
+     * interaziendali e aziendali. mappa in cui la chiave è il codiceAzienda e
+     * il valore la lista dei codici ruolo per quell'azienda nel caso dei ruoli
+     * interaziendali la chiave è 'interaziendali'
      */
     @Transient
     private Map<String, List<String>> ruoliUtentiPersona;
-    
+
     @Transient
     private Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda;
 
     @Transient
     private Utente utenteReale;
-    
+
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessiDiFlusso;
@@ -299,7 +297,7 @@ public class Utente implements Serializable, UserDetails {
     public void setRuoli(List<Ruolo> ruoli) {
         this.ruoli = ruoli;
     }
-    
+
     public Map<String, List<String>> getRuoliUtentiPersona() {
         return ruoliUtentiPersona;
     }
@@ -307,7 +305,6 @@ public class Utente implements Serializable, UserDetails {
     public void setRuoliUtentiPersona(Map<String, List<String>> ruoliUtentiPersona) {
         this.ruoliUtentiPersona = ruoliUtentiPersona;
     }
-    
 
     public Utente getUtenteReale() {
         return utenteReale;
@@ -324,7 +321,7 @@ public class Utente implements Serializable, UserDetails {
     public void setPermessiDiFlusso(List<PermessoEntitaStoredProcedure> permessiDiFlusso) {
         this.permessiDiFlusso = permessiDiFlusso;
     }
-    
+
     public Map<String, List<PermessoEntitaStoredProcedure>> getPermessiDiFlussoByCodiceAzienda() {
         return permessiDiFlussoByCodiceAzienda;
     }
@@ -332,7 +329,6 @@ public class Utente implements Serializable, UserDetails {
     public void setPermessiDiFlussoByCodiceAzienda(Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda) {
         this.permessiDiFlussoByCodiceAzienda = permessiDiFlussoByCodiceAzienda;
     }
-
 
     public List<StoricoAttivazione> getStoricoAttivazioneList() {
         return storicoAttivazioneList;

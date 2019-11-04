@@ -103,6 +103,9 @@ public class Folder implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     private ZonedDateTime version;
+    
+    @Column(name = "additional_data", columnDefinition = "jsonb")
+    private String additionalData;
 
     public ZonedDateTime getVersion() {
         return version;
@@ -211,6 +214,14 @@ public class Folder implements Serializable {
 
     public void setMessagePreviousFolderList(List<MessageFolder> messagePreviousFolderList) {
         this.messagePreviousFolderList = messagePreviousFolderList;
+    }
+
+    public String getAdditionalData() {
+        return additionalData;
+    }
+
+    public void setAdditionalData(String additionalData) {
+        this.additionalData = additionalData;
     }
   
     @Override
