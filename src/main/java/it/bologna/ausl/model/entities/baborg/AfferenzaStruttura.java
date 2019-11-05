@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -49,9 +50,17 @@ public class AfferenzaStruttura implements Serializable {
     private List<UtenteStruttura> utenteStrutturaList;
     
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    private ZonedDateTime version;
+
+    public ZonedDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(ZonedDateTime version) {
+        this.version = version;
+    }
     
     public static enum CodiciAfferenzaStruttura {
         DIRETTA, FUNZIONALE, UNIFICATA
@@ -100,14 +109,6 @@ public class AfferenzaStruttura implements Serializable {
 
     public void setUtenteStrutturaList(List<UtenteStruttura> utenteStrutturaList) {
         this.utenteStrutturaList = utenteStrutturaList;
-    }
-
-    public LocalDateTime getVersion() {
-        return version;
-    }
-
-    public void setVersion(LocalDateTime version) {
-        this.version = version;
     }
 
     @Override

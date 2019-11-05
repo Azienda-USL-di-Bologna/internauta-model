@@ -10,6 +10,7 @@ import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Basic;
@@ -107,15 +108,15 @@ public class Persona implements Serializable {
     private Integer[] messaggiVisti;
     
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-    private LocalDateTime version;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    private ZonedDateTime version;
 
-    public LocalDateTime getVersion() {
+    public ZonedDateTime getVersion() {
         return version;
     }
 
-    public void setVersion(LocalDateTime version) {
+    public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
       
