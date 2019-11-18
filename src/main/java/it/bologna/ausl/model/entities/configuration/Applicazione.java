@@ -38,6 +38,15 @@ public class Applicazione implements Serializable {
         scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo
     }
     
+    public static enum UrlsGenerationStrategy {
+        TRUSTED_URL_WITH_CONTEXT_INFORMATION,
+	TRUSTED_URL_WITHOUT_CONTEXT_INFORMATION,
+	RELATIVE_WITH_CONTEXT_INFORMATION,
+	RELATIVE_WITHOUT_CONTEXT_INFORMATION,
+        ABSOLUTE_WITH_CONTEXT_INFORMATION,
+        ABSOLUTE_WITHOUT_CONTEXT_INFORMATION
+    }
+    
     @Id
     @Basic(optional = false)
     @NotNull
@@ -70,7 +79,12 @@ public class Applicazione implements Serializable {
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "impostazioniApplicazioniList")
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
-        
+    
+    @Column(name = "url_generation_strategy", columnDefinition = "text")
+    @Basic(optional = false)
+    @NotNull
+    private String urlGenerationStrategy;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
@@ -158,6 +172,14 @@ public class Applicazione implements Serializable {
 
     public void setImpostazioniApplicazioniList(List<ImpostazioniApplicazioni> impostazioniApplicazioniList) {
         this.impostazioniApplicazioniList = impostazioniApplicazioniList;
+    }
+
+    public UrlsGenerationStrategy getUrlGenerationStrategy() {
+        return UrlsGenerationStrategy.valueOf(urlGenerationStrategy);
+    }
+
+    public void setUrlGenerationStrategy(UrlsGenerationStrategy urlGenerationStrategy) {
+        this.urlGenerationStrategy = urlGenerationStrategy.toString();
     }
 
     @Override

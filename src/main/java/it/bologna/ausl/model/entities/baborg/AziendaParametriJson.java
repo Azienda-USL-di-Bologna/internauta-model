@@ -19,7 +19,9 @@ public class AziendaParametriJson implements Serializable {
     private MasterChefParmas masterchefParams;
     private String entityId;
     private String loginPath;
+    private String basePath;
     private String crossLoginUrlTemplate;
+    private String simpleCrossLoginUrlTemplate;
     private MongoParams mongoParams;
     private String logoutUrl;
     //private String mongoConnectionString;
@@ -133,12 +135,28 @@ public class AziendaParametriJson implements Serializable {
         this.loginPath = loginPath;
     }
 
+    public String getBasePath() {
+        return basePath;
+    }
+
+    public void setBasePath(String basePath) {
+        this.basePath = basePath;
+    }
+
     public String getCrossLoginUrlTemplate() {
         return crossLoginUrlTemplate;
     }
 
     public void setCrossLoginUrlTemplate(String crossLoginUrlTemplate) {
         this.crossLoginUrlTemplate = crossLoginUrlTemplate;
+    }
+
+    public String getSimpleCrossLoginUrlTemplate() {
+        return simpleCrossLoginUrlTemplate;
+    }
+
+    public void setSimpleCrossLoginUrlTemplate(String simpleCrossLoginUrlTemplate) {
+        this.simpleCrossLoginUrlTemplate = simpleCrossLoginUrlTemplate;
     }
     
     public String getLogoutUrl() {
