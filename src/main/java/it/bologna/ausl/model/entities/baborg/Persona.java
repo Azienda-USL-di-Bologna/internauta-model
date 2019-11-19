@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.configuration.ImpostazioniApplicazioni;
+import it.bologna.ausl.model.entities.rubrica.Contatto;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +22,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -31,7 +33,6 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -106,6 +107,10 @@ public class Persona implements Serializable {
     @Column(name = "messaggi_visti", columnDefinition = "messaggi_visti[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] messaggiVisti;
+    
+    @JoinColumn(name = "id_contatto", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Contatto idContatto;
     
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
@@ -258,6 +263,14 @@ public class Persona implements Serializable {
 
     public void setPermessiPec(Map<Integer, List<String>> permessiPec) {
         this.permessiPec = permessiPec;
+    }
+
+    public Contatto getIdContatto() {
+        return idContatto;
+    }
+
+    public void setIdContatto(Contatto idContatto) {
+        this.idContatto = idContatto;
     }
 
 //    public String getApplicazione() {

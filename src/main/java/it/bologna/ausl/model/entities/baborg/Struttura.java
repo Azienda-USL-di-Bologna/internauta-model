@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.model.entities.rubrica.Contatto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -122,7 +123,9 @@ public class Struttura implements Serializable {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private Boolean propagaPermessoPec;
-
+    @JoinColumn(name = "id_contatto", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Contatto idContatto;
 
         
     @Version()
@@ -358,6 +361,14 @@ public class Struttura implements Serializable {
 
     public void setPropagaPermessoPec(Boolean propagaPermessoPec) {
         this.propagaPermessoPec = propagaPermessoPec;
+    }
+
+    public Contatto getIdContatto() {
+        return idContatto;
+    }
+
+    public void setIdContatto(Contatto idContatto) {
+        this.idContatto = idContatto;
     }
 
 
