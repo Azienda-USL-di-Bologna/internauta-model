@@ -29,6 +29,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class ContattiConflittuali implements Serializable {
+    
+    public static enum MotivazioneContatto {
+        Contatto_Duplicato
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,7 +43,7 @@ public class ContattiConflittuali implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_contatti")
-    private Serializable idContatti;
+    private Integer[] idContatti;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -57,12 +61,6 @@ public class ContattiConflittuali implements Serializable {
         this.id = id;
     }
 
-    public ContattiConflittuali(Integer id, Serializable idContatti, String motivazione) {
-        this.id = id;
-        this.idContatti = idContatti;
-        this.motivazione = motivazione;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -71,20 +69,20 @@ public class ContattiConflittuali implements Serializable {
         this.id = id;
     }
 
-    public Serializable getIdContatti() {
+    public Integer[] getIdContatti() {
         return idContatti;
     }
 
-    public void setIdContatti(Serializable idContatti) {
+    public void setIdContatti(Integer[] idContatti) {
         this.idContatti = idContatti;
     }
 
-    public String getMotivazione() {
-        return motivazione;
+    public MotivazioneContatto getMotivazione() {
+        return MotivazioneContatto.valueOf(motivazione);
     }
 
-    public void setMotivazione(String motivazione) {
-        this.motivazione = motivazione;
+    public void setMotivazione(MotivazioneContatto motivazione) {
+        this.motivazione = motivazione.toString();
     }
 
     public ZonedDateTime getVersion() {

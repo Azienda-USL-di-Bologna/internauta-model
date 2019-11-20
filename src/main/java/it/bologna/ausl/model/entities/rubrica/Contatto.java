@@ -41,6 +41,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Contatto implements Serializable {
+    
+    public static enum CategoriaContatto {
+        Persona,
+	Struttura,
+	Esterno,
+	Gruppo
+    }
+    public static enum TipoContatto {
+        Organigramma,
+	Persona_Fisica,
+        Azienda,
+	Pubblica_Amministrazione,
+	Vario
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -158,11 +172,9 @@ public class Contatto implements Serializable {
         this.id = id;
     }
 
-    public Contatto(Integer id, String descrizione, String tipo, String categoria, Integer idUtenteCreazione, Integer idPersonaCreazione, String provenienza, Boolean daVerificare, Boolean modificabile, Boolean eliminato) {
+    public Contatto(Integer id, String descrizione, Integer idUtenteCreazione, Integer idPersonaCreazione, String provenienza, Boolean daVerificare, Boolean modificabile, Boolean eliminato) {
         this.id = id;
         this.descrizione = descrizione;
-        this.tipo = tipo;
-        this.categoria = categoria;
         this.idUtenteCreazione = idUtenteCreazione;
         this.idPersonaCreazione = idPersonaCreazione;
         this.provenienza = provenienza;
@@ -227,20 +239,20 @@ public class Contatto implements Serializable {
         this.partitaIva = partitaIva;
     }
 
-    public String getTipo() {
-        return tipo;
+    public TipoContatto getTipo() {
+        return TipoContatto.valueOf(tipo);
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipo(TipoContatto tipo) {
+        this.tipo = tipo.toString();
     }
 
-    public String getCategoria() {
-        return categoria;
+    public CategoriaContatto getCategoria() {
+        return CategoriaContatto.valueOf(categoria);
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategoria(CategoriaContatto categoria) {
+        this.categoria = categoria.toString();
     }
 
     public Integer getIdUtenteCreazione() {
