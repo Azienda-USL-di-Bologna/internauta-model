@@ -67,7 +67,7 @@ public class Indirizzo implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "principale")
-    private boolean principale;
+    private Boolean principale;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -88,7 +88,7 @@ public class Indirizzo implements Serializable {
         this.id = id;
     }
 
-    public Indirizzo(Integer id, boolean principale, String provenienza) {
+    public Indirizzo(Integer id, Boolean principale, String provenienza) {
         this.id = id;
         this.principale = principale;
         this.provenienza = provenienza;
@@ -166,11 +166,11 @@ public class Indirizzo implements Serializable {
         this.tipo = tipo;
     }
 
-    public boolean getPrincipale() {
+    public Boolean getPrincipale() {
         return principale;
     }
 
-    public void setPrincipale(boolean principale) {
+    public void setPrincipale(Boolean principale) {
         this.principale = principale;
     }
 

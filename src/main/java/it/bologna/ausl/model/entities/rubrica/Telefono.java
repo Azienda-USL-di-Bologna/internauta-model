@@ -51,14 +51,14 @@ public class Telefono implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "principale")
-    private boolean principale;
+    private Boolean principale;
     @Size(max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fax")
-    private boolean fax;
+    private Boolean fax;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -79,7 +79,7 @@ public class Telefono implements Serializable {
         this.id = id;
     }
 
-    public Telefono(Integer id, String numero, boolean principale, boolean fax, String provenienza) {
+    public Telefono(Integer id, String numero, Boolean principale, Boolean fax, String provenienza) {
         this.id = id;
         this.numero = numero;
         this.principale = principale;
@@ -111,11 +111,11 @@ public class Telefono implements Serializable {
         this.tipo = tipo;
     }
 
-    public boolean getPrincipale() {
+    public Boolean getPrincipale() {
         return principale;
     }
 
-    public void setPrincipale(boolean principale) {
+    public void setPrincipale(Boolean principale) {
         this.principale = principale;
     }
 
@@ -127,11 +127,11 @@ public class Telefono implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public boolean getFax() {
+    public Boolean getFax() {
         return fax;
     }
 
-    public void setFax(boolean fax) {
+    public void setFax(Boolean fax) {
         this.fax = fax;
     }
 

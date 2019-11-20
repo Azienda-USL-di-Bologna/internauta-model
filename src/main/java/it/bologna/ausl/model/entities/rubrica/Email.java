@@ -52,7 +52,7 @@ public class Email implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "principale")
-    private boolean principale;
+    private Boolean principale;
     @Size(max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
@@ -64,7 +64,7 @@ public class Email implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "pec")
-    private boolean pec;
+    private Boolean pec;
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
@@ -80,7 +80,7 @@ public class Email implements Serializable {
         this.id = id;
     }
 
-    public Email(Integer id, String email, boolean principale, String provenienza, boolean pec) {
+    public Email(Integer id, String email, Boolean principale, String provenienza, Boolean pec) {
         this.id = id;
         this.email = email;
         this.principale = principale;
@@ -112,11 +112,11 @@ public class Email implements Serializable {
         this.tipo = tipo;
     }
 
-    public boolean getPrincipale() {
+    public Boolean getPrincipale() {
         return principale;
     }
 
-    public void setPrincipale(boolean principale) {
+    public void setPrincipale(Boolean principale) {
         this.principale = principale;
     }
 
@@ -136,11 +136,11 @@ public class Email implements Serializable {
         this.provenienza = provenienza;
     }
 
-    public boolean getPec() {
+    public Boolean getPec() {
         return pec;
     }
 
-    public void setPec(boolean pec) {
+    public void setPec(Boolean pec) {
         this.pec = pec;
     }
 

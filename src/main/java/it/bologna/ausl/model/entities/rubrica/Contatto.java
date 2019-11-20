@@ -1,7 +1,11 @@
 package it.bologna.ausl.model.entities.rubrica;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.baborg.Struttura;
+import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -18,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -73,11 +78,11 @@ public class Contatto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_utente_creazione")
-    private int idUtenteCreazione;
+    private Integer idUtenteCreazione;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_persona_creazione")
-    private int idPersonaCreazione;
+    private Integer idPersonaCreazione;
     @Column(name = "id_aziende")
     private Serializable idAziende;
     @Size(max = 2147483647)
@@ -91,15 +96,15 @@ public class Contatto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "da_verificare")
-    private boolean daVerificare;
+    private Boolean daVerificare;
     @Basic(optional = false)
     @NotNull
     @Column(name = "modificabile")
-    private boolean modificabile;
+    private Boolean modificabile;
     @Basic(optional = false)
     @NotNull
     @Column(name = "eliminato")
-    private boolean eliminato;
+    private Boolean eliminato;
     @Size(max = 2147483647)
     @Column(name = "contatto_errato")
     private String contattoErrato;
@@ -110,10 +115,12 @@ public class Contatto implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     private ZonedDateTime version;
-    @OneToMany(mappedBy = "idContattoPadre", fetch = FetchType.LAZY)
-    private List<Contatto> contattiList;
+    @OneToMany(mappedBy = "idContattoPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "contattiFigliList")
+    private List<Contatto> contattiFigliList;
     @JoinColumn(name = "id_contatto_padre", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idContattoPadre")
     private Contatto idContattoPadre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
     private List<GruppiContatti> gruppiContattiList;
@@ -125,6 +132,14 @@ public class Contatto implements Serializable {
     private List<Email> emailList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
     private List<Indirizzo> indirizziList;
+    
+    @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idStruttura")
+    private Struttura idStruttura;
+    
+    @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idPersona")
+    private Persona idPersona;
 
     public Contatto() {
     }
@@ -133,7 +148,7 @@ public class Contatto implements Serializable {
         this.id = id;
     }
 
-    public Contatto(Integer id, String descrizione, String tipo, String categoria, int idUtenteCreazione, int idPersonaCreazione, String provenienza, boolean daVerificare, boolean modificabile, boolean eliminato) {
+    public Contatto(Integer id, String descrizione, String tipo, String categoria, Integer idUtenteCreazione, Integer idPersonaCreazione, String provenienza, Boolean daVerificare, Boolean modificabile, Boolean eliminato) {
         this.id = id;
         this.descrizione = descrizione;
         this.tipo = tipo;
@@ -218,19 +233,19 @@ public class Contatto implements Serializable {
         this.categoria = categoria;
     }
 
-    public int getIdUtenteCreazione() {
+    public Integer getIdUtenteCreazione() {
         return idUtenteCreazione;
     }
 
-    public void setIdUtenteCreazione(int idUtenteCreazione) {
+    public void setIdUtenteCreazione(Integer idUtenteCreazione) {
         this.idUtenteCreazione = idUtenteCreazione;
     }
 
-    public int getIdPersonaCreazione() {
+    public Integer getIdPersonaCreazione() {
         return idPersonaCreazione;
     }
 
-    public void setIdPersonaCreazione(int idPersonaCreazione) {
+    public void setIdPersonaCreazione(Integer idPersonaCreazione) {
         this.idPersonaCreazione = idPersonaCreazione;
     }
 
@@ -258,27 +273,27 @@ public class Contatto implements Serializable {
         this.provenienza = provenienza;
     }
 
-    public boolean getDaVerificare() {
+    public Boolean getDaVerificare() {
         return daVerificare;
     }
 
-    public void setDaVerificare(boolean daVerificare) {
+    public void setDaVerificare(Boolean daVerificare) {
         this.daVerificare = daVerificare;
     }
 
-    public boolean getModificabile() {
+    public Boolean getModificabile() {
         return modificabile;
     }
 
-    public void setModificabile(boolean modificabile) {
+    public void setModificabile(Boolean modificabile) {
         this.modificabile = modificabile;
     }
 
-    public boolean getEliminato() {
+    public Boolean getEliminato() {
         return eliminato;
     }
 
-    public void setEliminato(boolean eliminato) {
+    public void setEliminato(Boolean eliminato) {
         this.eliminato = eliminato;
     }
 
@@ -306,12 +321,12 @@ public class Contatto implements Serializable {
         this.version = version;
     }
 
-    public List<Contatto> getContattiList() {
-        return contattiList;
+    public List<Contatto> getContattiFilgiList() {
+        return contattiFigliList;
     }
 
-    public void setContattiList(List<Contatto> contattiList) {
-        this.contattiList = contattiList;
+    public void setContattiFigliList(List<Contatto> contattiList) {
+        this.contattiFigliList = contattiList;
     }
 
     public Contatto getIdContattoPadre() {
@@ -360,6 +375,22 @@ public class Contatto implements Serializable {
 
     public void setIndirizziList(List<Indirizzo> indirizziList) {
         this.indirizziList = indirizziList;
+    }
+
+    public Struttura getIdStruttura() {
+        return idStruttura;
+    }
+
+    public void setIdStruttura(Struttura idStruttura) {
+        this.idStruttura = idStruttura;
+    }
+
+    public Persona getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
     }
 
     @Override
