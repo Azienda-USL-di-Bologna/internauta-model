@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.rubrica;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.baborg.Utente;
@@ -27,6 +28,8 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -83,8 +86,10 @@ public class Contatto implements Serializable {
     @NotNull
     @Column(name = "id_persona_creazione")
     private Integer idPersonaCreazione;
-    @Column(name = "id_aziende")
-    private Serializable idAziende;
+    @NotNull
+    @Column(name = "id_aziende", columnDefinition = "integer[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] idAziende;
     @Size(max = 2147483647)
     @Column(name = "id_esterno")
     private String idEsterno;
@@ -123,14 +128,19 @@ public class Contatto implements Serializable {
     @JsonBackReference(value = "idContattoPadre")
     private Contatto idContattoPadre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "gruppiContattiList")
     private List<GruppiContatti> gruppiContattiList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGruppo", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "gruppiContattiList1")
     private List<GruppiContatti> gruppiContattiList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "telefonoList")
     private List<Telefono> telefonoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "emailList")
     private List<Email> emailList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "indirizziList")
     private List<Indirizzo> indirizziList;
     
     @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -249,11 +259,11 @@ public class Contatto implements Serializable {
         this.idPersonaCreazione = idPersonaCreazione;
     }
 
-    public Serializable getIdAziende() {
+    public Integer[] getIdAziende() {
         return idAziende;
     }
 
-    public void setIdAziende(Serializable idAziende) {
+    public void setIdAziende(Integer[] idAziende) {
         this.idAziende = idAziende;
     }
 
