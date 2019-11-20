@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -13,8 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,8 +26,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class ContattiConflittuali implements Serializable {
-    
-    public static enum MotivazioneContatto {
+
+    public static enum MotivazioneConflitto {
         Contatto_Duplicato
     }
 
@@ -77,11 +74,11 @@ public class ContattiConflittuali implements Serializable {
         this.idContatti = idContatti;
     }
 
-    public MotivazioneContatto getMotivazione() {
-        return MotivazioneContatto.valueOf(motivazione);
+    public MotivazioneConflitto getMotivazione() {
+        return MotivazioneConflitto.valueOf(motivazione);
     }
 
-    public void setMotivazione(MotivazioneContatto motivazione) {
+    public void setMotivazione(MotivazioneConflitto motivazione) {
         this.motivazione = motivazione.toString();
     }
 
@@ -117,5 +114,5 @@ public class ContattiConflittuali implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.rubrica.ContattiConflittuali[ id=" + id + " ]";
     }
-    
+
 }
