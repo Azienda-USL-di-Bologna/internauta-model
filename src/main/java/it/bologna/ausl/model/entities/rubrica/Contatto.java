@@ -20,7 +20,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -41,19 +40,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Contatto implements Serializable {
-    
+
     public static enum CategoriaContatto {
         Persona,
-	Struttura,
-	Esterno,
-	Gruppo
+        Struttura,
+        Esterno,
+        Gruppo
     }
+
     public static enum TipoContatto {
         Organigramma,
-	Persona_Fisica,
+        Persona_Fisica,
         Azienda,
-	Pubblica_Amministrazione,
-	Vario
+        Pubblica_Amministrazione,
+        Vario
     }
 
     private static final long serialVersionUID = 1L;
@@ -95,11 +95,11 @@ public class Contatto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_utente_creazione")
-    private Integer idUtenteCreazione;
+    private Utente idUtenteCreazione;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_persona_creazione")
-    private Integer idPersonaCreazione;
+    private Persona idPersonaCreazione;
     @NotNull
     @Column(name = "id_aziende", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
@@ -156,11 +156,11 @@ public class Contatto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
     @JsonBackReference(value = "indirizziList")
     private List<Indirizzo> indirizziList;
-    
+
     @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idStruttura")
     private Struttura idStruttura;
-    
+
     @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPersona")
     private Persona idPersona;
@@ -170,17 +170,6 @@ public class Contatto implements Serializable {
 
     public Contatto(Integer id) {
         this.id = id;
-    }
-
-    public Contatto(Integer id, String descrizione, Integer idUtenteCreazione, Integer idPersonaCreazione, String provenienza, Boolean daVerificare, Boolean modificabile, Boolean eliminato) {
-        this.id = id;
-        this.descrizione = descrizione;
-        this.idUtenteCreazione = idUtenteCreazione;
-        this.idPersonaCreazione = idPersonaCreazione;
-        this.provenienza = provenienza;
-        this.daVerificare = daVerificare;
-        this.modificabile = modificabile;
-        this.eliminato = eliminato;
     }
 
     public Integer getId() {
@@ -255,19 +244,19 @@ public class Contatto implements Serializable {
         this.categoria = categoria.toString();
     }
 
-    public Integer getIdUtenteCreazione() {
+    public Utente getIdUtenteCreazione() {
         return idUtenteCreazione;
     }
 
-    public void setIdUtenteCreazione(Integer idUtenteCreazione) {
+    public void setIdUtenteCreazione(Utente idUtenteCreazione) {
         this.idUtenteCreazione = idUtenteCreazione;
     }
 
-    public Integer getIdPersonaCreazione() {
+    public Persona getIdPersonaCreazione() {
         return idPersonaCreazione;
     }
 
-    public void setIdPersonaCreazione(Integer idPersonaCreazione) {
+    public void setIdPersonaCreazione(Persona idPersonaCreazione) {
         this.idPersonaCreazione = idPersonaCreazione;
     }
 
@@ -439,5 +428,5 @@ public class Contatto implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.rubrica.Contatti[ id=" + id + " ]";
     }
-    
+
 }
