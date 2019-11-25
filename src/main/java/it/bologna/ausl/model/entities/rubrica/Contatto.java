@@ -42,18 +42,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Contatto implements Serializable {
 
     public static enum CategoriaContatto {
-        Persona,
-        Struttura,
-        Esterno,
-        Gruppo
+        PERSONA,
+        STRUTTURA,
+        ESTERNO,
+        GRUPPO
     }
 
     public static enum TipoContatto {
-        Organigramma,
-        Persona_Fisica,
-        Azienda,
-        Pubblica_Amministrazione,
-        Vario
+        ORGANIGRAMMA,
+        PERSONA_FISICA,
+        AZIENDA,
+        PUBBLICA_AMMINISTRAZIONE,
+        VARIO
     }
 
     private static final long serialVersionUID = 1L;
@@ -92,15 +92,12 @@ public class Contatto implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "categoria")
     private String categoria;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_utente_creazione")
+    @JoinColumn(name = "id_utente_creazione", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Utente idUtenteCreazione;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_persona_creazione")
+    @JoinColumn(name = "id_persona_creazione", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Persona idPersonaCreazione;
-    @NotNull
     @Column(name = "id_aziende", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idAziende;

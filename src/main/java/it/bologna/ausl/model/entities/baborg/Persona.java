@@ -113,6 +113,11 @@ public class Persona implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
     
+    @OneToMany(mappedBy = "idPersonaCreazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "contattiCreati")
+    private List<Contatto> contattiCreati;
+
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
@@ -272,6 +277,14 @@ public class Persona implements Serializable {
 
     public void setIdContatto(Contatto idContatto) {
         this.idContatto = idContatto;
+    }
+
+    public List<Contatto> getContattiCreati() {
+        return contattiCreati;
+    }
+
+    public void setContattiCreati(List<Contatto> contattiCreati) {
+        this.contattiCreati = contattiCreati;
     }
 
 //    public String getApplicazione() {
