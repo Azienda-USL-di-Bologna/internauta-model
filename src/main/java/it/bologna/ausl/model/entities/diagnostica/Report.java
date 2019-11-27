@@ -43,10 +43,10 @@ public class Report implements Serializable {
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime data_inserimento_riga = LocalDateTime.now();
+    private LocalDateTime dataInserimentoRiga = LocalDateTime.now();
 
     @Column(name = "additional_data")
-    private String additional_data;
+    private String additionalData;
 
     @Basic(optional = false)
     @Column(name = "risolto")
@@ -55,13 +55,13 @@ public class Report implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "in_attesa_di_risoluzione")
-    private Boolean in_attesa_di_risoluzione = false;
+    private Boolean inAttesaDiRisoluzione = false;
 
     @Basic(optional = false)
     @Column(name = "data_risoluzione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime data_risoluzione = LocalDateTime.now();
+    private LocalDateTime dataRisoluzione = LocalDateTime.now();
 
     @Size(max = 2147483647)
     @Column(name = "note")
@@ -86,20 +86,20 @@ public class Report implements Serializable {
         this.tipologia = tipologia;
     }
 
-    public LocalDateTime getData_inserimento_riga() {
-        return data_inserimento_riga;
+    public LocalDateTime getDataInserimentoRiga() {
+        return dataInserimentoRiga;
     }
 
-    public void setData_inserimento_riga(LocalDateTime data_inserimento_riga) {
-        this.data_inserimento_riga = data_inserimento_riga;
+    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+        this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public String getAdditional_data() {
-        return additional_data;
+    public String getAdditionalData() {
+        return additionalData;
     }
 
-    public void setAdditional_data(String additional_data) {
-        this.additional_data = additional_data;
+    public void setAdditionalData(String additionalData) {
+        this.additionalData = additionalData;
     }
 
     public Boolean getRisolto() {
@@ -110,20 +110,20 @@ public class Report implements Serializable {
         this.risolto = risolto;
     }
 
-    public Boolean getIn_attesa_di_risoluzione() {
-        return in_attesa_di_risoluzione;
+    public Boolean getInAttesaDiRisoluzione() {
+        return inAttesaDiRisoluzione;
     }
 
-    public void setIn_attesa_di_risoluzione(Boolean in_attesa_di_risoluzione) {
-        this.in_attesa_di_risoluzione = in_attesa_di_risoluzione;
+    public void setInAttesaDiRisoluzione(Boolean inAttesaDiRisoluzione) {
+        this.inAttesaDiRisoluzione = inAttesaDiRisoluzione;
     }
 
-    public LocalDateTime getData_risoluzione() {
-        return data_risoluzione;
+    public LocalDateTime getDataRisoluzione() {
+        return dataRisoluzione;
     }
 
-    public void setData_risoluzione(LocalDateTime data_risoluzione) {
-        this.data_risoluzione = data_risoluzione;
+    public void setDataRisoluzione(LocalDateTime dataRisoluzione) {
+        this.dataRisoluzione = dataRisoluzione;
     }
 
     public String getNote() {
@@ -158,4 +158,5 @@ public class Report implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.diagnostica.Report[ id=" + id + " ]";
     }
+
 }
