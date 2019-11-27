@@ -147,7 +147,7 @@ public class Contatto implements Serializable {
     
     // E' la lista dei contatti attaccati al gruppo.
     // In questo caso il contatto è di categoria GRUPPO
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGruppo", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGruppo", fetch = FetchType.LAZY, orphanRemoval=true)
     @JsonBackReference(value = "contattiDelGruppoList")
     private List<GruppiContatti> contattiDelGruppoList;
     
@@ -336,7 +336,7 @@ public class Contatto implements Serializable {
         this.version = version;
     }
 
-    public List<Contatto> getContattiFilgiList() {
+    public List<Contatto> getContattiFigliList() {
         return contattiFigliList;
     }
 
@@ -360,11 +360,11 @@ public class Contatto implements Serializable {
         this.gruppiDelContattoList = gruppiContattiList;
     }
 
-    public List<GruppiContatti> getContattiDeliGruppoList() {
+    public List<GruppiContatti> getContattiDelGruppoList() {
         return contattiDelGruppoList;
     }
 
-    public void setContattiDeliGruppoList(List<GruppiContatti> gruppiContattiList1) {
+    public void setContattiDelGruppoList(List<GruppiContatti> gruppiContattiList1) {
         this.contattiDelGruppoList = gruppiContattiList1;
     }
 

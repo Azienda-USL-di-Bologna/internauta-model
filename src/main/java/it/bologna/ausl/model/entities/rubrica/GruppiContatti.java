@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.rubrica;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
@@ -44,11 +45,13 @@ public class GruppiContatti implements Serializable {
     // Il valore di questa colonna può essere ripetuto con diversi id_gruppo ma mai con lo stesso id_gruppo
     @JoinColumn(name = "id_contatto", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idContatto")
     private Contatto idContatto;
     
     // Colonna id_gruppo punta ad un contatto di Categoria GRUPPO
     @JoinColumn(name = "id_gruppo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idGruppo")
     private Contatto idGruppo;
 
     public GruppiContatti() {
