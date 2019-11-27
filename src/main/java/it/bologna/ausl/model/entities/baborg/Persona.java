@@ -10,6 +10,7 @@ import it.bologna.ausl.model.entities.rubrica.Contatto;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -109,14 +111,14 @@ public class Persona implements Serializable {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] messaggiVisti;
     
+    @OneToMany(mappedBy = "idPersonaCreazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "contattiCreati")
+    private List<Contatto> contattiCreati;
+    
     @JoinColumn(name = "id_contatto", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
     
-    @OneToMany(mappedBy = "idPersonaCreazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "contattiCreati")
-    private List<Contatto> contattiCreati;
-
     
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
@@ -270,15 +272,7 @@ public class Persona implements Serializable {
     public void setPermessiPec(Map<Integer, List<String>> permessiPec) {
         this.permessiPec = permessiPec;
     }
-
-    public Contatto getIdContatto() {
-        return idContatto;
-    }
-
-    public void setIdContatto(Contatto idContatto) {
-        this.idContatto = idContatto;
-    }
-
+    
     public List<Contatto> getContattiCreati() {
         return contattiCreati;
     }
@@ -287,13 +281,13 @@ public class Persona implements Serializable {
         this.contattiCreati = contattiCreati;
     }
 
-//    public String getApplicazione() {
-//        return applicazione;
-//    }
-//
-//    public void setApplicazione(String applicazione) {
-//        this.applicazione = applicazione;
-//    }
+    public Contatto getIdContatto() {
+        return idContatto;
+    }
+
+    public void setIdContatto(Contatto idContatto) {
+        this.idContatto = idContatto;
+    }
 
     @Override
     public int hashCode() {
