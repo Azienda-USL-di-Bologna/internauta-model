@@ -9,6 +9,7 @@ import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
+import it.bologna.ausl.model.entities.rubrica.Contatto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -28,6 +29,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -109,7 +111,13 @@ public class Utente implements Serializable, UserDetails {
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "ribaltoneDaLanciareList")
     private List<RibaltoneDaLanciare> ribaltoneDaLanciareList;
-
+    
+    @OneToMany(mappedBy = "idUtenteCreazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "contattiCreati")
+    private List<Contatto> contattiCreati;
+    
+    
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
@@ -346,6 +354,16 @@ public class Utente implements Serializable, UserDetails {
     public void setRibaltoneDaLanciareList(List<RibaltoneDaLanciare> ribaltoneDaLanciareList) {
         this.ribaltoneDaLanciareList = ribaltoneDaLanciareList;
     }
+
+    public List<Contatto> getContattiCreati() {
+        return contattiCreati;
+    }
+
+    public void setContattiCreati(List<Contatto> contattiCreati) {
+        this.contattiCreati = contattiCreati;
+    }
+
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -28,7 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class ContattiConflittuali implements Serializable {
 
     public static enum MotivazioneConflitto {
-        Contatto_Duplicato
+        CONTATTO_DUPLICATO
     }
 
     private static final long serialVersionUID = 1L;

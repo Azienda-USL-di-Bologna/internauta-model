@@ -42,18 +42,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Contatto implements Serializable {
 
     public static enum CategoriaContatto {
-        Persona,
-        Struttura,
-        Esterno,
-        Gruppo
+        PERSONA,
+        STRUTTURA,
+        ESTERNO,
+        GRUPPO
     }
 
     public static enum TipoContatto {
-        Organigramma,
-        Persona_Fisica,
-        Azienda,
-        Pubblica_Amministrazione,
-        Vario
+        ORGANIGRAMMA,
+        PERSONA_FISICA,
+        AZIENDA,
+        PUBBLICA_AMMINISTRAZIONE,
+        VARIO
     }
 
     private static final long serialVersionUID = 1L;
@@ -92,15 +92,12 @@ public class Contatto implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "categoria")
     private String categoria;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_utente_creazione")
+    @JoinColumn(name = "id_utente_creazione", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Utente idUtenteCreazione;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_persona_creazione")
+    @JoinColumn(name = "id_persona_creazione", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Persona idPersonaCreazione;
-    @NotNull
     @Column(name = "id_aziende", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idAziende;
@@ -141,12 +138,19 @@ public class Contatto implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idContattoPadre")
     private Contatto idContattoPadre;
+    
+    // E' la lista dei gruppi su cui il contatto è presente. 
+    // In questo caso il contatto non può essere di categoria GRUPPO
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "gruppiContattiList")
-    private List<GruppiContatti> gruppiContattiList;
+    @JsonBackReference(value = "gruppiDelContattoList")
+    private List<GruppiContatti> gruppiDelContattoList;
+    
+    // E' la lista dei contatti attaccati al gruppo.
+    // In questo caso il contatto è di categoria GRUPPO
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGruppo", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "gruppiContattiList1")
-    private List<GruppiContatti> gruppiContattiList1;
+    @JsonBackReference(value = "contattiDelGruppoList")
+    private List<GruppiContatti> contattiDelGruppoList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
     @JsonBackReference(value = "telefonoList")
     private List<Telefono> telefonoList;
@@ -348,20 +352,20 @@ public class Contatto implements Serializable {
         this.idContattoPadre = idContattoPadre;
     }
 
-    public List<GruppiContatti> getGruppiContattiList() {
-        return gruppiContattiList;
+    public List<GruppiContatti> getGruppiDelContattoList() {
+        return gruppiDelContattoList;
     }
 
-    public void setGruppiContattiList(List<GruppiContatti> gruppiContattiList) {
-        this.gruppiContattiList = gruppiContattiList;
+    public void setGruppiDelContattoList(List<GruppiContatti> gruppiContattiList) {
+        this.gruppiDelContattoList = gruppiContattiList;
     }
 
-    public List<GruppiContatti> getGruppiContattiList1() {
-        return gruppiContattiList1;
+    public List<GruppiContatti> getContattiDeliGruppoList() {
+        return contattiDelGruppoList;
     }
 
-    public void setGruppiContattiList1(List<GruppiContatti> gruppiContattiList1) {
-        this.gruppiContattiList1 = gruppiContattiList1;
+    public void setContattiDeliGruppoList(List<GruppiContatti> gruppiContattiList1) {
+        this.contattiDelGruppoList = gruppiContattiList1;
     }
 
     public List<Telefono> getTelefonoList() {

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -17,10 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -43,9 +39,14 @@ public class GruppiContatti implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     private ZonedDateTime version;
+    
+    // Colonna id_contatto punta ad un contatto non di Categoria Gruppo.
+    // Il valore di questa colonna può essere ripetuto con diversi id_gruppo ma mai con lo stesso id_gruppo
     @JoinColumn(name = "id_contatto", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
+    
+    // Colonna id_gruppo punta ad un contatto di Categoria GRUPPO
     @JoinColumn(name = "id_gruppo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idGruppo;
