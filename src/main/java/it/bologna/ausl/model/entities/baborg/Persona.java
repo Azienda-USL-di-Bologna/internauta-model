@@ -105,7 +105,7 @@ public class Persona implements Serializable {
     @JsonBackReference(value = "impostazioniApplicazioniList")
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
 
-    @Column(name = "messaggi_visti", columnDefinition = "messaggi_visti[]")
+    @Column(name = "messaggi_visti", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] messaggiVisti;
     
