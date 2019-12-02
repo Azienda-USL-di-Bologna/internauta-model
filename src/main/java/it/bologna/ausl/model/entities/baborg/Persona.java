@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.configuration.ImpostazioniApplicazioni;
+import it.bologna.ausl.model.entities.rubrica.Contatto;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
@@ -22,7 +23,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -103,9 +107,18 @@ public class Persona implements Serializable {
     @JsonBackReference(value = "impostazioniApplicazioniList")
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
 
-    @Column(name = "messaggi_visti", columnDefinition = "messaggi_visti[]")
+    @Column(name = "messaggi_visti", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] messaggiVisti;
+    
+    @OneToMany(mappedBy = "idPersonaCreazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "contattiCreati")
+    private List<Contatto> contattiCreati;
+    
+    @JoinColumn(name = "id_contatto", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Contatto idContatto;
+    
     
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
@@ -259,14 +272,22 @@ public class Persona implements Serializable {
     public void setPermessiPec(Map<Integer, List<String>> permessiPec) {
         this.permessiPec = permessiPec;
     }
+    
+    public List<Contatto> getContattiCreati() {
+        return contattiCreati;
+    }
 
-//    public String getApplicazione() {
-//        return applicazione;
-//    }
-//
-//    public void setApplicazione(String applicazione) {
-//        this.applicazione = applicazione;
-//    }
+    public void setContattiCreati(List<Contatto> contattiCreati) {
+        this.contattiCreati = contattiCreati;
+    }
+
+    public Contatto getIdContatto() {
+        return idContatto;
+    }
+
+    public void setIdContatto(Contatto idContatto) {
+        this.idContatto = idContatto;
+    }
 
     @Override
     public int hashCode() {
