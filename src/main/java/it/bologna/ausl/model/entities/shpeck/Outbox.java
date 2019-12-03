@@ -101,6 +101,9 @@ public class Outbox implements Serializable {
     @Column(name = "body")
     private String body;
 
+    @Column(name = "id_related")
+    private Integer idRelated;
+
 //    @Version()
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -260,6 +263,14 @@ public class Outbox implements Serializable {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public Integer getIdRelated() {
+        return idRelated;
+    }
+
+    public void setIdRelated(Integer idRelated) {
+        this.idRelated = idRelated;
     }
 
     @Override
