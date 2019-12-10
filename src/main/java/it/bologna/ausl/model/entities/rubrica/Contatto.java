@@ -94,9 +94,11 @@ public class Contatto implements Serializable {
     private String categoria;
     @JoinColumn(name = "id_utente_creazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idUtenteCreazione")
     private Utente idUtenteCreazione;
     @JoinColumn(name = "id_persona_creazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idPersonaCreazione")
     private Persona idPersonaCreazione;
     @Column(name = "id_aziende", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
