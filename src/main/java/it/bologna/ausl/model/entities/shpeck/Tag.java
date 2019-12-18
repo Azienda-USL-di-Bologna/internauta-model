@@ -102,7 +102,10 @@ public class Tag implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     private ZonedDateTime version;
-
+    
+    @Column(name = "additional_data", columnDefinition = "jsonb")
+    private String additionalData;
+    
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -186,6 +189,14 @@ public class Tag implements Serializable {
 
     public void setMessageTagList(List<MessageTag> messageTagList) {
         this.messageTagList = messageTagList;
+    }
+
+    public String getAdditionalData() {
+        return additionalData;
+    }
+
+    public void setAdditionalData(String additionalData) {
+        this.additionalData = additionalData;
     }
 
     @Override
