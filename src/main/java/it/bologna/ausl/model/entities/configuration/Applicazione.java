@@ -38,6 +38,10 @@ public class Applicazione implements Serializable {
         scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo
     }
     
+    public static enum ApplicazioniIntimus {
+        scrivania, baborg, shpeck
+    }
+    
     public static enum UrlsGenerationStrategy {
         TRUSTED_URL_WITH_CONTEXT_INFORMATION,
 	TRUSTED_URL_WITHOUT_CONTEXT_INFORMATION,
