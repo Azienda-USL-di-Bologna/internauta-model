@@ -123,8 +123,6 @@ public class Contatto implements Serializable {
     @NotNull
     @Column(name = "eliminato")
     private Boolean eliminato;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "riservato")
     private Boolean riservato;
     @Size(max = 2147483647)
