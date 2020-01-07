@@ -119,7 +119,10 @@ public class Persona implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
     
-    
+    @JoinColumn(name = "id_azienda_default", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Azienda idAziendaDefault;   
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
@@ -287,6 +290,14 @@ public class Persona implements Serializable {
 
     public void setIdContatto(Contatto idContatto) {
         this.idContatto = idContatto;
+    }
+
+    public Azienda getIdAziendaDefault() {
+        return idAziendaDefault;
+    }
+
+    public void setIdAziendaDefault(Azienda idAziendaDefault) {
+        this.idAziendaDefault = idAziendaDefault;
     }
 
     @Override
