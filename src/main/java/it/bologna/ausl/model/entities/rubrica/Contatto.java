@@ -123,6 +123,8 @@ public class Contatto implements Serializable {
     @NotNull
     @Column(name = "eliminato")
     private Boolean eliminato;
+    @Column(name = "riservato")
+    private Boolean riservato;
     @Size(max = 2147483647)
     @Column(name = "contatto_errato")
     private String contattoErrato;
@@ -306,6 +308,14 @@ public class Contatto implements Serializable {
         this.modificabile = modificabile;
     }
 
+    public Boolean getRiservato() {
+        return riservato;
+    }
+
+    public void setRiservato(Boolean riservato) {
+        this.riservato = riservato;
+    }
+    
     public Boolean getEliminato() {
         return eliminato;
     }
