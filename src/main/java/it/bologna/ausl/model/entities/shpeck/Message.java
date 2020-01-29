@@ -75,7 +75,7 @@ public class Message implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pec idPec;
 
-    @JoinColumn(name = "id_azienda", referencedColumnName = "id")
+    @JoinColumn(name = "id_azienda_repository", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAziendaRepository;
 
