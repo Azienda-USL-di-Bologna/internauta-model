@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.shpeck;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
@@ -73,6 +74,10 @@ public class Message implements Serializable {
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pec idPec;
+
+    @JoinColumn(name = "id_azienda_repository", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Azienda idAziendaRepository;
 
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -156,19 +161,16 @@ public class Message implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageAddressList")
     private List<MessageAddress> messageAddressList;
-    
+
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "id", fetch = FetchType.EAGER)
     @JsonBackReference(value = "messageExtensionList")
     private List<MessageExtension> messageExtensionList;
-    
+
 //    @Formula("(select shpeck.messages_addresses ma where ma.address_role = 'FROM' and ma.message = id)")
 //    private MessageAddress messageAddressFrom;
-    
 //    @JsonIgnore
 //    @Formula("(select a.mail_address from shpeck.messages_addresses ma join shpeck.addresses a on a.id = ma.address where ma.address_role = 'FROM' and ma.message = id)")
 //    private String addressFrom;
-    
-    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageTagList")
     private List<MessageTag> messageTagList;
@@ -205,10 +207,10 @@ public class Message implements Serializable {
 
     @Column(name = "id_message_pecgw")
     private String idMessagePecgw;
-        
+
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
     public ZonedDateTime getVersion() {
@@ -218,7 +220,7 @@ public class Message implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
- 
+
     public Message() {
     }
 
@@ -268,6 +270,14 @@ public class Message implements Serializable {
 
     public void setIdPec(Pec idPec) {
         this.idPec = idPec;
+    }
+
+    public Azienda getIdAziendaRepository() {
+        return idAziendaRepository;
+    }
+
+    public void setIdAziendaRepository(Azienda idAziendaRepository) {
+        this.idAziendaRepository = idAziendaRepository;
     }
 
     public Applicazione getIdApplicazione() {
@@ -425,7 +435,6 @@ public class Message implements Serializable {
 //    public String getAddressFrom() {
 //        return addressFrom;
 //    }
-
 //    public MessageAddress getMessageAddressFrom() {
 //        return messageAddressFrom;
 //    }
@@ -436,7 +445,6 @@ public class Message implements Serializable {
 //    public void setAddressFrom(String addressFrom) {
 //        this.addressFrom = addressFrom;
 //    }
-
     public List<MessageTag> getMessageTagList() {
         return messageTagList;
     }
@@ -544,7 +552,8 @@ public class Message implements Serializable {
                 + ", messageType=" + messageType + ", attachmentsNumber=" + attachmentsNumber
                 + ", uuidRepository=" + uuidRepository + ", pathRepository=" + pathRepository
                 + ", receiveTime=" + receiveTime + ", seen=" + seen + ", inReplyTo=" + inReplyTo
-                + ", relationType=" + relationType + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessagePecgw + '}';
+                + ", relationType=" + relationType + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessagePecgw
+                + ", idAzienda=" + idAziendaRepository + '}';
     }
 
     @Override
@@ -570,6 +579,7 @@ public class Message implements Serializable {
         m.setIdOutbox(this.getIdOutbox());
         m.setIdRecepit(this.getIdRecepit());
         m.setInReplyTo(this.getInReplyTo());
+        m.setIdAziendaRepository(this.getIdAziendaRepository());
 
         List<MessageAddress> maList = new ArrayList();
         MessageAddress mma;
