@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -25,6 +26,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -70,6 +72,11 @@ public class MdrTrasformazioni implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
 
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime version;
+    
     public MdrTrasformazioni() {
     }
 
@@ -155,6 +162,14 @@ public class MdrTrasformazioni implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public ZonedDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(ZonedDateTime version) {
+        this.version = version;
     }
 
     @Override
