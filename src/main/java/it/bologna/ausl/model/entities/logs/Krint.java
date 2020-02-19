@@ -103,8 +103,8 @@ public class Krint implements Serializable {
     @ManyToOne(optional = false)
     private OperazioneVersionataKrint idOperazioneVersionata;
     @Column(name = "dataora_operazione", updatable = false, insertable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime dataoraOperazione;
 
     @Version()
