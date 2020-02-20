@@ -2,9 +2,9 @@ package it.bologna.ausl.model.entities.rubrica;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.NextSdrAncestor;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -16,9 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,12 +33,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 public class Telefono implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -60,14 +53,25 @@ public class Telefono implements Serializable {
     @Column(name = "fax")
     private Boolean fax;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 2147483647)
     @Column(name = "provenienza")
     private String provenienza;
+    
+    @JoinColumn(name = "id_dettaglio_contatto", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval=true)
+    private DettaglioContatto idDettaglioContatto;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+    @NextSdrAncestor(relationName = "idContattoDettaglioContatto")
     @JoinColumn(name = "id_contatto", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
@@ -95,54 +99,6 @@ public class Telefono implements Serializable {
         this.id = id;
     }
 
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public Boolean getPrincipale() {
-        return principale;
-    }
-
-    public void setPrincipale(Boolean principale) {
-        this.principale = principale;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-
-    public Boolean getFax() {
-        return fax;
-    }
-
-    public void setFax(Boolean fax) {
-        this.fax = fax;
-    }
-
-    public String getProvenienza() {
-        return provenienza;
-    }
-
-    public void setProvenienza(String provenienza) {
-        this.provenienza = provenienza;
-    }
-
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -159,6 +115,62 @@ public class Telefono implements Serializable {
         this.idContatto = idContatto;
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public boolean getPrincipale() {
+        return principale;
+    }
+
+    public void setPrincipale(boolean principale) {
+        this.principale = principale;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public boolean getFax() {
+        return fax;
+    }
+
+    public void setFax(boolean fax) {
+        this.fax = fax;
+    }
+
+    public String getProvenienza() {
+        return provenienza;
+    }
+
+    public void setProvenienza(String provenienza) {
+        this.provenienza = provenienza;
+    }
+
+    public DettaglioContatto getIdDettaglioContatto() {
+        return idDettaglioContatto;
+    }
+
+    public void setIdDettaglioContatto(DettaglioContatto idDettaglioContatto) {
+        this.idDettaglioContatto = idDettaglioContatto;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -183,5 +195,4 @@ public class Telefono implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.rubrica.Telefono[ id=" + id + " ]";
     }
-    
 }
