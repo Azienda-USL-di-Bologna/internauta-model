@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.rubrica;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.NextSdrAncestor;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -30,7 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class Email implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +48,7 @@ public class Email implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "tipo")
     private String tipo;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "principale")
@@ -59,16 +62,23 @@ public class Email implements Serializable {
     @Column(name = "provenienza")
     private String provenienza;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Column(name = "pec")
     private Boolean pec;
+    
+    @JoinColumn(name = "id_dettaglio_contatto", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval=true)
+    private DettaglioContatto idDettaglioContatto;
+    
+    @NextSdrAncestor(relationName = "idContattoDettaglioContatto")
+    @JoinColumn(name = "id_contatto", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Contatto idContatto;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
-    @JoinColumn(name = "id_contatto", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private Contatto idContatto;
 
     public Email() {
     }
@@ -93,6 +103,23 @@ public class Email implements Serializable {
         this.id = id;
     }
 
+
+    public ZonedDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(ZonedDateTime version) {
+        this.version = version;
+    }
+
+    public Contatto getIdContatto() {
+        return idContatto;
+    }
+
+    public void setIdContatto(Contatto idContatto) {
+        this.idContatto = idContatto;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -109,11 +136,11 @@ public class Email implements Serializable {
         this.tipo = tipo;
     }
 
-    public Boolean getPrincipale() {
+    public boolean getPrincipale() {
         return principale;
     }
 
-    public void setPrincipale(Boolean principale) {
+    public void setPrincipale(boolean principale) {
         this.principale = principale;
     }
 
@@ -133,30 +160,22 @@ public class Email implements Serializable {
         this.provenienza = provenienza;
     }
 
-    public Boolean getPec() {
+    public boolean getPec() {
         return pec;
     }
 
-    public void setPec(Boolean pec) {
+    public void setPec(boolean pec) {
         this.pec = pec;
     }
 
-    public ZonedDateTime getVersion() {
-        return version;
+    public DettaglioContatto getIdDettaglioContatto() {
+        return idDettaglioContatto;
     }
 
-    public void setVersion(ZonedDateTime version) {
-        this.version = version;
+    public void setIdDettaglioContatto(DettaglioContatto idDettaglioContatto) {
+        this.idDettaglioContatto = idDettaglioContatto;
     }
-
-    public Contatto getIdContatto() {
-        return idContatto;
-    }
-
-    public void setIdContatto(Contatto idContatto) {
-        this.idContatto = idContatto;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -181,5 +200,4 @@ public class Email implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.rubrica.Email[ id=" + id + " ]";
     }
-    
 }

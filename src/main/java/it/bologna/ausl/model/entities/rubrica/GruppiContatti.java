@@ -30,6 +30,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 public class GruppiContatti implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +55,11 @@ public class GruppiContatti implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idGruppo")
     private Contatto idGruppo;
+    
+    @JoinColumn(name = "id_dettaglio_contatto", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idDettaglioContatto")
+    private DettaglioContatto idDettaglioContatto;
 
     public GruppiContatti() {
     }
@@ -77,6 +84,14 @@ public class GruppiContatti implements Serializable {
         this.version = version;
     }
 
+    public Contatto getIdGruppo() {
+        return idGruppo;
+    }
+
+    public void setIdGruppo(Contatto idGruppo) {
+        this.idGruppo = idGruppo;
+    }
+
     public Contatto getIdContatto() {
         return idContatto;
     }
@@ -84,13 +99,13 @@ public class GruppiContatti implements Serializable {
     public void setIdContatto(Contatto idContatto) {
         this.idContatto = idContatto;
     }
-
-    public Contatto getIdGruppo() {
-        return idGruppo;
+    
+    public DettaglioContatto getIdDettaglioContatto() {
+        return idDettaglioContatto;
     }
 
-    public void setIdGruppo(Contatto idGruppo) {
-        this.idGruppo = idGruppo;
+    public void setIdDettaglioContatto(DettaglioContatto idDettaglioContatto) {
+        this.idDettaglioContatto = idDettaglioContatto;
     }
 
     @Override
