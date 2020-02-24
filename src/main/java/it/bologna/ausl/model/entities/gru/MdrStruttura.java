@@ -47,13 +47,13 @@ public class MdrStruttura implements Serializable {
     private String descrizione;
 
     @Column(name = "datain")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime datain;
 
     @Column(name = "datafi")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime datafi;
 
     @Size(max = 2147483647)

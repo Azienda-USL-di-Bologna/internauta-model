@@ -154,7 +154,6 @@ public class Contatto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGruppo", fetch = FetchType.LAZY, orphanRemoval=true)
     @JsonBackReference(value = "contattiDelGruppoList")
     private List<GruppiContatti> contattiDelGruppoList;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
     @JsonBackReference(value = "telefonoList")
     private List<Telefono> telefonoList;
@@ -164,11 +163,12 @@ public class Contatto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
     @JsonBackReference(value = "indirizziList")
     private List<Indirizzo> indirizziList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
+    @JsonBackReference(value = "dettaglioContattoList")
+    private List<DettaglioContatto> dettaglioContattoList;
     @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idStruttura")
     private Struttura idStruttura;
-
     @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPersona")
     private Persona idPersona;
@@ -364,14 +364,6 @@ public class Contatto implements Serializable {
         this.idContattoPadre = idContattoPadre;
     }
 
-    public List<GruppiContatti> getGruppiDelContattoList() {
-        return gruppiDelContattoList;
-    }
-
-    public void setGruppiDelContattoList(List<GruppiContatti> gruppiContattiList) {
-        this.gruppiDelContattoList = gruppiContattiList;
-    }
-
     public List<GruppiContatti> getContattiDelGruppoList() {
         return contattiDelGruppoList;
     }
@@ -418,6 +410,22 @@ public class Contatto implements Serializable {
 
     public void setIdPersona(Persona idPersona) {
         this.idPersona = idPersona;
+    }
+
+    public List<DettaglioContatto> getDettaglioContattoList() {
+        return dettaglioContattoList;
+    }
+
+    public void setDettaglioContattoList(List<DettaglioContatto> dettaglioContattoList) {
+        this.dettaglioContattoList = dettaglioContattoList;
+    }
+
+    public List<GruppiContatti> getGruppiDelContattoList() {
+        return gruppiDelContattoList;
+    }
+
+    public void setGruppiDelContattoList(List<GruppiContatti> gruppiDelContattoList) {
+        this.gruppiDelContattoList = gruppiDelContattoList;
     }
 
     @Override

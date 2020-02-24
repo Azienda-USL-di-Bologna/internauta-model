@@ -51,8 +51,8 @@ public class MessageTag implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "inserted")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime inserted = LocalDateTime.now();
 
     @Column(name = "additional_data", columnDefinition = "jsonb")

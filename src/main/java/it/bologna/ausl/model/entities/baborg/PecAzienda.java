@@ -33,8 +33,8 @@ public class PecAzienda implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Column(name = "data_inserimento_riga", updatable = false, insertable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime dataInserimentoRiga;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false)

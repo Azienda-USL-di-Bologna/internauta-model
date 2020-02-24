@@ -41,8 +41,8 @@ public class Report implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime dataInserimentoRiga = LocalDateTime.now();
 
     @Column(name = "additional_data")
@@ -59,8 +59,8 @@ public class Report implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "data_risoluzione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime dataRisoluzione = LocalDateTime.now();
 
     @Size(max = 2147483647)
