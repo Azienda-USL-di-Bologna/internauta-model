@@ -42,6 +42,7 @@ public class OperazioneKrint implements Serializable {
         PEC_MESSAGE_FASCICOLAZIONE,
         PEC_MESSAGE_ERRORE_NON_VISTO,
         PEC_MESSAGE_ERRORE_VISTO,
+        PEC_MESSAGE_DELETE_FROM_TRASH,
         // PEC_MESSAGE_RIPRISTINO,
         PEC_MESSAGE_INVIO_NUOVA_MAIL,
         PEC_DRAFT_CREAZIONE,
