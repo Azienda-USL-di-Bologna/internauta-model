@@ -123,6 +123,8 @@ public class Contatto implements Serializable {
     @NotNull
     @Column(name = "eliminato")
     private Boolean eliminato;
+    @Column(name = "riservato")
+    private Boolean riservato;
     @Size(max = 2147483647)
     @Column(name = "contatto_errato")
     private String contattoErrato;
@@ -130,8 +132,8 @@ public class Contatto implements Serializable {
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
     @OneToMany(mappedBy = "idContattoPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "contattiFigliList")
@@ -153,13 +155,13 @@ public class Contatto implements Serializable {
     @JsonBackReference(value = "contattiDelGruppoList")
     private List<GruppiContatti> contattiDelGruppoList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
     @JsonBackReference(value = "telefonoList")
     private List<Telefono> telefonoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
     @JsonBackReference(value = "emailList")
     private List<Email> emailList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
     @JsonBackReference(value = "indirizziList")
     private List<Indirizzo> indirizziList;
 
@@ -306,6 +308,14 @@ public class Contatto implements Serializable {
         this.modificabile = modificabile;
     }
 
+    public Boolean getRiservato() {
+        return riservato;
+    }
+
+    public void setRiservato(Boolean riservato) {
+        this.riservato = riservato;
+    }
+    
     public Boolean getEliminato() {
         return eliminato;
     }

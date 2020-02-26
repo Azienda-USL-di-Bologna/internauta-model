@@ -38,6 +38,10 @@ public class Applicazione implements Serializable {
         scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo
     }
     
+    public static enum ApplicazioniIntimus {
+        scrivania, baborg, shpeck
+    }
+    
     public static enum UrlsGenerationStrategy {
         TRUSTED_URL_WITH_CONTEXT_INFORMATION,
 	TRUSTED_URL_WITHOUT_CONTEXT_INFORMATION,
@@ -86,8 +90,8 @@ public class Applicazione implements Serializable {
     private String urlGenerationStrategy;
     
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
     public ZonedDateTime getVersion() {

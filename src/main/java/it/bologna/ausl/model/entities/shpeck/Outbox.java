@@ -66,7 +66,7 @@ public class Outbox implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "external_id")
     private String externalId;
-        
+
     @Size(max = 2147483647)
     @Column(name = "subject")
     private String subject;
@@ -103,9 +103,12 @@ public class Outbox implements Serializable {
     @Column(name = "body")
     private String body;
 
+    @Column(name = "id_related")
+    private Integer idRelated;
+
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
     public ZonedDateTime getVersion() {
@@ -115,7 +118,7 @@ public class Outbox implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
+
     public Outbox() {
     }
 
@@ -263,6 +266,14 @@ public class Outbox implements Serializable {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public Integer getIdRelated() {
+        return idRelated;
+    }
+
+    public void setIdRelated(Integer idRelated) {
+        this.idRelated = idRelated;
     }
 
     @Override

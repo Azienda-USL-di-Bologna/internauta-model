@@ -43,9 +43,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author solidus83
  */
 @TypeDefs(
-    {
-        @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-    }
+        {
+            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+        }
 )
 @Entity
 @Table(name = "persone", catalog = "internauta", schema = "baborg")
@@ -54,55 +54,55 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "nome", columnDefinition = "text")
     private String nome;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "cognome", columnDefinition = "text")
     private String cognome;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "codice_fiscale", columnDefinition = "text")
     private String codiceFiscale;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "attiva")
     private Boolean attiva;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
-    
+
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
     private List<Utente> utenteList;
-    
+
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
-    
+
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
-    
+
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "impostazioniApplicazioniList")
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
@@ -110,19 +110,26 @@ public class Persona implements Serializable {
     @Column(name = "messaggi_visti", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] messaggiVisti;
-    
+
     @OneToMany(mappedBy = "idPersonaCreazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "contattiCreati")
     private List<Contatto> contattiCreati;
-    
+
     @JoinColumn(name = "id_contatto", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
-    
-    
+
+    @JoinColumn(name = "id_azienda_default", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Azienda idAziendaDefault;
+
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "importazioniOrganigrammaList")
+    private List<ImportazioniOrganigramma> importazioniOrganigrammaList;
+
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
     public ZonedDateTime getVersion() {
@@ -132,17 +139,16 @@ public class Persona implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-      
+
     @Transient //TODO: togliere e usare permessiPec (è usato in PersonaInterceptor)
     private List<PermessoEntitaStoredProcedure> permessi;
 
     @Transient
     private Map<Integer, List<String>> permessiPec;
-    
+
 //    @Transient
 //    @QueryType(PropertyType.SIMPLE)
 //    private String applicazione;
-
     public Persona() {
     }
 
@@ -272,7 +278,7 @@ public class Persona implements Serializable {
     public void setPermessiPec(Map<Integer, List<String>> permessiPec) {
         this.permessiPec = permessiPec;
     }
-    
+
     public List<Contatto> getContattiCreati() {
         return contattiCreati;
     }
@@ -287,6 +293,14 @@ public class Persona implements Serializable {
 
     public void setIdContatto(Contatto idContatto) {
         this.idContatto = idContatto;
+    }
+
+    public Azienda getIdAziendaDefault() {
+        return idAziendaDefault;
+    }
+
+    public void setIdAziendaDefault(Azienda idAziendaDefault) {
+        this.idAziendaDefault = idAziendaDefault;
     }
 
     @Override

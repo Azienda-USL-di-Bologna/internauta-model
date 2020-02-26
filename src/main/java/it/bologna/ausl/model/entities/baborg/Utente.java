@@ -105,22 +105,26 @@ public class Utente implements Serializable, UserDetails {
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
+
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "storicoAttivazioneList")
     private List<StoricoAttivazione> storicoAttivazioneList;
+
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "ribaltoneDaLanciareList")
     private List<RibaltoneDaLanciare> ribaltoneDaLanciareList;
-    
+
     @OneToMany(mappedBy = "idUtenteCreazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "contattiCreati")
     private List<Contatto> contattiCreati;
-    
-    
-    
+
+    @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "importazioniOrganigrammaList")
+    private List<ImportazioniOrganigramma> importazioniOrganigrammaList;
+
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
     public ZonedDateTime getVersion() {
@@ -362,8 +366,6 @@ public class Utente implements Serializable, UserDetails {
     public void setContattiCreati(List<Contatto> contattiCreati) {
         this.contattiCreati = contattiCreati;
     }
-
-    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

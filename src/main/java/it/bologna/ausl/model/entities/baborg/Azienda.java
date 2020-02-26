@@ -122,13 +122,18 @@ public class Azienda implements Serializable {
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "storicoAttivazioneList")
     private List<StoricoAttivazione> storicoAttivazioneList;
+
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY)
     @JsonBackReference(value = "ribaltoneDaLanciareList")
     private List<RibaltoneDaLanciare> ribaltoneDaLanciareList;
-        
+
+    @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "importazioniOrganigrammaList")
+    private List<ImportazioniOrganigramma> importazioniOrganigrammaList;
+
     @Version()
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
     public ZonedDateTime getVersion() {
@@ -138,7 +143,7 @@ public class Azienda implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
+
     public Azienda() {
     }
 

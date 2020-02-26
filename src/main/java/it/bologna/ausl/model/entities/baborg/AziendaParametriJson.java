@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.baborg;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,10 +21,12 @@ public class AziendaParametriJson implements Serializable {
     private String entityId;
     private String loginPath;
     private String basePath;
+    private String InternetBasePath;
     private String crossLoginUrlTemplate;
     private String simpleCrossLoginUrlTemplate;
     private MongoParams mongoParams;
     private String logoutUrl;
+    private String InternetLogoutUrl;
     //private String mongoConnectionString;
 
 
@@ -166,6 +169,22 @@ public class AziendaParametriJson implements Serializable {
     public void setLogoutUrl(String logoutUrl) {
         this.logoutUrl = logoutUrl;
     }
+
+    public String getInternetBasePath() {
+        return InternetBasePath;
+    }
+
+    public void setInternetBasePath(String InternetBasePath) {
+        this.InternetBasePath = InternetBasePath;
+    }
+
+    public String getInternetLogoutUrl() {
+        return InternetLogoutUrl;
+    }
+
+    public void setInternetLogoutUrl(String InternetLogoutUrl) {
+        this.InternetLogoutUrl = InternetLogoutUrl;
+    }
     
 //    public String getMongoConnectionString() {
 //        return mongoConnectionString;
@@ -177,6 +196,10 @@ public class AziendaParametriJson implements Serializable {
 
     public static AziendaParametriJson parse(ObjectMapper objectMapper, String src) throws IOException {
         return objectMapper.readValue(src, AziendaParametriJson.class);
+    }
+
+    public static String dumpToString(ObjectMapper objectMapper, AziendaParametriJson aziendaParametriJson) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(aziendaParametriJson);
     }
     
     public class MasterChefParmas {
