@@ -35,6 +35,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 public class DettaglioContatto implements Serializable {
+    
+    public static enum TipoDettaglio {
+        UTENTE_STRUTTURA,
+        STRUTTURA,
+        EMAIL,
+        TELEFONO,
+        INDIRIZZO_FISICO
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -71,6 +79,11 @@ public class DettaglioContatto implements Serializable {
     @NotNull
     @Column(name = "principale")
     private Boolean principale;
+    
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "tipo")
+    private String tipo;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -152,6 +165,14 @@ public class DettaglioContatto implements Serializable {
 
     public void setPrincipale(Boolean principale) {
         this.principale = principale;
+    }
+    
+    public TipoDettaglio getTipo() {
+        return TipoDettaglio.valueOf(tipo);
+    }
+
+    public void setTipo(TipoDettaglio tipo) {
+        this.tipo = tipo.toString();
     }
 
     public ZonedDateTime getVersion() {
