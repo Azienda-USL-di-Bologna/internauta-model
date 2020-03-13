@@ -27,6 +27,7 @@ public class AziendaParametriJson implements Serializable {
     private MongoParams mongoParams;
     private String logoutUrl;
     private String InternetLogoutUrl;
+    private MailParams mailParams;
     //private String mongoConnectionString;
 
 
@@ -34,7 +35,7 @@ public class AziendaParametriJson implements Serializable {
     public AziendaParametriJson() {
     }
 
-    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, String descBreve, String loginSSOField, String loginDBField, String loginDBFieldBaborg, String shalboApiUrl, MasterChefParmas masterchefParams, String entityId, String loginPath, String crossLoginUrlTemplate, MongoParams mongoParams, String logoutUrl) {
+    public AziendaParametriJson(String babelSuiteBdsToolsUrl, String babelSuiteWebApiUrl, String descBreve, String loginSSOField, String loginDBField, String loginDBFieldBaborg, String shalboApiUrl, MasterChefParmas masterchefParams, String entityId, String loginPath, String basePath, String InternetBasePath, String crossLoginUrlTemplate, String simpleCrossLoginUrlTemplate, MongoParams mongoParams, String logoutUrl, String InternetLogoutUrl, MailParams mailParams) {
         this.babelSuiteBdsToolsUrl = babelSuiteBdsToolsUrl;
         this.babelSuiteWebApiUrl = babelSuiteWebApiUrl;
         this.descBreve = descBreve;
@@ -45,9 +46,22 @@ public class AziendaParametriJson implements Serializable {
         this.masterchefParams = masterchefParams;
         this.entityId = entityId;
         this.loginPath = loginPath;
+        this.basePath = basePath;
+        this.InternetBasePath = InternetBasePath;
         this.crossLoginUrlTemplate = crossLoginUrlTemplate;
+        this.simpleCrossLoginUrlTemplate = simpleCrossLoginUrlTemplate;
         this.mongoParams = mongoParams;
         this.logoutUrl = logoutUrl;
+        this.InternetLogoutUrl = InternetLogoutUrl;
+        this.mailParams = mailParams;
+    }
+
+    public MailParams getMailParams() {
+        return mailParams;
+    }
+
+    public void setMailParams(MailParams mailParams) {
+        this.mailParams = mailParams;
     }
 
     public String getBabelSuiteBdsToolsUrl() {
@@ -269,5 +283,47 @@ public class AziendaParametriJson implements Serializable {
         public void setRoot(String root) {
             this.root = root;
         }
+    }
+    
+    
+    public class MailParams {
+        private String mailServerSmtpUrl;
+        private Integer mailServerSmtpPort;
+        private String mailFrom;
+
+        public MailParams() {
+        }
+
+        public MailParams(Integer mailServerSmtpPort, String mailServerSmtpUrl, String mailFrom) {
+            this.mailServerSmtpPort = mailServerSmtpPort;
+            this.mailServerSmtpUrl = mailServerSmtpUrl;
+            this.mailFrom = mailFrom;
+        }
+
+        public Integer getMailServerSmtpPort() {
+            return mailServerSmtpPort;
+        }
+
+        public void setMailServerSmtpPort(Integer mailServerSmtpPort) {
+            this.mailServerSmtpPort = mailServerSmtpPort;
+        }
+
+        public String getMailServerSmtpUrl() {
+            return mailServerSmtpUrl;
+        }
+
+        public void setMailServerSmtpUrl(String mailServerSmtpUrl) {
+            this.mailServerSmtpUrl = mailServerSmtpUrl;
+        }
+
+        public String getMailFrom() {
+            return mailFrom;
+        }
+
+        public void setMailFrom(String mailFrom) {
+            this.mailFrom = mailFrom;
+        }
+
+        
     }
 }
