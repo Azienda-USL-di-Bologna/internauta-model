@@ -287,8 +287,8 @@ public class AziendaParametriJson implements Serializable {
     
     
     public class MailParams {
-        private Integer mailServerSmtpPort;
         private String mailServerSmtpUrl;
+        private Integer mailServerSmtpPort;
         private String mailFrom;
 
         public MailParams() {
