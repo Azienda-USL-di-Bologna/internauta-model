@@ -1,19 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.bologna.ausl.model.entities.forms;
 
-import it.bologna.ausl.model.entities.baborg.Azienda;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Classe per mappare i campi della form Feedback dell'utente 
+ * Classe per mappare i campi della form "Invia Segnalazione Utente"
  * @author Giuseppe Russo <g.russo@nsi.it>
  */
-public class Feedback {
-    private Integer azienda;
+public class Segnalazione {
+    private String azienda;
     private String cognome;
     private String nome;
     private String username;
@@ -23,11 +17,11 @@ public class Feedback {
     private String descrizione;
     private MultipartFile[] allegati;
 
-    public Integer getAzienda() {
+    public String getAzienda() {
         return azienda;
     }
 
-    public void setAzienda(Integer azienda) {
+    public void setAzienda(String azienda) {
         this.azienda = azienda;
     }
 
