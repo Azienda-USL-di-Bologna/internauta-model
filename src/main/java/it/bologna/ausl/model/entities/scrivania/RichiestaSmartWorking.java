@@ -153,6 +153,8 @@ public class RichiestaSmartWorking implements Serializable {
     @Column(name = "dichiarazioni_finali", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] dichiarazioniFinali;
+    @Column(name = "my_sanita")
+    private Boolean mySanita;
 
     public RichiestaSmartWorking() {
     }
@@ -511,6 +513,14 @@ public class RichiestaSmartWorking implements Serializable {
 
     public void setDichiarazioniFinali(String[] dichiarazioniFinali) {
         this.dichiarazioniFinali = dichiarazioniFinali;
+    }
+
+    public Boolean getMySanita() {
+        return mySanita;
+    }
+
+    public void setMySanita(Boolean mySanita) {
+        this.mySanita = mySanita;
     }
 
     @Override
