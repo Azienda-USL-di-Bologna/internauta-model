@@ -104,7 +104,7 @@ public class Draft implements Serializable {
     private String messageRelatedType;
           
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Utente idUtente;
     
     @Version()
