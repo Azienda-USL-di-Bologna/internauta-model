@@ -156,6 +156,9 @@ public class Utente implements Serializable, UserDetails {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessiDiFlusso;
+    
+    @Transient
+    private List<PermessoEntitaStoredProcedure> permessiDiFlussoByIdUtente;
 
     public Utente() {
     }
@@ -341,6 +344,14 @@ public class Utente implements Serializable, UserDetails {
 
     public void setPermessiDiFlussoByCodiceAzienda(Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda) {
         this.permessiDiFlussoByCodiceAzienda = permessiDiFlussoByCodiceAzienda;
+    }
+
+    public List<PermessoEntitaStoredProcedure> getPermessiDiFlussoByIdUtente() {
+        return permessiDiFlussoByIdUtente;
+    }
+
+    public void setPermessiDiFlussoByIdUtente(List<PermessoEntitaStoredProcedure> permessiDiFlussoByIdUtente) {
+        this.permessiDiFlussoByIdUtente = permessiDiFlussoByIdUtente;
     }
 
     public List<StoricoAttivazione> getStoricoAttivazioneList() {
