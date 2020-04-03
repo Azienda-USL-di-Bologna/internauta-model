@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Pec;
+import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -102,6 +103,10 @@ public class Draft implements Serializable {
     @Column(name = "message_related_type")
     private String messageRelatedType;
           
+    @JoinColumn(name = "id_utente", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Utente idUtente;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -255,6 +260,14 @@ public class Draft implements Serializable {
 
     public void setMessageRelatedType(MessageRelatedType messageRelatedType) {
         this.messageRelatedType = messageRelatedType.toString();
+    }
+
+    public Utente getIdUtente() {
+        return idUtente;
+    }
+
+    public void setIdUtente(Utente idUtente) {
+        this.idUtente = idUtente;
     }
 
     @Override
