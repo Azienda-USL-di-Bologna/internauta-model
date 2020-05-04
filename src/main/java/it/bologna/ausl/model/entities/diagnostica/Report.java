@@ -61,7 +61,7 @@ public class Report implements Serializable {
     @Column(name = "data_risoluzione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataRisoluzione = LocalDateTime.now();
+    private LocalDateTime dataRisoluzione;
 
     @Size(max = 2147483647)
     @Column(name = "note")

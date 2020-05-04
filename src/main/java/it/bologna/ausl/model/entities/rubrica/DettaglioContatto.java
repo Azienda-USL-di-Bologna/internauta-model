@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.rubrica;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.baborg.UtenteStruttura;
 import it.nextsw.common.annotations.NextSdrAncestor;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -74,6 +75,10 @@ public class DettaglioContatto implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval=true)
     @JsonBackReference(value = "indirizzo")
     private Indirizzo indirizzo;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval=false)
+    @JsonBackReference(value = "utenteStruttura")
+    private UtenteStruttura utenteStruttura;
     
     @Basic(optional = false)
     @NotNull
@@ -161,6 +166,14 @@ public class DettaglioContatto implements Serializable {
 
     public Boolean getPrincipale() {
         return principale;
+    }
+
+    public UtenteStruttura getUtenteStruttura() {
+        return utenteStruttura;
+    }
+
+    public void setUtenteStruttura(UtenteStruttura utenteStruttura) {
+        this.utenteStruttura = utenteStruttura;
     }
 
     public void setPrincipale(Boolean principale) {

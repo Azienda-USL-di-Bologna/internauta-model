@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -18,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -49,6 +51,9 @@ public class UtenteStruttura implements Serializable {
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Utente idUtente;
+    @JoinColumn(name = "id_dettaglio_contatto", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval=true)
+    private DettaglioContatto idDettaglioContatto;
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -108,6 +113,14 @@ public class UtenteStruttura implements Serializable {
 
     public void setIdUtente(Utente idUtente) {
         this.idUtente = idUtente;
+    }
+
+    public DettaglioContatto getIdDettaglioContatto() {
+        return idDettaglioContatto;
+    }
+
+    public void setIdDettaglioContatto(DettaglioContatto idDettaglioContatto) {
+        this.idDettaglioContatto = idDettaglioContatto;
     }
 
     @Override
