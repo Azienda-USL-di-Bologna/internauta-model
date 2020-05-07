@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -52,13 +53,33 @@ public class UtenteStruttura implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Utente idUtente;
     @JoinColumn(name = "id_dettaglio_contatto", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval=true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private DettaglioContatto idDettaglioContatto;
-        
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+
+    @Column(name = "attivo_dal")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime attivoDal;
+
+    @Column(name = "attivo_al")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime attivoAl;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "attivo")
+    private Boolean attivo;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bit_ruoli")
+    private Integer bitRuoli;
 
     public ZonedDateTime getVersion() {
         return version;
@@ -67,7 +88,7 @@ public class UtenteStruttura implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
+
     public UtenteStruttura() {
     }
 
@@ -121,6 +142,38 @@ public class UtenteStruttura implements Serializable {
 
     public void setIdDettaglioContatto(DettaglioContatto idDettaglioContatto) {
         this.idDettaglioContatto = idDettaglioContatto;
+    }
+
+    public ZonedDateTime getAttivoDal() {
+        return attivoDal;
+    }
+
+    public void setAttivoDal(ZonedDateTime attivoDal) {
+        this.attivoDal = attivoDal;
+    }
+
+    public ZonedDateTime getAttivoAl() {
+        return attivoAl;
+    }
+
+    public void setAttivoAl(ZonedDateTime attivoAl) {
+        this.attivoAl = attivoAl;
+    }
+
+    public Boolean getAttivo() {
+        return attivo;
+    }
+
+    public void setAttivo(Boolean attivo) {
+        this.attivo = attivo;
+    }
+
+    public Integer getBitRuoli() {
+        return bitRuoli;
+    }
+
+    public void setBitRuoli(Integer bitRuoli) {
+        this.bitRuoli = bitRuoli;
     }
 
     @Override
