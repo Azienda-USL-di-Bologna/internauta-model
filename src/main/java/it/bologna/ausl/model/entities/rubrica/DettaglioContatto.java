@@ -167,6 +167,10 @@ public class DettaglioContatto implements Serializable {
     public Boolean getPrincipale() {
         return principale;
     }
+    
+    public void setPrincipale(Boolean principale) {
+        this.principale = principale;
+    }
 
     public UtenteStruttura getUtenteStruttura() {
         return utenteStruttura;
@@ -176,16 +180,19 @@ public class DettaglioContatto implements Serializable {
         this.utenteStruttura = utenteStruttura;
     }
 
-    public void setPrincipale(Boolean principale) {
-        this.principale = principale;
-    }
     
     public TipoDettaglio getTipo() {
-        return TipoDettaglio.valueOf(tipo);
+        if (tipo != null) {
+            return TipoDettaglio.valueOf(tipo);
+        } else {
+            return null;
+        }
     }
 
     public void setTipo(TipoDettaglio tipo) {
-        this.tipo = tipo.toString();
+        if (tipo != null) {
+            this.tipo = tipo.toString();
+        }
     }
 
     public ZonedDateTime getVersion() {

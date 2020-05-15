@@ -256,12 +256,12 @@ public class Utente implements Serializable, UserDetails {
         this.fax = fax;
     }
 
-    public boolean getOmonimia() {
+    public Boolean getOmonimia() {
         return omonimia;
     }
 
     public void setOmonimia(Boolean omonimia) {
-        this.omonimia = omonimia;
+            this.omonimia = omonimia;
     }
 
     public String getPasswordHash() {
@@ -280,7 +280,7 @@ public class Utente implements Serializable, UserDetails {
         this.dominio = dominio;
     }
 
-    public boolean getAttivo() {
+    public Boolean getAttivo() {
         return attivo;
     }
 
@@ -288,7 +288,7 @@ public class Utente implements Serializable, UserDetails {
         this.attivo = attivo;
     }
 
-    public int getBitRuoli() {
+    public Integer getBitRuoli() {
         return bitRuoli;
     }
 

@@ -47,7 +47,7 @@ public class Ruolo implements Serializable {
     @NotNull
     @Column(name = "super_aziendale")
     private Boolean superAziendale;
-        
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -60,9 +60,9 @@ public class Ruolo implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
+
     public static enum CodiciRuolo {
-        UG, MOS, OS, CA, CI, AS, SD
+        UG, MOS, OS, CA, CI, AS, SD, SR, R
     }
 
     public Ruolo() {
@@ -97,11 +97,19 @@ public class Ruolo implements Serializable {
     }
 
     public CodiciRuolo getNomeBreve() {
-        return CodiciRuolo.valueOf(nomeBreve);
+        if (nomeBreve != null) {
+            return CodiciRuolo.valueOf(nomeBreve);
+        } else {
+            return null;
+        }
     }
 
     public void setNomeBreve(CodiciRuolo nomeBreve) {
-        this.nomeBreve = nomeBreve.name();
+        if (nomeBreve != null) {
+            this.nomeBreve = nomeBreve.name();
+        } else {
+            this.nomeBreve = null;
+        }
     }
 
     public Integer getMascheraBit() {

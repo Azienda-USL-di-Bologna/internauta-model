@@ -96,11 +96,17 @@ public class AfferenzaStruttura implements Serializable {
     }
 
     public CodiciAfferenzaStruttura getCodice() {
-        return CodiciAfferenzaStruttura.valueOf(codice);
+        if (codice != null) {
+            return CodiciAfferenzaStruttura.valueOf(codice);
+        } else {
+            return null;
+        }
     }
 
     public void setCodice(CodiciAfferenzaStruttura codice) {
-        this.codice = codice.toString();
+        if (codice != null) {
+            this.codice = codice.toString();
+        }
     }
 
     public List<UtenteStruttura> getUtenteStrutturaList() {

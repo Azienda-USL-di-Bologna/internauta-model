@@ -62,7 +62,20 @@ public class ImportazioniOrganigramma implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "esito")
     private String esito;
+    
+    @Basic(optional = false)
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "csv_error_link")
+    private String path_csv_error;
 
+    public String getPath_csv_error() {
+        return path_csv_error;
+    }
+
+    public void setPath_csv_error(String path_csv_error) {
+        this.path_csv_error = path_csv_error;
+    }
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
