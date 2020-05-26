@@ -128,6 +128,8 @@ public class Struttura implements Serializable {
     @JoinColumn(name = "id_contatto", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
+    @Column(name = "anarchica")
+    private Boolean anarchica;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -370,6 +372,14 @@ public class Struttura implements Serializable {
 
     public void setIdContatto(Contatto idContatto) {
         this.idContatto = idContatto;
+    }
+
+    public Boolean getAnarchica() {
+        return anarchica;
+    }
+
+    public void setAnarchica(Boolean anarchica) {
+        this.anarchica = anarchica;
     }
 
 

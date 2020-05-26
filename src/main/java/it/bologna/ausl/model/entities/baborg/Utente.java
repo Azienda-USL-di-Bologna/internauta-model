@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
@@ -35,6 +36,10 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -44,6 +49,11 @@ import org.springframework.security.core.userdetails.UserDetails;
  *
  * @author solidus83
  */
+@TypeDefs(
+        {
+            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+        }
+)
 @Entity
 @Table(name = "utenti", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
@@ -127,6 +137,18 @@ public class Utente implements Serializable, UserDetails {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
+    @Column(name = "emails", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] emails;
+
+    public String[] getEmails() {
+        return emails;
+    }
+
+    public void setEmails(String[] emails) {
+        this.emails = emails;
+    }
+
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -156,7 +178,7 @@ public class Utente implements Serializable, UserDetails {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessiDiFlusso;
-    
+
     @Transient
     private List<PermessoEntitaStoredProcedure> permessiDiFlussoByIdUtente;
 
@@ -234,12 +256,12 @@ public class Utente implements Serializable, UserDetails {
         this.fax = fax;
     }
 
-    public boolean getOmonimia() {
+    public Boolean getOmonimia() {
         return omonimia;
     }
 
     public void setOmonimia(Boolean omonimia) {
-        this.omonimia = omonimia;
+            this.omonimia = omonimia;
     }
 
     public String getPasswordHash() {
@@ -258,7 +280,7 @@ public class Utente implements Serializable, UserDetails {
         this.dominio = dominio;
     }
 
-    public boolean getAttivo() {
+    public Boolean getAttivo() {
         return attivo;
     }
 
@@ -266,7 +288,7 @@ public class Utente implements Serializable, UserDetails {
         this.attivo = attivo;
     }
 
-    public int getBitRuoli() {
+    public Integer getBitRuoli() {
         return bitRuoli;
     }
 
