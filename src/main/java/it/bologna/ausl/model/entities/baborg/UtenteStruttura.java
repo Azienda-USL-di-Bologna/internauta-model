@@ -50,9 +50,9 @@ public class UtenteStruttura implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @OneToMany(mappedBy = "idUtentiStrutture", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "permessoList")
-    private List<Permesso> permessoList;
+//    @OneToMany(mappedBy = "idUtentiStrutture", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    @JsonBackReference(value = "permessoList")
+//    private List<Permesso> permessoList;
     @JoinColumn(name = "id_afferenza_struttura", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private AfferenzaStruttura idAfferenzaStruttura;
@@ -118,13 +118,13 @@ public class UtenteStruttura implements Serializable {
         this.id = id;
     }
 
-    public List<Permesso> getPermessoList() {
-        return permessoList;
-    }
-
-    public void setPermessoList(List<Permesso> permessoList) {
-        this.permessoList = permessoList;
-    }
+//    public List<Permesso> getPermessoList() {
+//        return permessoList;
+//    }
+//
+//    public void setPermessoList(List<Permesso> permessoList) {
+//        this.permessoList = permessoList;
+//    }
 
     public AfferenzaStruttura getIdAfferenzaStruttura() {
         return idAfferenzaStruttura;

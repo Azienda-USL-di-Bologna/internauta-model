@@ -37,9 +37,9 @@ public class PecUtente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @OneToMany(mappedBy = "idPecUtenti", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
-    @JsonBackReference(value = "permessoList")
-    private List<Permesso> permessoList;
+//    @OneToMany(mappedBy = "idPecUtenti", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+//    @JsonBackReference(value = "permessoList")
+//    private List<Permesso> permessoList;
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Pec idPec;
@@ -75,13 +75,13 @@ public class PecUtente implements Serializable {
         this.id = id;
     }
 
-    public List<Permesso> getPermessoList() {
-        return permessoList;
-    }
+//    public List<Permesso> getPermessoList() {
+//        return permessoList;
+//    }
 
-    public void setPermessoList(List<Permesso> permessoList) {
-        this.permessoList = permessoList;
-    }
+//    public void setPermessoList(List<Permesso> permessoList) {
+//        this.permessoList = permessoList;
+//    }
 
     public Pec getIdPec() {
         return idPec;
