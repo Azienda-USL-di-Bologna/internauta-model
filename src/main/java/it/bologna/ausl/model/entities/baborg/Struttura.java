@@ -130,6 +130,9 @@ public class Struttura implements Serializable {
     private Contatto idContatto;
     @Column(name = "anarchica")
     private Boolean anarchica;
+    
+    @Transient
+    private Boolean fogliaCalcolata = false;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -382,6 +385,13 @@ public class Struttura implements Serializable {
         this.anarchica = anarchica;
     }
 
+    public Boolean getFogliaCalcolata() {
+        return fogliaCalcolata;
+    }
+
+    public void setFogliaCalcolata(Boolean fogliaCalcolata) {
+        this.fogliaCalcolata = fogliaCalcolata;
+    }
 
 
     @Override
