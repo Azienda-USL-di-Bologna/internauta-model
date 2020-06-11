@@ -35,6 +35,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class MdrAppartenenti implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public static void selectAppartenentiByIdAzienda(String idAzienda) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     @Column(name = "codice_ente")
     private Integer codiceEnte;
 
