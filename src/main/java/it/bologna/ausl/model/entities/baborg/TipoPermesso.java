@@ -53,9 +53,9 @@ public class TipoPermesso implements Serializable {
     @Size(max = 300)
     @Column(name = "descrizione")
     private String descrizione;
-    @OneToMany(mappedBy = "idTipoPermesso", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "permessoList")
-    private List<Permesso> permessoList;
+//    @OneToMany(mappedBy = "idTipoPermesso", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    @JsonBackReference(value = "permessoList")
+//    private List<Permesso> permessoList;
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -123,13 +123,13 @@ public class TipoPermesso implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public List<Permesso> getPermessoList() {
-        return permessoList;
-    }
+//    public List<Permesso> getPermessoList() {
+//        return permessoList;
+//    }
 
-    public void setPermessoList(List<Permesso> permessoList) {
-        this.permessoList = permessoList;
-    }
+//    public void setPermessoList(List<Permesso> permessoList) {
+//        this.permessoList = permessoList;
+//    }
 
     @Override
     public int hashCode() {

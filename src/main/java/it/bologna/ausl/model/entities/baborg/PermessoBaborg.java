@@ -27,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "permessi", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Permesso implements Serializable {
+public class PermessoBaborg implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,10 +61,10 @@ public class Permesso implements Serializable {
         this.version = version;
     }
     
-    public Permesso() {
+    public PermessoBaborg() {
     }
 
-    public Permesso(Integer id) {
+    public PermessoBaborg(Integer id) {
         this.id = id;
     }
 
@@ -118,10 +118,10 @@ public class Permesso implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Permesso)) {
+        if (!(object instanceof PermessoBaborg)) {
             return false;
         }
-        Permesso other = (Permesso) object;
+        PermessoBaborg other = (PermessoBaborg) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
