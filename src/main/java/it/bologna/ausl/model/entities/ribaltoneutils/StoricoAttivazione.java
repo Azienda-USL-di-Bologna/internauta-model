@@ -62,7 +62,8 @@ public class StoricoAttivazione implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "note")
     private String note;
-
+    @Column(name = "fonte_ribaltone")
+    private String fonteRibaltone;
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -146,6 +147,14 @@ public class StoricoAttivazione implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getFonteRibaltone() {
+        return fonteRibaltone;
+    }
+
+    public void setFonteRibaltone(String fonteRibaltone) {
+        this.fonteRibaltone = fonteRibaltone;
     }
 
     @Override

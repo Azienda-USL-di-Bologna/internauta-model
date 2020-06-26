@@ -80,6 +80,8 @@ public class RibaltoneDaLanciare implements Serializable {
     private Boolean ribaltatoInternauta;
     @Column(name = "ribaltato_argo")
     private Boolean ribaltatoArgo;
+    @Column(name = "fonte_ribaltone")
+    private String fonteRibaltone;
     
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -227,6 +229,14 @@ public class RibaltoneDaLanciare implements Serializable {
 
     public void setRibaltatoArgo(Boolean ribaltatoArgo) {
         this.ribaltatoArgo = ribaltatoArgo;
+    }
+
+    public String getFonteRibaltone() {
+        return fonteRibaltone;
+    }
+
+    public void setFonteRibaltone(String fonteRibaltone) {
+        this.fonteRibaltone = fonteRibaltone;
     }
 
     @Override
