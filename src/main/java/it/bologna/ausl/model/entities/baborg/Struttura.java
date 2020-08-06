@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -37,6 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({"idAzienda", "idAzienda, utenteStrutturaList", "struttureFiglieList"})
 public class Struttura implements Serializable {
 
     private static final long serialVersionUID = 1L;

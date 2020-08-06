@@ -1,9 +1,9 @@
 package it.bologna.ausl.model.entities.shpeck.views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.shpeck.Message;
 import java.io.Serializable;
@@ -29,6 +29,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "drafts_lite", schema = "shpeck")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({"idPec"})
 public class DraftLite implements Serializable {
     
     public static enum MessageRelatedType {

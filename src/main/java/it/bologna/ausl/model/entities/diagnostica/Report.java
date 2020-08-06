@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.diagnostica;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
@@ -22,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "report", catalog = "internauta", schema = "diagnostica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({})
 public class Report implements Serializable {
 
     private static final long serialVersionUID = 1L;

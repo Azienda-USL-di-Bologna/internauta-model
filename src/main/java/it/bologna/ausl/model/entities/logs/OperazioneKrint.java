@@ -1,6 +1,7 @@
 package it.bologna.ausl.model.entities.logs;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -22,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "operazioni_krint", catalog = "internauta", schema = "logs")
+@GenerateProjections({})
 public class OperazioneKrint implements Serializable {
     
     public static enum CodiceOperazione{

@@ -5,6 +5,7 @@
  */
 package it.bologna.ausl.model.entities.logs;
 
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -29,6 +30,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "operazioni_versionate_krint", catalog = "internauta", schema = "logs")
+@GenerateProjections({})
 public class OperazioneVersionataKrint implements Serializable {
 
     private static final long serialVersionUID = 1L;
