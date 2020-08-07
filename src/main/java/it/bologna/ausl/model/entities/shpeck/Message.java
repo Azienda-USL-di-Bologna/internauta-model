@@ -78,15 +78,15 @@ public class Message implements Serializable {
     private Pec idPec;
 
     @JoinColumn(name = "id_azienda_repository", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Azienda idAziendaRepository;
 
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Applicazione idApplicazione;
 
     @JoinColumn(name = "id_related", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Message idRelated;
 
     @Size(max = 2147483647)

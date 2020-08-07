@@ -111,11 +111,11 @@ public class MessageComplete implements Serializable {
     private String folderType;
 
     @JoinColumn(name = "id_folder", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Folder idFolder;
     
     @JoinColumn(name = "id_target_folder", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Folder idTargetFolder;
     
     @Column(name = "id_tags", columnDefinition = "text[]")

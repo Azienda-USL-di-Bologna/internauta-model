@@ -69,7 +69,7 @@ public class MessageFolder implements Serializable {
     private Utente idUtente;
     
     @JoinColumn(name = "id_previous_folder", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Folder idPreviousFolder;
         
     @Version()

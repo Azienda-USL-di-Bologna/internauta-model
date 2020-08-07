@@ -49,7 +49,7 @@ public class OutboxLite implements Serializable {
     private Boolean ignore = false;
 
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Applicazione idApplicazione;
 
     @Size(min = 1, max = 2147483647)
