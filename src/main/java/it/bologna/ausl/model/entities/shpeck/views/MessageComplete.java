@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.shpeck.views;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Message;
@@ -38,6 +39,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "messages_complete", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @Cacheable(false)
+@GenerateProjections({})
 public class MessageComplete implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -109,11 +111,11 @@ public class MessageComplete implements Serializable {
     private String folderType;
 
     @JoinColumn(name = "id_folder", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Folder idFolder;
     
     @JoinColumn(name = "id_target_folder", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Folder idTargetFolder;
     
     @Column(name = "id_tags", columnDefinition = "text[]")

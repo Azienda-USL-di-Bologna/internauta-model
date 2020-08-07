@@ -7,11 +7,11 @@ package it.bologna.ausl.model.entities.gru;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,11 +21,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,6 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "mdr_trasformazioni", catalog = "internauta", schema = "gru")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({})
 public class MdrTrasformazioni implements Serializable {
 
     private static final long serialVersionUID = 1L;

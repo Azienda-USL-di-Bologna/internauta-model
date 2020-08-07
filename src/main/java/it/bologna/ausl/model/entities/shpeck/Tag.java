@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.shpeck;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "tags", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({})
 public class Tag implements Serializable {
 
     public static enum TagType {

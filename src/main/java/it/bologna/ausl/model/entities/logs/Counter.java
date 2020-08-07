@@ -6,6 +6,7 @@ package it.bologna.ausl.model.entities.logs;
  */
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -24,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "counter", catalog = "internauta", schema = "logs")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({})
 public class Counter implements Serializable {
 
     private static final long serialVersionUID = 1L;
