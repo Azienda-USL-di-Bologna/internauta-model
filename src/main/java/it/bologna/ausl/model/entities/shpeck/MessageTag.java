@@ -47,7 +47,7 @@ public class MessageTag implements Serializable {
     private Tag idTag;
 
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Utente idUtente;
 
     @Basic(optional = false)
@@ -59,7 +59,7 @@ public class MessageTag implements Serializable {
 
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private String additionalData;
-        
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -72,7 +72,7 @@ public class MessageTag implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
- 
+
     public MessageTag() {
     }
 
