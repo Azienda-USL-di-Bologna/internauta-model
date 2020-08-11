@@ -27,6 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class OperazioneKrint implements Serializable {
     
     public static enum CodiceOperazione{
+        // Operazione Shpeck
         PEC_MESSAGE_SPOSTAMENTO,
         PEC_MESSAGE_PROTOCOLLAZIONE,
         PEC_MESSAGE_REMOVE_PROTOCOLLAZIONE,
@@ -45,7 +46,6 @@ public class OperazioneKrint implements Serializable {
         PEC_MESSAGE_ERRORE_NON_VISTO,
         PEC_MESSAGE_ERRORE_VISTO,
         PEC_MESSAGE_DELETE_FROM_TRASH,
-        // PEC_MESSAGE_RIPRISTINO,
         PEC_MESSAGE_INVIO_NUOVA_MAIL,
         PEC_DRAFT_CREAZIONE,
         PEC_DRAFT_MODIFICA,
@@ -55,7 +55,14 @@ public class OperazioneKrint implements Serializable {
         PEC_FOLDER_ELIMINAZIONE,
         PEC_TAG_CREAZIONE,
         PEC_TAG_RINOMINA,
-        PEC_TAG_ELIMINAZIONE
+        PEC_TAG_ELIMINAZIONE,
+        
+        // Operazioni rubrica
+        RUBRICA_CONTACT_CREATION,
+        RUBRICA_CONTACT_DETAIL_CREATION,
+        RUBRICA_GROUP_CREATION,
+        RUBRICA_GROUP_CONTACT_CREATION,
+        
     }
 
     private static final long serialVersionUID = 1L;

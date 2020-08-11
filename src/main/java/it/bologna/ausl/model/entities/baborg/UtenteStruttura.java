@@ -7,6 +7,7 @@ import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Parameter;
@@ -92,6 +94,9 @@ public class UtenteStruttura implements Serializable {
     @NotNull
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
+    
+    @Transient
+    private List<Ruolo> ruoliUtenteStruttura;
 
     public ZonedDateTime getVersion() {
         return version;
@@ -194,6 +199,14 @@ public class UtenteStruttura implements Serializable {
 
     public void setBitRuoli(Integer bitRuoli) {
         this.bitRuoli = bitRuoli;
+    }
+
+    public List<Ruolo> getRuoliUtenteStruttura() {
+        return ruoliUtenteStruttura;
+    }
+
+    public void setRuoliUtenteStruttura(List<Ruolo> ruoliUtenteStruttura) {
+        this.ruoliUtenteStruttura = ruoliUtenteStruttura;
     }
 
     @Override

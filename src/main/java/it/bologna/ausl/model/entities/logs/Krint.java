@@ -35,7 +35,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Krint implements Serializable {
     
     public static enum TipoOggettoKrint {
-        BABORG_PEC, SHPECK_MESSAGE, SHPECK_DRAFT, SHPECK_FOLDER, SHPECK_TAG, SHPECK_OUTBOX
+        BABORG_PEC, SHPECK_MESSAGE, SHPECK_DRAFT, SHPECK_FOLDER, SHPECK_TAG, SHPECK_OUTBOX, RUBRICA_CONTATTO, RUBRICA_DETTAGLIO_CONTATTO, RUBRICA_GRUPPO,
+        RUBRICA_GRUPPO_CONTATTO
     };
     
 //    public static enum KrintField {

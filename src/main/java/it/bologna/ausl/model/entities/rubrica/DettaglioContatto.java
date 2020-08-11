@@ -87,6 +87,11 @@ public class DettaglioContatto implements Serializable {
     @Column(name = "principale")
     private Boolean principale;
     
+    
+    @NotNull
+    @Column(name = "eliminato")
+    private Boolean eliminato;
+    
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
     private String tipo;
@@ -145,6 +150,14 @@ public class DettaglioContatto implements Serializable {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Boolean getEliminato() {
+        return eliminato;
+    }
+
+    public void setEliminato(Boolean eliminato) {
+        this.eliminato = eliminato;
     }
 
 //    public Email getEmail() {
