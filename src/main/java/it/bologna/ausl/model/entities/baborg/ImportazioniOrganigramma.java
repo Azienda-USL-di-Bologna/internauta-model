@@ -39,12 +39,12 @@ public class ImportazioniOrganigramma implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
+    
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "nome_file")
     private String nomeFile;
-    @Basic(optional = false)
+    
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
@@ -54,7 +54,6 @@ public class ImportazioniOrganigramma implements Serializable {
     @Column(name = "esito")
     private String esito;
     
-    @Basic(optional = false)
     @Size(min = 1, max = 2147483647)
     @Column(name = "csv_error_link")
     private String path_csv_error;
@@ -67,7 +66,6 @@ public class ImportazioniOrganigramma implements Serializable {
         this.path_csv_error = path_csv_error;
     }
     
-    @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
