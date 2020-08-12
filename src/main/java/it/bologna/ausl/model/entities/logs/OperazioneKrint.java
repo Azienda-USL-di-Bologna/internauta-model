@@ -62,6 +62,8 @@ public class OperazioneKrint implements Serializable {
         RUBRICA_CONTACT_DETAIL_CREATION,
         RUBRICA_GROUP_CREATION,
         RUBRICA_GROUP_CONTACT_CREATION,
+        RUBRICA_GROUP_CONTACT_DELETE,
+        RUBRICA_GROUP_CONTACT_UPDATE,
         
     }
 
