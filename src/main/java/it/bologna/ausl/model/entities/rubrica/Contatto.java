@@ -40,17 +40,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "contatti", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"contattiDelGruppoList, emailList, gruppiDelContattoList, idContattoPadre, idPersona, idPersonaCreazione, idStruttura, idUtenteCreazione, indirizziList, telefonoList"
-,  "contattiDelGruppoList, emailList, idPersonaCreazione, indirizziList, telefonoList"
-,  "contattiDelGruppoList, idPersonaCreazione, idUtenteCreazione"
-,  "dettaglioContattoList"
-,  "dettaglioContattoList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione"
-,  "dettaglioContattoList, idPersonaCreazione, idStruttura"
-,  "emailList"
-,  "emailList, gruppiDelContattoList, idPersonaCreazione, idUtenteCreazione, indirizziList, telefonoList"
-,  "emailList, idPersona, idPersonaCreazione, indirizziList, telefonoList"
-,  "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione"
-,  "idPersona, idPersonaCreazione, idStruttura"})
+@GenerateProjections({"contattiDelGruppoList, emailList, gruppiDelContattoList, idContattoPadre, idPersona, idPersonaCreazione, idStruttura, idUtenteCreazione, indirizziList, telefonoList",
+     "contattiDelGruppoList, emailList, idPersonaCreazione, indirizziList, telefonoList",
+     "contattiDelGruppoList, idPersonaCreazione, idUtenteCreazione",
+     "dettaglioContattoList",
+     "dettaglioContattoList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione",
+     "dettaglioContattoList, idPersonaCreazione, idStruttura",
+     "emailList",
+     "emailList, gruppiDelContattoList, idPersonaCreazione, idUtenteCreazione, indirizziList, telefonoList",
+     "emailList, idPersona, idPersonaCreazione, indirizziList, telefonoList",
+     "emailList, idPersonaCreazione, indirizziList, telefonoList",
+     "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
+     "idPersona, idPersonaCreazione, idStruttura"})
 public class Contatto implements Serializable {
 
     public static enum CategoriaContatto {
@@ -154,28 +155,28 @@ public class Contatto implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idContattoPadre")
     private Contatto idContattoPadre;
-    
+
     // E' la lista dei gruppi su cui il contatto è presente. 
     // In questo caso il contatto non può essere di categoria GRUPPO
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
     @JsonBackReference(value = "gruppiDelContattoList")
     private List<GruppiContatti> gruppiDelContattoList;
-    
+
     // E' la lista dei contatti attaccati al gruppo.
     // In questo caso il contatto è di categoria GRUPPO
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGruppo", fetch = FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGruppo", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "contattiDelGruppoList")
     private List<GruppiContatti> contattiDelGruppoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "telefonoList")
     private List<Telefono> telefonoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "emailList")
     private List<Email> emailList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "indirizziList")
     private List<Indirizzo> indirizziList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "dettaglioContattoList")
     private List<DettaglioContatto> dettaglioContattoList;
     @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -327,7 +328,7 @@ public class Contatto implements Serializable {
     public void setRiservato(Boolean riservato) {
         this.riservato = riservato;
     }
-    
+
     public Boolean getEliminato() {
         return eliminato;
     }
