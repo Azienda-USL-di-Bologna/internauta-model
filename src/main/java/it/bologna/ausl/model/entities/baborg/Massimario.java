@@ -3,11 +3,10 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -22,8 +21,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,6 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "massimario", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
+@GenerateProjections({"titoli"})
 public class Massimario implements Serializable {
 
     private static final long serialVersionUID = 1L;

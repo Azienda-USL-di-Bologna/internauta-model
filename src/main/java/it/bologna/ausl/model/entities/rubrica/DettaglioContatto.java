@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.rubrica;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.UtenteStruttura;
 import it.nextsw.common.annotations.NextSdrAncestor;
 import java.io.Serializable;
@@ -35,6 +36,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "dettagli_contatti", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({"idContatto", "utenteStruttura"})
 public class DettaglioContatto implements Serializable {
     
     public static enum TipoDettaglio {
@@ -84,6 +86,11 @@ public class DettaglioContatto implements Serializable {
     @NotNull
     @Column(name = "principale")
     private Boolean principale;
+    
+    
+    @NotNull
+    @Column(name = "eliminato")
+    private Boolean eliminato;
     
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
@@ -143,6 +150,14 @@ public class DettaglioContatto implements Serializable {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Boolean getEliminato() {
+        return eliminato;
+    }
+
+    public void setEliminato(Boolean eliminato) {
+        this.eliminato = eliminato;
     }
 
 //    public Email getEmail() {

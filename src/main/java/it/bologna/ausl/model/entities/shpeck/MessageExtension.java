@@ -1,8 +1,8 @@
 package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -23,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "messages_extensions", catalog = "internauta", schema = "shpeck")
+@GenerateProjections({})
 public class MessageExtension implements Serializable {
 
     private static final long serialVersionUID = 1L;

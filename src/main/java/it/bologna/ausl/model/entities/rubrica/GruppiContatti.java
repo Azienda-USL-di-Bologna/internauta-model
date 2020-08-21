@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.rubrica;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
@@ -28,6 +29,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "gruppi_contatti", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({"idContatto, idDettaglioContatto", "idDettaglioContatto, idGruppo", "idGruppo"})
 public class GruppiContatti implements Serializable {
 
     

@@ -1,12 +1,11 @@
 package it.bologna.ausl.model.entities.baborg;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -19,9 +18,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Parameter;
@@ -42,6 +41,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "utenti_strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({"idAfferenzaStruttura", "idAfferenzaStruttura, idDettaglioContatto, idStruttura", "idAfferenzaStruttura, idUtente", "idStruttura"})
 public class UtenteStruttura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -94,6 +94,9 @@ public class UtenteStruttura implements Serializable {
     @NotNull
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
+    
+    @Transient
+    private List<Ruolo> ruoliUtenteStruttura;
 
     public ZonedDateTime getVersion() {
         return version;
@@ -196,6 +199,14 @@ public class UtenteStruttura implements Serializable {
 
     public void setBitRuoli(Integer bitRuoli) {
         this.bitRuoli = bitRuoli;
+    }
+
+    public List<Ruolo> getRuoliUtenteStruttura() {
+        return ruoliUtenteStruttura;
+    }
+
+    public void setRuoliUtenteStruttura(List<Ruolo> ruoliUtenteStruttura) {
+        this.ruoliUtenteStruttura = ruoliUtenteStruttura;
     }
 
     @Override

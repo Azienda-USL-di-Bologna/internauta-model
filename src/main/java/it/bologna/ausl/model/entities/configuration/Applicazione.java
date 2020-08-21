@@ -3,11 +3,11 @@ package it.bologna.ausl.model.entities.configuration;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -31,6 +31,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "applicazioni", catalog = "internauta", schema = "configurazione")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({})
 public class Applicazione implements Serializable {
     private static final long serialVersionUID = 1L;
             

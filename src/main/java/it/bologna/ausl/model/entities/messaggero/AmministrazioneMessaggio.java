@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -37,6 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "amministrazione_messaggi", catalog = "internauta", schema = "messaggero")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
 @Cacheable(false)
+@GenerateProjections({})
 public class AmministrazioneMessaggio implements Serializable {
     
     public static enum InvasivitaEnum {

@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.TimeZone;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -22,11 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,6 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "importazioni_organigramma", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
 @Cacheable(false)
+@GenerateProjections({"idAzienda, idPersona"})
 public class ImportazioniOrganigramma implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,12 +39,12 @@ public class ImportazioniOrganigramma implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
+    
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "nome_file")
     private String nomeFile;
-    @Basic(optional = false)
+    
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
@@ -63,7 +54,6 @@ public class ImportazioniOrganigramma implements Serializable {
     @Column(name = "esito")
     private String esito;
     
-    @Basic(optional = false)
     @Size(min = 1, max = 2147483647)
     @Column(name = "csv_error_link")
     private String path_csv_error;
@@ -76,7 +66,6 @@ public class ImportazioniOrganigramma implements Serializable {
         this.path_csv_error = path_csv_error;
     }
     
-    @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")

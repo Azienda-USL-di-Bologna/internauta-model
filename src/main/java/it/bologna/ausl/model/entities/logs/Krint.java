@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.logs;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -30,10 +31,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 // TODO: capire se servono le due righe seguenti, le ho copiate dall'entità utenti, se non servono le tolgo
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
 @Cacheable(false)
+@GenerateProjections({})
 public class Krint implements Serializable {
     
     public static enum TipoOggettoKrint {
-        BABORG_PEC, SHPECK_MESSAGE, SHPECK_DRAFT, SHPECK_FOLDER, SHPECK_TAG, SHPECK_OUTBOX
+        BABORG_PEC, SHPECK_MESSAGE, SHPECK_DRAFT, SHPECK_FOLDER, SHPECK_TAG, SHPECK_OUTBOX, RUBRICA_CONTATTO, RUBRICA_DETTAGLIO_CONTATTO, RUBRICA_GRUPPO,
+        RUBRICA_GRUPPO_CONTATTO
     };
     
 //    public static enum KrintField {

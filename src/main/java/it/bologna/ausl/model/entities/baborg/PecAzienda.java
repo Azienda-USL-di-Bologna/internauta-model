@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -24,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "pec_aziende", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
+@GenerateProjections({"idAzienda", "idAzienda, idPec"})
 public class PecAzienda implements Serializable {
 
     private static final long serialVersionUID = 1L;
