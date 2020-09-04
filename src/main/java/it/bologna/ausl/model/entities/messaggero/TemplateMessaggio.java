@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.InvasivitaEnum;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.SeveritaEnum;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.TipologiaEnum;

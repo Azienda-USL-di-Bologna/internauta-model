@@ -8,7 +8,7 @@ import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
