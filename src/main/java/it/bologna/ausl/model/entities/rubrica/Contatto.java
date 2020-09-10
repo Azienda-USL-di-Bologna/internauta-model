@@ -41,17 +41,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"contattiDelGruppoList, emailList, gruppiDelContattoList, idContattoPadre, idPersona, idPersonaCreazione, idStruttura, idUtenteCreazione, indirizziList, telefonoList",
-     "contattiDelGruppoList, emailList, idPersonaCreazione, indirizziList, telefonoList",
-     "contattiDelGruppoList, idPersonaCreazione, idUtenteCreazione",
-     "dettaglioContattoList",
-     "dettaglioContattoList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione",
-     "dettaglioContattoList, idPersonaCreazione, idStruttura",
-     "emailList",
-     "emailList, gruppiDelContattoList, idPersonaCreazione, idUtenteCreazione, indirizziList, telefonoList",
-     "emailList, idPersona, idPersonaCreazione, indirizziList, telefonoList",
-     "emailList, idPersonaCreazione, indirizziList, telefonoList",
-     "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
-     "idPersona, idPersonaCreazione, idStruttura"})
+    "contattiDelGruppoList, emailList, idPersonaCreazione, indirizziList, telefonoList",
+    "contattiDelGruppoList, idPersonaCreazione, idUtenteCreazione",
+    "dettaglioContattoList",
+    "dettaglioContattoList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione",
+    "dettaglioContattoList, idPersonaCreazione, idStruttura",
+    "emailList",
+    "emailList, gruppiDelContattoList, idPersonaCreazione, idUtenteCreazione, indirizziList, telefonoList",
+    "emailList, idPersona, idPersonaCreazione, indirizziList, telefonoList",
+    "emailList, idPersonaCreazione, indirizziList, telefonoList",
+    "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
+    "idPersona, idPersonaCreazione, idStruttura"})
 public class Contatto implements Serializable {
 
     public static enum CategoriaContatto {
