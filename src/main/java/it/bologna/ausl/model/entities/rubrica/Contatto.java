@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.bologna.ausl.jenesisprojections.annotations.GenerateProjections;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.baborg.Utente;
@@ -41,17 +41,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"contattiDelGruppoList, emailList, gruppiDelContattoList, idContattoPadre, idPersona, idPersonaCreazione, idStruttura, idUtenteCreazione, indirizziList, telefonoList",
-     "contattiDelGruppoList, emailList, idPersonaCreazione, indirizziList, telefonoList",
-     "contattiDelGruppoList, idPersonaCreazione, idUtenteCreazione",
-     "dettaglioContattoList",
-     "dettaglioContattoList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione",
-     "dettaglioContattoList, idPersonaCreazione, idStruttura",
-     "emailList",
-     "emailList, gruppiDelContattoList, idPersonaCreazione, idUtenteCreazione, indirizziList, telefonoList",
-     "emailList, idPersona, idPersonaCreazione, indirizziList, telefonoList",
-     "emailList, idPersonaCreazione, indirizziList, telefonoList",
-     "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
-     "idPersona, idPersonaCreazione, idStruttura"})
+    "contattiDelGruppoList, emailList, idPersonaCreazione, indirizziList, telefonoList",
+    "contattiDelGruppoList, idPersonaCreazione, idUtenteCreazione",
+    "dettaglioContattoList",
+    "dettaglioContattoList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione",
+    "dettaglioContattoList, idPersonaCreazione, idStruttura",
+    "emailList",
+    "emailList, gruppiDelContattoList, idPersonaCreazione, idUtenteCreazione, indirizziList, telefonoList",
+    "emailList, idPersona, idPersonaCreazione, indirizziList, telefonoList",
+    "emailList, idPersonaCreazione, indirizziList, telefonoList",
+    "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
+    "idPersona, idPersonaCreazione, idStruttura"})
 public class Contatto implements Serializable {
 
     public static enum CategoriaContatto {
