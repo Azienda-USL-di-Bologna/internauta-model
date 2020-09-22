@@ -126,13 +126,17 @@ public class Struttura implements Serializable {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private Boolean propagaPermessoPec;
-    
+
     @JoinColumn(name = "id_contatto", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
+
     @Column(name = "anarchica")
     private Boolean anarchica;
-    
+
+    @Column(name = "ufficio")
+    private Boolean ufficio;
+
     @Transient
     private Boolean fogliaCalcolata = false;
 
@@ -148,14 +152,13 @@ public class Struttura implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
+
     public Struttura() {
     }
 
     public Struttura(Integer id) {
         this.id = id;
     }
-
 
     public Struttura(Integer id, Integer codice, String nome, String codiceDislocazione, String dislocazione, LocalDateTime dataAttivazione, LocalDateTime dataCessazione, Boolean attiva, Boolean spettrale, Boolean usaSegreteriaBucataPadre, List<PecStruttura> pecStrutturaList, Azienda idAzienda, List<Struttura> struttureFiglieList, Struttura idStrutturaPadre, List<Struttura> struttureSegretariateList, Struttura idStrutturaSegreteria, List<StrutturaUnificata> strutturaUnificataDestinazioneList, List<StrutturaUnificata> strutturaUnificataSorgenteList, List<UtenteStruttura> utenteStrutturaList) {
         this.id = id;
@@ -338,7 +341,7 @@ public class Struttura implements Serializable {
     public void setUtenteStrutturaList(List<UtenteStruttura> utenteStrutturaList) {
         this.utenteStrutturaList = utenteStrutturaList;
     }
-    
+
     public Struttura getIdStrutturaReplicata() {
         return idStrutturaReplicata;
     }
@@ -346,7 +349,7 @@ public class Struttura implements Serializable {
     public void setIdStrutturaReplicata(Struttura idStrutturaReplicata) {
         this.idStrutturaReplicata = idStrutturaReplicata;
     }
-    
+
     public List<PermessoEntitaStoredProcedure> getPermessi() {
         return permessi;
     }
@@ -354,7 +357,7 @@ public class Struttura implements Serializable {
     public void setPermessi(List<PermessoEntitaStoredProcedure> permessi) {
         this.permessi = permessi;
     }
-    
+
     public Boolean getIsPermessoPecPrincipale() {
         return isPermessoPecPrincipale;
     }
@@ -387,6 +390,14 @@ public class Struttura implements Serializable {
         this.anarchica = anarchica;
     }
 
+    public Boolean getUfficio() {
+        return ufficio;
+    }
+
+    public void setUfficio(Boolean ufficio) {
+        this.ufficio = ufficio;
+    }
+
     public Boolean getFogliaCalcolata() {
         return fogliaCalcolata;
     }
@@ -394,7 +405,6 @@ public class Struttura implements Serializable {
     public void setFogliaCalcolata(Boolean fogliaCalcolata) {
         this.fogliaCalcolata = fogliaCalcolata;
     }
-
 
     @Override
     public int hashCode() {
