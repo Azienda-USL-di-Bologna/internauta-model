@@ -38,7 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@GenerateProjections({"idAzienda", "idAzienda, utenteStrutturaList", "struttureFiglieList"})
+@GenerateProjections({"idAzienda", "idAzienda, utenteStrutturaList", "struttureFiglieList", "idStrutturaPadre, idAzienda"})
 public class Struttura implements Serializable {
 
     private static final long serialVersionUID = 1L;
