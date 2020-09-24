@@ -47,8 +47,7 @@ public class Struttura implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
     @Column(name = "codice")
     private Integer codice;
     @Basic(optional = false)
