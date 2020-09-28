@@ -62,7 +62,7 @@ public class DettaglioContatto implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY)
     @JsonBackReference(value = "gruppiDelContattoList")
     private List<GruppiContatti> gruppiDelDettaglioList;
     
@@ -78,7 +78,7 @@ public class DettaglioContatto implements Serializable {
     @JsonBackReference(value = "indirizzo")
     private Indirizzo indirizzo;
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval=false)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval=false)
     @JsonBackReference(value = "utenteStruttura")
     private UtenteStruttura utenteStruttura;
     

@@ -97,7 +97,7 @@ public class Folder implements Serializable {
     @JsonBackReference(value = "messageFolderList")
     private List<MessageFolder> messageFolderList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPreviousFolder", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPreviousFolder", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messagePreviousFolderList")
     private List<MessageFolder> messagePreviousFolderList;
         
