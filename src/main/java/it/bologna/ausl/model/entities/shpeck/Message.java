@@ -193,7 +193,7 @@ public class Message implements Serializable {
     @JsonBackReference(value = "noteList")
     private List<Note> noteList;
 
-    @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
     @JsonBackReference(value = "idRecepit")
     private Recepit idRecepit;

@@ -49,7 +49,7 @@ public class OperazioneVersionataKrint implements Serializable {
     @JoinColumn(name = "id_operazione", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private OperazioneKrint idOperazione;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOperazioneVersionata")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idOperazioneVersionata")
     private List<Krint> krintList;
 
     public OperazioneKrint getIdOperazione() {
