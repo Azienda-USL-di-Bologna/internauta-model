@@ -38,7 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@GenerateProjections({"idAzienda, attributiStruttura", "idAzienda, utenteStrutturaList, attributiStruttura", "struttureFiglieList, attributiStruttura", "idStrutturaPadre, idAzienda, attributiStruttura"})
+@GenerateProjections({"idAzienda", "idAzienda, attributiStruttura", "idAzienda, utenteStrutturaList", "struttureFiglieList", "idStrutturaPadre, idAzienda", "idStrutturaPadre, idAzienda, attributiStruttura"})
 public class Struttura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -136,7 +136,7 @@ public class Struttura implements Serializable {
     @Column(name = "ufficio")
     private Boolean ufficio;
     
-    @OneToOne(mappedBy = "idStruttura", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(optional = true, mappedBy = "idStruttura", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attributiStruttura")
     private AttributiStruttura attributiStruttura;
 
