@@ -66,7 +66,7 @@ public class AfferenzaStruttura implements Serializable {
     }
     
     public static enum CodiciAfferenzaStruttura {
-        DIRETTA, FUNZIONALE, UNIFICATA
+        DIRETTA, FUNZIONALE, UNIFICATA, UFFICIO
     }
 
     public AfferenzaStruttura() {

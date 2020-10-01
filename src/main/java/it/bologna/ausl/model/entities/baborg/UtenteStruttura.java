@@ -6,6 +6,7 @@ import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -41,7 +42,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "utenti_strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@GenerateProjections({"idAfferenzaStruttura", "idAfferenzaStruttura, idDettaglioContatto, idStruttura", "idAfferenzaStruttura, idUtente", "idStruttura"})
+@GenerateProjections({"idAfferenzaStruttura, idStruttura", "idAfferenzaStruttura", "idAfferenzaStruttura, idDettaglioContatto, idStruttura", "idAfferenzaStruttura, idUtente", "idStruttura"})
 public class UtenteStruttura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -76,14 +77,14 @@ public class UtenteStruttura implements Serializable {
     private ZonedDateTime version;
 
     @Column(name = "attivo_dal")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime attivoDal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    private LocalDateTime attivoDal;
 
     @Column(name = "attivo_al")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime attivoAl;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    private LocalDateTime attivoAl;
 
     @Basic(optional = false)
     @NotNull
@@ -169,19 +170,19 @@ public class UtenteStruttura implements Serializable {
         this.attributi = attributi;
     }
 
-    public ZonedDateTime getAttivoDal() {
+    public LocalDateTime getAttivoDal() {
         return attivoDal;
     }
 
-    public void setAttivoDal(ZonedDateTime attivoDal) {
+    public void setAttivoDal(LocalDateTime attivoDal) {
         this.attivoDal = attivoDal;
     }
 
-    public ZonedDateTime getAttivoAl() {
+    public LocalDateTime getAttivoAl() {
         return attivoAl;
     }
 
-    public void setAttivoAl(ZonedDateTime attivoAl) {
+    public void setAttivoAl(LocalDateTime attivoAl) {
         this.attivoAl = attivoAl;
     }
 

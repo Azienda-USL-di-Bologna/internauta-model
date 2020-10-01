@@ -43,7 +43,7 @@ public class AttributiStruttura implements Serializable {
     private Integer id;
     
     @JoinColumn(name = "id_struttura", referencedColumnName = "id")
-    @OneToOne(optional = false, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Struttura idStruttura;
     
     @JoinColumn(name = "id_tipologia_struttura", referencedColumnName = "id")
