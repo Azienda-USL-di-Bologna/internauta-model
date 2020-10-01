@@ -8,6 +8,7 @@ import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.model.entities.EntityInterface;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
@@ -58,7 +59,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
 @Cacheable(false)
 @GenerateProjections({"idAzienda, idPersona", "idAzienda, idPersona, utenteStrutturaList", "idPersona"})
-public class Utente implements Serializable, UserDetails {
+public class Utente implements Serializable, UserDetails, EntityInterface {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -261,7 +262,7 @@ public class Utente implements Serializable, UserDetails {
     }
 
     public void setOmonimia(Boolean omonimia) {
-            this.omonimia = omonimia;
+        this.omonimia = omonimia;
     }
 
     public String getPasswordHash() {
@@ -453,6 +454,11 @@ public class Utente implements Serializable, UserDetails {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String getEntityDescription() {
+        return getIdPersona().getEntityDescription();
     }
 
     @Override
