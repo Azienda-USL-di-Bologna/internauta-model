@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.model.entities.EntityInterface;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.configuration.ImpostazioniApplicazioni;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
@@ -49,9 +50,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "persone", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"attivitaFattaList", "attivitaFattaList, attivitaList", "attivitaFattaList, attivitaList, utenteList", "attivitaFattaList, utenteList"
-,  "attivitaList", "attivitaList, utenteList", "impostazioniApplicazioniList", "utenteList"})
-public class Persona implements Serializable {
+@GenerateProjections({"attivitaFattaList", "attivitaFattaList, attivitaList", "attivitaFattaList, attivitaList, utenteList", "attivitaFattaList, utenteList",
+    "attivitaList", "attivitaList, utenteList", "impostazioniApplicazioniList", "utenteList"})
+public class Persona implements Serializable, EntityInterface {
 
     private static final long serialVersionUID = 1L;
 
@@ -321,6 +322,11 @@ public class Persona implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String getEntityDescription() {
+        return descrizione;
     }
 
     @Override
