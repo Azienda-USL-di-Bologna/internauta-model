@@ -106,6 +106,18 @@ public class DettaglioContatto implements Serializable {
     @JsonIgnoreProperties
     private String mezzo;
 
+    @Transient
+    @JsonIgnoreProperties
+    private String idUtenteArgo;
+
+    public String getIdUtenteArgo() {
+        return idUtenteArgo;
+    }
+
+    public void setIdUtenteArgo(String idUtenteArgo) {
+        this.idUtenteArgo = idUtenteArgo;
+    }
+
     //    usato in sendSelectedContactsToExternalApp
     @Transient
     @JsonIgnoreProperties
