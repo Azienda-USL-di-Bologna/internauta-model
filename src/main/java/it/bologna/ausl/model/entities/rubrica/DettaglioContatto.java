@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,7 +39,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({"idContatto", "utenteStruttura"})
 public class DettaglioContatto implements Serializable {
-    
+
     public static enum TipoDettaglio {
         UTENTE_STRUTTURA,
         STRUTTURA,
@@ -56,51 +57,62 @@ public class DettaglioContatto implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
-    
+
     @NextSdrAncestor(relationName = "idContattoDettaglioContatto")
     @JoinColumn(name = "id_contatto", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContatto;
-    
+
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY)
     @JsonBackReference(value = "gruppiDelContattoList")
     private List<GruppiContatti> gruppiDelDettaglioList;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval=true)
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "telefono")
     private Telefono telefono;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval=true)
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "email")
     private Email email;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval=true)
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "indirizzo")
     private Indirizzo indirizzo;
-    
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval=false)
+
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDettaglioContatto", fetch = FetchType.LAZY, orphanRemoval = false)
     @JsonBackReference(value = "utenteStruttura")
     private UtenteStruttura utenteStruttura;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "principale")
     private Boolean principale;
-    
-    
+
     @NotNull
     @Column(name = "eliminato")
     private Boolean eliminato;
-    
+
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
     private String tipo;
-    
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
-    
+
+    @Transient
+    @JsonIgnoreProperties
+    private String mezzo;
+
+    public String getMezzo() {
+        return mezzo;
+    }
+
+    public void setMezzo(String mezzo) {
+        this.mezzo = mezzo;
+    }
+
     public DettaglioContatto() {
     }
 
@@ -182,7 +194,7 @@ public class DettaglioContatto implements Serializable {
     public Boolean getPrincipale() {
         return principale;
     }
-    
+
     public void setPrincipale(Boolean principale) {
         this.principale = principale;
     }
@@ -195,7 +207,6 @@ public class DettaglioContatto implements Serializable {
         this.utenteStruttura = utenteStruttura;
     }
 
-    
     public TipoDettaglio getTipo() {
         if (tipo != null) {
             return TipoDettaglio.valueOf(tipo);
@@ -242,5 +253,5 @@ public class DettaglioContatto implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.rubrica.DettagliContatti[ id=" + id + " ]";
     }
-    
+
 }
