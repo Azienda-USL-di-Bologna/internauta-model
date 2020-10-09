@@ -101,9 +101,23 @@ public class DettaglioContatto implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
+    //    usato in sendSelectedContactsToExternalApp
     @Transient
     @JsonIgnoreProperties
     private String mezzo;
+
+    //    usato in sendSelectedContactsToExternalApp
+    @Transient
+    @JsonIgnoreProperties
+    private String idUtenteInserenteDestinatario;
+
+    public String getIdUtenteInserenteDestinatario() {
+        return idUtenteInserenteDestinatario;
+    }
+
+    public void setIdUtenteInserenteDestinatario(String idUtenteInserenteDestinatario) {
+        this.idUtenteInserenteDestinatario = idUtenteInserenteDestinatario;
+    }
 
     public String getMezzo() {
         return mezzo;
