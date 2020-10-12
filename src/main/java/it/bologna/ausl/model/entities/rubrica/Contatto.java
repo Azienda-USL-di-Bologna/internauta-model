@@ -189,18 +189,17 @@ public class Contatto implements Serializable {
     @JsonBackReference(value = "idPersona")
     private Persona idPersona;
 
-    @Transient
-    @JsonIgnoreProperties
-    private String id_vecchio;
-
-    public String getId_vecchio() {
-        return id_vecchio;
-    }
-
-    public void setId_vecchio(String id_vecchio) {
-        this.id_vecchio = id_vecchio;
-    }
-
+//    @Transient  // serve per sendSelectedContactsToExternalApp
+//    @JsonIgnoreProperties
+//    private String id_vecchio;
+//
+//    public String getId_vecchio() {
+//        return id_vecchio;
+//    }
+//
+//    public void setId_vecchio(String id_vecchio) {
+//        this.id_vecchio = id_vecchio;
+//    }
     public Contatto() {
     }
 
