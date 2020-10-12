@@ -101,44 +101,43 @@ public class DettaglioContatto implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    //    usato in sendSelectedContactsToExternalApp
-    @Transient
-    @JsonIgnoreProperties
-    private String mezzo;
-
-    @Transient
-    @JsonIgnoreProperties
-    private String idUtenteArgo;
-
-    public String getIdUtenteArgo() {
-        return idUtenteArgo;
-    }
-
-    public void setIdUtenteArgo(String idUtenteArgo) {
-        this.idUtenteArgo = idUtenteArgo;
-    }
-
-    //    usato in sendSelectedContactsToExternalApp
-    @Transient
-    @JsonIgnoreProperties
-    private String idUtenteInserenteDestinatario;
-
-    public String getIdUtenteInserenteDestinatario() {
-        return idUtenteInserenteDestinatario;
-    }
-
-    public void setIdUtenteInserenteDestinatario(String idUtenteInserenteDestinatario) {
-        this.idUtenteInserenteDestinatario = idUtenteInserenteDestinatario;
-    }
-
-    public String getMezzo() {
-        return mezzo;
-    }
-
-    public void setMezzo(String mezzo) {
-        this.mezzo = mezzo;
-    }
-
+    //    usati in sendSelectedContactsToExternalApp
+//    @Transient
+//    @JsonIgnoreProperties
+//    private String mezzo;
+//
+//    @Transient
+//    @JsonIgnoreProperties
+//    private String idUtenteArgo;
+//
+//    public String getIdUtenteArgo() {
+//        return idUtenteArgo;
+//    }
+//
+//    public void setIdUtenteArgo(String idUtenteArgo) {
+//        this.idUtenteArgo = idUtenteArgo;
+//    }
+//
+//    //    usato in sendSelectedContactsToExternalApp
+//    @Transient
+//    @JsonIgnoreProperties
+//    private String idUtenteInserenteDestinatario;
+//
+//    public String getIdUtenteInserenteDestinatario() {
+//        return idUtenteInserenteDestinatario;
+//    }
+//
+//    public void setIdUtenteInserenteDestinatario(String idUtenteInserenteDestinatario) {
+//        this.idUtenteInserenteDestinatario = idUtenteInserenteDestinatario;
+//    }
+//
+//    public String getMezzo() {
+//        return mezzo;
+//    }
+//
+//    public void setMezzo(String mezzo) {
+//        this.mezzo = mezzo;
+//    }
     public DettaglioContatto() {
     }
 
