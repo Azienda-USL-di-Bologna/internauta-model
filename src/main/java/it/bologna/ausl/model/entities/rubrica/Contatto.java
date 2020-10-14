@@ -128,7 +128,7 @@ public class Contatto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "da_verificare")
-    private Boolean daVerificare;
+    private Boolean daVerificare = false;
     @Column(name = "protocontatto")
     private Boolean protocontatto = false;
     @Basic(optional = false)
