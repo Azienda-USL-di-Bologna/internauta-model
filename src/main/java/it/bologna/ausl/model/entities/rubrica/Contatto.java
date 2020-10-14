@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.rubrica;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
@@ -147,8 +148,10 @@ public class Contatto implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonIgnore
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
     @OneToMany(mappedBy = "idContattoPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -364,6 +367,7 @@ public class Contatto implements Serializable {
         this.tscol = tscol;
     }
 
+    @JsonIgnore
     public ZonedDateTime getVersion() {
         return version;
     }
