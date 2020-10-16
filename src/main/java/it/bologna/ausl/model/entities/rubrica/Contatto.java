@@ -127,7 +127,9 @@ public class Contatto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "da_verificare")
-    private Boolean daVerificare;
+    private Boolean daVerificare = false;
+    @Column(name = "protocontatto")
+    private Boolean protocontatto = false;
     @Basic(optional = false)
     @NotNull
     @Column(name = "modificabile")
@@ -144,6 +146,7 @@ public class Contatto implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -156,7 +159,7 @@ public class Contatto implements Serializable {
     @JsonBackReference(value = "idContattoPadre")
     private Contatto idContattoPadre;
 
-    // E' la lista dei gruppi su cui il contatto è presente. 
+    // E' la lista dei gruppi su cui il contatto è presente.
     // In questo caso il contatto non può essere di categoria GRUPPO
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY)
     @JsonBackReference(value = "gruppiDelContattoList")
@@ -311,6 +314,14 @@ public class Contatto implements Serializable {
 
     public void setDaVerificare(Boolean daVerificare) {
         this.daVerificare = daVerificare;
+    }
+
+    public Boolean getProtocontatto() {
+        return protocontatto;
+    }
+
+    public void setProtocontatto(Boolean protocontatto) {
+        this.protocontatto = protocontatto;
     }
 
     public Boolean getModificabile() {

@@ -70,6 +70,8 @@ public class OperazioneKrint implements Serializable {
         RUBRICA_GROUP_CONTACT_CREATION,
         RUBRICA_GROUP_CONTACT_DELETE,
         RUBRICA_GROUP_CONTACT_UPDATE,
+        RUBRICA_CONTACT_MERGE,
+        
     }
 
     private static final long serialVersionUID = 1L;
