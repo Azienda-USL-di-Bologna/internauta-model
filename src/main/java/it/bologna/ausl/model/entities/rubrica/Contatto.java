@@ -2,7 +2,10 @@ package it.bologna.ausl.model.entities.rubrica;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Persona;
@@ -52,6 +55,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "emailList, idPersonaCreazione, indirizziList, telefonoList",
     "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
     "idPersona, idPersonaCreazione, idStruttura"})
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Contatto.class)
 public class Contatto implements Serializable {
 
     public static enum CategoriaContatto {
@@ -80,6 +84,7 @@ public class Contatto implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
+    // @JsonView(RubricaJsonViews.ContattoForSimilarity.class)
     @Size(max = 2147483647)
     @Column(name = "cognome")
     private String cognome;
@@ -171,13 +176,14 @@ public class Contatto implements Serializable {
     @JsonBackReference(value = "contattiDelGruppoList")
     private List<GruppiContatti> contattiDelGruppoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonBackReference(value = "telefonoList")
+//    @JsonBackReference(value = "telefonoList")
     private List<Telefono> telefonoList;
+    //@JsonView(RubricaJsonViews.ContattoForSimilarity.class)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonBackReference(value = "emailList")
+    //@JsonBackReference(value = "emailList")
     private List<Email> emailList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonBackReference(value = "indirizziList")
+//    @JsonBackReference(value = "indirizziList")
     private List<Indirizzo> indirizziList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference(value = "dettaglioContattoList")
