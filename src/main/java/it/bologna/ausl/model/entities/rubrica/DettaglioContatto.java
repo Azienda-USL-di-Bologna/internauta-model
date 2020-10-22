@@ -104,6 +104,18 @@ public class DettaglioContatto implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
+    @Size(max = 2147483647)
+    @Column(name = "tscol", columnDefinition = "tsvector")
+    private String tscol;
+
+    public String getTscol() {
+        return tscol;
+    }
+
+    public void setTscol(String tscol) {
+        this.tscol = tscol;
+    }
+    
     public DettaglioContatto() {
     }
 
