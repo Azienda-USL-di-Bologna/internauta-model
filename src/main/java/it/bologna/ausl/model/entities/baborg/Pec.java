@@ -139,6 +139,10 @@ public class Pec implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime resetLastuidTime;
 
+    @Basic(optional = true)
+    @Column(name = "keep_backup")
+    private Integer keepBackup = 90;
+
 //    @Version()
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -378,6 +382,14 @@ public class Pec implements Serializable {
 
     public void setResetLastuidTime(LocalDateTime resetLastuidTime) {
         this.resetLastuidTime = resetLastuidTime;
+    }
+
+    public Integer getKeepBackup() {
+        return keepBackup;
+    }
+
+    public void setKeepBackup(Integer keepBackup) {
+        this.keepBackup = keepBackup;
     }
 
     @Override
