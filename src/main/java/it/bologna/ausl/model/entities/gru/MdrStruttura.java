@@ -7,6 +7,7 @@ package it.bologna.ausl.model.entities.gru;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "mdr_struttura", catalog = "internauta", schema = "gru")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({})
 public class MdrStruttura implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.shpeck;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
@@ -38,6 +39,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "messages", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({"idRecepit, messageAddressList", "messageAddressList, messageFolderList, messageTagList"})
 public class Message implements Serializable {
 
     public static enum InOut {
@@ -76,15 +78,15 @@ public class Message implements Serializable {
     private Pec idPec;
 
     @JoinColumn(name = "id_azienda_repository", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Azienda idAziendaRepository;
 
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Applicazione idApplicazione;
 
     @JoinColumn(name = "id_related", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Message idRelated;
 
     @Size(max = 2147483647)
@@ -191,7 +193,7 @@ public class Message implements Serializable {
     @JsonBackReference(value = "noteList")
     private List<Note> noteList;
 
-    @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @OneToOne(optional = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
     @JsonBackReference(value = "idRecepit")
     private Recepit idRecepit;

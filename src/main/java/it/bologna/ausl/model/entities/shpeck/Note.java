@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "notes", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({})
 public class Note implements Serializable{
     
     @Id

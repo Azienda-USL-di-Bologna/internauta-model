@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.ribaltoneutils;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -31,6 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "storico_attivazioni", catalog = "internauta", schema = "ribaltone_utils")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({"idAzienda, idUtente", "idUtente"})
 public class StoricoAttivazione implements Serializable {
 
     private static final long serialVersionUID = 1L;

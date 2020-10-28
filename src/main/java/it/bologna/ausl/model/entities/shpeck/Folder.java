@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.shpeck;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
@@ -33,6 +34,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "folders", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({})
 public class Folder implements Serializable {
 
     public static enum FolderType {
@@ -95,7 +97,7 @@ public class Folder implements Serializable {
     @JsonBackReference(value = "messageFolderList")
     private List<MessageFolder> messageFolderList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPreviousFolder", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPreviousFolder", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messagePreviousFolderList")
     private List<MessageFolder> messagePreviousFolderList;
         

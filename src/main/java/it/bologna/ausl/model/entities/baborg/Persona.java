@@ -5,12 +5,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.model.entities.EntityInterface;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.configuration.ImpostazioniApplicazioni;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,7 +35,6 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -51,7 +50,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "persone", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-public class Persona implements Serializable {
+@GenerateProjections({"attivitaFattaList", "attivitaFattaList, attivitaList", "attivitaFattaList, attivitaList, utenteList", "attivitaFattaList, utenteList",
+    "attivitaList", "attivitaList, utenteList", "impostazioniApplicazioniList", "utenteList"})
+public class Persona implements Serializable, EntityInterface {
 
     private static final long serialVersionUID = 1L;
 
@@ -321,6 +322,11 @@ public class Persona implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String getEntityDescription() {
+        return descrizione;
     }
 
     @Override

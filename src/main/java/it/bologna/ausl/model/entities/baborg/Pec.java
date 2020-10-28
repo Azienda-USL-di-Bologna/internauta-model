@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.shpeck.Draft;
 import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Tag;
@@ -38,6 +39,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "pec", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
+@GenerateProjections({"folderList", "folderList, pecAziendaList","folderList, pecAziendaList, tagList", "folderList, tagList", 
+    "idPecProvider", "tagList"})
 public class Pec implements Serializable {
 
     private static final long serialVersionUID = 1L;

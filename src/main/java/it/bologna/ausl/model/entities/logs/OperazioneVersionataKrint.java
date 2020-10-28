@@ -5,6 +5,7 @@
  */
 package it.bologna.ausl.model.entities.logs;
 
+import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -29,6 +30,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "operazioni_versionate_krint", catalog = "internauta", schema = "logs")
+@GenerateProjections({})
 public class OperazioneVersionataKrint implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +49,7 @@ public class OperazioneVersionataKrint implements Serializable {
     @JoinColumn(name = "id_operazione", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private OperazioneKrint idOperazione;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOperazioneVersionata")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idOperazioneVersionata")
     private List<Krint> krintList;
 
     public OperazioneKrint getIdOperazione() {

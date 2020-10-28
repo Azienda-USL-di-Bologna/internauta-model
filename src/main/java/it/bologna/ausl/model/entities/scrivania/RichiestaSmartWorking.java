@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.scrivania;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
@@ -31,6 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "richieste_smart_working", catalog = "internauta", schema = "scrivania")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({})
 public class RichiestaSmartWorking implements Serializable {
 
     private static final long serialVersionUID = 1L;

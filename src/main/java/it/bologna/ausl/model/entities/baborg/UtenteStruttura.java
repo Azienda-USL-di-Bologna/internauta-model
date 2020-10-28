@@ -1,9 +1,9 @@
 package it.bologna.ausl.model.entities.baborg;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,9 +19,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Parameter;
@@ -42,6 +42,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "utenti_strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({"idAfferenzaStruttura, idStruttura", "idAfferenzaStruttura", "idAfferenzaStruttura, idDettaglioContatto, idStruttura", "idAfferenzaStruttura, idUtente", "idStruttura"})
 public class UtenteStruttura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -76,14 +77,14 @@ public class UtenteStruttura implements Serializable {
     private ZonedDateTime version;
 
     @Column(name = "attivo_dal")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime attivoDal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    private LocalDateTime attivoDal;
 
     @Column(name = "attivo_al")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime attivoAl;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    private LocalDateTime attivoAl;
 
     @Basic(optional = false)
     @NotNull
@@ -94,6 +95,9 @@ public class UtenteStruttura implements Serializable {
     @NotNull
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
+    
+    @Transient
+    private List<Ruolo> ruoliUtenteStruttura;
 
     public ZonedDateTime getVersion() {
         return version;
@@ -166,19 +170,19 @@ public class UtenteStruttura implements Serializable {
         this.attributi = attributi;
     }
 
-    public ZonedDateTime getAttivoDal() {
+    public LocalDateTime getAttivoDal() {
         return attivoDal;
     }
 
-    public void setAttivoDal(ZonedDateTime attivoDal) {
+    public void setAttivoDal(LocalDateTime attivoDal) {
         this.attivoDal = attivoDal;
     }
 
-    public ZonedDateTime getAttivoAl() {
+    public LocalDateTime getAttivoAl() {
         return attivoAl;
     }
 
-    public void setAttivoAl(ZonedDateTime attivoAl) {
+    public void setAttivoAl(LocalDateTime attivoAl) {
         this.attivoAl = attivoAl;
     }
 
@@ -196,6 +200,14 @@ public class UtenteStruttura implements Serializable {
 
     public void setBitRuoli(Integer bitRuoli) {
         this.bitRuoli = bitRuoli;
+    }
+
+    public List<Ruolo> getRuoliUtenteStruttura() {
+        return ruoliUtenteStruttura;
+    }
+
+    public void setRuoliUtenteStruttura(List<Ruolo> ruoliUtenteStruttura) {
+        this.ruoliUtenteStruttura = ruoliUtenteStruttura;
     }
 
     @Override

@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.rubrica;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
@@ -25,6 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "contatti_conflittuali", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({})
 public class ContattiConflittuali implements Serializable {
 
     public static enum MotivazioneConflitto {

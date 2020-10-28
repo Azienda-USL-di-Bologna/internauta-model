@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "messages_tags", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@GenerateProjections({"idMessage", "idMessage, idTag", "idMessage, idTag, idUtente", "idTag", "idTag, idUtente"})
 public class MessageTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +47,7 @@ public class MessageTag implements Serializable {
     private Tag idTag;
 
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Utente idUtente;
 
     @Basic(optional = false)
@@ -57,7 +59,7 @@ public class MessageTag implements Serializable {
 
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private String additionalData;
-        
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -70,7 +72,7 @@ public class MessageTag implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
- 
+
     public MessageTag() {
     }
 

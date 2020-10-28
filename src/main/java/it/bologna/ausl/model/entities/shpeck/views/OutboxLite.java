@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.shpeck.views;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
@@ -30,6 +31,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "outbox_lite", schema = "shpeck")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({"idPec"})
 public class OutboxLite implements Serializable {
 
     @Id
@@ -47,7 +49,7 @@ public class OutboxLite implements Serializable {
     private Boolean ignore = false;
 
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Applicazione idApplicazione;
 
     @Size(min = 1, max = 2147483647)

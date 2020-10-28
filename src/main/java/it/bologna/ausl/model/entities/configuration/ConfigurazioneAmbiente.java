@@ -2,8 +2,8 @@ package it.bologna.ausl.model.entities.configuration;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -24,6 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "configurazioni_ambiente", catalog = "internauta", schema = "configurazione")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({})
 public class ConfigurazioneAmbiente implements Serializable {
 
     private static final long serialVersionUID = 1L;

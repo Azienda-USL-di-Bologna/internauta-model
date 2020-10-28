@@ -7,6 +7,7 @@ import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import java.io.Serializable;
@@ -45,6 +46,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "aziende", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({"ribaltoneDaLanciareList"})
 public class Azienda implements Serializable {
 
     private static final long serialVersionUID = 1L;

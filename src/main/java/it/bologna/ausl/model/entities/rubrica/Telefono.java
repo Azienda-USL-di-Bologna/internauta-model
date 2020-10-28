@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.rubrica;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.nextsw.common.annotations.GenerateProjections;
 import it.nextsw.common.annotations.NextSdrAncestor;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -31,6 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "telefoni", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
+@GenerateProjections({"idDettaglioContatto"})
 public class Telefono implements Serializable {
 
     @Basic(optional = false)
