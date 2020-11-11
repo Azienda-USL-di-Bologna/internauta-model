@@ -90,6 +90,11 @@ public class Menu implements Serializable {
     @Basic(optional = false)
     @Column(name = "ordinale")
     private Integer ordinale;
+    
+    @Basic(optional = true)
+    @Column(name = "modulo")
+    @Size(min = 1, max = 2147483647)
+    private String modulo;
          
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -191,6 +196,14 @@ public class Menu implements Serializable {
 
     public void setOrdinale(Integer ordinale) {
         this.ordinale = ordinale;
+    }
+
+    public String getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(String modulo) {
+        this.modulo = modulo;
     }
 
     public String getCompiledUrl() {
