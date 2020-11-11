@@ -26,7 +26,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({})
 public class Ruolo implements Serializable {
+    
+    public static enum CodiciRuolo {
+        UG, MOS, OS, CA, CI, AS, SD, SR, R
+    }
 
+    public static enum ModuliRuolo {
+        GENERALE, MATRINT, POOLS
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,10 +69,6 @@ public class Ruolo implements Serializable {
 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
-    }
-
-    public static enum CodiciRuolo {
-        UG, MOS, OS, CA, CI, AS, SD, SR, R
     }
 
     public Ruolo() {

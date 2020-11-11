@@ -168,7 +168,7 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
      * interaziendali la chiave è 'interaziendali'
      */
     @Transient
-    private Map<String, List<String>> ruoliUtentiPersona;
+    private Map<String, Map<String, List<String>>> ruoliUtentiPersona;
 
     @Transient
     private Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda;
@@ -337,11 +337,11 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
         this.ruoli = ruoli;
     }
 
-    public Map<String, List<String>> getRuoliUtentiPersona() {
+    public Map<String, Map<String, List<String>>> getRuoliUtentiPersona() {
         return ruoliUtentiPersona;
     }
 
-    public void setRuoliUtentiPersona(Map<String, List<String>> ruoliUtentiPersona) {
+    public void setRuoliUtentiPersona(Map<String, Map<String, List<String>>> ruoliUtentiPersona) {
         this.ruoliUtentiPersona = ruoliUtentiPersona;
     }
 
