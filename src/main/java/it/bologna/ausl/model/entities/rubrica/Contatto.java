@@ -55,7 +55,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "emailList, idPersonaCreazione, indirizziList, telefonoList",
     "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
     "idPersona, idPersonaCreazione, idStruttura"})
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Contatto.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Contatto.class)
 public class Contatto implements Serializable {
 
     public static enum CategoriaContatto {
@@ -70,7 +70,8 @@ public class Contatto implements Serializable {
         PERSONA_FISICA,
         AZIENDA,
         PUBBLICA_AMMINISTRAZIONE,
-        VARIO
+        VARIO,
+        FORNITORE
     }
 
     private static final long serialVersionUID = 1L;
