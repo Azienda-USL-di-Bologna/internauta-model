@@ -159,7 +159,7 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
     }
 
     @Transient
-    private List<Ruolo> ruoli;
+    private Map<String, List<Ruolo>> mappaRuoli;
 
     /**
      * tutti i ruoli di tutte le aziende della persona dell'utente, divisi per
@@ -168,7 +168,7 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
      * interaziendali la chiave è 'interaziendali'
      */
     @Transient
-    private Map<String, List<String>> ruoliUtentiPersona;
+    private Map<String, Map<String, List<String>>> ruoliUtentiPersona;
 
     @Transient
     private Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda;
@@ -329,19 +329,19 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
         this.utenteStrutturaList = utenteStrutturaList;
     }
 
-    public List<Ruolo> getRuoli() {
-        return this.ruoli;
+    public Map<String, List<Ruolo>> getMappaRuoli() {
+        return this.mappaRuoli;
     }
 
-    public void setRuoli(List<Ruolo> ruoli) {
-        this.ruoli = ruoli;
+    public void setMappaRuoli(Map<String, List<Ruolo>> ruoli) {
+        this.mappaRuoli = ruoli;
     }
 
-    public Map<String, List<String>> getRuoliUtentiPersona() {
+    public Map<String, Map<String, List<String>>> getRuoliUtentiPersona() {
         return ruoliUtentiPersona;
     }
 
-    public void setRuoliUtentiPersona(Map<String, List<String>> ruoliUtentiPersona) {
+    public void setRuoliUtentiPersona(Map<String, Map<String, List<String>>> ruoliUtentiPersona) {
         this.ruoliUtentiPersona = ruoliUtentiPersona;
     }
 

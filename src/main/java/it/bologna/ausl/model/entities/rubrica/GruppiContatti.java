@@ -2,7 +2,9 @@ package it.bologna.ausl.model.entities.rubrica;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -30,6 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"idContatto, idDettaglioContatto", "idDettaglioContatto, idGruppo", "idGruppo"})
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = GruppiContatti.class)
 public class GruppiContatti implements Serializable {
 
     
