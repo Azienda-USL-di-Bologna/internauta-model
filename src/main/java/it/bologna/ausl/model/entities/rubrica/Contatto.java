@@ -70,7 +70,8 @@ public class Contatto implements Serializable {
         PERSONA_FISICA,
         AZIENDA,
         PUBBLICA_AMMINISTRAZIONE,
-        VARIO
+        VARIO,
+        FORNITORE
     }
 
     private static final long serialVersionUID = 1L;
