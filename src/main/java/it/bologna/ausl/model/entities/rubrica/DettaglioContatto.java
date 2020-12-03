@@ -39,7 +39,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "dettagli_contatti", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idContatto", "utenteStruttura"})
+@GenerateProjections({"idContatto", "utenteStruttura", "telefono, email, indirizzo"})
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = DettaglioContatto.class)
 public class DettaglioContatto implements Serializable {
 
