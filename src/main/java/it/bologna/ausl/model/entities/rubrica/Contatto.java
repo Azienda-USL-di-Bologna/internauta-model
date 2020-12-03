@@ -43,12 +43,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "contatti", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"contattiDelGruppoList, emailList, gruppiDelContattoList, idContattoPadre, idPersona, idPersonaCreazione, idStruttura, idUtenteCreazione, indirizziList, telefonoList",
+@GenerateProjections({
+    "contattiDelGruppoList, emailList, gruppiDelContattoList, idContattoPadre, idPersona, idPersonaCreazione, idStruttura, idUtenteCreazione, indirizziList, telefonoList",
     "contattiDelGruppoList, emailList, idPersonaCreazione, indirizziList, telefonoList", //forse si può togliere
     "contattiDelGruppoList, idPersonaCreazione, idUtenteCreazione",
     "contattiDelGruppoList, dettaglioContattoList, idPersonaCreazione",
     "dettaglioContattoList",
-    "dettaglioContattoList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione",
+    "dettaglioContattoList, emailList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione",
     "dettaglioContattoList, idPersonaCreazione, idStruttura",
     "dettaglioContattoList, idPersonaCreazione",
     "emailList",
