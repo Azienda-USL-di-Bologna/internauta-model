@@ -31,7 +31,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "gruppi_contatti", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idContatto, idDettaglioContatto", "idDettaglioContatto, idGruppo", "idGruppo"})
+@GenerateProjections({
+    "idContatto, idDettaglioContatto",
+    "idContatto, idDettaglioContatto, idGruppo", 
+    "idDettaglioContatto, idGruppo", 
+    "idGruppo"})
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = GruppiContatti.class)
 public class GruppiContatti implements Serializable {
 
