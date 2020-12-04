@@ -40,7 +40,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"idContatto", "utenteStruttura", "telefono, email, indirizzo"})
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = DettaglioContatto.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = DettaglioContatto.class)
 public class DettaglioContatto implements Serializable {
 
     public static enum TipoDettaglio {
@@ -89,11 +89,11 @@ public class DettaglioContatto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "principale")
-    private Boolean principale;
+    private Boolean principale = false;
 
     @NotNull
     @Column(name = "eliminato")
-    private Boolean eliminato;
+    private Boolean eliminato = false;
 
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
@@ -108,6 +108,9 @@ public class DettaglioContatto implements Serializable {
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
+    @Column(name = "id_contatto_esterno")
+    private Integer idContattoEsterno = null;
+
     public String getTscol() {
         return tscol;
     }
@@ -115,7 +118,7 @@ public class DettaglioContatto implements Serializable {
     public void setTscol(String tscol) {
         this.tscol = tscol;
     }
-    
+
     public DettaglioContatto() {
     }
 
