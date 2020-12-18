@@ -33,31 +33,32 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({})
 public class Applicazione implements Serializable {
+
     private static final long serialVersionUID = 1L;
-            
+
     public static enum Applicazioni {
-        scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo, rubrica
+        scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo, rubrica, iac
     }
-    
+
     public static enum ApplicazioniIntimus {
         scrivania, baborg, shpeck
     }
-    
+
     public static enum UrlsGenerationStrategy {
         TRUSTED_URL_WITH_CONTEXT_INFORMATION,
-	TRUSTED_URL_WITHOUT_CONTEXT_INFORMATION,
-	RELATIVE_WITH_CONTEXT_INFORMATION,
-	RELATIVE_WITHOUT_CONTEXT_INFORMATION,
+        TRUSTED_URL_WITHOUT_CONTEXT_INFORMATION,
+        RELATIVE_WITH_CONTEXT_INFORMATION,
+        RELATIVE_WITHOUT_CONTEXT_INFORMATION,
         ABSOLUTE_WITH_CONTEXT_INFORMATION,
         ABSOLUTE_WITHOUT_CONTEXT_INFORMATION
     }
-    
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id", columnDefinition = "text")
     private String id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "nome", columnDefinition = "text")
@@ -65,31 +66,31 @@ public class Applicazione implements Serializable {
 
     @Column(name = "base_url", columnDefinition = "text")
     private String baseUrl;
-    
+
     @Column(name = "index_page", columnDefinition = "text")
     private String indexPage;
-    
+
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
-    
+
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
-    
+
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "menuList")
     private List<Menu> menuList;
-    
+
     @OneToMany(mappedBy = "idApplicazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "impostazioniApplicazioniList")
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
-    
+
     @Column(name = "url_generation_strategy", columnDefinition = "text")
     @Basic(optional = false)
     @NotNull
     private String urlGenerationStrategy;
-    
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -102,7 +103,7 @@ public class Applicazione implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
+
     public Applicazione() {
     }
 
