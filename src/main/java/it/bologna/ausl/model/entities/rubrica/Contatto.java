@@ -14,6 +14,7 @@ import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -28,6 +29,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -177,7 +179,7 @@ public class Contatto implements Serializable {
     // E' la lista dei contatti attaccati al gruppo.
     // In questo caso il contatto è di categoria GRUPPO
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGruppo", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonBackReference(value = "contattiDelGruppoList")
+//    @JsonBackReference(value = "contattiDelGruppoList")
     private List<GruppiContatti> contattiDelGruppoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContatto", fetch = FetchType.LAZY, orphanRemoval = true)
 //    @JsonBackReference(value = "telefonoList")
@@ -198,6 +200,17 @@ public class Contatto implements Serializable {
     @OneToOne(mappedBy = "idContatto", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPersona")
     private Persona idPersona;
+    
+    @Transient
+    private List<Contatto> contattiContenuti;
+
+    public List<Contatto> getContattiContenuti() {
+        return contattiContenuti;
+    }
+
+    public void setContattiContenuti(List<Contatto> contattiContenuti) {
+        this.contattiContenuti = contattiContenuti;
+    }
 
     public Contatto() {
     }
