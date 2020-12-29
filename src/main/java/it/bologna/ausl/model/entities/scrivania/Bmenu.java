@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.model.entities.configuration.Applicazione;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -48,56 +49,71 @@ public class Bmenu implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
+    
     @Size(max = 2147483647)
     @Column(name = "icona")
     private String icona;
+    
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private String idApplicazione;
+    private Applicazione idApplicazione;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "open_command")
     private String openCommand;
+    
     @Column(name = "permessi_sufficienti", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] permessiSufficienti;
+    
     @Column(name = "ruoli_sufficienti", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] ruoliSufficienti;
+    
     @Column(name = "delega", columnDefinition = "text")
     private String delega;
-    @Column(name = "aziende", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
-    private Integer[] aziende;
+    
+    @Column(name = "aziende", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] aziende;
+    
     @Column(name = "scomponi_per_azienda")
     private Boolean scomponiPerAzienda;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "livello")
     private Integer livello;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "foglia")
     private Boolean foglia;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "ordinale")
     private Integer ordinale;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime version;    
+    private ZonedDateTime version;  
+    
     @OneToMany(mappedBy = "idPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "bmenuList")
     private List<Bmenu> bmenuList;
+    
     @JoinColumn(name = "id_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPadre")
@@ -110,7 +126,7 @@ public class Bmenu implements Serializable {
         this.id = id;
     }
 
-    public Bmenu(Integer id, String descrizione, String idApplicazione, String openCommand, Integer livello, Boolean foglia, Integer ordinale) {
+    public Bmenu(Integer id, String descrizione, Applicazione idApplicazione, String openCommand, Integer livello, Boolean foglia, Integer ordinale) {
         this.id = id;
         this.descrizione = descrizione;
         this.idApplicazione = idApplicazione;
@@ -144,11 +160,11 @@ public class Bmenu implements Serializable {
         this.icona = icona;
     }
 
-    public String getIdApplicazione() {
+    public Applicazione getIdApplicazione() {
         return idApplicazione;
     }
 
-    public void setIdApplicazione(String idApplicazione) {
+    public void setIdApplicazione(Applicazione idApplicazione) {
         this.idApplicazione = idApplicazione;
     }
 
@@ -184,11 +200,11 @@ public class Bmenu implements Serializable {
         this.delega = delega;
     }
 
-    public Serializable getAziende() {
+    public String[] getAziende() {
         return aziende;
     }
 
-    public void setAziende(Integer[] aziende) {
+    public void setAziende(String[] aziende) {
         this.aziende = aziende;
     }
 
