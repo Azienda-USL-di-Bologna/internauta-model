@@ -42,6 +42,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({"idApplicazione"})
 public class Bmenu implements Serializable {
+    
+    public static enum CommandType {
+        ROUTING,
+        COMPONENT,
+        URL
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,17 +66,15 @@ public class Bmenu implements Serializable {
     @Column(name = "icona")
     private String icona;
     
-    @Basic(optional = false)
-    @NotNull
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Applicazione idApplicazione;
     
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
     @Column(name = "open_command")
     private String openCommand;
+    
+    @Column(name = "commandType")
+    private String commandType;
     
     @Column(name = "permessi_sufficienti", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
@@ -80,8 +84,8 @@ public class Bmenu implements Serializable {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] ruoliSufficienti;
     
-    @Column(name = "delega", columnDefinition = "text")
-    private String delega;
+    @Column(name = "modulo", columnDefinition = "text")
+    private String modulo;
     
     @Column(name = "aziende", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
@@ -175,7 +179,15 @@ public class Bmenu implements Serializable {
     public void setOpenCommand(String openCommand) {
         this.openCommand = openCommand;
     }
+    
+    public CommandType getCommandType() {
+        return commandType == null ? null : CommandType.valueOf(commandType);
+    }
 
+    public void setCommandType(CommandType commandType) {
+        this.commandType = commandType.toString();
+    }
+    
     public String[] getPermessiSufficienti() {
         return permessiSufficienti;
     }
@@ -192,12 +204,12 @@ public class Bmenu implements Serializable {
         this.ruoliSufficienti = ruoliSufficienti;
     }
 
-    public String getDelega() {
-        return delega;
+    public String getModulo() {
+        return modulo;
     }
 
-    public void setDelega(String delega) {
-        this.delega = delega;
+    public void setModulo(String modulo) {
+        this.modulo = modulo;
     }
 
     public String[] getAziende() {
