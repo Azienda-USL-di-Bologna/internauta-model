@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.annotations.NextSdrAncestor;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
@@ -65,6 +66,7 @@ public class GruppiContatti implements Serializable {
     @JsonBackReference(value = "idGruppo")
     private Contatto idGruppo;
     
+    @NextSdrAncestor(relationName = "idDettaglioContattoGruppiContatti")
     @JoinColumn(name = "id_dettaglio_contatto", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idDettaglioContatto")
