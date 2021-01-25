@@ -75,6 +75,18 @@ public class UserAccess implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "codice_azienda")
     private String codiceAzienda;
+    
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "browser_name")
+    private String browserName;
+    
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "browser_version")
+    private String browserVersion;
+    
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "os")
+    private String os;
 
     @Basic(optional = false)
     @NotNull
@@ -90,6 +102,19 @@ public class UserAccess implements Serializable {
         this.fromInternet = fromInternet;
         this.applicazione = applicazione;
         this.codiceAzienda = codiceAzienda;
+    }
+
+    public UserAccess(Integer idUtente, String cfUtente, String descrizioneUtente, Boolean fromInternet, String applicazione, String codiceAzienda, String browserName, String browserVersion, String os) {
+        this.id = id;
+        this.idUtente = idUtente;
+        this.cfUtente = cfUtente;
+        this.descrizioneUtente = descrizioneUtente;
+        this.fromInternet = fromInternet;
+        this.applicazione = applicazione;
+        this.codiceAzienda = codiceAzienda;
+        this.browserName = browserName;
+        this.browserVersion = browserVersion;
+        this.os = os;
     }
 
     public BigInteger getId() {
@@ -146,6 +171,30 @@ public class UserAccess implements Serializable {
 
     public void setCodiceAzienda(String codiceAzienda) {
         this.codiceAzienda = codiceAzienda;
+    }
+
+    public String getBrowserName() {
+        return browserName;
+    }
+
+    public void setBrowserName(String browserName) {
+        this.browserName = browserName;
+    }
+
+    public String getBrowserVersion() {
+        return browserVersion;
+    }
+
+    public void setBrowserVersion(String browserVersion) {
+        this.browserVersion = browserVersion;
+    }
+
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
     }
 
     public LocalDateTime getTs() {
