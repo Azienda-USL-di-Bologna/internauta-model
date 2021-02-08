@@ -143,6 +143,21 @@ public class Pec implements Serializable {
     @Column(name = "keep_backup")
     private Integer keepBackup = 90;
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "importa_casella")
+    private Boolean importaCasella = false;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "importa_folders")
+    private Boolean importaFolders = false;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "importa_messages")
+    private Boolean importaMessages = false;
+
 //    @Version()
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -390,6 +405,30 @@ public class Pec implements Serializable {
 
     public void setKeepBackup(Integer keepBackup) {
         this.keepBackup = keepBackup;
+    }
+
+    public Boolean getImportaCasella() {
+        return importaCasella;
+    }
+
+    public void setImportaCasella(Boolean importaCasella) {
+        this.importaCasella = importaCasella;
+    }
+
+    public Boolean getImportaFolders() {
+        return importaFolders;
+    }
+
+    public void setImportaFolders(Boolean importaFolders) {
+        this.importaFolders = importaFolders;
+    }
+
+    public Boolean getImportaMessages() {
+        return importaMessages;
+    }
+
+    public void setImportaMessages(Boolean importaMessages) {
+        this.importaMessages = importaMessages;
     }
 
     @Override
