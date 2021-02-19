@@ -209,6 +209,13 @@
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-52</artifactId>
+            <version>2.10.2</version>
+            <type>jar</type>
+        </dependency>
 
     </dependencies>
     
