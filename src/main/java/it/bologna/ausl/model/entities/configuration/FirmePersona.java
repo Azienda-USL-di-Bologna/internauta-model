@@ -1,9 +1,12 @@
 package it.bologna.ausl.model.entities.configuration;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -14,11 +17,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -29,6 +36,9 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({})
+@TypeDefs({
+  @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
 public class FirmePersona implements Serializable {
     
     public static enum TipoFirma {
@@ -66,10 +76,14 @@ public class FirmePersona implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "tramite")
     private String tramite;
-//    @Lob
-//    @Column(name = "additional_data")
-//    private Object additionalData;
-
+    @Type(type = "jsonb")
+    @Column(name = "additional_data", columnDefinition = "jsonb")
+    private AdditionalData additionalData;
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime version;
+    
     public FirmePersona() {
     }
 
@@ -125,14 +139,22 @@ public class FirmePersona implements Serializable {
         this.tramite = tramite.toString();
     }
 
-//    public Object getAdditionalData() {
-//        return additionalData;
-//    }
-//
-//    public void setAdditionalData(Object additionalData) {
-//        this.additionalData = additionalData;
-//    }
+    public AdditionalData getAdditionalData() {
+        return additionalData;
+    }
 
+    public void setAdditionalData(AdditionalData additionalData) {
+        this.additionalData = additionalData;
+    }
+    
+    public ZonedDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(ZonedDateTime version) {
+        this.version = version;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -158,4 +180,46 @@ public class FirmePersona implements Serializable {
         return "it.bologna.ausl.model.entities.configuration.FirmePersona[ id=" + id + " ]";
     }
     
+    public static class AdditionalData {
+        String username;
+        String password;
+        String dominio;
+        String autenticazione;
+
+        public AdditionalData() {
+        }
+       
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getDominio() {
+            return dominio;
+        }
+
+        public void setDominio(String dominio) {
+            this.dominio = dominio;
+        }
+
+        public String getAutenticazione() {
+            return autenticazione;
+        }
+
+        public void setAutenticazione(String autenticazione) {
+            this.autenticazione = autenticazione;
+        }
+        
+    }
 }
