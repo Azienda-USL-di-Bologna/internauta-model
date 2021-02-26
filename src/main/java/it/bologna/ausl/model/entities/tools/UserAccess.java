@@ -75,18 +75,22 @@ public class UserAccess implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "codice_azienda")
     private String codiceAzienda;
-    
+
     @Size(min = 1, max = 2147483647)
     @Column(name = "browser_name")
     private String browserName;
-    
+
     @Size(min = 1, max = 2147483647)
     @Column(name = "browser_version")
     private String browserVersion;
-    
+
     @Size(min = 1, max = 2147483647)
     @Column(name = "os")
     private String os;
+
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "serverNumber")
+    private String serverNumber;
 
     @Basic(optional = false)
     @NotNull
@@ -104,7 +108,7 @@ public class UserAccess implements Serializable {
         this.codiceAzienda = codiceAzienda;
     }
 
-    public UserAccess(Integer idUtente, String cfUtente, String descrizioneUtente, Boolean fromInternet, String applicazione, String codiceAzienda, String browserName, String browserVersion, String os) {
+    public UserAccess(Integer idUtente, String cfUtente, String descrizioneUtente, Boolean fromInternet, String applicazione, String codiceAzienda, String browserName, String browserVersion, String os, String serverNumber) {
         this.id = id;
         this.idUtente = idUtente;
         this.cfUtente = cfUtente;
@@ -115,6 +119,15 @@ public class UserAccess implements Serializable {
         this.browserName = browserName;
         this.browserVersion = browserVersion;
         this.os = os;
+        this.serverNumber = serverNumber;
+    }
+
+    public String getServerNumber() {
+        return serverNumber;
+    }
+
+    public void setServerNumber(String serverNumber) {
+        this.serverNumber = serverNumber;
     }
 
     public BigInteger getId() {
