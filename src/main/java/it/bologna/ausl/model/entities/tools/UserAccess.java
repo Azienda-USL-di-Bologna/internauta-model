@@ -7,10 +7,12 @@ package it.bologna.ausl.model.entities.tools;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -21,6 +23,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -32,6 +37,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({})
+@TypeDefs({
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
 public class UserAccess implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -88,9 +96,9 @@ public class UserAccess implements Serializable {
     @Column(name = "os")
     private String os;
 
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "serverNumber")
-    private String serverNumber;
+    @Type(type = "jsonb")
+    @Column(name = "cookies", columnDefinition = "jsonb")
+    private Map<String, String> cookies;
 
     @Basic(optional = false)
     @NotNull
@@ -108,7 +116,7 @@ public class UserAccess implements Serializable {
         this.codiceAzienda = codiceAzienda;
     }
 
-    public UserAccess(Integer idUtente, String cfUtente, String descrizioneUtente, Boolean fromInternet, String applicazione, String codiceAzienda, String browserName, String browserVersion, String os, String serverNumber) {
+    public UserAccess(Integer idUtente, String cfUtente, String descrizioneUtente, Boolean fromInternet, String applicazione, String codiceAzienda, String browserName, String browserVersion, String os, Map<String, String> cookie) {
         this.id = id;
         this.idUtente = idUtente;
         this.cfUtente = cfUtente;
@@ -119,15 +127,15 @@ public class UserAccess implements Serializable {
         this.browserName = browserName;
         this.browserVersion = browserVersion;
         this.os = os;
-        this.serverNumber = serverNumber;
+        this.cookies = cookie;
     }
 
-    public String getServerNumber() {
-        return serverNumber;
+    public Map<String, String> getCookies() {
+        return cookies;
     }
 
-    public void setServerNumber(String serverNumber) {
-        this.serverNumber = serverNumber;
+    public void setCookies(Map<String, String> cookies) {
+        this.cookies = cookies;
     }
 
     public BigInteger getId() {

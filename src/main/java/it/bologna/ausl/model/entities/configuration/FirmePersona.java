@@ -37,15 +37,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({})
 @TypeDefs({
-  @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 })
 public class FirmePersona implements Serializable {
-    
+
     public static enum TipoFirma {
         CNS,
         REMOTA
     }
-    
+
     public static enum TramiteFirma {
         APPLET,
         WEBSTART,
@@ -59,31 +59,37 @@ public class FirmePersona implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Persona idPersona;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "predefinita")
     private Boolean predefinita;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
     private String tipo;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tramite")
     private String tramite;
+
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private AdditionalData additionalData;
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
-    
+
     public FirmePersona() {
     }
 
@@ -146,7 +152,7 @@ public class FirmePersona implements Serializable {
     public void setAdditionalData(AdditionalData additionalData) {
         this.additionalData = additionalData;
     }
-    
+
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -154,7 +160,7 @@ public class FirmePersona implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -179,8 +185,9 @@ public class FirmePersona implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.configuration.FirmePersona[ id=" + id + " ]";
     }
-    
+
     public static class AdditionalData {
+
         String username;
         String password;
         String dominio;
@@ -188,7 +195,7 @@ public class FirmePersona implements Serializable {
 
         public AdditionalData() {
         }
-       
+
         public String getUsername() {
             return username;
         }
@@ -220,6 +227,6 @@ public class FirmePersona implements Serializable {
         public void setAutenticazione(String autenticazione) {
             this.autenticazione = autenticazione;
         }
-        
+
     }
 }
