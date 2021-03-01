@@ -35,11 +35,11 @@ public class MessageFolder implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @JoinColumn(name = "id_message", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Message idMessage;
-    
+
     @JoinColumn(name = "id_folder", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Folder idFolder;
@@ -52,23 +52,22 @@ public class MessageFolder implements Serializable {
     private LocalDateTime inserted = LocalDateTime.now();
 
     @Column(name = "deleted")
-    private Boolean deleted;
+    private Boolean deleted = false;
 
     @Size(max = 2147483647)
     @Column(name = "notes")
     private String notes;
-    
+
 //    @Column(name = "client_status")
 //    private Integer clientStatus;
-    
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Utente idUtente;
-    
+
     @JoinColumn(name = "id_previous_folder", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Folder idPreviousFolder;
-        
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -81,7 +80,7 @@ public class MessageFolder implements Serializable {
     public void setVersion(LocalDateTime version) {
         this.version = version;
     }
- 
+
     public MessageFolder() {
     }
 
@@ -182,5 +181,5 @@ public class MessageFolder implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.shpeck.MessageFolder[ id=" + id + " ]";
     }
-    
+
 }
