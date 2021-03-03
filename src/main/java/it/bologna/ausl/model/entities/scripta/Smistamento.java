@@ -1,14 +1,20 @@
 package it.bologna.ausl.model.entities.scripta;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.model.entities.baborg.Azienda;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.baborg.Struttura;
+import it.bologna.ausl.model.entities.rubrica.Contatto;
+import it.bologna.ausl.model.entities.shpeck.Message;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,26 +23,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author solidus83
  */
-//@TypeDefs(
-//        {
-//            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-//        }
-//)
 @Entity
-@Table(name = "docs", catalog = "internauta", schema = "scripta")
+@Table(name = "smistamenti", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idPersonaCreazione,idAzienda"})
-public class Doc implements Serializable {
+@GenerateProjections({"idStruttuta"})
+public class Smistamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -46,41 +51,30 @@ public class Doc implements Serializable {
     @Column(name = "id")
     private Integer id;
     
-    @Basic(optional = true)
-    @Column(name = "oggetto")
-    private String oggetto;
-    
-    @JoinColumn(name = "id_persona_creazione", referencedColumnName = "id")
+    @JoinColumn(name = "id_struttura", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Persona idPersonaCreazione;
-    
-    @JoinColumn(name = "id_azienda", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Azienda idAzienda;
+    private Struttura idStruttuta;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @Column(name = "data_creazione")
+    @Column(name = "data_inserimento")
     @Basic(optional = false)
     @NotNull
-    private ZonedDateTime dataCreazione;
+    private ZonedDateTime dataInserimento = ZonedDateTime.now();
     
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    public Doc() {
+    public Smistamento() {
     }
 
-    public Doc(Integer id, String oggetto, Persona idPersonaCreazione, Azienda idAzienda, ZonedDateTime dataCreazione) {
+    public Smistamento(Integer id, Struttura idStruttuta, ZonedDateTime version) {
         this.id = id;
-        this.oggetto = oggetto;
-        this.idPersonaCreazione = idPersonaCreazione;
-        this.idAzienda = idAzienda;
-        this.dataCreazione = dataCreazione;
+        this.idStruttuta = idStruttuta;
+        this.version = version;
     }
-
     public Integer getId() {
         return id;
     }
@@ -89,36 +83,20 @@ public class Doc implements Serializable {
         this.id = id;
     }
 
-    public String getOggetto() {
-        return oggetto;
+    public Struttura getIdStruttuta() {
+        return idStruttuta;
     }
 
-    public void setOggetto(String oggetto) {
-        this.oggetto = oggetto;
+    public void setIdStruttuta(Struttura idStruttuta) {
+        this.idStruttuta = idStruttuta;
     }
 
-    public Persona getIdPersonaCreazione() {
-        return idPersonaCreazione;
+    public ZonedDateTime getDataInserimento() {
+        return dataInserimento;
     }
 
-    public void setIdPersonaCreazione(Persona idPersonaCreazione) {
-        this.idPersonaCreazione = idPersonaCreazione;
-    }
-
-    public Azienda getIdAzienda() {
-        return idAzienda;
-    }
-
-    public void setIdAzienda(Azienda idAzienda) {
-        this.idAzienda = idAzienda;
-    }
-
-    public ZonedDateTime getDataCreazione() {
-        return dataCreazione;
-    }
-
-    public void setDataCreazione(ZonedDateTime dataCreazione) {
-        this.dataCreazione = dataCreazione;
+    public void setDataInserimento(ZonedDateTime dataInserimento) {
+        this.dataInserimento = dataInserimento;
     }
 
     public ZonedDateTime getVersion() {
@@ -139,10 +117,10 @@ public class Doc implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Doc)) {
+        if (!(object instanceof Smistamento)) {
             return false;
         }
-        Doc other = (Doc) object;
+        Smistamento other = (Smistamento) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -153,5 +131,4 @@ public class Doc implements Serializable {
     public String toString() {
         return getClass().getCanonicalName() + "[ id=" + id + " ]";
     }
-
 }

@@ -227,6 +227,5 @@ public class FirmePersona implements Serializable {
         public void setAutenticazione(String autenticazione) {
             this.autenticazione = autenticazione;
         }
-
     }
 }
