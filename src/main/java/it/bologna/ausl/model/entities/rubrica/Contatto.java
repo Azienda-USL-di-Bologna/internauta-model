@@ -276,19 +276,35 @@ public class Contatto implements Serializable {
     }
 
     public TipoContatto getTipo() {
-        return TipoContatto.valueOf(tipo);
+        if (tipo != null) {
+            return TipoContatto.valueOf(tipo);
+        } else {
+            return null;
+        }
     }
 
     public void setTipo(TipoContatto tipo) {
-        this.tipo = tipo.toString();
+        if (tipo != null) {
+            this.tipo = tipo.toString();
+        } else {
+            this.tipo = null;
+        }
     }
 
     public CategoriaContatto getCategoria() {
-        return CategoriaContatto.valueOf(categoria);
+        if (categoria != null) {
+            return CategoriaContatto.valueOf(categoria);
+        } else {
+            return null;
+        }
     }
 
     public void setCategoria(CategoriaContatto categoria) {
-        this.categoria = categoria.toString();
+        if (categoria != null) {
+            this.categoria = categoria.toString();
+        } else {
+            this.categoria = null;
+        }
     }
 
     public Utente getIdUtenteCreazione() {

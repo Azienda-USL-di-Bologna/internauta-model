@@ -108,8 +108,10 @@ public class DettaglioContatto implements Serializable {
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
-    @Column(name = "id_contatto_esterno")
-    private Integer idContattoEsterno = null;
+    @NextSdrAncestor(relationName = "idContattoEsternoDettaglioContatto")
+    @JoinColumn(name = "id_contatto_esterno", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Contatto idContattoEsterno;
 
     public String getTscol() {
         return tscol;
@@ -195,6 +197,14 @@ public class DettaglioContatto implements Serializable {
 
     public void setIndirizzo(Indirizzo indirizzo) {
         this.indirizzo = indirizzo;
+    }
+
+    public Contatto getIdContattoEsterno() {
+        return idContattoEsterno;
+    }
+
+    public void setIdContattoEsterno(Contatto idContattoEsterno) {
+        this.idContattoEsterno = idContattoEsterno;
     }
 
     public Boolean getPrincipale() {
