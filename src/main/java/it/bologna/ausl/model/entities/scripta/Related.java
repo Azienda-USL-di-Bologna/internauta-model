@@ -26,6 +26,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.FilterDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -38,6 +40,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"idContatto","idGruppo","relatedList","spedizioneList","idContatto,idGruppo"})
+//@FilterDefs({
+//        @FilterDef(name="mittenti", defaultCondition="tipo = 'MITTENTE'"),
+//        @FilterDef(name="destinatari", defaultCondition="tipo = 'A'")})
 public class Related implements Serializable {
 
     private static final long serialVersionUID = 1L;

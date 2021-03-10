@@ -19,11 +19,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.FilterJoinTable;
+import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -39,7 +46,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "docs", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idPersonaCreazione,idAzienda", "idPersonaCreazione,idAzienda,mittenti,destinatari"})
+//@GenerateProjections({"idPersonaCreazione,idAzienda", "idPersonaCreazione,idAzienda,mittenti,destinatari"})
+@GenerateProjections({"idPersonaCreazione,idAzienda", "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related"})
+
 public class Doc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,13 +79,30 @@ public class Doc implements Serializable {
     private ZonedDateTime dataCreazione;
 
     //lista di mittenti che conterra per il momento solo un elemento
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "mittenti")
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
+//    @JsonBackReference(value = "mittenti")
+    //@Filter(name = "mittenti")
+    @Transient
+//    @Where(clause = "tipo='MITTENTE'")
     private List<Related> mittenti;
 
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
+//    @JsonBackReference(value = "destinatari")
+    //@Filter(name = "destinatari")
+//    @Where(clause = "tipo='A'")
+//    @Transient
+//    private List<Related> destinatari;
+    
+    @Transient
+    private List<Related> competenti;
+    
+    @Transient
+    private List<Related> coinvolti;
+    
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "destinatari")
-    private List<Related> destinatari;
+    @JsonBackReference(value = "related")
+    private List<Related> related;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -142,13 +168,30 @@ public class Doc implements Serializable {
         this.mittenti = mittenti;
     }
 
-    public List<Related> getDestinatari() {
-        return destinatari;
+    public List<Related> getCompetenti() {
+        return competenti;
     }
 
-    public void setDestinatari(List<Related> destinatari) {
-        this.destinatari = destinatari;
+    public void setCompetenti(List<Related> competenti) {
+        this.competenti = competenti;
     }
+
+    public List<Related> getCoinvolti() {
+        return coinvolti;
+    }
+
+    public void setCoinvolti(List<Related> coinvolti) {
+        this.coinvolti = coinvolti;
+    }
+
+    public List<Related> getRelated() {
+        return related;
+    }
+
+    public void setRelated(List<Related> related) {
+        this.related = related;
+    }
+
 
     public ZonedDateTime getVersion() {
         return version;
