@@ -47,7 +47,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 //@GenerateProjections({"idPersonaCreazione,idAzienda", "idPersonaCreazione,idAzienda,mittenti,destinatari"})
-@GenerateProjections({"idPersonaCreazione,idAzienda", "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related"})
+@GenerateProjections({"idPersonaCreazione,idAzienda", "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati"})
 
 public class Doc implements Serializable {
 
@@ -92,17 +92,19 @@ public class Doc implements Serializable {
 //    @Where(clause = "tipo='A'")
 //    @Transient
 //    private List<Related> destinatari;
-    
     @Transient
     private List<Related> competenti;
-    
+
     @Transient
     private List<Related> coinvolti;
-    
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "related")
     private List<Related> related;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "allagato")
+    private List<Allegato> allegati;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -192,6 +194,13 @@ public class Doc implements Serializable {
         this.related = related;
     }
 
+    public List<Allegato> getAllegati() {
+        return allegati;
+    }
+
+    public void setAllegati(List<Allegato> allegati) {
+        this.allegati = allegati;
+    }
 
     public ZonedDateTime getVersion() {
         return version;
