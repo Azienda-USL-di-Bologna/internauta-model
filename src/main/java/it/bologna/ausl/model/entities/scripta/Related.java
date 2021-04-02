@@ -3,10 +3,8 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
-import it.bologna.ausl.model.entities.rubrica.GruppiContatti;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -26,8 +24,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.FilterDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
