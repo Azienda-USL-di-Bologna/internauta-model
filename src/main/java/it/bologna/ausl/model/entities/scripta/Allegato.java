@@ -7,12 +7,9 @@ package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.model.entities.baborg.Persona;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.security.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -26,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -37,7 +35,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"idDoc", "idDoc,idAllegatoPadre"})
+@DynamicUpdate
 public class Allegato implements Serializable {
+
+    public static enum TipoAllegato {
+        ALLEGATO,
+        LETTERA,
+        LETTERA_FIRMATA,
+        FRONTESPIZIO,
+        STAMPA_UNICA,
+        FASCICOLATO
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,14 +99,17 @@ public class Allegato implements Serializable {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private LocalDateTime dataInserimento;
+    private ZonedDateTime dataInserimento;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    public Allegato(Integer id, Doc idDoc, Allegato idAllegatoPadre, String nome, String estensione, String tipo, String idRepository, Boolean principale, Integer numeroAllegato, Boolean convertibilePdf, Integer dimensioneByte, String mimeType, LocalDateTime dataInserimento, ZonedDateTime version) {
+    public Allegato() {
+    }
+
+    public Allegato(Integer id, Doc idDoc, Allegato idAllegatoPadre, String nome, String estensione, String tipo, String idRepository, Boolean principale, Integer numeroAllegato, Boolean convertibilePdf, Integer dimensioneByte, String mimeType, ZonedDateTime dataInserimento, ZonedDateTime version) {
         this.id = id;
         this.idDoc = idDoc;
         this.idAllegatoPadre = idAllegatoPadre;
@@ -115,10 +126,7 @@ public class Allegato implements Serializable {
         this.version = version;
     }
 
-    public Allegato() {
-    }
-
-    public Allegato(Doc idDoc, Allegato idAllegatoPadre, String nome, String estensione, String tipo, String idRepository, Boolean principale, Integer numeroAllegato, Boolean convertibilePdf, Integer dimensioneByte, String mimeType, LocalDateTime dataInserimento) {
+    public Allegato(Doc idDoc, Allegato idAllegatoPadre, String nome, String estensione, String tipo, String idRepository, Boolean principale, Integer numeroAllegato, Boolean convertibilePdf, Integer dimensioneByte, String mimeType, ZonedDateTime dataInserimento) {
         this.idDoc = idDoc;
         this.idAllegatoPadre = idAllegatoPadre;
         this.nome = nome;
@@ -141,20 +149,20 @@ public class Allegato implements Serializable {
         this.estensione = estensione;
     }
 
-    public String getTipo() {
-        return tipo;
+    public TipoAllegato getTipo() {
+        if (tipo != null) {
+            return TipoAllegato.valueOf(tipo);
+        } else {
+            return null;
+        }
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public LocalDateTime getDataInserimento() {
-        return dataInserimento;
-    }
-
-    public void setDataInserimento(LocalDateTime dataInserimento) {
-        this.dataInserimento = dataInserimento;
+    public void setTipo(TipoAllegato tipo) {
+        if (tipo != null) {
+            this.tipo = tipo.toString();
+        } else {
+            this.tipo = null;
+        }
     }
 
     public Integer getId() {
@@ -235,6 +243,14 @@ public class Allegato implements Serializable {
 
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    public ZonedDateTime getDataInserimento() {
+        return dataInserimento;
+    }
+
+    public void setDataInserimento(ZonedDateTime dataInserimento) {
+        this.dataInserimento = dataInserimento;
     }
 
     public ZonedDateTime getVersion() {
