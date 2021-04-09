@@ -26,7 +26,6 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author solidus83
  */
-
 @Entity
 @Table(name = "mezzi", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -35,23 +34,27 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Mezzo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
+    public static enum CodiciMezzo {
+        MAIL, PEC, POSTA_ORDINARIA, FAX, RACCOMANDATA, BABEL, TELEFONO
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @Column(name = "codice")
     @NotNull
     private String codice;
-    
+
     @Basic(optional = false)
     @Column(name = "descrizione")
     @NotNull
     private String descrizione;
-    
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
