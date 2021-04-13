@@ -1,6 +1,7 @@
 package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
@@ -84,6 +85,43 @@ public class Mezzo implements Serializable {
 
     public void setCodice(String codice) {
         this.codice = codice;
+    }
+//Da eliminare quando non si utilizzeranno piu le applicazioni inde
+    @JsonIgnore
+    public String ottieniCodiceArgo() {
+        String codiceArgo = "";
+        switch (codice.toUpperCase()) {
+            case "PEC":
+                codiceArgo = "Pec";
+                break;
+            case "MAIL":
+                codiceArgo = "Email";
+                // code block
+                break;
+            case "Posta Ordinaria":
+                codiceArgo = "Posta ordinaria";
+                // code block
+                break;
+            case "FAX":
+                codiceArgo = "Fax";
+                // code block
+                break;
+            case "RACCOMANDATA":
+                codiceArgo = "Raccomandata";
+                // code block
+                break;
+            case "BABEL":
+                codiceArgo = "Babel";
+                // code block
+                break;
+            case "TELEFONO":
+                codiceArgo = "Tel";
+                // code block
+                break;
+            default:
+            codiceArgo ="Errore";
+        }
+        return codiceArgo;
     }
 
     public String getDescrizione() {
