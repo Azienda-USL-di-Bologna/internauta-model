@@ -112,6 +112,19 @@ public class DettaglioContatto implements Serializable {
     @JoinColumn(name = "id_contatto_esterno", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Contatto idContattoEsterno;
+    
+    // Questa proprietà serve per non perdere il mezzo durante la conversione in json 
+    // Il mezzo viene passato a inde per i mittenti/destinatari
+    @Transient
+    private String mezzo;
+
+    public String getMezzo() {
+        return mezzo;
+    }
+
+    public void setMezzo(String mezzo) {
+        this.mezzo = mezzo;
+    }
 
     public String getTscol() {
         return tscol;

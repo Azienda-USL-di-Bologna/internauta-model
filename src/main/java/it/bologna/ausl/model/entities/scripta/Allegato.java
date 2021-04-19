@@ -1,18 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.bologna.ausl.model.entities.scripta;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import org.hibernate.annotations.DynamicUpdate;
@@ -28,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author Top
+ * @author Mido
  */
 @Entity
 @Table(name = "allegati", catalog = "internauta", schema = "scripta")
@@ -61,6 +60,10 @@ public class Allegato implements Serializable {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Allegato idAllegatoPadre;
 
+    @OneToMany(mappedBy = "idAllegatoPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "allegatiFigliList")
+    private List<Allegato> allegatiFigliList;
+    
     @Basic(optional = false)
     @Column(name = "nome")
     private String nome;
@@ -187,6 +190,14 @@ public class Allegato implements Serializable {
 
     public void setIdAllegatoPadre(Allegato idAllegatoPadre) {
         this.idAllegatoPadre = idAllegatoPadre;
+    }
+
+    public List<Allegato> getAllegatiFigliList() {
+        return allegatiFigliList;
+    }
+
+    public void setAllegatiFigliList(List<Allegato> allegatiFigliList) {
+        this.allegatiFigliList = allegatiFigliList;
     }
 
     public String getNome() {
