@@ -20,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,6 +32,7 @@ import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.FilterJoinTable;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Where;
+import org.hibernate.annotations.WhereJoinTable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -82,19 +84,20 @@ public class Doc implements Serializable {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
 //    @JsonBackReference(value = "mittenti")
     //@Filter(name = "mittenti")
-    @Transient
-//    @Where(clause = "tipo='MITTENTE'")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @Where(clause = "tipo='MITTENTE'")
     private List<Related> mittenti;
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
 //    @JsonBackReference(value = "destinatari")
     //@Filter(name = "destinatari")
-//    @Where(clause = "tipo='A'")
 //    @Transient
 //    private List<Related> destinatari;
+    @Where(clause = "tipo = 'A'")
     @Transient
     private List<Related> competenti;
 
+    @Where(clause = "tipo = 'CC'")
     @Transient
     private List<Related> coinvolti;
 
