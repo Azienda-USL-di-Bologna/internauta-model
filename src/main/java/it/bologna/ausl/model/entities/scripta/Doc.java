@@ -78,7 +78,7 @@ public class Doc implements Serializable {
     @Column(name = "data_creazione")
     @Basic(optional = false)
     @NotNull
-    private ZonedDateTime dataCreazione;
+    private ZonedDateTime dataCreazione = ZonedDateTime.now();
 
     //lista di mittenti che conterra per il momento solo un elemento
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
@@ -105,8 +105,8 @@ public class Doc implements Serializable {
     @JsonBackReference(value = "related")
     private List<Related> related;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "allagato")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "allagati")
     private List<Allegato> allegati;
 
     @Version()
