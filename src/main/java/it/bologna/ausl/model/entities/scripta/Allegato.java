@@ -37,7 +37,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "allegati", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idDoc", "idDoc,idAllegatoPadre"})
+@GenerateProjections({"idDoc", "idDoc,idAllegatoPadre","idAllegatoPadre,dettagliAllegatiList"})
 @DynamicUpdate
 public class Allegato implements Serializable {
 
@@ -68,8 +68,7 @@ public class Allegato implements Serializable {
     private List<Allegato> allegatiFigliList;
 
     @OneToMany(mappedBy = "idAllegato", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = ""
-            + "")
+    @JsonBackReference(value = "dettagliAllegatiList")
     private List<DettaglioAllegato> dettagliAllegatiList;
 
     @Basic(optional = false)
