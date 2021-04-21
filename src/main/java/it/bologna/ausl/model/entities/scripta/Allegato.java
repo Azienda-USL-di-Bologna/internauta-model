@@ -80,7 +80,7 @@ public class Allegato implements Serializable {
     @Column(name = "tipo")
     private String tipo;
 
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "principale")
     private Boolean principale;
 
@@ -90,7 +90,7 @@ public class Allegato implements Serializable {
     
     @Basic(optional = false)
     @Column(name = "firmato")
-    private Integer firmato;
+    private Boolean firmato;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -176,11 +176,11 @@ public class Allegato implements Serializable {
         this.principale = principale;
     }
 
-    public Integer getFirmato() {
+    public Boolean getFirmato() {
         return firmato;
     }
 
-    public void setFirmato(Integer firmato) {
+    public void setFirmato(Boolean firmato) {
         this.firmato = firmato;
     }
     
