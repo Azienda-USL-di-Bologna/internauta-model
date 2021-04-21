@@ -40,6 +40,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @GenerateProjections({})
 @DynamicUpdate
 public class DettaglioAllegato {
+    
     public static enum TipoDettaglioAllegato {
         ORIGINALE,
         CONVERTITO,
@@ -48,9 +49,7 @@ public class DettaglioAllegato {
 	ORIGINALE_FIRMATO_P7M,
 	CONVERTITO_FIRMATO,
 	CONVERTITO_FIRMATO_P7M
-    }
-
-    
+    }    
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -68,7 +68,8 @@ public class Allegato implements Serializable {
     private List<Allegato> allegatiFigliList;
 
     @OneToMany(mappedBy = "idAllegato", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "dettagliAllegatiList")
+    @JsonBackReference(value = ""
+            + "")
     private List<DettaglioAllegato> dettagliAllegatiList;
 
     @Basic(optional = false)
@@ -86,7 +87,11 @@ public class Allegato implements Serializable {
     @Basic(optional = false)
     @Column(name = "ordinale")
     private Integer ordinale;
-
+    
+    @Basic(optional = false)
+    @Column(name = "firmato")
+    private Integer firmato;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataInserimento = ZonedDateTime.now();
@@ -171,6 +176,14 @@ public class Allegato implements Serializable {
         this.principale = principale;
     }
 
+    public Integer getFirmato() {
+        return firmato;
+    }
+
+    public void setFirmato(Integer firmato) {
+        this.firmato = firmato;
+    }
+    
     public Integer getOrdinale() {
         return ordinale;
     }
@@ -196,7 +209,7 @@ public class Allegato implements Serializable {
     }
 
     public DettaglioAllegato getDettaglioByTipoDettaglioAllegato(DettaglioAllegato.TipoDettaglioAllegato tipo) {
-
+//ci possono avere piu di un firmato?
         List<DettaglioAllegato> collect = getDettagliAllegatiList().stream().filter(da -> da.getCaratteristica().equals(tipo)).collect(Collectors.toList());
         if (collect != null && !collect.isEmpty()) {
             return collect.get(0);
