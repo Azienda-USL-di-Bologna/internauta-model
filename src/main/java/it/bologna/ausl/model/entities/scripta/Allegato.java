@@ -37,7 +37,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "allegati", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idDoc", "idDoc,idAllegatoPadre"})
+@GenerateProjections({"idDoc", "idDoc,idAllegatoPadre","idAllegatoPadre,dettagliAllegatiList"})
 @DynamicUpdate
 public class Allegato implements Serializable {
 
@@ -79,14 +79,18 @@ public class Allegato implements Serializable {
     @Column(name = "tipo")
     private String tipo;
 
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "principale")
     private Boolean principale;
 
     @Basic(optional = false)
     @Column(name = "ordinale")
     private Integer ordinale;
-
+    
+    @Basic(optional = false)
+    @Column(name = "firmato")
+    private Boolean firmato;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataInserimento = ZonedDateTime.now();
@@ -171,6 +175,14 @@ public class Allegato implements Serializable {
         this.principale = principale;
     }
 
+    public Boolean getFirmato() {
+        return firmato;
+    }
+
+    public void setFirmato(Boolean firmato) {
+        this.firmato = firmato;
+    }
+    
     public Integer getOrdinale() {
         return ordinale;
     }
@@ -196,7 +208,7 @@ public class Allegato implements Serializable {
     }
 
     public DettaglioAllegato getDettaglioByTipoDettaglioAllegato(DettaglioAllegato.TipoDettaglioAllegato tipo) {
-
+//ci possono avere piu di un firmato?
         List<DettaglioAllegato> collect = getDettagliAllegatiList().stream().filter(da -> da.getCaratteristica().equals(tipo)).collect(Collectors.toList());
         if (collect != null && !collect.isEmpty()) {
             return collect.get(0);

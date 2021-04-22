@@ -40,6 +40,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @GenerateProjections({})
 @DynamicUpdate
 public class DettaglioAllegato {
+    
     public static enum TipoDettaglioAllegato {
         ORIGINALE,
         CONVERTITO,
@@ -48,9 +49,7 @@ public class DettaglioAllegato {
 	ORIGINALE_FIRMATO_P7M,
 	CONVERTITO_FIRMATO,
 	CONVERTITO_FIRMATO_P7M
-    }
-
-    
+    }    
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,13 +61,17 @@ public class DettaglioAllegato {
     @Column(name = "id_repository")
     private String idRepository;
     
+    //allegato di cui sono il dettaglio
     @JoinColumn(name = "id_allegato", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Allegato idAllegato;
     
+    
+    //
     @JoinColumn(name = "id_dettaglio_allegato_padre", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private DettaglioAllegato idDettaglioAllegatoPadre;
+    
     
     @OneToMany(cascade =  {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDettaglioAllegatoPadre", fetch = FetchType.LAZY)
     @JsonBackReference(value = "dettagliAllagatoFigliList")
@@ -78,23 +81,27 @@ public class DettaglioAllegato {
     @Column(name = "estensione")
     private String estensione;
     
-    @Basic(optional = true)
+    @Basic(optional = false)
+    @Column(name = "nome")
+    private String nome;
+    
+    @Basic(optional = false)
     @Column(name = "dimensione_byte")
     private Integer dimensioneByte;
 
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "mime_type")
     private String mimeType;
     
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "caratteristica")
     private String caratteristica;
     
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "hash_md5")
     private String hashMd5;
     
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "hash_sha256")
     private String hashSha256;
     
@@ -108,6 +115,14 @@ public class DettaglioAllegato {
     private ZonedDateTime version;
     
     public DettaglioAllegato() {
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     
     public TipoDettaglioAllegato getCaratteristica() {
