@@ -93,12 +93,12 @@ public class Doc implements Serializable {
     //@Filter(name = "destinatari")
 //    @Transient
 //    private List<Related> destinatari;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo = 'A'")
-    @Transient
     private List<Related> competenti;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo = 'CC'")
-    @Transient
     private List<Related> coinvolti;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
