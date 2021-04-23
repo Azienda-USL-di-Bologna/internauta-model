@@ -67,7 +67,7 @@ public class Allegato implements Serializable {
     @JsonBackReference(value = "allegatiFigliList")
     private List<Allegato> allegatiFigliList;
 
-    @OneToMany(mappedBy = "idAllegato", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idAllegato", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonBackReference(value = "dettagliAllegatiList")
     private List<DettaglioAllegato> dettagliAllegatiList;
 
