@@ -86,6 +86,7 @@ public class Doc implements Serializable {
     //@Filter(name = "mittenti")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo='MITTENTE'")
+    @JsonIgnoreProperties("idDoc")
     private List<Related> mittenti;
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
@@ -95,10 +96,12 @@ public class Doc implements Serializable {
 //    private List<Related> destinatari;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo = 'A'")
+    @JsonIgnoreProperties("idDoc")
     private List<Related> competenti;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo = 'CC'")
+    @JsonIgnoreProperties("idDoc")
     private List<Related> coinvolti;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
