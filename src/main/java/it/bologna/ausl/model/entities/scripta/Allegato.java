@@ -7,7 +7,10 @@ import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -21,6 +24,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,14 +37,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "allegati", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idDoc", "idDoc,idAllegatoPadre"})
+@GenerateProjections({"idDoc", "idDoc,idAllegatoPadre","idAllegatoPadre,dettagliAllegatiList"})
 @DynamicUpdate
 public class Allegato implements Serializable {
 
     public static enum TipoAllegato {
         ALLEGATO,
         LETTERA,
-        LETTERA_FIRMATA,
         FRONTESPIZIO,
         STAMPA_UNICA,
         FASCICOLATO
@@ -63,46 +66,34 @@ public class Allegato implements Serializable {
     @OneToMany(mappedBy = "idAllegatoPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "allegatiFigliList")
     private List<Allegato> allegatiFigliList;
-    
+
+    @OneToMany(mappedBy = "idAllegato", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REMOVE})
+    @JsonBackReference(value = "dettagliAllegatiList")
+    private List<DettaglioAllegato> dettagliAllegatiList;
+
     @Basic(optional = false)
     @Column(name = "nome")
     private String nome;
-
-    @Basic(optional = false)
-    @Column(name = "estensione")
-    private String estensione;
 
     @Basic(optional = false)
     @Column(name = "tipo")
     private String tipo;
 
     @Basic(optional = false)
-    @Column(name = "id_repository")
-    private String idRepository;
-
-    @Basic(optional = true)
     @Column(name = "principale")
     private Boolean principale;
 
     @Basic(optional = false)
-    @Column(name = "numero_allegato")
-    private Integer numeroAllegato;
-
-    @Basic(optional = true)
-    @Column(name = "convertibile_pdf")
-    private Boolean convertibilePdf;
-
-    @Basic(optional = true)
-    @Column(name = "dimensione_byte")
-    private Integer dimensioneByte;
-
-    @Basic(optional = true)
-    @Column(name = "mime_type")
-    private String mimeType;
-
+    @Column(name = "ordinale")
+    private Integer ordinale;
+    
+    @Basic(optional = false)
+    @Column(name = "firmato")
+    private Boolean firmato;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime dataInserimento;
+    private ZonedDateTime dataInserimento = ZonedDateTime.now();
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -110,62 +101,6 @@ public class Allegato implements Serializable {
     private ZonedDateTime version;
 
     public Allegato() {
-    }
-
-    public Allegato(Integer id, Doc idDoc, Allegato idAllegatoPadre, String nome, String estensione, String tipo, String idRepository, Boolean principale, Integer numeroAllegato, Boolean convertibilePdf, Integer dimensioneByte, String mimeType, ZonedDateTime dataInserimento, ZonedDateTime version) {
-        this.id = id;
-        this.idDoc = idDoc;
-        this.idAllegatoPadre = idAllegatoPadre;
-        this.nome = nome;
-        this.estensione = estensione;
-        this.tipo = tipo;
-        this.idRepository = idRepository;
-        this.principale = principale;
-        this.numeroAllegato = numeroAllegato;
-        this.convertibilePdf = convertibilePdf;
-        this.dimensioneByte = dimensioneByte;
-        this.mimeType = mimeType;
-        this.dataInserimento = dataInserimento;
-        this.version = version;
-    }
-
-    public Allegato(Doc idDoc, Allegato idAllegatoPadre, String nome, String estensione, String tipo, String idRepository, Boolean principale, Integer numeroAllegato, Boolean convertibilePdf, Integer dimensioneByte, String mimeType, ZonedDateTime dataInserimento) {
-        this.idDoc = idDoc;
-        this.idAllegatoPadre = idAllegatoPadre;
-        this.nome = nome;
-        this.estensione = estensione;
-        this.tipo = tipo;
-        this.idRepository = idRepository;
-        this.principale = principale;
-        this.numeroAllegato = numeroAllegato;
-        this.convertibilePdf = convertibilePdf;
-        this.dimensioneByte = dimensioneByte;
-        this.mimeType = mimeType;
-        this.dataInserimento = dataInserimento;
-    }
-
-    public String getEstensione() {
-        return estensione;
-    }
-
-    public void setEstensione(String estensione) {
-        this.estensione = estensione;
-    }
-
-    public TipoAllegato getTipo() {
-        if (tipo != null) {
-            return TipoAllegato.valueOf(tipo);
-        } else {
-            return null;
-        }
-    }
-
-    public void setTipo(TipoAllegato tipo) {
-        if (tipo != null) {
-            this.tipo = tipo.toString();
-        } else {
-            this.tipo = null;
-        }
     }
 
     public Integer getId() {
@@ -200,6 +135,14 @@ public class Allegato implements Serializable {
         this.allegatiFigliList = allegatiFigliList;
     }
 
+    public List<DettaglioAllegato> getDettagliAllegatiList() {
+        return dettagliAllegatiList;
+    }
+
+    public void setDettagliAllegatiList(List<DettaglioAllegato> dettagliAllegatiList) {
+        this.dettagliAllegatiList = dettagliAllegatiList;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -208,12 +151,20 @@ public class Allegato implements Serializable {
         this.nome = nome;
     }
 
-    public String getIdRepository() {
-        return idRepository;
+    public TipoAllegato getTipo() {
+        if (tipo != null) {
+            return TipoAllegato.valueOf(tipo);
+        } else {
+            return null;
+        }
     }
 
-    public void setIdRepository(String idRepository) {
-        this.idRepository = idRepository;
+    public void setTipo(TipoAllegato tipo) {
+        if (tipo != null) {
+            this.tipo = tipo.toString();
+        } else {
+            this.tipo = null;
+        }
     }
 
     public Boolean getPrincipale() {
@@ -224,36 +175,20 @@ public class Allegato implements Serializable {
         this.principale = principale;
     }
 
-    public Integer getNumeroAllegato() {
-        return numeroAllegato;
+    public Boolean getFirmato() {
+        return firmato;
     }
 
-    public void setNumeroAllegato(Integer numeroAllegato) {
-        this.numeroAllegato = numeroAllegato;
+    public void setFirmato(Boolean firmato) {
+        this.firmato = firmato;
+    }
+    
+    public Integer getOrdinale() {
+        return ordinale;
     }
 
-    public Boolean getConvertibilePdf() {
-        return convertibilePdf;
-    }
-
-    public void setConvertibilePdf(Boolean convertibilePdf) {
-        this.convertibilePdf = convertibilePdf;
-    }
-
-    public Integer getDimensioneByte() {
-        return dimensioneByte;
-    }
-
-    public void setDimensioneByte(Integer dimensioneByte) {
-        this.dimensioneByte = dimensioneByte;
-    }
-
-    public String getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
+    public void setOrdinale(Integer ordinale) {
+        this.ordinale = ordinale;
     }
 
     public ZonedDateTime getDataInserimento() {
@@ -270,6 +205,17 @@ public class Allegato implements Serializable {
 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
+    }
+
+    public DettaglioAllegato getDettaglioByTipoDettaglioAllegato(DettaglioAllegato.TipoDettaglioAllegato tipo) {
+//ci possono avere piu di un firmato?
+        List<DettaglioAllegato> collect = getDettagliAllegatiList().stream().filter(da -> da.getCaratteristica().equals(tipo)).collect(Collectors.toList());
+        if (collect != null && !collect.isEmpty()) {
+            return collect.get(0);
+        } else {
+            return null;
+        }
+
     }
 
 }
