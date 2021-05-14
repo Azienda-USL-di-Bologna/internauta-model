@@ -39,7 +39,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "dettagli_contatti", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idContatto", "utenteStruttura, indirizzo", "telefono, email, indirizzo", "idContatto, telefono, indirizzo, email"})
+@GenerateProjections({"idContatto", "utenteStruttura", "telefono, email, indirizzo"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = DettaglioContatto.class)
 public class DettaglioContatto implements Serializable {
 
@@ -108,23 +108,8 @@ public class DettaglioContatto implements Serializable {
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
-    @NextSdrAncestor(relationName = "idContattoEsternoDettaglioContatto")
-    @JoinColumn(name = "id_contatto_esterno", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private Contatto idContattoEsterno;
-    
-    // Questa proprietà serve per non perdere il mezzo durante la conversione in json 
-    // Il mezzo viene passato a inde per i mittenti/destinatari
-    @Transient
-    private String mezzo;
-
-    public String getMezzo() {
-        return mezzo;
-    }
-
-    public void setMezzo(String mezzo) {
-        this.mezzo = mezzo;
-    }
+    @Column(name = "id_contatto_esterno")
+    private Integer idContattoEsterno = null;
 
     public String getTscol() {
         return tscol;
@@ -210,14 +195,6 @@ public class DettaglioContatto implements Serializable {
 
     public void setIndirizzo(Indirizzo indirizzo) {
         this.indirizzo = indirizzo;
-    }
-
-    public Contatto getIdContattoEsterno() {
-        return idContattoEsterno;
-    }
-
-    public void setIdContattoEsterno(Contatto idContattoEsterno) {
-        this.idContattoEsterno = idContattoEsterno;
     }
 
     public Boolean getPrincipale() {

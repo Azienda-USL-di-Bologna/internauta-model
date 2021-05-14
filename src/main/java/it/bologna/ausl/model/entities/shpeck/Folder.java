@@ -108,9 +108,6 @@ public class Folder implements Serializable {
     
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private String additionalData;
-    
-    @Column(name = "unread_messages")
-    private Integer unreadMessages;
 
     public ZonedDateTime getVersion() {
         return version;
@@ -228,15 +225,7 @@ public class Folder implements Serializable {
     public void setAdditionalData(String additionalData) {
         this.additionalData = additionalData;
     }
-
-    public Integer getUnreadMessages() {
-        return unreadMessages;
-    }
-
-    public void setUnreadMessages(Integer unreadMessages) {
-        this.unreadMessages = unreadMessages;
-    }
-    
+  
     @Override
     public int hashCode() {
         int hash = 0;

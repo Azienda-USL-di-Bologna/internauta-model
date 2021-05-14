@@ -39,7 +39,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "pec", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
-@GenerateProjections({"folderList", "folderList, pecAziendaList", "folderList, pecAziendaList, tagList", "folderList, tagList",
+@GenerateProjections({"folderList", "folderList, pecAziendaList","folderList, pecAziendaList, tagList", "folderList, tagList", 
     "idPecProvider", "tagList"})
 public class Pec implements Serializable {
 
@@ -143,26 +143,11 @@ public class Pec implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime resetLastuidTime;
-
+        
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "importa_casella")
-    private Boolean importaCasella = false;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "importa_folders")
-    private Boolean importaFolders = false;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "importa_messages")
-    private Boolean importaMessages = false;
 
     public ZonedDateTime getVersion() {
         return version;
@@ -171,7 +156,7 @@ public class Pec implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-
+    
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
@@ -179,7 +164,7 @@ public class Pec implements Serializable {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<Persona> gestori;
-
+    
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<Struttura> strutture;
@@ -368,7 +353,7 @@ public class Pec implements Serializable {
     public void setStrutture(List<Struttura> strutture) {
         this.strutture = strutture;
     }
-
+    
     public Boolean getIsPec() {
         return isPec;
     }
@@ -399,30 +384,6 @@ public class Pec implements Serializable {
 
     public void setResetLastuidTime(LocalDateTime resetLastuidTime) {
         this.resetLastuidTime = resetLastuidTime;
-    }
-
-    public Boolean getImportaCasella() {
-        return importaCasella;
-    }
-
-    public void setImportaCasella(Boolean importaCasella) {
-        this.importaCasella = importaCasella;
-    }
-
-    public Boolean getImportaFolders() {
-        return importaFolders;
-    }
-
-    public void setImportaFolders(Boolean importaFolders) {
-        this.importaFolders = importaFolders;
-    }
-
-    public Boolean getImportaMessages() {
-        return importaMessages;
-    }
-
-    public void setImportaMessages(Boolean importaMessages) {
-        this.importaMessages = importaMessages;
     }
 
     @Override

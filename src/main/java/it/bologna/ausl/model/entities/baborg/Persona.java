@@ -31,7 +31,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -51,14 +50,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "persone", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"attivitaFattaList",
-    "attivitaFattaList, attivitaList",
-    "attivitaFattaList, attivitaList, utenteList",
-    "attivitaFattaList, utenteList",
-    "attivitaList",
-    "attivitaList, utenteList",
-    "impostazioniApplicazioniList",
-    "utenteList",})
+@GenerateProjections({"attivitaFattaList", "attivitaFattaList, attivitaList", "attivitaFattaList, attivitaList, utenteList", "attivitaFattaList, utenteList",
+    "attivitaList", "attivitaList, utenteList", "impostazioniApplicazioniList", "utenteList"})
 public class Persona implements Serializable, EntityInterface {
 
     private static final long serialVersionUID = 1L;
@@ -98,11 +91,6 @@ public class Persona implements Serializable, EntityInterface {
     @NotNull
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
-
-    @Basic(optional = true)
-    @Null
-    @Column(name = "accessibilita", columnDefinition = "boolean")
-    private Boolean accessibilita;
 
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
@@ -180,18 +168,6 @@ public class Persona implements Serializable, EntityInterface {
         this.utenteList = utenteList;
     }
 
-    public Persona(Integer id, String nome, String cognome, String codiceFiscale, Integer bitRuoli, Boolean attiva, String descrizione, Boolean accessibilita, List<Utente> utenteList) {
-        this.id = id;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.codiceFiscale = codiceFiscale;
-        this.bitRuoli = bitRuoli;
-        this.attiva = attiva;
-        this.descrizione = descrizione;
-        this.utenteList = utenteList;
-        this.accessibilita = accessibilita;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -246,14 +222,6 @@ public class Persona implements Serializable, EntityInterface {
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
-    }
-
-    public Boolean getAccessibilita() {
-        return accessibilita;
-    }
-
-    public void setAccessibilita(Boolean accessibilita) {
-        this.accessibilita = accessibilita;
     }
 
     public List<Utente> getUtenteList() {
