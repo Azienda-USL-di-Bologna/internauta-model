@@ -38,7 +38,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@GenerateProjections({"idAzienda", "idAzienda, attributiStruttura", "idAzienda, utenteStrutturaList", "struttureFiglieList", "idStrutturaPadre, idAzienda", "idStrutturaPadre, idAzienda, attributiStruttura"})
+@GenerateProjections({
+    "idAzienda", 
+    "idAzienda, attributiStruttura", 
+    "idAzienda, utenteStrutturaList", 
+    "struttureFiglieList", 
+    "idStrutturaPadre, idAzienda", 
+    "idStrutturaPadre, idAzienda, attributiStruttura",
+    "idStrutturaReplicata, struttureReplicheList"
+})
 public class Struttura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -89,13 +97,16 @@ public class Struttura implements Serializable {
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
+    
     @OneToMany(mappedBy = "idStrutturaPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "struttureFiglieList")
     private List<Struttura> struttureFiglieList;
+    
     @JoinColumn(name = "id_struttura_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idStrutturaPadre")
     private Struttura idStrutturaPadre;
+    
     @OneToMany(mappedBy = "idStrutturaSegreteria", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "struttureSegretariateList")
     private List<Struttura> struttureSegretariateList;
@@ -112,10 +123,20 @@ public class Struttura implements Serializable {
     @OneToMany(mappedBy = "idStruttura", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
+    
+    @OneToMany(mappedBy = "idStrutturaReplicata", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "struttureReplicheList")
+    private List<Struttura> struttureReplicheList;
+    
     @JoinColumn(name = "id_struttura_replicata", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idStrutturaReplicata")
     private Struttura idStrutturaReplicata;
+    
+    @Basic(optional = true)
+    @Column(name = "id_casella")
+    private Integer idCasella;
+    
     @Transient
     @QueryType(PropertyType.SIMPLE)
     private List<PermessoEntitaStoredProcedure> permessi;
@@ -142,6 +163,9 @@ public class Struttura implements Serializable {
 
     @Transient
     private Boolean fogliaCalcolata = false;
+    
+    @Transient
+    private Object fusioni = null;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -415,6 +439,30 @@ public class Struttura implements Serializable {
 
     public void setFogliaCalcolata(Boolean fogliaCalcolata) {
         this.fogliaCalcolata = fogliaCalcolata;
+    }
+
+    public List<Struttura> getStruttureReplicheList() {
+        return struttureReplicheList;
+    }
+
+    public void setStruttureReplicheList(List<Struttura> struttureReplicheList) {
+        this.struttureReplicheList = struttureReplicheList;
+    }
+
+    public Object getFusioni() {
+        return fusioni;
+    }
+
+    public void setFusioni(Object fusioni) {
+        this.fusioni = fusioni;
+    }
+
+    public Integer getIdCasella() {
+        return idCasella;
+    }
+
+    public void setIdCasella(Integer idCasella) {
+        this.idCasella = idCasella;
     }
 
     @Override
