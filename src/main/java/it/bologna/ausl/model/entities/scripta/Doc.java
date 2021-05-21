@@ -82,26 +82,29 @@ public class Doc implements Serializable {
 
     //lista di mittenti che conterra per il momento solo un elemento
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
-//    @JsonBackReference(value = "mittenti")
+
     //@Filter(name = "mittenti")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo='MITTENTE'")
     @JsonIgnoreProperties("idDoc")
+    @JsonBackReference(value = "mittenti")
     private List<Related> mittenti;
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
-//    @JsonBackReference(value = "destinatari")
+    
     //@Filter(name = "destinatari")
 //    @Transient
 //    private List<Related> destinatari;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo = 'A'")
     @JsonIgnoreProperties("idDoc")
+    @JsonBackReference(value = "competenti")
     private List<Related> competenti;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo = 'CC'")
     @JsonIgnoreProperties("idDoc")
+    @JsonBackReference(value = "coinvolti")
     private List<Related> coinvolti;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
