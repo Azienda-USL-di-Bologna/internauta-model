@@ -59,11 +59,11 @@ public class Allegato implements Serializable {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Allegato idAllegatoPadre;
 
-    @OneToMany(mappedBy = "idAllegatoPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idAllegatoPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JsonBackReference(value = "allegatiFigliList")
     private List<Allegato> allegatiFigliList;
 
-    @OneToMany(mappedBy = "idAllegato", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "idAllegato", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JsonBackReference(value = "dettagliAllegatiList")
     private List<DettaglioAllegato> dettagliAllegatiList;
 

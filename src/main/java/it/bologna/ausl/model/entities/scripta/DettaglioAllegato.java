@@ -73,7 +73,7 @@ public class DettaglioAllegato {
     private DettaglioAllegato idDettaglioAllegatoPadre;
     
     
-    @OneToMany(cascade =  {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDettaglioAllegatoPadre", fetch = FetchType.LAZY)
+    @OneToMany(cascade =  {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "idDettaglioAllegatoPadre", fetch = FetchType.LAZY)
     @JsonBackReference(value = "dettagliAllagatoFigliList")
     private List<DettaglioAllegato> dettagliAllagatoFigliList;
         
