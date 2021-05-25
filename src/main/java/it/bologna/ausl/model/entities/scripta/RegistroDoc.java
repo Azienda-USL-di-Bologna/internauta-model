@@ -52,11 +52,6 @@ public class RegistroDoc implements Serializable {
     @Column(name = "anno")
     private Integer anno;
     
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ultimo_numero_staccato")
-    private Integer ultimoNumeroStaccato;
-    
     @JoinColumn(name = "id_registro", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference(value = "idRegistro")
@@ -96,11 +91,10 @@ public class RegistroDoc implements Serializable {
         this.id = id;
     }
 
-    public RegistroDoc(Integer id, int numero, int anno, int ultimoNumeroStaccato, ZonedDateTime dataRegistrazione, ZonedDateTime version) {
+    public RegistroDoc(Integer id, Integer numero, Integer anno, ZonedDateTime dataRegistrazione, ZonedDateTime version) {
         this.id = id;
         this.numero = numero;
         this.anno = anno;
-        this.ultimoNumeroStaccato = ultimoNumeroStaccato;
         this.dataRegistrazione = dataRegistrazione;
         this.version = version;
     }
@@ -128,15 +122,7 @@ public class RegistroDoc implements Serializable {
     public void setAnno(Integer anno) {
         this.anno = anno;
     }
-
-    public Integer getUltimoNumeroStaccato() {
-        return ultimoNumeroStaccato;
-    }
-
-    public void setUltimoNumeroStaccato(Integer ultimoNumeroStaccato) {
-        this.ultimoNumeroStaccato = ultimoNumeroStaccato;
-    }
-
+    
     public Persona getIdPersonaRegistrante() {
         return idPersonaRegistrante;
     }
