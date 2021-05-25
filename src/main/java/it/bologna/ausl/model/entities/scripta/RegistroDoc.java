@@ -207,7 +207,7 @@ public class RegistroDoc implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.scripta.RegistriDocs[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.scripta.RegistroDoc[ id=" + id + " ]";
     }
     
 }

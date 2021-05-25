@@ -7,7 +7,6 @@ import it.bologna.ausl.model.entities.shpeck.Message;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -20,8 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -57,18 +54,21 @@ public class MessageDoc implements Serializable {
     @JsonBackReference(value = "idMessage")
     private Message idMessage;
     
+    @JoinColumn(name = "id_doc", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference(value = "idDoc")
+    private Doc idDoc;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
     private String tipo;
     
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "data_inserimento")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime dataInserimento;
+    private ZonedDateTime dataInserimento = ZonedDateTime.now();
     
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -104,6 +104,14 @@ public class MessageDoc implements Serializable {
 
     public void setIdMessage(Message idMessage) {
         this.idMessage = idMessage;
+    }
+
+    public Doc getIdDoc() {
+        return idDoc;
+    }
+
+    public void setIdDoc(Doc idDoc) {
+        this.idDoc = idDoc;
     }
 
     public TipoMessageDoc getTipo() {
@@ -160,7 +168,7 @@ public class MessageDoc implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.scripta.MessagesDocs[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.scripta.MessageDoc[ id=" + id + " ]";
     }
     
 }

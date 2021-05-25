@@ -183,7 +183,7 @@ public class Registro implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.scripta.Registri[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.scripta.Registro[ id=" + id + " ]";
     }
     
 }
