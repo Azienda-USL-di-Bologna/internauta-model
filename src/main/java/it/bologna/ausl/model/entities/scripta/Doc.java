@@ -44,7 +44,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @GenerateProjections({
     "idPersonaCreazione,idAzienda", 
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", 
-    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati"
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList"
 })
 public class Doc implements Serializable {
 

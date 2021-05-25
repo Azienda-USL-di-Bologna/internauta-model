@@ -32,7 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "registri_docs", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({})
+@GenerateProjections({"idRegistro"})
 public class RegistroDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +51,9 @@ public class RegistroDoc implements Serializable {
     @NotNull
     @Column(name = "anno")
     private Integer anno;
+    
+    @Column(name = "numero_visualizzazione")
+    private String numeroVisualizzazione;
     
     @JoinColumn(name = "id_registro", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -121,6 +124,14 @@ public class RegistroDoc implements Serializable {
 
     public void setAnno(Integer anno) {
         this.anno = anno;
+    }
+
+    public String getNumeroVisualizzazione() {
+        return numeroVisualizzazione;
+    }
+
+    public void setNumeroVisualizzazione(String numeroVisualizzazione) {
+        this.numeroVisualizzazione = numeroVisualizzazione;
     }
     
     public Persona getIdPersonaRegistrante() {
