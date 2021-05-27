@@ -19,20 +19,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.FilterJoinTable;
-import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Where;
-import org.hibernate.annotations.WhereJoinTable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -49,8 +41,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 //@GenerateProjections({"idPersonaCreazione,idAzienda", "idPersonaCreazione,idAzienda,mittenti,destinatari"})
-@GenerateProjections({"idPersonaCreazione,idAzienda", "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati"})
-
+@GenerateProjections({
+    "idPersonaCreazione,idAzienda", 
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", 
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList"
+})
 public class Doc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -82,32 +77,43 @@ public class Doc implements Serializable {
 
     //lista di mittenti che conterra per il momento solo un elemento
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
-//    @JsonBackReference(value = "mittenti")
+
     //@Filter(name = "mittenti")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo='MITTENTE'")
     @JsonIgnoreProperties("idDoc")
+    @JsonBackReference(value = "mittenti")
     private List<Related> mittenti;
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
-//    @JsonBackReference(value = "destinatari")
+    
     //@Filter(name = "destinatari")
 //    @Transient
 //    private List<Related> destinatari;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo = 'A'")
     @JsonIgnoreProperties("idDoc")
+    @JsonBackReference(value = "competenti")
     private List<Related> competenti;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo = 'CC'")
     @JsonIgnoreProperties("idDoc")
+    @JsonBackReference(value = "coinvolti")
     private List<Related> coinvolti;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "related")
     private List<Related> related;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageDocList")
+    private List<MessageDoc> messageDocList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "registroDocList")
+    private List<RegistroDoc> registroDocList;
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "allagati")
     private List<Allegato> allegati;
@@ -198,6 +204,22 @@ public class Doc implements Serializable {
 
     public void setRelated(List<Related> related) {
         this.related = related;
+    }
+
+    public List<MessageDoc> getMessageDocList() {
+        return messageDocList;
+    }
+
+    public void setMessageDocList(List<MessageDoc> messageDocList) {
+        this.messageDocList = messageDocList;
+    }
+
+    public List<RegistroDoc> getRegistroDocList() {
+        return registroDocList;
+    }
+
+    public void setRegistroDocList(List<RegistroDoc> registroDocList) {
+        this.registroDocList = registroDocList;
     }
 
     public List<Allegato> getAllegati() {
