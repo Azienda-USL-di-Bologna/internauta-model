@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "pec_aziende", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @GenerateProjections({"idAzienda", "idAzienda, idPec"})
+@Cacheable(false)
 public class PecAzienda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,13 +36,16 @@ public class PecAzienda implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Column(name = "data_inserimento_riga", updatable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime dataInserimentoRiga;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Azienda idAzienda;
+    
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Pec idPec;
