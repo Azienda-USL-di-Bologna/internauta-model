@@ -110,7 +110,7 @@ public class Folder implements Serializable {
     private String additionalData;
     
     @Column(name = "unread_messages")
-    private Integer unreadMessages;
+    private Integer unreadMessages = 0;
 
     public ZonedDateTime getVersion() {
         return version;
