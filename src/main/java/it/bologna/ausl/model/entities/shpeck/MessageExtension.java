@@ -36,11 +36,15 @@ public class MessageExtension implements Serializable {
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Message message;
-        
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime version;
+
+    @Size(max = 2147483647)
+    @Column(name = "full_address_from")
+    private String fullAddressFrom;
 
     public LocalDateTime getVersion() {
         return version;
@@ -49,7 +53,7 @@ public class MessageExtension implements Serializable {
     public void setVersion(LocalDateTime version) {
         this.version = version;
     }
- 
+
     public MessageExtension() {
     }
 
@@ -101,9 +105,17 @@ public class MessageExtension implements Serializable {
         return true;
     }
 
+    public String getFullAddressFrom() {
+        return fullAddressFrom;
+    }
+
+    public void setFullAddressFrom(String fullAddressFrom) {
+        this.fullAddressFrom = fullAddressFrom;
+    }
+
     @Override
     public String toString() {
         return "it.bologna.ausl.model.entities.shpeck.MessagesExtensions[ id=" + id + " ]";
     }
-    
+
 }
