@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -52,7 +52,7 @@ public class MessageFolder implements Serializable {
     @Column(name = "inserted")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime inserted = LocalDateTime.now();
+    private ZonedDateTime inserted = ZonedDateTime.now();
 
     @Column(name = "deleted")
     private Boolean deleted;
@@ -92,7 +92,7 @@ public class MessageFolder implements Serializable {
         this.id = id;
     }
 
-    public MessageFolder(Integer id, LocalDateTime inserted) {
+    public MessageFolder(Integer id, ZonedDateTime inserted) {
         this.id = id;
         this.inserted = inserted;
     }
@@ -105,11 +105,11 @@ public class MessageFolder implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getInserted() {
+    public ZonedDateTime getInserted() {
         return inserted;
     }
 
-    public void setInserted(LocalDateTime inserted) {
+    public void setInserted(ZonedDateTime inserted) {
         this.inserted = inserted;
     }
 

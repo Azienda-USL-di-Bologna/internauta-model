@@ -8,7 +8,7 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Message;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -69,12 +69,12 @@ public class MessageComplete implements Serializable {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime createTime;
+    private ZonedDateTime createTime;
 
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime updateTime;
+    private ZonedDateTime updateTime;
     
     @Size(max = 2147483647)
     @Column(name = "message_type")
@@ -98,7 +98,7 @@ public class MessageComplete implements Serializable {
     @Column(name = "receive_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime receiveTime;
+    private ZonedDateTime receiveTime;
 
     @Column(name = "seen")
     private Boolean seen;
@@ -182,19 +182,19 @@ public class MessageComplete implements Serializable {
         this.messageStatus = messageStatus.toString();
     }
 
-    public LocalDateTime getCreateTime() {
+    public ZonedDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(ZonedDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public ZonedDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(ZonedDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -238,11 +238,11 @@ public class MessageComplete implements Serializable {
         this.name = name;
     }
 
-    public LocalDateTime getReceiveTime() {
+    public ZonedDateTime getReceiveTime() {
         return receiveTime;
     }
 
-    public void setReceiveTime(LocalDateTime receiveTime) {
+    public void setReceiveTime(ZonedDateTime receiveTime) {
         this.receiveTime = receiveTime;
     }
 

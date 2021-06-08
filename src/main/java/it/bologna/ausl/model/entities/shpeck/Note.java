@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -60,13 +60,13 @@ public class Note implements Serializable{
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime createTime = LocalDateTime.now();
+    private ZonedDateTime createTime = ZonedDateTime.now();
     
     @Basic(optional = false)
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime updateTime = LocalDateTime.now();
+    private ZonedDateTime updateTime = ZonedDateTime.now();
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -122,19 +122,19 @@ public class Note implements Serializable{
         this.memo = memo;
     }
 
-    public LocalDateTime getCreateTime() {
+    public ZonedDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(ZonedDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public ZonedDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(ZonedDateTime updateTime) {
         this.updateTime = updateTime;
     }
     

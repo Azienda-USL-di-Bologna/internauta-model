@@ -8,7 +8,6 @@ import it.bologna.ausl.model.entities.configuration.Applicazione;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -137,17 +136,17 @@ public class Attivita implements Serializable {
     @Column(name = "data")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime data;
+    private ZonedDateTime data;
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    private ZonedDateTime dataInserimentoRiga;
     @Column(name = "data_ultima_modifica")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataUltimaModifica;
+    private ZonedDateTime dataUltimaModifica;
     @Column(name = "note", columnDefinition = "text")
     private String note;
     @Column(name = "provenienza", columnDefinition = "text")
@@ -155,7 +154,7 @@ public class Attivita implements Serializable {
     @Column(name = "data_scadenza")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataScadenza;
+    private ZonedDateTime dataScadenza;
     @Column(name = "priorita")
     private Integer priorita;
     @Column(name = "tags", columnDefinition = "text[]")
@@ -199,7 +198,7 @@ public class Attivita implements Serializable {
         this.id = id;
     }
 
-    public Attivita(Integer id, Azienda idAzienda, String tipo, LocalDateTime data, LocalDateTime dataInserimentoRiga) {
+    public Attivita(Integer id, Azienda idAzienda, String tipo, ZonedDateTime data, ZonedDateTime dataInserimentoRiga) {
         this.id = id;
         this.idAzienda = idAzienda;
 //        this.idPersona = idPersona;
@@ -281,27 +280,27 @@ public class Attivita implements Serializable {
         this.aperta = aperta;
     }
 
-    public LocalDateTime getData() {
+    public ZonedDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDateTime data) {
+    public void setData(ZonedDateTime data) {
         this.data = data;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public LocalDateTime getDataUltimaModifica() {
+    public ZonedDateTime getDataUltimaModifica() {
         return dataUltimaModifica;
     }
 
-    public void setDataUltimaModifica(LocalDateTime dataUltimaModifica) {
+    public void setDataUltimaModifica(ZonedDateTime dataUltimaModifica) {
         this.dataUltimaModifica = dataUltimaModifica;
     }
 
@@ -321,11 +320,11 @@ public class Attivita implements Serializable {
         this.provenienza = provenienza;
     }
 
-    public LocalDateTime getDataScadenza() {
+    public ZonedDateTime getDataScadenza() {
         return dataScadenza;
     }
 
-    public void setDataScadenza(LocalDateTime dataScadenza) {
+    public void setDataScadenza(ZonedDateTime dataScadenza) {
         this.dataScadenza = dataScadenza;
     }
 

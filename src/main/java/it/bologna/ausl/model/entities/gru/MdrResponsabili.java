@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -50,12 +49,12 @@ public class MdrResponsabili implements Serializable {
     @Column(name = "datain")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime datain;
+    private ZonedDateTime datain;
 
     @Column(name = "datafi")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime datafi;
+    private ZonedDateTime datafi;
 
     @Size(max = 2147483647)
     @Column(name = "tipo")
@@ -107,19 +106,19 @@ public class MdrResponsabili implements Serializable {
         this.idCasella = idCasella;
     }
 
-    public LocalDateTime getDatain() {
+    public ZonedDateTime getDatain() {
         return datain;
     }
 
-    public void setDatain(LocalDateTime datain) {
+    public void setDatain(ZonedDateTime datain) {
         this.datain = datain;
     }
 
-    public LocalDateTime getDatafi() {
+    public ZonedDateTime getDatafi() {
         return datafi;
     }
 
-    public void setDatafi(LocalDateTime datafi) {
+    public void setDatafi(ZonedDateTime datafi) {
         this.datafi = datafi;
     }
 

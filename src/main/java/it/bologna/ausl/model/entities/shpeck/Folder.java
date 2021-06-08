@@ -7,7 +7,7 @@ import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -85,13 +85,13 @@ public class Folder implements Serializable {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime createTime = LocalDateTime.now();
+    private ZonedDateTime createTime = ZonedDateTime.now();
     
     @Basic(optional = false)
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime updateTime = LocalDateTime.now();
+    private ZonedDateTime updateTime = ZonedDateTime.now();
         
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFolder", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageFolderList")
@@ -189,19 +189,19 @@ public class Folder implements Serializable {
         this.idUtente = idUtente;
     }
 
-    public LocalDateTime getCreateTime() {
+    public ZonedDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(ZonedDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public ZonedDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(ZonedDateTime updateTime) {
         this.updateTime = updateTime;
     }
 

@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Utente;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.Version;
@@ -49,7 +49,7 @@ public class StoricoAttivazione implements Serializable {
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    private ZonedDateTime dataInserimentoRiga;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ribalta_internauta")
@@ -86,7 +86,7 @@ public class StoricoAttivazione implements Serializable {
         this.id = id;
     }
 
-    public StoricoAttivazione(Integer id, Azienda idAzienda, LocalDateTime dataInserimentoRiga, boolean ribaltaInternauta, boolean ribaltaArgo, Utente idUtente) {
+    public StoricoAttivazione(Integer id, Azienda idAzienda, ZonedDateTime dataInserimentoRiga, boolean ribaltaInternauta, boolean ribaltaArgo, Utente idUtente) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.dataInserimentoRiga = dataInserimentoRiga;
@@ -111,11 +111,11 @@ public class StoricoAttivazione implements Serializable {
         this.idAzienda = idAzienda;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 

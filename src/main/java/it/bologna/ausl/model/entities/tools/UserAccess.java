@@ -11,7 +11,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -105,7 +105,7 @@ public class UserAccess implements Serializable {
     @Column(name = "ts")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime ts = LocalDateTime.now();
+    private ZonedDateTime ts = ZonedDateTime.now();
 
     public UserAccess(Integer idUtente, String cfUtente, String descrizioneUtente, Boolean fromInternet, String applicazione, String codiceAzienda) {
         this.idUtente = idUtente;
@@ -218,11 +218,11 @@ public class UserAccess implements Serializable {
         this.os = os;
     }
 
-    public LocalDateTime getTs() {
+    public ZonedDateTime getTs() {
         return ts;
     }
 
-    public void setTs(LocalDateTime ts) {
+    public void setTs(ZonedDateTime ts) {
         this.ts = ts;
     }
 

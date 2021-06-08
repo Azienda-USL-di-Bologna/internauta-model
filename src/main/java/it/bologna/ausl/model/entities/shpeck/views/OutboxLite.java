@@ -7,7 +7,7 @@ import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -59,7 +59,7 @@ public class OutboxLite implements Serializable {
     @Column(name = "inserted")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime inserted = LocalDateTime.now();
+    private ZonedDateTime inserted = ZonedDateTime.now();
 
     @Size(max = 2147483647)
     @Column(name = "subject")
@@ -79,12 +79,12 @@ public class OutboxLite implements Serializable {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime createTime = LocalDateTime.now();
+    private ZonedDateTime createTime = ZonedDateTime.now();
 
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime updateTime = LocalDateTime.now();
+    private ZonedDateTime updateTime = ZonedDateTime.now();
 
     @Column(name = "attachments_number")
     private Integer attachmentsNumber;
@@ -105,8 +105,8 @@ public class OutboxLite implements Serializable {
     }
 
     public OutboxLite(Integer id, Pec idPec, Boolean ignore, Applicazione idApplicazione,
-            String externalId, LocalDateTime inserted, String subject, String[] toAddresses, String[] ccAddresses,
-            Boolean hiddenRecipients, LocalDateTime createTime, LocalDateTime updateTime,
+            String externalId, ZonedDateTime inserted, String subject, String[] toAddresses, String[] ccAddresses,
+            Boolean hiddenRecipients, ZonedDateTime createTime, ZonedDateTime updateTime,
             Integer attachmentsNumber, String[] attachmentsName) {
         this.id = id;
         this.idPec = idPec;
@@ -163,11 +163,11 @@ public class OutboxLite implements Serializable {
         this.externalId = externalId;
     }
 
-    public LocalDateTime getInserted() {
+    public ZonedDateTime getInserted() {
         return inserted;
     }
 
-    public void setInserted(LocalDateTime inserted) {
+    public void setInserted(ZonedDateTime inserted) {
         this.inserted = inserted;
     }
 
@@ -203,19 +203,19 @@ public class OutboxLite implements Serializable {
         this.hiddenRecipients = hiddenRecipients;
     }
 
-    public LocalDateTime getCreateTime() {
+    public ZonedDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(ZonedDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public ZonedDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(ZonedDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
