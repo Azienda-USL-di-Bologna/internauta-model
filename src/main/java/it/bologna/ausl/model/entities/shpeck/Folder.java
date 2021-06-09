@@ -77,7 +77,7 @@ public class Folder implements Serializable {
     private Pec idPec;
     
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "idUtente")
     private Utente idUtente;
     
