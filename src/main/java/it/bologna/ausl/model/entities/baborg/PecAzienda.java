@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -40,7 +39,7 @@ public class PecAzienda implements Serializable {
     @Column(name = "data_inserimento_riga", updatable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    private ZonedDateTime dataInserimentoRiga;
     
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -78,11 +77,11 @@ public class PecAzienda implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 

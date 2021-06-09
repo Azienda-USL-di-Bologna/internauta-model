@@ -8,7 +8,7 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,14 +105,14 @@ public class Message implements Serializable {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime createTime = LocalDateTime.now();
+    private ZonedDateTime createTime = ZonedDateTime.now();
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime updateTime = LocalDateTime.now();
+    private ZonedDateTime updateTime = ZonedDateTime.now();
 
     @Size(max = 2147483647)
     @Column(name = "message_type")
@@ -145,7 +145,7 @@ public class Message implements Serializable {
     @Column(name = "receive_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime receiveTime = LocalDateTime.now();
+    private ZonedDateTime receiveTime = ZonedDateTime.now();
 
     @Size(max = 2147483647)
     @Column(name = "external_id")
@@ -230,7 +230,7 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveTime) {
+    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, ZonedDateTime createTime, ZonedDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, ZonedDateTime receiveTime) {
         this.id = id;
         this.uuidMessage = uuidMessage;
         this.idPec = idPec;
@@ -322,19 +322,19 @@ public class Message implements Serializable {
         this.inOut = inOut.toString();
     }
 
-    public LocalDateTime getCreateTime() {
+    public ZonedDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(ZonedDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public ZonedDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(ZonedDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -402,11 +402,11 @@ public class Message implements Serializable {
         this.tscol = tscol;
     }
 
-    public LocalDateTime getReceiveTime() {
+    public ZonedDateTime getReceiveTime() {
         return receiveTime;
     }
 
-    public void setReceiveTime(LocalDateTime receiveTime) {
+    public void setReceiveTime(ZonedDateTime receiveTime) {
         this.receiveTime = receiveTime;
     }
 

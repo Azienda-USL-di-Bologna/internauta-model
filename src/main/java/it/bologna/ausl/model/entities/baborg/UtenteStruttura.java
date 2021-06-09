@@ -6,7 +6,6 @@ import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -79,12 +78,12 @@ public class UtenteStruttura implements Serializable {
     @Column(name = "attivo_dal")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime attivoDal;
+    private ZonedDateTime attivoDal;
 
     @Column(name = "attivo_al")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime attivoAl;
+    private ZonedDateTime attivoAl;
 
     @Basic(optional = false)
     @NotNull
@@ -170,19 +169,19 @@ public class UtenteStruttura implements Serializable {
         this.attributi = attributi;
     }
 
-    public LocalDateTime getAttivoDal() {
+    public ZonedDateTime getAttivoDal() {
         return attivoDal;
     }
 
-    public void setAttivoDal(LocalDateTime attivoDal) {
+    public void setAttivoDal(ZonedDateTime attivoDal) {
         this.attivoDal = attivoDal;
     }
 
-    public LocalDateTime getAttivoAl() {
+    public ZonedDateTime getAttivoAl() {
         return attivoAl;
     }
 
-    public void setAttivoAl(LocalDateTime attivoAl) {
+    public void setAttivoAl(ZonedDateTime attivoAl) {
         this.attivoAl = attivoAl;
     }
 

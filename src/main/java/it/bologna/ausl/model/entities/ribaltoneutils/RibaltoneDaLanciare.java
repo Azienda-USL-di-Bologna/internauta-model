@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Utente;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.FetchType;
@@ -53,11 +52,11 @@ public class RibaltoneDaLanciare implements Serializable {
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    private ZonedDateTime dataInserimentoRiga;
     @Column(name = "data_ultima_modifica")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataUltimaModifica;
+    private ZonedDateTime dataUltimaModifica;
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Utente idUtente;
@@ -137,19 +136,19 @@ public class RibaltoneDaLanciare implements Serializable {
         this.stato = stato;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public LocalDateTime getDataUltimaModifica() {
+    public ZonedDateTime getDataUltimaModifica() {
         return dataUltimaModifica;
     }
 
-    public void setDataUltimaModifica(LocalDateTime dataUltimaModifica) {
+    public void setDataUltimaModifica(ZonedDateTime dataUltimaModifica) {
         this.dataUltimaModifica = dataUltimaModifica;
     }
 

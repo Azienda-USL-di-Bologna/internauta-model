@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -90,7 +89,7 @@ public class AmministrazioneMessaggio implements Serializable {
     @Column(name = "data_pubblicazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataPubblicazione;
+    private ZonedDateTime dataPubblicazione;
     
     @Column(name = "invasivita")
     private String invasivita;
@@ -107,19 +106,19 @@ public class AmministrazioneMessaggio implements Serializable {
     @Column(name = "data_scadenza")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataScadenza;
+    private ZonedDateTime dataScadenza;
     
     @Basic(optional = false)
     @Column(name = "data_inserimento")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimento = LocalDateTime.now();
+    private ZonedDateTime dataInserimento = ZonedDateTime.now();
     
     @Basic(optional = false)
     @Column(name = "data_ultima_modifica")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataUltimaModifica = LocalDateTime.now();
+    private ZonedDateTime dataUltimaModifica = ZonedDateTime.now();
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -137,7 +136,7 @@ public class AmministrazioneMessaggio implements Serializable {
     public AmministrazioneMessaggio() {
     }
 
-    public AmministrazioneMessaggio(String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idPersone, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
+    public AmministrazioneMessaggio(String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idPersone, Boolean perTutti, ZonedDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, ZonedDateTime dataScadenza) {
         this.titolo = titolo;
         this.testo = testo;
         this.idApplicazioni = idApplicazioni;
@@ -216,11 +215,11 @@ public class AmministrazioneMessaggio implements Serializable {
         this.perTutti = perTutti;
     }
 
-    public LocalDateTime getDataPubblicazione() {
+    public ZonedDateTime getDataPubblicazione() {
         return dataPubblicazione;
     }
 
-    public void setDataPubblicazione(LocalDateTime dataPubblicazione) {
+    public void setDataPubblicazione(ZonedDateTime dataPubblicazione) {
         this.dataPubblicazione = dataPubblicazione;
     }
 
@@ -271,27 +270,27 @@ public class AmministrazioneMessaggio implements Serializable {
         this.intervallo = intervallo;
     }
 
-    public LocalDateTime getDataScadenza() {
+    public ZonedDateTime getDataScadenza() {
         return dataScadenza;
     }
 
-    public void setDataScadenza(LocalDateTime dataScadenza) {
+    public void setDataScadenza(ZonedDateTime dataScadenza) {
         this.dataScadenza = dataScadenza;
     }
 
-    public LocalDateTime getDataInserimento() {
+    public ZonedDateTime getDataInserimento() {
         return dataInserimento;
     }
 
-    public void setDataInserimento(LocalDateTime dataInserimento) {
+    public void setDataInserimento(ZonedDateTime dataInserimento) {
         this.dataInserimento = dataInserimento;
     }
 
-    public LocalDateTime getDataUltimaModifica() {
+    public ZonedDateTime getDataUltimaModifica() {
         return dataUltimaModifica;
     }
 
-    public void setDataUltimaModifica(LocalDateTime dataUltimaModifica) {
+    public void setDataUltimaModifica(ZonedDateTime dataUltimaModifica) {
         this.dataUltimaModifica = dataUltimaModifica;
     }
     
