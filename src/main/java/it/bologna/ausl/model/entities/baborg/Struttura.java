@@ -9,7 +9,7 @@ import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -72,11 +72,11 @@ public class Struttura implements Serializable {
     @Column(name = "data_attivazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataAttivazione;
+    private LocalDateTime dataAttivazione;
     @Column(name = "data_cessazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataCessazione;
+    private LocalDateTime dataCessazione;
     @Basic(optional = false)
     @NotNull
     @Column(name = "attiva")
@@ -187,7 +187,7 @@ public class Struttura implements Serializable {
         this.id = id;
     }
 
-    public Struttura(Integer id, Integer codice, String nome, String codiceDislocazione, String dislocazione, ZonedDateTime dataAttivazione, ZonedDateTime dataCessazione, Boolean attiva, Boolean spettrale, Boolean usaSegreteriaBucataPadre, List<PecStruttura> pecStrutturaList, Azienda idAzienda, List<Struttura> struttureFiglieList, Struttura idStrutturaPadre, List<Struttura> struttureSegretariateList, Struttura idStrutturaSegreteria, List<StrutturaUnificata> strutturaUnificataDestinazioneList, List<StrutturaUnificata> strutturaUnificataSorgenteList, List<UtenteStruttura> utenteStrutturaList) {
+    public Struttura(Integer id, Integer codice, String nome, String codiceDislocazione, String dislocazione, LocalDateTime dataAttivazione, LocalDateTime dataCessazione, Boolean attiva, Boolean spettrale, Boolean usaSegreteriaBucataPadre, List<PecStruttura> pecStrutturaList, Azienda idAzienda, List<Struttura> struttureFiglieList, Struttura idStrutturaPadre, List<Struttura> struttureSegretariateList, Struttura idStrutturaSegreteria, List<StrutturaUnificata> strutturaUnificataDestinazioneList, List<StrutturaUnificata> strutturaUnificataSorgenteList, List<UtenteStruttura> utenteStrutturaList) {
         this.id = id;
         this.codice = codice;
         this.nome = nome;
@@ -249,19 +249,19 @@ public class Struttura implements Serializable {
         this.dislocazione = dislocazione;
     }
 
-    public ZonedDateTime getDataAttivazione() {
+    public LocalDateTime getDataAttivazione() {
         return dataAttivazione;
     }
 
-    public void setDataAttivazione(ZonedDateTime dataAttivazione) {
+    public void setDataAttivazione(LocalDateTime dataAttivazione) {
         this.dataAttivazione = dataAttivazione;
     }
 
-    public ZonedDateTime getDataCessazione() {
+    public LocalDateTime getDataCessazione() {
         return dataCessazione;
     }
 
-    public void setDataCessazione(ZonedDateTime dataCessazione) {
+    public void setDataCessazione(LocalDateTime dataCessazione) {
         this.dataCessazione = dataCessazione;
     }
 

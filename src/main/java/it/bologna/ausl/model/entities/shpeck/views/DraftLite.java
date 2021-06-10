@@ -7,7 +7,7 @@ import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.shpeck.Message;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,12 +62,12 @@ public class DraftLite implements Serializable {
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime createTime = ZonedDateTime.now();
+    private LocalDateTime createTime = LocalDateTime.now();
     
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime updateTime = ZonedDateTime.now();
+    private LocalDateTime updateTime = LocalDateTime.now();
     
     @Column(name = "attachments_number")
     private Integer attachmentsNumber;
@@ -95,7 +95,7 @@ public class DraftLite implements Serializable {
     }
 
     public DraftLite(Integer id, Pec idPec, String subject, String[] toAddresses, String[] ccAddresses, 
-            Boolean hiddenRecipients, ZonedDateTime createTime, ZonedDateTime updateTime, Integer attachmentsNumber, 
+            Boolean hiddenRecipients, LocalDateTime createTime, LocalDateTime updateTime, Integer attachmentsNumber, 
             String[] attachmentsName, String body, Message idMessageRelated, String messageRelatedType) {
         this.id = id;
         this.idPec = idPec;
@@ -160,19 +160,19 @@ public class DraftLite implements Serializable {
         this.hiddenRecipients = hiddenRecipients;
     }
 
-    public ZonedDateTime getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(ZonedDateTime createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public ZonedDateTime getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(ZonedDateTime updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 

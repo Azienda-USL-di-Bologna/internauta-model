@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.logs;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;

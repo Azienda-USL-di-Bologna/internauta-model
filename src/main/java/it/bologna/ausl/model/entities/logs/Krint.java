@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -107,7 +108,7 @@ public class Krint implements Serializable {
     @Column(name = "dataora_operazione", updatable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataoraOperazione;
+    private LocalDateTime dataoraOperazione;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -276,11 +277,11 @@ public class Krint implements Serializable {
         this.informazioniOggettoContenitore = informazioniOggettoContenitore;
     }
 
-    public ZonedDateTime getDataoraOperazione() {
+    public LocalDateTime getDataoraOperazione() {
         return dataoraOperazione;
     }
 
-    public void setDataoraOperazione(ZonedDateTime dataoraOperazione) {
+    public void setDataoraOperazione(LocalDateTime dataoraOperazione) {
         this.dataoraOperazione = dataoraOperazione;
     }
 

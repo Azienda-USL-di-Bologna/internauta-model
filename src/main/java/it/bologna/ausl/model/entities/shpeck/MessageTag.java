@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -55,7 +55,7 @@ public class MessageTag implements Serializable {
     @Column(name = "inserted")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime inserted = ZonedDateTime.now();
+    private LocalDateTime inserted = LocalDateTime.now();
 
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private String additionalData;
@@ -88,11 +88,11 @@ public class MessageTag implements Serializable {
         this.id = id;
     }
 
-    public ZonedDateTime getInserted() {
+    public LocalDateTime getInserted() {
         return inserted;
     }
 
-    public void setInserted(ZonedDateTime inserted) {
+    public void setInserted(LocalDateTime inserted) {
         this.inserted = inserted;
     }
 

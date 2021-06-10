@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -50,12 +51,12 @@ public class StoricoRelazione implements Serializable {
     @Column(name = "attiva_dal")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime attivaDal;
+    private LocalDateTime attivaDal;
 
     @Column(name = "attiva_al")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime attivaAl;
+    private LocalDateTime attivaAl;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -101,19 +102,19 @@ public class StoricoRelazione implements Serializable {
         this.idStrutturaFiglia = idStrutturaFiglia;
     }
 
-    public ZonedDateTime getAttivaDal() {
+    public LocalDateTime getAttivaDal() {
         return attivaDal;
     }
 
-    public void ZonedDateTime(ZonedDateTime attivaDal) {
+    public void setAttivaDal(LocalDateTime attivaDal) {
         this.attivaDal = attivaDal;
     }
 
-    public ZonedDateTime getAttivaAl() {
+    public LocalDateTime getAttivaAl() {
         return attivaAl;
     }
 
-    public void setAttivaAl(ZonedDateTime attivaAl) {
+    public void setAttivaAl(LocalDateTime attivaAl) {
         this.attivaAl = attivaAl;
     }
 

@@ -8,7 +8,7 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -20,6 +20,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -54,7 +56,7 @@ public class Gdm2 implements Serializable {
     private String obbligatorio;
     
     @Version()
-    private ZonedDateTime version;
+    private LocalDateTime version;
 
     public String getObbligatorio() {
         return obbligatorio;
@@ -90,11 +92,11 @@ public class Gdm2 implements Serializable {
         this.oggetto = oggetto;
     }
 
-    public ZonedDateTime getVersion() {
+    public LocalDateTime getVersion() {
         return version;
     }
 
-    public void setVersion(ZonedDateTime version) {
+    public void setVersion(LocalDateTime version) {
         this.version = version;
     }
 

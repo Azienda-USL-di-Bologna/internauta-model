@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -51,18 +51,18 @@ public class MdrTrasformazioni implements Serializable {
     @Column(name = "data_trasformazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataTrasformazione;
+    private LocalDateTime dataTrasformazione;
     @Size(max = 2147483647)
     @Column(name = "motivo")
     private String motivo;
     @Column(name = "datain_partenza")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime datainPartenza;
+    private LocalDateTime datainPartenza;
     @Column(name = "dataora_oper")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataoraOper;
+    private LocalDateTime dataoraOper;
     @Column(name = "codice_ente")
     private Integer codiceEnte;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
@@ -105,11 +105,11 @@ public class MdrTrasformazioni implements Serializable {
         this.idCasellaArrivo = idCasellaArrivo;
     }
 
-    public ZonedDateTime getDataTrasformazione() {
+    public LocalDateTime getDataTrasformazione() {
         return dataTrasformazione;
     }
 
-    public void setDataTrasformazione(ZonedDateTime dataTrasformazione) {
+    public void setDataTrasformazione(LocalDateTime dataTrasformazione) {
         this.dataTrasformazione = dataTrasformazione;
     }
 
@@ -121,19 +121,19 @@ public class MdrTrasformazioni implements Serializable {
         this.motivo = motivo;
     }
 
-    public ZonedDateTime getDatainPartenza() {
+    public LocalDateTime getDatainPartenza() {
         return datainPartenza;
     }
 
-    public void setDatainPartenza(ZonedDateTime datainPartenza) {
+    public void setDatainPartenza(LocalDateTime datainPartenza) {
         this.datainPartenza = datainPartenza;
     }
 
-    public ZonedDateTime getDataoraOper() {
+    public LocalDateTime getDataoraOper() {
         return dataoraOper;
     }
 
-    public void setDataoraOper(ZonedDateTime dataoraOper) {
+    public void setDataoraOper(LocalDateTime dataoraOper) {
         this.dataoraOper = dataoraOper;
     }
 

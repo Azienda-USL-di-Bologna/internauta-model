@@ -12,6 +12,7 @@ import it.bologna.ausl.model.entities.shpeck.Draft;
 import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Tag;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -141,7 +142,7 @@ public class Pec implements Serializable {
     @Column(name = "reset_lastuid_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime resetLastuidTime;
+    private LocalDateTime resetLastuidTime;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -392,11 +393,11 @@ public class Pec implements Serializable {
         this.sendDelay = sendDelay;
     }
 
-    public ZonedDateTime getResetLastuidTime() {
+    public LocalDateTime getResetLastuidTime() {
         return resetLastuidTime;
     }
 
-    public void setResetLastuidTime(ZonedDateTime resetLastuidTime) {
+    public void setResetLastuidTime(LocalDateTime resetLastuidTime) {
         this.resetLastuidTime = resetLastuidTime;
     }
 

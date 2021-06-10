@@ -10,6 +10,7 @@ import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.Invasi
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.SeveritaEnum;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.TipologiaEnum;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -97,13 +98,13 @@ public class TemplateMessaggio implements Serializable {
     @Column(name = "data_inserimento")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataInserimento = ZonedDateTime.now();
+    private LocalDateTime dataInserimento = LocalDateTime.now();
     
     @Basic(optional = false)
     @Column(name = "data_ultima_modifica")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataUltimaModifica = ZonedDateTime.now();
+    private LocalDateTime dataUltimaModifica = LocalDateTime.now();
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -121,7 +122,7 @@ public class TemplateMessaggio implements Serializable {
     public TemplateMessaggio() {
     }
 
-    public TemplateMessaggio(String nomeTemplate, String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idPersone, Boolean perTutti, ZonedDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, ZonedDateTime dataScadenza) {
+    public TemplateMessaggio(String nomeTemplate, String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idPersone, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
         this.nomeTemplate = nomeTemplate;
         this.titolo = titolo;
         this.testo = testo;
@@ -254,19 +255,19 @@ public class TemplateMessaggio implements Serializable {
         this.intervallo = intervallo;
     }
 
-    public ZonedDateTime getDataInserimento() {
+    public LocalDateTime getDataInserimento() {
         return dataInserimento;
     }
 
-    public void setDataInserimento(ZonedDateTime dataInserimento) {
+    public void setDataInserimento(LocalDateTime dataInserimento) {
         this.dataInserimento = dataInserimento;
     }
 
-    public ZonedDateTime getDataUltimaModifica() {
+    public LocalDateTime getDataUltimaModifica() {
         return dataUltimaModifica;
     }
 
-    public void setDataUltimaModifica(ZonedDateTime dataUltimaModifica) {
+    public void setDataUltimaModifica(LocalDateTime dataUltimaModifica) {
         this.dataUltimaModifica = dataUltimaModifica;
     }
     

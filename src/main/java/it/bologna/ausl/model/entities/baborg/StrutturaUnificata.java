@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -39,11 +40,11 @@ public class StrutturaUnificata implements Serializable {
     @Column(name = "data_attivazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataAttivazione;
+    private LocalDateTime dataAttivazione;
     @Column(name = "data_disattivazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataDisattivazione;
+    private LocalDateTime dataDisattivazione;
     @Column(name = "tipo_operazione")
     @Size(max = 100)
     private String tipoOperazione;
@@ -56,11 +57,11 @@ public class StrutturaUnificata implements Serializable {
     @Column(name = "data_accensione_attivazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataAccensioneAttivazione;
+    private LocalDateTime dataAccensioneAttivazione;
     @Column(name = "data_inserimento_riga", updatable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private ZonedDateTime dataInserimentoRiga;
+    private LocalDateTime dataInserimentoRiga;
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -82,7 +83,7 @@ public class StrutturaUnificata implements Serializable {
         this.id = id;
     }
 
-    public StrutturaUnificata(Integer id, ZonedDateTime dataAttivazione, Struttura idStrutturaDestinazione, Struttura idStrutturaSorgente) {
+    public StrutturaUnificata(Integer id, LocalDateTime dataAttivazione, Struttura idStrutturaDestinazione, Struttura idStrutturaSorgente) {
         this.id = id;
         this.dataAttivazione = dataAttivazione;
         this.idStrutturaDestinazione = idStrutturaDestinazione;
@@ -97,19 +98,19 @@ public class StrutturaUnificata implements Serializable {
         this.id = id;
     }
 
-    public ZonedDateTime getDataAttivazione() {
+    public LocalDateTime getDataAttivazione() {
         return dataAttivazione;
     }
 
-    public void setDataAttivazione(ZonedDateTime dataAttivazione) {
+    public void setDataAttivazione(LocalDateTime dataAttivazione) {
         this.dataAttivazione = dataAttivazione;
     }
 
-    public ZonedDateTime getDataDisattivazione() {
+    public LocalDateTime getDataDisattivazione() {
         return dataDisattivazione;
     }
 
-    public void setDataDisattivazione(ZonedDateTime dataDisattivazione) {
+    public void setDataDisattivazione(LocalDateTime dataDisattivazione) {
         this.dataDisattivazione = dataDisattivazione;
     }
 
@@ -137,19 +138,19 @@ public class StrutturaUnificata implements Serializable {
         this.idStrutturaSorgente = idStrutturaSorgente;
     }
 
-    public ZonedDateTime getDataInserimentoRiga() {
+    public LocalDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public ZonedDateTime getDataAccensioneAttivazione() {
+    public LocalDateTime getDataAccensioneAttivazione() {
         return dataAccensioneAttivazione;
     }
 
-    public void setDataAccensioneAttivazione(ZonedDateTime dataAccensioneAttivazione) {
+    public void setDataAccensioneAttivazione(LocalDateTime dataAccensioneAttivazione) {
         this.dataAccensioneAttivazione = dataAccensioneAttivazione;
     }
 
