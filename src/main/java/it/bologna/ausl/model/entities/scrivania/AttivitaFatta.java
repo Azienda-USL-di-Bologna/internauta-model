@@ -132,27 +132,27 @@ public class AttivitaFatta implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime data;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime data;
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataInserimentoRiga;
     @Column(name = "data_ultima_modifica")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataUltimaModifica;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataUltimaModifica;
     @Column(name = "note", columnDefinition = "text")
     private String note;
     @Column(name = "provenienza", columnDefinition = "text")
     private String provenienza;
     @Column(name = "data_scadenza")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataScadenza;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataScadenza;
     @Column(name = "priorita")
     private Integer priorita;
     @Column(name = "tags", columnDefinition = "text[]")
@@ -176,13 +176,13 @@ public class AttivitaFatta implements Serializable {
 //    @Version()
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS.SSS")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS.SSS")
-//    private LocalDateTime version;
+//    private ZonedDateTime version;
 //
-//    public LocalDateTime getVersion() {
+//    public ZonedDateTime getVersion() {
 //        return version;
 //    }
 //
-//    public void setVersion(LocalDateTime version) {
+//    public void setVersion(ZonedDateTime version) {
 //        this.version = version;
 //    }
  
@@ -196,7 +196,7 @@ public class AttivitaFatta implements Serializable {
         this.id = id;
     }
 
-    public AttivitaFatta(Integer id, Azienda idAzienda, Persona idPersona, Applicazione idApplicazione, String tipo, LocalDateTime data, LocalDateTime dataInserimentoRiga) {
+    public AttivitaFatta(Integer id, Azienda idAzienda, Persona idPersona, Applicazione idApplicazione, String tipo, ZonedDateTime data, ZonedDateTime dataInserimentoRiga) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.idPersona = idPersona;
@@ -278,27 +278,27 @@ public class AttivitaFatta implements Serializable {
         this.aperta = aperta;
     }
 
-    public LocalDateTime getData() {
+    public ZonedDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDateTime data) {
+    public void setData(ZonedDateTime data) {
         this.data = data;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public LocalDateTime getDataUltimaModifica() {
+    public ZonedDateTime getDataUltimaModifica() {
         return dataUltimaModifica;
     }
 
-    public void setDataUltimaModifica(LocalDateTime dataUltimaModifica) {
+    public void setDataUltimaModifica(ZonedDateTime dataUltimaModifica) {
         this.dataUltimaModifica = dataUltimaModifica;
     }
 
@@ -318,11 +318,11 @@ public class AttivitaFatta implements Serializable {
         this.provenienza = provenienza;
     }
 
-    public LocalDateTime getDataScadenza() {
+    public ZonedDateTime getDataScadenza() {
         return dataScadenza;
     }
 
-    public void setDataScadenza(LocalDateTime dataScadenza) {
+    public void setDataScadenza(ZonedDateTime dataScadenza) {
         this.dataScadenza = dataScadenza;
     }
 

@@ -96,15 +96,15 @@ public class TemplateMessaggio implements Serializable {
     
     @Basic(optional = false)
     @Column(name = "data_inserimento")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimento = LocalDateTime.now();
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataInserimento = ZonedDateTime.now();
     
     @Basic(optional = false)
     @Column(name = "data_ultima_modifica")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataUltimaModifica = LocalDateTime.now();
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataUltimaModifica = ZonedDateTime.now();
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -122,7 +122,7 @@ public class TemplateMessaggio implements Serializable {
     public TemplateMessaggio() {
     }
 
-    public TemplateMessaggio(String nomeTemplate, String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idPersone, Boolean perTutti, LocalDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, LocalDateTime dataScadenza) {
+    public TemplateMessaggio(String nomeTemplate, String titolo, String testo, String[] idApplicazioni, Integer[] idAziende, Integer[] idStrutture, Integer[] idPersone, Boolean perTutti, ZonedDateTime dataPubblicazione, String invasivita, String tipologia, Integer intervallo, ZonedDateTime dataScadenza) {
         this.nomeTemplate = nomeTemplate;
         this.titolo = titolo;
         this.testo = testo;
@@ -255,19 +255,19 @@ public class TemplateMessaggio implements Serializable {
         this.intervallo = intervallo;
     }
 
-    public LocalDateTime getDataInserimento() {
+    public ZonedDateTime getDataInserimento() {
         return dataInserimento;
     }
 
-    public void setDataInserimento(LocalDateTime dataInserimento) {
+    public void setDataInserimento(ZonedDateTime dataInserimento) {
         this.dataInserimento = dataInserimento;
     }
 
-    public LocalDateTime getDataUltimaModifica() {
+    public ZonedDateTime getDataUltimaModifica() {
         return dataUltimaModifica;
     }
 
-    public void setDataUltimaModifica(LocalDateTime dataUltimaModifica) {
+    public void setDataUltimaModifica(ZonedDateTime dataUltimaModifica) {
         this.dataUltimaModifica = dataUltimaModifica;
     }
     

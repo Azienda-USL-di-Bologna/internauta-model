@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -39,12 +38,12 @@ public class ImportazioniOrganigramma implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "nome_file")
     private String nomeFile;
-    
+
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
@@ -53,7 +52,7 @@ public class ImportazioniOrganigramma implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "esito")
     private String esito;
-    
+
     @Size(min = 1, max = 2147483647)
     @Column(name = "csv_error_link")
     private String path_csv_error;
@@ -65,12 +64,12 @@ public class ImportazioniOrganigramma implements Serializable {
     public void setPath_csv_error(String path_csv_error) {
         this.path_csv_error = path_csv_error;
     }
-    
+
     @NotNull
     @Column(name = "data_inserimento_riga")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataInserimentoRiga;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -134,11 +133,11 @@ public class ImportazioniOrganigramma implements Serializable {
         this.esito = esito;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 

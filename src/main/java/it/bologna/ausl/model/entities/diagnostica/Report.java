@@ -43,9 +43,9 @@ public class Report implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga = LocalDateTime.now();
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
 
     @Column(name = "additional_data")
     private String additionalData;
@@ -61,9 +61,9 @@ public class Report implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "data_risoluzione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataRisoluzione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataRisoluzione;
 
     @Size(max = 2147483647)
     @Column(name = "note")
@@ -88,11 +88,11 @@ public class Report implements Serializable {
         this.tipologia = tipologia;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
@@ -120,11 +120,11 @@ public class Report implements Serializable {
         this.inAttesaDiRisoluzione = inAttesaDiRisoluzione;
     }
 
-    public LocalDateTime getDataRisoluzione() {
+    public ZonedDateTime getDataRisoluzione() {
         return dataRisoluzione;
     }
 
-    public void setDataRisoluzione(LocalDateTime dataRisoluzione) {
+    public void setDataRisoluzione(ZonedDateTime dataRisoluzione) {
         this.dataRisoluzione = dataRisoluzione;
     }
 
