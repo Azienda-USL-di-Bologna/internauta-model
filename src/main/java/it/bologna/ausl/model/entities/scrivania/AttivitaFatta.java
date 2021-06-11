@@ -9,6 +9,7 @@ import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -69,17 +70,18 @@ public class AttivitaFatta implements Serializable {
             return getKey();
         }
     }
-    
-    public enum IdApplicazione{
+
+    public enum IdApplicazione {
         PICO("procton"),
         DETE("dete"),
         DELI("deli");
-        
+
         private final String key;
-        
+
         IdApplicazione(String key) {
             this.key = key;
         }
+
         public static Attivita.IdApplicazione fromString(String key) {
             return key == null
                     ? null
@@ -95,7 +97,7 @@ public class AttivitaFatta implements Serializable {
             return getKey();
         }
     }
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -172,7 +174,7 @@ public class AttivitaFatta implements Serializable {
     private String classe;
     @Column(name = "allegati", columnDefinition = "text")
     private String allegati;
-        
+
 //    @Version()
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS.SSS")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS.SSS")
@@ -185,10 +187,9 @@ public class AttivitaFatta implements Serializable {
 //    public void setVersion(ZonedDateTime version) {
 //        this.version = version;
 //    }
- 
     @Transient
     private String compiledUrls;
-        
+
     public AttivitaFatta() {
     }
 

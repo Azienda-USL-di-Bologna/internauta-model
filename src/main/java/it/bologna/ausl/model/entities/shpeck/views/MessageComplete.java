@@ -9,6 +9,7 @@ import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Message;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,6 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author gdm
  */
-
 @TypeDefs(
         {
             @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
@@ -46,15 +46,15 @@ public class MessageComplete implements Serializable {
     @Id
     @Column(name = "id")
     private Integer id;
-    
+
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pec idPec;
-    
+
     @Size(max = 2147483647)
     @Column(name = "subject")
     private String subject;
-    
+
     @Size(min = 1, max = 2147483647)
     @Column(name = "uuid_message")
     private String uuidMessage;
@@ -62,7 +62,7 @@ public class MessageComplete implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "in_out")
     private String inOut;
-    
+
     @Column(name = "message_status")
     private String messageStatus;
 
@@ -75,7 +75,7 @@ public class MessageComplete implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime updateTime;
-    
+
     @Size(max = 2147483647)
     @Column(name = "message_type")
     private String messageType;
@@ -106,28 +106,27 @@ public class MessageComplete implements Serializable {
 //    @JoinColumn(name = "id_raw_message", referencedColumnName = "id")
 //    @ManyToOne(optional = false, fetch = FetchType.LAZY)
 //    private RawMessage idRawMessage;
-
     @Column(name = "folderType")
     private String folderType;
 
     @JoinColumn(name = "id_folder", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Folder idFolder;
-    
+
     @JoinColumn(name = "id_target_folder", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Folder idTargetFolder;
-    
+
     @Column(name = "id_tags", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idTags;
-    
+
     @Column(name = "from")
     private String from;
-    
+
     @Column(name = "to")
     private String to;
-    
+
     @Column(name = "cc")
     private String cc;
 

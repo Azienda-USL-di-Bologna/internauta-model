@@ -8,6 +8,7 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.shpeck.Message;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({"idPec"})
 public class DraftLite implements Serializable {
-    
+
     public static enum MessageRelatedType {
         REPLIED, REPLIED_ALL, FORWARDED
     }
@@ -43,50 +44,50 @@ public class DraftLite implements Serializable {
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pec idPec;
-    
+
     @Size(max = 2147483647)
     @Column(name = "subject")
     private String subject;
-    
+
     @Column(name = "to_addresses", columnDefinition = "to_addresses[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] toAddresses;
-    
+
     @Column(name = "cc_addresses", columnDefinition = "cc_addresses[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] ccAddresses;
-    
+
     @Column(name = "hidden_recipients")
     private Boolean hiddenRecipients = false;
-    
+
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime createTime = ZonedDateTime.now();
-    
+
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime updateTime = ZonedDateTime.now();
-    
+
     @Column(name = "attachments_number")
     private Integer attachmentsNumber;
-    
+
     @Column(name = "attachments_name", columnDefinition = "attachments_name[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] attachmentsName;
-    
+
     @Size(max = 2147483647)
     @Column(name = "body")
     private String body;
-    
+
     @JoinColumn(name = "id_message_related", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Message idMessageRelated;
-    
+
     @Column(name = "message_related_type")
     private String messageRelatedType;
-    
+
     public DraftLite() {
     }
 
@@ -94,8 +95,8 @@ public class DraftLite implements Serializable {
         this.id = id;
     }
 
-    public DraftLite(Integer id, Pec idPec, String subject, String[] toAddresses, String[] ccAddresses, 
-            Boolean hiddenRecipients, ZonedDateTime createTime, ZonedDateTime updateTime, Integer attachmentsNumber, 
+    public DraftLite(Integer id, Pec idPec, String subject, String[] toAddresses, String[] ccAddresses,
+            Boolean hiddenRecipients, ZonedDateTime createTime, ZonedDateTime updateTime, Integer attachmentsNumber,
             String[] attachmentsName, String body, Message idMessageRelated, String messageRelatedType) {
         this.id = id;
         this.idPec = idPec;
@@ -199,7 +200,7 @@ public class DraftLite implements Serializable {
     public void setBody(String body) {
         this.body = body;
     }
-    
+
     public Message getIdMessageRelated() {
         return idMessageRelated;
     }
@@ -244,5 +245,5 @@ public class DraftLite implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.shpeck.DraftLite[ id=" + id + " ]";
     }
-    
+
 }

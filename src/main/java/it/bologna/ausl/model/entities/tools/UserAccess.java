@@ -12,6 +12,7 @@ import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
