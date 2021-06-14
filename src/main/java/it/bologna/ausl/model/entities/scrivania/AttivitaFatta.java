@@ -9,6 +9,7 @@ import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -69,17 +70,18 @@ public class AttivitaFatta implements Serializable {
             return getKey();
         }
     }
-    
-    public enum IdApplicazione{
+
+    public enum IdApplicazione {
         PICO("procton"),
         DETE("dete"),
         DELI("deli");
-        
+
         private final String key;
-        
+
         IdApplicazione(String key) {
             this.key = key;
         }
+
         public static Attivita.IdApplicazione fromString(String key) {
             return key == null
                     ? null
@@ -95,7 +97,7 @@ public class AttivitaFatta implements Serializable {
             return getKey();
         }
     }
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -132,27 +134,27 @@ public class AttivitaFatta implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime data;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime data;
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataInserimentoRiga;
     @Column(name = "data_ultima_modifica")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataUltimaModifica;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataUltimaModifica;
     @Column(name = "note", columnDefinition = "text")
     private String note;
     @Column(name = "provenienza", columnDefinition = "text")
     private String provenienza;
     @Column(name = "data_scadenza")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataScadenza;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataScadenza;
     @Column(name = "priorita")
     private Integer priorita;
     @Column(name = "tags", columnDefinition = "text[]")
@@ -172,23 +174,22 @@ public class AttivitaFatta implements Serializable {
     private String classe;
     @Column(name = "allegati", columnDefinition = "text")
     private String allegati;
-        
+
 //    @Version()
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS.SSS")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS.SSS")
-//    private LocalDateTime version;
+//    private ZonedDateTime version;
 //
-//    public LocalDateTime getVersion() {
+//    public ZonedDateTime getVersion() {
 //        return version;
 //    }
 //
-//    public void setVersion(LocalDateTime version) {
+//    public void setVersion(ZonedDateTime version) {
 //        this.version = version;
 //    }
- 
     @Transient
     private String compiledUrls;
-        
+
     public AttivitaFatta() {
     }
 
@@ -196,7 +197,7 @@ public class AttivitaFatta implements Serializable {
         this.id = id;
     }
 
-    public AttivitaFatta(Integer id, Azienda idAzienda, Persona idPersona, Applicazione idApplicazione, String tipo, LocalDateTime data, LocalDateTime dataInserimentoRiga) {
+    public AttivitaFatta(Integer id, Azienda idAzienda, Persona idPersona, Applicazione idApplicazione, String tipo, ZonedDateTime data, ZonedDateTime dataInserimentoRiga) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.idPersona = idPersona;
@@ -278,27 +279,27 @@ public class AttivitaFatta implements Serializable {
         this.aperta = aperta;
     }
 
-    public LocalDateTime getData() {
+    public ZonedDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDateTime data) {
+    public void setData(ZonedDateTime data) {
         this.data = data;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public LocalDateTime getDataUltimaModifica() {
+    public ZonedDateTime getDataUltimaModifica() {
         return dataUltimaModifica;
     }
 
-    public void setDataUltimaModifica(LocalDateTime dataUltimaModifica) {
+    public void setDataUltimaModifica(ZonedDateTime dataUltimaModifica) {
         this.dataUltimaModifica = dataUltimaModifica;
     }
 
@@ -318,11 +319,11 @@ public class AttivitaFatta implements Serializable {
         this.provenienza = provenienza;
     }
 
-    public LocalDateTime getDataScadenza() {
+    public ZonedDateTime getDataScadenza() {
         return dataScadenza;
     }
 
-    public void setDataScadenza(LocalDateTime dataScadenza) {
+    public void setDataScadenza(ZonedDateTime dataScadenza) {
         this.dataScadenza = dataScadenza;
     }
 

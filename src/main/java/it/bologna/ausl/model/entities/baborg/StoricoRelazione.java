@@ -49,14 +49,14 @@ public class StoricoRelazione implements Serializable {
     private Struttura idStrutturaFiglia;
 
     @Column(name = "attiva_dal")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime attivaDal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime attivaDal;
 
     @Column(name = "attiva_al")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime attivaAl;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime attivaAl;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -70,7 +70,7 @@ public class StoricoRelazione implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
+
     public StoricoRelazione() {
     }
 
@@ -102,19 +102,19 @@ public class StoricoRelazione implements Serializable {
         this.idStrutturaFiglia = idStrutturaFiglia;
     }
 
-    public LocalDateTime getAttivaDal() {
+    public ZonedDateTime getAttivaDal() {
         return attivaDal;
     }
 
-    public void setAttivaDal(LocalDateTime attivaDal) {
+    public void setAttivaDal(ZonedDateTime attivaDal) {
         this.attivaDal = attivaDal;
     }
 
-    public LocalDateTime getAttivaAl() {
+    public ZonedDateTime getAttivaAl() {
         return attivaAl;
     }
 
-    public void setAttivaAl(LocalDateTime attivaAl) {
+    public void setAttivaAl(ZonedDateTime attivaAl) {
         this.attivaAl = attivaAl;
     }
 

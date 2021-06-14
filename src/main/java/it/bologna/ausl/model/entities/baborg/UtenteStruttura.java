@@ -77,14 +77,14 @@ public class UtenteStruttura implements Serializable {
     private ZonedDateTime version;
 
     @Column(name = "attivo_dal")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime attivoDal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime attivoDal;
 
     @Column(name = "attivo_al")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime attivoAl;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime attivoAl;
 
     @Basic(optional = false)
     @NotNull
@@ -170,19 +170,19 @@ public class UtenteStruttura implements Serializable {
         this.attributi = attributi;
     }
 
-    public LocalDateTime getAttivoDal() {
+    public ZonedDateTime getAttivoDal() {
         return attivoDal;
     }
 
-    public void setAttivoDal(LocalDateTime attivoDal) {
+    public void setAttivoDal(ZonedDateTime attivoDal) {
         this.attivoDal = attivoDal;
     }
 
-    public LocalDateTime getAttivoAl() {
+    public ZonedDateTime getAttivoAl() {
         return attivoAl;
     }
 
-    public void setAttivoAl(LocalDateTime attivoAl) {
+    public void setAttivoAl(ZonedDateTime attivoAl) {
         this.attivoAl = attivoAl;
     }
 

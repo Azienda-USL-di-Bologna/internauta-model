@@ -140,9 +140,9 @@ public class Pec implements Serializable {
     private Integer sendDelay = -1;
 
     @Column(name = "reset_lastuid_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime resetLastuidTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime resetLastuidTime;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -393,11 +393,11 @@ public class Pec implements Serializable {
         this.sendDelay = sendDelay;
     }
 
-    public LocalDateTime getResetLastuidTime() {
+    public ZonedDateTime getResetLastuidTime() {
         return resetLastuidTime;
     }
 
-    public void setResetLastuidTime(LocalDateTime resetLastuidTime) {
+    public void setResetLastuidTime(ZonedDateTime resetLastuidTime) {
         this.resetLastuidTime = resetLastuidTime;
     }
 
