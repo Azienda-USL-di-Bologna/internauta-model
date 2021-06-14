@@ -49,20 +49,20 @@ public class MdrTrasformazioni implements Serializable {
     @Column(name = "id_casella_arrivo")
     private Integer idCasellaArrivo;
     @Column(name = "data_trasformazione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataTrasformazione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataTrasformazione;
     @Size(max = 2147483647)
     @Column(name = "motivo")
     private String motivo;
     @Column(name = "datain_partenza")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime datainPartenza;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime datainPartenza;
     @Column(name = "dataora_oper")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataoraOper;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataoraOper;
     @Column(name = "codice_ente")
     private Integer codiceEnte;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
@@ -105,11 +105,11 @@ public class MdrTrasformazioni implements Serializable {
         this.idCasellaArrivo = idCasellaArrivo;
     }
 
-    public LocalDateTime getDataTrasformazione() {
+    public ZonedDateTime getDataTrasformazione() {
         return dataTrasformazione;
     }
 
-    public void setDataTrasformazione(LocalDateTime dataTrasformazione) {
+    public void setDataTrasformazione(ZonedDateTime dataTrasformazione) {
         this.dataTrasformazione = dataTrasformazione;
     }
 
@@ -121,19 +121,19 @@ public class MdrTrasformazioni implements Serializable {
         this.motivo = motivo;
     }
 
-    public LocalDateTime getDatainPartenza() {
+    public ZonedDateTime getDatainPartenza() {
         return datainPartenza;
     }
 
-    public void setDatainPartenza(LocalDateTime datainPartenza) {
+    public void setDatainPartenza(ZonedDateTime datainPartenza) {
         this.datainPartenza = datainPartenza;
     }
 
-    public LocalDateTime getDataoraOper() {
+    public ZonedDateTime getDataoraOper() {
         return dataoraOper;
     }
 
-    public void setDataoraOper(LocalDateTime dataoraOper) {
+    public void setDataoraOper(ZonedDateTime dataoraOper) {
         this.dataoraOper = dataoraOper;
     }
 

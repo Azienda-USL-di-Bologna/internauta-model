@@ -98,7 +98,7 @@ public class Mezzo implements Serializable {
                 codiceArgo = "Email";
                 // code block
                 break;
-            case "Posta Ordinaria":
+            case "POSTA_ORDINARIA":
                 codiceArgo = "Posta ordinaria";
                 // code block
                 break;

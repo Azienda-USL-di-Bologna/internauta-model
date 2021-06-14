@@ -38,13 +38,13 @@ public class StrutturaUnificata implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Column(name = "data_attivazione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataAttivazione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataAttivazione;
     @Column(name = "data_disattivazione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataDisattivazione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataDisattivazione;
     @Column(name = "tipo_operazione")
     @Size(max = 100)
     private String tipoOperazione;
@@ -55,13 +55,13 @@ public class StrutturaUnificata implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Struttura idStrutturaSorgente;
     @Column(name = "data_accensione_attivazione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataAccensioneAttivazione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataAccensioneAttivazione;
     @Column(name = "data_inserimento_riga", updatable = false, insertable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataInserimentoRiga;
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -83,7 +83,7 @@ public class StrutturaUnificata implements Serializable {
         this.id = id;
     }
 
-    public StrutturaUnificata(Integer id, LocalDateTime dataAttivazione, Struttura idStrutturaDestinazione, Struttura idStrutturaSorgente) {
+    public StrutturaUnificata(Integer id, ZonedDateTime dataAttivazione, Struttura idStrutturaDestinazione, Struttura idStrutturaSorgente) {
         this.id = id;
         this.dataAttivazione = dataAttivazione;
         this.idStrutturaDestinazione = idStrutturaDestinazione;
@@ -98,19 +98,19 @@ public class StrutturaUnificata implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getDataAttivazione() {
+    public ZonedDateTime getDataAttivazione() {
         return dataAttivazione;
     }
 
-    public void setDataAttivazione(LocalDateTime dataAttivazione) {
+    public void setDataAttivazione(ZonedDateTime dataAttivazione) {
         this.dataAttivazione = dataAttivazione;
     }
 
-    public LocalDateTime getDataDisattivazione() {
+    public ZonedDateTime getDataDisattivazione() {
         return dataDisattivazione;
     }
 
-    public void setDataDisattivazione(LocalDateTime dataDisattivazione) {
+    public void setDataDisattivazione(ZonedDateTime dataDisattivazione) {
         this.dataDisattivazione = dataDisattivazione;
     }
 
@@ -138,19 +138,19 @@ public class StrutturaUnificata implements Serializable {
         this.idStrutturaSorgente = idStrutturaSorgente;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public LocalDateTime getDataAccensioneAttivazione() {
+    public ZonedDateTime getDataAccensioneAttivazione() {
         return dataAccensioneAttivazione;
     }
 
-    public void setDataAccensioneAttivazione(LocalDateTime dataAccensioneAttivazione) {
+    public void setDataAccensioneAttivazione(ZonedDateTime dataAccensioneAttivazione) {
         this.dataAccensioneAttivazione = dataAccensioneAttivazione;
     }
 

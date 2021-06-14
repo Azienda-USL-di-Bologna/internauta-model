@@ -50,9 +50,9 @@ public class MessageFolder implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "inserted")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime inserted = LocalDateTime.now();
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime inserted = ZonedDateTime.now();
 
     @Column(name = "deleted")
     private Boolean deleted;
@@ -92,7 +92,7 @@ public class MessageFolder implements Serializable {
         this.id = id;
     }
 
-    public MessageFolder(Integer id, LocalDateTime inserted) {
+    public MessageFolder(Integer id, ZonedDateTime inserted) {
         this.id = id;
         this.inserted = inserted;
     }
@@ -105,11 +105,11 @@ public class MessageFolder implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getInserted() {
+    public ZonedDateTime getInserted() {
         return inserted;
     }
 
-    public void setInserted(LocalDateTime inserted) {
+    public void setInserted(ZonedDateTime inserted) {
         this.inserted = inserted;
     }
 

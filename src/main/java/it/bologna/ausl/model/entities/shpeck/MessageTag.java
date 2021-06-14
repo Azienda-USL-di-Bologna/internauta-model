@@ -53,9 +53,9 @@ public class MessageTag implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "inserted")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime inserted = LocalDateTime.now();
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime inserted = ZonedDateTime.now();
 
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private String additionalData;
@@ -88,11 +88,11 @@ public class MessageTag implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getInserted() {
+    public ZonedDateTime getInserted() {
         return inserted;
     }
 
-    public void setInserted(LocalDateTime inserted) {
+    public void setInserted(ZonedDateTime inserted) {
         this.inserted = inserted;
     }
 

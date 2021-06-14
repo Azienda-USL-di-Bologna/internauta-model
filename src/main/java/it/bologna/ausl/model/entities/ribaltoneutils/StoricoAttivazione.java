@@ -47,9 +47,9 @@ public class StoricoAttivazione implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataInserimentoRiga;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataInserimentoRiga;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ribalta_internauta")
@@ -86,7 +86,7 @@ public class StoricoAttivazione implements Serializable {
         this.id = id;
     }
 
-    public StoricoAttivazione(Integer id, Azienda idAzienda, LocalDateTime dataInserimentoRiga, boolean ribaltaInternauta, boolean ribaltaArgo, Utente idUtente) {
+    public StoricoAttivazione(Integer id, Azienda idAzienda, ZonedDateTime dataInserimentoRiga, boolean ribaltaInternauta, boolean ribaltaArgo, Utente idUtente) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.dataInserimentoRiga = dataInserimentoRiga;
@@ -111,11 +111,11 @@ public class StoricoAttivazione implements Serializable {
         this.idAzienda = idAzienda;
     }
 
-    public LocalDateTime getDataInserimentoRiga() {
+    public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
-    public void setDataInserimentoRiga(LocalDateTime dataInserimentoRiga) {
+    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
