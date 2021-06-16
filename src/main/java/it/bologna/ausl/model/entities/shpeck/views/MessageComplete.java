@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -40,6 +41,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @Cacheable(false)
 @GenerateProjections({})
+@DynamicUpdate
 public class MessageComplete implements Serializable {
 
     private static final long serialVersionUID = 1L;

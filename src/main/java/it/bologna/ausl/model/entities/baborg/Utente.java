@@ -36,6 +36,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -59,6 +60,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
 @Cacheable(false)
 @GenerateProjections({"idAzienda, idPersona", "idAzienda, idPersona, utenteStrutturaList", "idPersona"})
+@DynamicUpdate
 public class Utente implements Serializable, UserDetails, EntityInterface {
 
     private static final long serialVersionUID = 1L;

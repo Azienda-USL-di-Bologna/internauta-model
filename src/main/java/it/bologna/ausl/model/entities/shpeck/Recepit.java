@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -31,6 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "recepits", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({})
+@DynamicUpdate
 public class Recepit implements Serializable {
 
     public static enum RecepitType {

@@ -29,6 +29,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -41,6 +42,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({"idContatto", "utenteStruttura, indirizzo", "telefono, email, indirizzo", "idContatto, telefono, indirizzo, email"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = DettaglioContatto.class)
+@DynamicUpdate
 public class DettaglioContatto implements Serializable {
 
     public static enum TipoDettaglio {

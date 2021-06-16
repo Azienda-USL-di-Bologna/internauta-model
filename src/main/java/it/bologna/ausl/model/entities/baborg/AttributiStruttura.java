@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +34,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"idStruttura, idTipologiaStruttura", "idTipologiaStruttura"})
+@DynamicUpdate
 public class AttributiStruttura implements Serializable {
 
     private static final long serialVersionUID = 1L;

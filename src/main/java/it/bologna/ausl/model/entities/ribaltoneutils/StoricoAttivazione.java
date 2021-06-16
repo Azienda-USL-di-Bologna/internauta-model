@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.Version;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -33,6 +34,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"idAzienda, idUtente", "idUtente"})
+@DynamicUpdate
 public class StoricoAttivazione implements Serializable {
 
     private static final long serialVersionUID = 1L;

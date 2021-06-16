@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -32,6 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
 @Cacheable(false)
 @GenerateProjections({})
+@DynamicUpdate
 public class Krint implements Serializable {
     
     public static enum TipoOggettoKrint {
