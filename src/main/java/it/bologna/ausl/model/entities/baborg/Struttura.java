@@ -70,13 +70,13 @@ public class Struttura implements Serializable {
     @Column(name = "dislocazione")
     private String dislocazione;
     @Column(name = "data_attivazione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataAttivazione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataAttivazione;
     @Column(name = "data_cessazione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataCessazione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataCessazione;
     @Basic(optional = false)
     @NotNull
     @Column(name = "attiva")
@@ -187,7 +187,7 @@ public class Struttura implements Serializable {
         this.id = id;
     }
 
-    public Struttura(Integer id, Integer codice, String nome, String codiceDislocazione, String dislocazione, LocalDateTime dataAttivazione, LocalDateTime dataCessazione, Boolean attiva, Boolean spettrale, Boolean usaSegreteriaBucataPadre, List<PecStruttura> pecStrutturaList, Azienda idAzienda, List<Struttura> struttureFiglieList, Struttura idStrutturaPadre, List<Struttura> struttureSegretariateList, Struttura idStrutturaSegreteria, List<StrutturaUnificata> strutturaUnificataDestinazioneList, List<StrutturaUnificata> strutturaUnificataSorgenteList, List<UtenteStruttura> utenteStrutturaList) {
+    public Struttura(Integer id, Integer codice, String nome, String codiceDislocazione, String dislocazione, ZonedDateTime dataAttivazione, ZonedDateTime dataCessazione, Boolean attiva, Boolean spettrale, Boolean usaSegreteriaBucataPadre, List<PecStruttura> pecStrutturaList, Azienda idAzienda, List<Struttura> struttureFiglieList, Struttura idStrutturaPadre, List<Struttura> struttureSegretariateList, Struttura idStrutturaSegreteria, List<StrutturaUnificata> strutturaUnificataDestinazioneList, List<StrutturaUnificata> strutturaUnificataSorgenteList, List<UtenteStruttura> utenteStrutturaList) {
         this.id = id;
         this.codice = codice;
         this.nome = nome;
@@ -249,19 +249,19 @@ public class Struttura implements Serializable {
         this.dislocazione = dislocazione;
     }
 
-    public LocalDateTime getDataAttivazione() {
+    public ZonedDateTime getDataAttivazione() {
         return dataAttivazione;
     }
 
-    public void setDataAttivazione(LocalDateTime dataAttivazione) {
+    public void setDataAttivazione(ZonedDateTime dataAttivazione) {
         this.dataAttivazione = dataAttivazione;
     }
 
-    public LocalDateTime getDataCessazione() {
+    public ZonedDateTime getDataCessazione() {
         return dataCessazione;
     }
 
-    public void setDataCessazione(LocalDateTime dataCessazione) {
+    public void setDataCessazione(ZonedDateTime dataCessazione) {
         this.dataCessazione = dataCessazione;
     }
 

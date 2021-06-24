@@ -63,14 +63,14 @@ public class MdrAppartenenti implements Serializable {
     private Integer idCasella;
 
     @Column(name = "datain")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime datain;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime datain;
 
     @Column(name = "datafi")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime datafi;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime datafi;
 
     @Size(max = 2147483647)
     @Column(name = "tipo_appartenenza")
@@ -81,14 +81,14 @@ public class MdrAppartenenti implements Serializable {
     private String username;
 
     @Column(name = "data_assunzione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataAssunzione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataAssunzione;
 
     @Column(name = "data_dimissione")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    private LocalDateTime dataDimissione;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataDimissione;
 
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -160,19 +160,19 @@ public class MdrAppartenenti implements Serializable {
         this.idCasella = idCasella;
     }
 
-    public LocalDateTime getDatain() {
+    public ZonedDateTime getDatain() {
         return datain;
     }
 
-    public void setDatain(LocalDateTime datain) {
+    public void setDatain(ZonedDateTime datain) {
         this.datain = datain;
     }
 
-    public LocalDateTime getDatafi() {
+    public ZonedDateTime getDatafi() {
         return datafi;
     }
 
-    public void setDatafi(LocalDateTime datafi) {
+    public void setDatafi(ZonedDateTime datafi) {
         this.datafi = datafi;
     }
 
@@ -192,19 +192,19 @@ public class MdrAppartenenti implements Serializable {
         this.username = username;
     }
 
-    public LocalDateTime getDataAssunzione() {
+    public ZonedDateTime getDataAssunzione() {
         return dataAssunzione;
     }
 
-    public void setDataAssunzione(LocalDateTime dataAssunzione) {
+    public void setDataAssunzione(ZonedDateTime dataAssunzione) {
         this.dataAssunzione = dataAssunzione;
     }
 
-    public LocalDateTime getDataDimissione() {
+    public ZonedDateTime getDataDimissione() {
         return dataDimissione;
     }
 
-    public void setDataDimissione(LocalDateTime dataDimissione) {
+    public void setDataDimissione(ZonedDateTime dataDimissione) {
         this.dataDimissione = dataDimissione;
     }
 

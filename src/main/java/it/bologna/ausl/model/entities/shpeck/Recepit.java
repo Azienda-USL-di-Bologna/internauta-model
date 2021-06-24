@@ -80,7 +80,7 @@ public class Recepit implements Serializable {
     public Recepit() {
     }
 
-    public Recepit(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer nAttachments, String uuidMongo, String mongoPath, String name, LocalDateTime receiveDate, RecepitType recepitType) {
+    public Recepit(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, ZonedDateTime createTime, ZonedDateTime updateTime, String messageType, Boolean isPec, Integer nAttachments, String uuidMongo, String mongoPath, String name, ZonedDateTime receiveDate, RecepitType recepitType) {
         this.recepitType = recepitType.toString();
         this.idMessage = new Message(id, uuidMessage, idPec, idApplicazione, idRelated, subject, messageStatus, inOut, createTime, updateTime, messageType, isPec, nAttachments, uuidMongo, mongoPath, name, receiveDate);
     }
