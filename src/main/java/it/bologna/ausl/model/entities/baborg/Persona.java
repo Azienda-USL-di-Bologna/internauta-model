@@ -32,6 +32,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -59,6 +60,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "attivitaList, utenteList",
     "impostazioniApplicazioniList",
     "utenteList",})
+@DynamicUpdate
 public class Persona implements Serializable, EntityInterface {
 
     private static final long serialVersionUID = 1L;

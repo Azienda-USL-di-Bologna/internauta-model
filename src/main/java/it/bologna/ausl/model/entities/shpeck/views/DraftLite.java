@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,6 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"idPec"})
+@DynamicUpdate
 public class DraftLite implements Serializable {
 
     public static enum MessageRelatedType {

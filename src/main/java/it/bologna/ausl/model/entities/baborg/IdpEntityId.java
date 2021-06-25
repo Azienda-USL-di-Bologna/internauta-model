@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -27,6 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "idp_entity_id", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({})
+@DynamicUpdate
 public class IdpEntityId implements Serializable {
 
     private static final long serialVersionUID = 1L;

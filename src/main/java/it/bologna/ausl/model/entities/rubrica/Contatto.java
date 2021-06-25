@@ -33,6 +33,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -61,6 +62,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
     "idPersona, idPersonaCreazione, idStruttura"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Contatto.class)
+@DynamicUpdate
 public class Contatto implements Serializable {
 
     public static enum CategoriaContatto {

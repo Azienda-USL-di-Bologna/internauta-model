@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -39,6 +40,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 //@FilterDefs({
 //        @FilterDef(name="mittenti", defaultCondition="tipo = 'MITTENTE'"),
 //        @FilterDef(name="destinatari", defaultCondition="tipo = 'A'")})
+@DynamicUpdate
 public class Related implements Serializable {
 
     private static final long serialVersionUID = 1L;

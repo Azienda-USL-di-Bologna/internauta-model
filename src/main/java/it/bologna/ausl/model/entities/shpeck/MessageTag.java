@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -29,6 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "messages_tags", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({"idMessage", "idMessage, idTag", "idMessage, idTag, idUtente", "idTag", "idTag, idUtente"})
+@DynamicUpdate
 public class MessageTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
