@@ -31,6 +31,20 @@ public class PathPermission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static enum MethodBits {
+        //Constants with values
+        GET(1), PATCH(2),  POST(4), PUT(8), DELETE(16);
+        //Instance variable
+        private int bit;
+        //Constructor to initialize the instance variable
+        MethodBits(int bit) {
+           this.bit = bit;
+        }
+        public int getBit() {
+           return this.bit;
+        }
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

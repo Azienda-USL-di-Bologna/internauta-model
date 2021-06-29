@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -34,6 +35,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "tags", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({})
+@DynamicUpdate
 public class Tag implements Serializable {
 
     public static enum TagType {
