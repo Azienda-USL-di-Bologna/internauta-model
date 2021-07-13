@@ -3,12 +3,14 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.repositories.JsonType;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -149,8 +151,6 @@ public class DocList implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_registrazione")
-    @Basic(optional = false)
-    @NotNull
     private ZonedDateTime dataRegistrazione;
     
     @Column(name = "numero_registrazione")
@@ -162,8 +162,6 @@ public class DocList implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_pubblicazione")
-    @Basic(optional = false)
-    @NotNull
     private ZonedDateTime dataPubblicazione;
     
     @Size(max = 2147483647)
@@ -235,7 +233,7 @@ public class DocList implements Serializable {
     private Double rankingMittente;
     
     @JoinColumn(name = "id_mezzo_ricezione", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Mezzo idMezzoRicezione;
     
     @Size(max = 2147483647)
@@ -254,7 +252,7 @@ public class DocList implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "persone_vedenti", columnDefinition = "jsonb")
-    private List<PersonaVedente> personeVedenti;
+    private List<JsonNode> personeVedenti;
         
     @Column(name = "id_strutture_firmatari", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
@@ -611,11 +609,11 @@ public class DocList implements Serializable {
     }
 
     public List<PersonaVedente> getPersoneVedenti() {
-        return personeVedenti;
+        return (List<PersonaVedente>) (List<?>) personeVedenti;
     }
 
     public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
-        this.personeVedenti = personeVedenti;
+        this.personeVedenti = (List<JsonNode>)(List<?>) personeVedenti;
     }
 
     public Integer[] getIdStruttureFirmatari() {
