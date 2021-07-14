@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -24,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "ruoli", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({})
+@DynamicUpdate
 public class Ruolo implements Serializable {
     
     public static enum CodiciRuolo {

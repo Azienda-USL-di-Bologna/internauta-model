@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -46,6 +47,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", 
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList"
 })
+@DynamicUpdate
 public class Doc implements Serializable {
 
     private static final long serialVersionUID = 1L;

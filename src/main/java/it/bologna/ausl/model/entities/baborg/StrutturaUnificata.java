@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -29,6 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "strutture_unificate", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @GenerateProjections({"idStrutturaDestinazione, idStrutturaSorgente"})
+@DynamicUpdate
 public class StrutturaUnificata implements Serializable {
 
     private static final long serialVersionUID = 1L;

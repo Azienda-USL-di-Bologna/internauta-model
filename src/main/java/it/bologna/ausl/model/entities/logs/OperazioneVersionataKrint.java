@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 
 /**
  *
@@ -31,6 +32,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "operazioni_versionate_krint", catalog = "internauta", schema = "logs")
 @GenerateProjections({})
+@DynamicUpdate
 public class OperazioneVersionataKrint implements Serializable {
 
     private static final long serialVersionUID = 1L;

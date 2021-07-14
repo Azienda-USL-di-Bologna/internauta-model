@@ -24,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -41,6 +42,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @TypeDefs({
     @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 })
+@DynamicUpdate
 public class UserAccess implements Serializable {
 
     private static final long serialVersionUID = 1L;

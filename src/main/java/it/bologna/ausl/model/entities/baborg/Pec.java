@@ -30,6 +30,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -41,6 +42,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @GenerateProjections({"folderList", "folderList, pecAziendaList", "folderList, pecAziendaList, tagList", "folderList, tagList",
     "idPecProvider", "tagList"})
+@DynamicUpdate
 public class Pec implements Serializable {
 
     private static final long serialVersionUID = 1L;

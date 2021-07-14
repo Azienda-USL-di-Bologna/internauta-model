@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -29,6 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "storico_relazioni", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({"idStrutturaFiglia", "idStrutturaFiglia, idStrutturaPadre", "idStrutturaPadre"})
+@DynamicUpdate
 public class StoricoRelazione implements Serializable {
 
     private static final long serialVersionUID = 1L;

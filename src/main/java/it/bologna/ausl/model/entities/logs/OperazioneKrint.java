@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -24,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "operazioni_krint", catalog = "internauta", schema = "logs")
 @GenerateProjections({})
+@DynamicUpdate
 public class OperazioneKrint implements Serializable {
     
     public static enum CodiceOperazione{
