@@ -608,11 +608,11 @@ public class DocList implements Serializable {
     }
 
     public List<PersonaVedente> getPersoneVedenti() {
-        return (List<PersonaVedente>) (List<?>) personeVedenti;
+        return (List<PersonaVedente>) (Object) personeVedenti;
     }
 
     public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
-        this.personeVedenti = (List<JsonNode>)(List<?>) personeVedenti;
+        this.personeVedenti = (List<JsonNode>)(Object) personeVedenti;
     }
 
     public Integer[] getIdStruttureFirmatari() {
