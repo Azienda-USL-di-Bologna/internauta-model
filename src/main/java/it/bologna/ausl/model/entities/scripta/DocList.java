@@ -3,7 +3,9 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
@@ -608,7 +610,8 @@ public class DocList implements Serializable {
     }
 
     public List<PersonaVedente> getPersoneVedenti() {
-        return (List<PersonaVedente>) (Object) personeVedenti;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return  objectMapper.convertValue(personeVedenti, new TypeReference<List<DocList.PersonaVedente>>(){});
     }
 
     public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
