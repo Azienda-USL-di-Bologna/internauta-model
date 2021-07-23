@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
@@ -14,7 +13,6 @@ import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -34,6 +32,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -205,6 +204,17 @@ public class Contatto implements Serializable {
     
     @Transient
     private List<Contatto> contattiContenuti;
+    
+    @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
+    private Double ranking;
+    
+    public Double getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Double ranking) {
+        this.ranking = ranking;
+    }
 
     public List<Contatto> getContattiContenuti() {
         return contattiContenuti;
