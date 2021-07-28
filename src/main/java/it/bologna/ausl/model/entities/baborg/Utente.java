@@ -174,6 +174,9 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
 
     @Transient
     private Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda;
+    
+    @Transient
+    private Integer[] struttureDelSegretario;
 
     @Transient
     private Utente utenteReale;
@@ -369,6 +372,14 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
 
     public void setPermessiDiFlussoByCodiceAzienda(Map<String, List<PermessoEntitaStoredProcedure>> permessiDiFlussoByCodiceAzienda) {
         this.permessiDiFlussoByCodiceAzienda = permessiDiFlussoByCodiceAzienda;
+    }
+
+    public Integer[] getStruttureDelSegretario() {
+        return struttureDelSegretario;
+    }
+
+    public void setStruttureDelSegretario(Integer[] struttureDelSegretario) {
+        this.struttureDelSegretario = struttureDelSegretario;
     }
 
     public List<PermessoEntitaStoredProcedure> getPermessiDiFlussoByIdUtente() {

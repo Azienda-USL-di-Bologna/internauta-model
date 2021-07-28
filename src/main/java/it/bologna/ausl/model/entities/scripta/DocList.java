@@ -81,7 +81,14 @@ public class DocList implements Serializable {
 	DSC,
 	SMISTAMENTO,
 	SPEDIZIONE,
-	FINE
+	FINE,
+        NUMERAZIONE,
+        REGISTRAZIONE_PROTOCOLLO,
+        AVVIA_SPEDIZIONI,
+        ASPETTA_SPEDIZIONI,
+        ATTENDI_JOBS,
+        CONTROLLO_SEGRETERIA,
+        SPEDIZIONE_MANUALE
     }
 
     public static enum StatoUfficioAtti {
