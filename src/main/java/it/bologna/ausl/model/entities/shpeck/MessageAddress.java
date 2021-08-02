@@ -36,7 +36,7 @@ public class MessageAddress implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static enum AddressRoleType {
-        FROM, TO, CC
+        FROM, TO, CC, REPLY_TO
     }
 
     @Id
