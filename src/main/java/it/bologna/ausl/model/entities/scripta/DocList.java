@@ -27,6 +27,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -278,6 +279,10 @@ public class DocList implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
+    // Proprietà transient
+    @Transient
+    private String urlComplete;
+    
     public DocList() {
     }
 
@@ -689,8 +694,14 @@ public class DocList implements Serializable {
         this.ranking = ranking;
     }
 
-    
-    
+    public String getUrlComplete() {
+        return urlComplete;
+    }
+
+    public void setUrlComplete(String urlComplete) {
+        this.urlComplete = urlComplete;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
