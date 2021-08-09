@@ -2,11 +2,11 @@ package it.bologna.ausl.model.entities.diagnostica;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.nextsw.common.annotations.GenerateProjections;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,16 +16,22 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author Spritz
  */
+@TypeDefs({
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
 @Entity
 @Table(name = "report", catalog = "internauta", schema = "diagnostica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@GenerateProjections({})
+@Cacheable(false)
 @DynamicUpdate
 public class Report implements Serializable {
 
@@ -43,26 +49,21 @@ public class Report implements Serializable {
     @Column(name = "tipologia")
     private String tipologia;
 
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
 
-    @Column(name = "additional_data")
+    @Type(type = "jsonb")
+    @Column(name = "additional_data", columnDefinition = "jsonb")
     private String additionalData;
 
-    @Basic(optional = false)
     @Column(name = "risolto")
     private Boolean risolto = false;
 
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "in_attesa_di_risoluzione")
     private Boolean inAttesaDiRisoluzione = false;
 
-    @Basic(optional = false)
     @Column(name = "data_risoluzione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
