@@ -52,7 +52,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda"
+    "idAzienda",
+    "idAzienda,idPersonaResponsabileProcedimento"
 })
 @DynamicUpdate
 public class DocList implements Serializable {
