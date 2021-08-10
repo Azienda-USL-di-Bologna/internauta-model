@@ -142,6 +142,9 @@ public class Persona implements Serializable, EntityInterface {
     @JsonBackReference(value = "importazioniOrganigrammaList")
     private List<ImportazioniOrganigramma> importazioniOrganigrammaList;
 
+    @Column(name = "id_secondario", columnDefinition = "text")
+    private String idSecondario;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -336,6 +339,14 @@ public class Persona implements Serializable, EntityInterface {
 
     public void setIdAziendaDefault(Azienda idAziendaDefault) {
         this.idAziendaDefault = idAziendaDefault;
+    }
+
+    public String getIdSecondario() {
+        return idSecondario;
+    }
+
+    public void setIdSecondario(String idSecondario) {
+        this.idSecondario = idSecondario;
     }
 
     @Override

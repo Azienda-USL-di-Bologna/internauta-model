@@ -52,8 +52,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda",
-    "idAzienda,idPersonaResponsabileProcedimento"
+    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione"
 })
 @DynamicUpdate
 public class DocList implements Serializable {
@@ -187,13 +186,13 @@ public class DocList implements Serializable {
 
     @Type(type = "jsonb")
     @Column(name = "firmatari", columnDefinition = "jsonb")
-    private List<Firmatari> firmatari;
+    private List<JsonNode> firmatari;
 
 //    @Column(name = "firmatari_tscol", columnDefinition = "tsvector")
 //    private String firmatariTscol;
-    @Size(max = 2147483647)
-    @Column(name = "destinatari")
-    private String destinatari;
+    @Type(type = "jsonb")
+    @Column(name = "destinatari", columnDefinition = "jsonb")
+    private List<Destinatario> destinatari;
 
     @Column(name = "destinatari_tscol", columnDefinition = "tsvector")
     private String destinatariTscol;
@@ -467,12 +466,14 @@ public class DocList implements Serializable {
         this.oggettoTscol = oggettoTscol;
     }
 
-    public List<Firmatari> getFirmatari() {
-        return firmatari;
+    public List<Firmatario> getFirmatari() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(firmatari, new TypeReference<List<DocList.Firmatario>>() {
+        });
     }
 
-    public void setFirmatari(List<Firmatari> firmatari) {
-        this.firmatari = firmatari;
+    public void setFirmatari(List<Firmatario> firmatari) {
+        this.firmatari = (List<JsonNode>) (Object) firmatari;
     }
 
 //    public String getFirmatariTscol() {
@@ -482,11 +483,11 @@ public class DocList implements Serializable {
 //    public void setFirmatariTscol(String firmatariTscol) {
 //        this.firmatariTscol = firmatariTscol;
 //    }
-    public String getDestinatari() {
+    public List<Destinatario> getDestinatari() {
         return destinatari;
     }
 
-    public void setDestinatari(String destinatari) {
+    public void setDestinatari(List<Destinatario> destinatari) {
         this.destinatari = destinatari;
     }
 
@@ -764,7 +765,7 @@ public class DocList implements Serializable {
         }
     }
 
-    public static class Firmatari {
+    public static class Firmatario {
 
         String descrizione;
         Integer idPersona;
@@ -783,6 +784,37 @@ public class DocList implements Serializable {
 
         public void setIdPersona(Integer idPersona) {
             this.idPersona = idPersona;
+        }
+    }
+    
+    public static class Destinatario {
+
+        String nome;
+        String indirizzo;
+        String tipo;
+
+        public String getNome() {
+            return nome;
+        }
+
+        public void setNome(String nome) {
+            this.nome = nome;
+        }
+
+        public String getIndirizzo() {
+            return indirizzo;
+        }
+
+        public void setIndirizzo(String indirizzo) {
+            this.indirizzo = indirizzo;
+        }
+
+        public String getTipo() {
+            return tipo;
+        }
+
+        public void setTipo(String tipo) {
+            this.tipo = tipo;
         }
     }
 
