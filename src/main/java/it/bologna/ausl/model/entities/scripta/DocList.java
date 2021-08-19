@@ -90,7 +90,8 @@ public class DocList implements Serializable {
         ASPETTA_SPEDIZIONI,
         ATTENDI_JOBS,
         CONTROLLO_SEGRETERIA,
-        SPEDIZIONE_MANUALE
+        SPEDIZIONE_MANUALE,
+        APPROVAZIONE
     }
 
     public static enum StatoUfficioAtti {
