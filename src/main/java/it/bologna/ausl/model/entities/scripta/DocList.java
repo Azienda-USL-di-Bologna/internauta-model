@@ -268,6 +268,10 @@ public class DocList implements Serializable {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idStruttureSegreteria;
 
+    @Column(name = "sulla_scrivania_di", columnDefinition = "jsonb")
+    @Type(type = "jsonb")
+    private List<JsonNode> sullaScrivaniaDi;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_inserimento_riga")
@@ -287,7 +291,6 @@ public class DocList implements Serializable {
     // Proprietà transient
     @Transient
     private String urlComplete;
-    
 
     public DocList() {
     }
@@ -638,6 +641,16 @@ public class DocList implements Serializable {
         this.personeVedenti = (List<JsonNode>) (Object) personeVedenti;
     }
 
+    public List<PersonaUsante> getSullaScrivaniaDi() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(sullaScrivaniaDi, new TypeReference<List<DocList.PersonaUsante>>() {
+        });
+    }
+
+    public void setSullaScrivaniaDi(List<PersonaUsante> sullaScrivaniaDi) {
+        this.sullaScrivaniaDi = (List<JsonNode>) (Object) sullaScrivaniaDi;
+    }
+
     public Integer[] getIdStruttureSegreteria() {
         return idStruttureSegreteria;
     }
@@ -787,7 +800,7 @@ public class DocList implements Serializable {
             this.idPersona = idPersona;
         }
     }
-    
+
     public static class Destinatario {
 
         String nome;
@@ -881,6 +894,29 @@ public class DocList implements Serializable {
         }
     }
 
+    public static class PersonaUsante {
+
+        Integer idPersona;
+        String descrizione;
+
+        public Integer getIdPersona() {
+            return idPersona;
+        }
+
+        public void setIdPersona(Integer idPersona) {
+            this.idPersona = idPersona;
+        }
+
+        public String getDescrizione() {
+            return descrizione;
+        }
+
+        public void setDescrizione(String descrizione) {
+            this.descrizione = descrizione;
+        }
+
+    }
+
     public Applicazione getIdApplicazione() {
         return idApplicazione;
     }
@@ -888,4 +924,5 @@ public class DocList implements Serializable {
     public void setIdApplicazione(Applicazione idApplicazione) {
         this.idApplicazione = idApplicazione;
     }
+
 }
