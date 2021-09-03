@@ -11,6 +11,7 @@ import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
+import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -27,6 +28,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -50,38 +52,46 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda"
+    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione"
 })
 @DynamicUpdate
 public class DocList implements Serializable {
-    
+
     public static enum TipologiaDoc {
         PROTOCOLLO_IN_USCITA,
         PROTOCOLLO_IN_ENTRATA,
         DETERMINA,
         DELIBERA
     }
-    
+
     public static enum CommandType {
         ROUTING,
         COMPONENT,
         URL
     }
-    
+
     public static enum StatoDoc {
         REDAZIONE,
-	CLASSIFICAZIONE,
-	PARERE,
-	VISTA,
-	FIRMA,
-	UFFICIO_ATTI,
-	DG,
-	DS,
-	DA,
-	DSC,
-	SMISTAMENTO,
-	SPEDIZIONE,
-	FINE
+        CLASSIFICAZIONE,
+        PARERE,
+        VISTA,
+        FIRMA,
+        UFFICIO_ATTI,
+        DG,
+        DS,
+        DA,
+        DSC,
+        SMISTAMENTO,
+        SPEDIZIONE,
+        FINE,
+        NUMERAZIONE,
+        REGISTRAZIONE_PROTOCOLLO,
+        AVVIA_SPEDIZIONI,
+        ASPETTA_SPEDIZIONI,
+        ATTENDI_JOBS,
+        CONTROLLO_SEGRETERIA,
+        SPEDIZIONE_MANUALE,
+        APPROVAZIONE
     }
 
     public static enum StatoUfficioAtti {
@@ -96,180 +106,191 @@ public class DocList implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
-    
+
     @Size(max = 2147483647)
     @Column(name = "guid_documento")
     private String guidDocumento;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipologia")
     private String tipologia;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "open_command")
     private String openCommand;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "command_type")
     private String commandType;
-    
+
     @JoinColumn(name = "id_persona_responsabile_procedimento", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Persona idPersonaResponsabileProcedimento;
-    
+
     @JoinColumn(name = "id_persona_redattrice", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Persona idPersonaRedattrice;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_creazione")
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione;
-    
+
     @Column(name = "numero_proposta")
     private Integer numeroProposta;
-    
+
     @Column(name = "anno_proposta")
     private Integer annoProposta;
-    
+
     @JoinColumn(name = "id_struttura_registrazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idStrutturaRegistrazione")
     private Struttura idStrutturaRegistrazione;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_registrazione")
     private ZonedDateTime dataRegistrazione;
-    
+
     @Column(name = "numero_registrazione")
     private Integer numeroRegistrazione;
-    
+
     @Column(name = "anno_registrazione")
     private Integer annoRegistrazione;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_pubblicazione")
     private ZonedDateTime dataPubblicazione;
-    
+
     @Size(max = 2147483647)
     @Column(name = "oggetto")
     private String oggetto;
-    
+
     @Column(name = "oggetto_tscol", columnDefinition = "tsvector")
     private String oggettoTscol;
-    
+
     @Formula("(select ts_rank(oggetto_tscol, to_tsquery('italian',$${oggetto_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double rankingOggetto;
 
     @Type(type = "jsonb")
     @Column(name = "firmatari", columnDefinition = "jsonb")
-    private List<Firmatari> firmatari;
-    
+    private List<JsonNode> firmatari;
+
 //    @Column(name = "firmatari_tscol", columnDefinition = "tsvector")
 //    private String firmatariTscol;
-    
-    @Size(max = 2147483647)
-    @Column(name = "destinatari")
-    private String destinatari;
-    
+    @Type(type = "jsonb")
+    @Column(name = "destinatari", columnDefinition = "jsonb")
+    private List<Destinatario> destinatari;
+
     @Column(name = "destinatari_tscol", columnDefinition = "tsvector")
     private String destinatariTscol;
-    
+
     @Formula("(select ts_rank(destinatari_tscol, to_tsquery('italian',$${destinatari_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double rankingDestinatari;
-    
+
     @Type(type = "jsonb")
     @Column(name = "fascicolazioni", columnDefinition = "jsonb")
     private List<Fascicolazione> fascicolazioni;
-    
+
     @Column(name = "fascicolazioni_tscol", columnDefinition = "tsvector")
     private String fascicolazioniTscol;
-    
+
     @Formula("(select ts_rank(fascicolazioni_tscol, to_tsquery('italian',$${fascicolazioni_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double rankingFascicolazioni;
-    
+
     @Type(type = "jsonb")
     @Column(name = "classificazioni", columnDefinition = "jsonb")
     private List<Classificazione> classificazioni;
-    
+
     @Size(max = 2147483647)
     @Column(name = "stato")
     private String stato;
-    
+
     @Column(name = "visibilita_limitata")
     private Boolean visibilitaLimitata;
-    
+
     @Column(name = "riservato")
     private Boolean riservato;
-    
+
     @Column(name = "annullato")
     private Boolean annullato;
-    
+
     @Size(max = 2147483647)
     @Column(name = "protocollo_esterno")
     private String protocolloEsterno;
-    
+
     @Size(max = 2147483647)
     @Column(name = "mittente")
     private String mittente;
-    
+
     @Column(name = "mittente_tscol", columnDefinition = "tsvector")
     private String mittenteTscol;
-    
+
     @Formula("(select ts_rank(mittente_tscol, to_tsquery('italian',$${mittente_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double rankingMittente;
-    
+
     @JoinColumn(name = "id_mezzo_ricezione", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Mezzo idMezzoRicezione;
-    
+
     @Size(max = 2147483647)
     @Column(name = "mail_collegio")
     private String mailCollegio;
-    
+
     @Size(max = 2147483647)
     @Column(name = "stato_ufficio_atti")
     private String statoUfficioAtti;
-    
+
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
-    
+
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
-    
+
     @Type(type = "jsonb")
     @Column(name = "persone_vedenti", columnDefinition = "jsonb")
     private List<JsonNode> personeVedenti;
-        
-    @Column(name = "id_strutture_firmatari", columnDefinition = "integer[]")
+
+    @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
-    private Integer[] idStruttureFirmatari;
-    
+    private Integer[] idStruttureSegreteria;
+
+    @Column(name = "sulla_scrivania_di", columnDefinition = "jsonb")
+    @Type(type = "jsonb")
+    private List<JsonNode> sullaScrivaniaDi;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_inserimento_riga")
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
-    
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+
+    @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idApplicazione")
+    private Applicazione idApplicazione;
+    // Proprietà transient
+    @Transient
+    private String urlComplete;
 
     public DocList() {
     }
@@ -449,12 +470,14 @@ public class DocList implements Serializable {
         this.oggettoTscol = oggettoTscol;
     }
 
-    public List<Firmatari> getFirmatari() {
-        return firmatari;
+    public List<Firmatario> getFirmatari() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(firmatari, new TypeReference<List<DocList.Firmatario>>() {
+        });
     }
 
-    public void setFirmatari(List<Firmatari> firmatari) {
-        this.firmatari = firmatari;
+    public void setFirmatari(List<Firmatario> firmatari) {
+        this.firmatari = (List<JsonNode>) (Object) firmatari;
     }
 
 //    public String getFirmatariTscol() {
@@ -464,12 +487,11 @@ public class DocList implements Serializable {
 //    public void setFirmatariTscol(String firmatariTscol) {
 //        this.firmatariTscol = firmatariTscol;
 //    }
-
-    public String getDestinatari() {
+    public List<Destinatario> getDestinatari() {
         return destinatari;
     }
 
-    public void setDestinatari(String destinatari) {
+    public void setDestinatari(List<Destinatario> destinatari) {
         this.destinatari = destinatari;
     }
 
@@ -611,19 +633,30 @@ public class DocList implements Serializable {
 
     public List<PersonaVedente> getPersoneVedenti() {
         ObjectMapper objectMapper = new ObjectMapper();
-        return  objectMapper.convertValue(personeVedenti, new TypeReference<List<DocList.PersonaVedente>>(){});
+        return objectMapper.convertValue(personeVedenti, new TypeReference<List<DocList.PersonaVedente>>() {
+        });
     }
 
     public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
-        this.personeVedenti = (List<JsonNode>)(Object) personeVedenti;
+        this.personeVedenti = (List<JsonNode>) (Object) personeVedenti;
     }
 
-    public Integer[] getIdStruttureFirmatari() {
-        return idStruttureFirmatari;
+    public List<PersonaUsante> getSullaScrivaniaDi() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(sullaScrivaniaDi, new TypeReference<List<DocList.PersonaUsante>>() {
+        });
     }
 
-    public void setIdStruttureFirmatari(Integer[] idStruttureFirmatari) {
-        this.idStruttureFirmatari = idStruttureFirmatari;
+    public void setSullaScrivaniaDi(List<PersonaUsante> sullaScrivaniaDi) {
+        this.sullaScrivaniaDi = (List<JsonNode>) (Object) sullaScrivaniaDi;
+    }
+
+    public Integer[] getIdStruttureSegreteria() {
+        return idStruttureSegreteria;
+    }
+
+    public void setIdStruttureSegreteria(Integer[] idStruttureSegreteria) {
+        this.idStruttureSegreteria = idStruttureSegreteria;
     }
 
     public ZonedDateTime getDataInserimentoRiga() {
@@ -682,8 +715,14 @@ public class DocList implements Serializable {
         this.ranking = ranking;
     }
 
-    
-    
+    public String getUrlComplete() {
+        return urlComplete;
+    }
+
+    public void setUrlComplete(String urlComplete) {
+        this.urlComplete = urlComplete;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -708,8 +747,9 @@ public class DocList implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.scripta.DocsList[ id=" + id + " ]";
     }
-    
+
     public static class Fascicolazione {
+
         String nome;
         String numerazione;
         String idFascicoloArgo;
@@ -738,8 +778,9 @@ public class DocList implements Serializable {
             this.idFascicoloArgo = idFascicoloArgo;
         }
     }
-    
-    public static class Firmatari {
+
+    public static class Firmatario {
+
         String descrizione;
         Integer idPersona;
 
@@ -757,10 +798,42 @@ public class DocList implements Serializable {
 
         public void setIdPersona(Integer idPersona) {
             this.idPersona = idPersona;
-        } 
+        }
     }
-    
+
+    public static class Destinatario {
+
+        String nome;
+        String indirizzo;
+        String tipo;
+
+        public String getNome() {
+            return nome;
+        }
+
+        public void setNome(String nome) {
+            this.nome = nome;
+        }
+
+        public String getIndirizzo() {
+            return indirizzo;
+        }
+
+        public void setIndirizzo(String indirizzo) {
+            this.indirizzo = indirizzo;
+        }
+
+        public String getTipo() {
+            return tipo;
+        }
+
+        public void setTipo(String tipo) {
+            this.tipo = tipo;
+        }
+    }
+
     public static class Classificazione {
+
         String nome;
         String numerazione;
 
@@ -780,8 +853,9 @@ public class DocList implements Serializable {
             this.numerazione = numerazione;
         }
     }
-    
+
     public static class PersonaVedente {
+
         Integer idPersona;
         Boolean mioDocumento;
         Boolean pienaVisibilita;
@@ -817,6 +891,38 @@ public class DocList implements Serializable {
 
         public void setModalitaApertura(String modalitaApertura) {
             this.modalitaApertura = modalitaApertura;
-        }  
+        }
     }
+
+    public static class PersonaUsante {
+
+        Integer idPersona;
+        String descrizione;
+
+        public Integer getIdPersona() {
+            return idPersona;
+        }
+
+        public void setIdPersona(Integer idPersona) {
+            this.idPersona = idPersona;
+        }
+
+        public String getDescrizione() {
+            return descrizione;
+        }
+
+        public void setDescrizione(String descrizione) {
+            this.descrizione = descrizione;
+        }
+
+    }
+
+    public Applicazione getIdApplicazione() {
+        return idApplicazione;
+    }
+
+    public void setIdApplicazione(Applicazione idApplicazione) {
+        this.idApplicazione = idApplicazione;
+    }
+
 }

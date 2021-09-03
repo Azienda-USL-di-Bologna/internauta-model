@@ -6,7 +6,6 @@ import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -43,7 +42,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "utenti_strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@GenerateProjections({"idAfferenzaStruttura, idStruttura", "idAfferenzaStruttura", "idAfferenzaStruttura, idDettaglioContatto, idStruttura", "idAfferenzaStruttura, idUtente", "idStruttura"})
+@GenerateProjections({
+    "idAfferenzaStruttura, idStruttura", 
+    "idAfferenzaStruttura", 
+    "idAfferenzaStruttura, idDettaglioContatto, idStruttura", 
+    "idAfferenzaStruttura, idUtente", 
+    "idStruttura",
+    "idAfferenzaStruttura, idUtente, idStruttura, idStrutturaVeicolante", 
+})
 @DynamicUpdate
 public class UtenteStruttura implements Serializable {
 
@@ -97,6 +103,10 @@ public class UtenteStruttura implements Serializable {
     @NotNull
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
+    
+    @JoinColumn(name = "id_struttura_veicolante", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Struttura idStrutturaVeicolante;
     
     @Transient
     private List<Ruolo> ruoliUtenteStruttura;
@@ -210,6 +220,14 @@ public class UtenteStruttura implements Serializable {
 
     public void setRuoliUtenteStruttura(List<Ruolo> ruoliUtenteStruttura) {
         this.ruoliUtenteStruttura = ruoliUtenteStruttura;
+    }
+
+    public Struttura getIdStrutturaVeicolante() {
+        return idStrutturaVeicolante;
+    }
+
+    public void setIdStrutturaVeicolante(Struttura idStrutturaVeicolante) {
+        this.idStrutturaVeicolante = idStrutturaVeicolante;
     }
 
     @Override
