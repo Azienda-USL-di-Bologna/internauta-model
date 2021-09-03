@@ -105,7 +105,7 @@ public class UtenteStruttura implements Serializable {
     private Integer bitRuoli;
     
     @JoinColumn(name = "id_struttura_veicolante", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Struttura idStrutturaVeicolante;
     
     @Transient
