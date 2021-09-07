@@ -753,6 +753,7 @@ public class DocList implements Serializable {
         String nome;
         String numerazione;
         String idFascicoloArgo;
+        String idFascicoloRadiceArgo;
 
         public String getNome() {
             return nome;
@@ -777,6 +778,15 @@ public class DocList implements Serializable {
         public void setIdFascicoloArgo(String idFascicoloArgo) {
             this.idFascicoloArgo = idFascicoloArgo;
         }
+
+        public String getIdFascicoloRadiceArgo() {
+            return idFascicoloRadiceArgo;
+        }
+
+        public void setIdFascicoloRadiceArgo(String idFascicoloRadiceArgo) {
+            this.idFascicoloRadiceArgo = idFascicoloRadiceArgo;
+        }
+        
     }
 
     public static class Firmatario {
