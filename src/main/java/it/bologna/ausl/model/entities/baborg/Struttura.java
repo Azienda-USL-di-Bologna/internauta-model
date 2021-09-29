@@ -9,7 +9,6 @@ import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -138,6 +137,9 @@ public class Struttura implements Serializable {
     @Basic(optional = true)
     @Column(name = "id_casella")
     private Integer idCasella;
+    
+    @Column(name = "id_casella_padre")
+    private Integer idCasellaPadre;
     
     @Transient
     @QueryType(PropertyType.SIMPLE)
@@ -467,6 +469,14 @@ public class Struttura implements Serializable {
         this.idCasella = idCasella;
     }
 
+    public Integer getIdCasellaPadre() {
+        return idCasellaPadre;
+    }
+
+    public void setIdCasellaPadre(Integer idCasellaPadre) {
+        this.idCasellaPadre = idCasellaPadre;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

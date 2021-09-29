@@ -1,4 +1,4 @@
-package it.bologna.ausl.model.entities.configuration;
+package it.bologna.ausl.model.entities.configurazione;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
