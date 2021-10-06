@@ -130,6 +130,19 @@ public class Pec implements Serializable {
     @NotNull
     @Column(name = "is_pec")
     private Boolean isPec = false;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "publicata_IPA")
+    private Boolean publicataIPA = false;
+
+    public Boolean getPublicataIPA() {
+        return publicataIPA;
+    }
+
+    public void setPublicataIPA(Boolean publicataIPA) {
+        this.publicataIPA = publicataIPA;
+    }
 
     @Basic(optional = false)
     @NotNull
