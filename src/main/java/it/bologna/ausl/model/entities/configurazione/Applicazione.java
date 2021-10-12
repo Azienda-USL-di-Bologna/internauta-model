@@ -39,7 +39,7 @@ public class Applicazione implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static enum Applicazioni {
-        scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo, rubrica, scripta, ngipi
+        scrivania, babel, deli, dete, procton, verba, ribaltorg, pecg, gedi, baborg, gipi, shpeck, firmone, myaliseo, rubrica, scripta, ngipi, sai
     }
 
     public static enum ApplicazioniIntimus {
