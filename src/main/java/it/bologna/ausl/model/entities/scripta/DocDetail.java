@@ -27,12 +27,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -48,14 +51,15 @@ import org.springframework.format.annotation.DateTimeFormat;
     @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 })
 @Entity
-@Table(name = "docs_list", catalog = "internauta", schema = "scripta")
+@Table(name = "docs_detail", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione"
+//    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione",
+//    "personeVedentiList"
 })
 @DynamicUpdate
-public class DocList implements Serializable {
+public class DocDetail implements Serializable {
 
     public static enum TipologiaDoc {
         PROTOCOLLO_IN_USCITA,
@@ -260,9 +264,14 @@ public class DocList implements Serializable {
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
 
-    @Type(type = "jsonb")
-    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
-    private List<JsonNode> personeVedenti;
+//    @Type(type = "jsonb")
+//    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
+//    private List<JsonNode> personeVedenti;
+    
+    //@JsonBackReference(value = "personeVedentiList")
+    @OneToMany(mappedBy = "idDocDetail")
+    @Fetch(FetchMode.JOIN)
+    private List<PersonaVedente> personeVedentiList;
 
     @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
@@ -292,14 +301,14 @@ public class DocList implements Serializable {
     @Transient
     private String urlComplete;
 
-    public DocList() {
+    public DocDetail() {
     }
 
-    public DocList(Integer id) {
+    public DocDetail(Integer id) {
         this.id = id;
     }
 
-    public DocList(Integer id, Azienda idAzienda, String tipologia, String openCommand, String commandType, ZonedDateTime dataCreazione, ZonedDateTime dataInserimentoRiga, ZonedDateTime version) {
+    public DocDetail(Integer id, Azienda idAzienda, String tipologia, String openCommand, String commandType, ZonedDateTime dataCreazione, ZonedDateTime dataInserimentoRiga, ZonedDateTime version) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.tipologia = tipologia;
@@ -472,7 +481,7 @@ public class DocList implements Serializable {
 
     public List<Firmatario> getFirmatari() {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(firmatari, new TypeReference<List<DocList.Firmatario>>() {
+        return objectMapper.convertValue(firmatari, new TypeReference<List<DocDetail.Firmatario>>() {
         });
     }
 
@@ -631,19 +640,27 @@ public class DocList implements Serializable {
         this.tscol = tscol;
     }
 
-    public List<PersonaVedente> getPersoneVedenti() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(personeVedenti, new TypeReference<List<DocList.PersonaVedente>>() {
-        });
+//    public List<PersonaVedente> getPersoneVedenti() {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        return objectMapper.convertValue(personeVedenti, new TypeReference<List<DocList.PersonaVedente>>() {
+//        });
+//    }
+//
+//    public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
+//        this.personeVedenti = (List<JsonNode>) (Object) personeVedenti;
+//    }
+
+    public List<PersonaVedente> getPersoneVedentiList() {
+        return personeVedentiList;
     }
 
-    public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
-        this.personeVedenti = (List<JsonNode>) (Object) personeVedenti;
+    public void setPersoneVedentiList(List<PersonaVedente> personeVedentiList) {
+        this.personeVedentiList = personeVedentiList;
     }
-
+    
     public List<PersonaUsante> getSullaScrivaniaDi() {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(sullaScrivaniaDi, new TypeReference<List<DocList.PersonaUsante>>() {
+        return objectMapper.convertValue(sullaScrivaniaDi, new TypeReference<List<DocDetail.PersonaUsante>>() {
         });
     }
 
@@ -733,10 +750,10 @@ public class DocList implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DocList)) {
+        if (!(object instanceof DocDetail)) {
             return false;
         }
-        DocList other = (DocList) object;
+        DocDetail other = (DocDetail) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -864,45 +881,45 @@ public class DocList implements Serializable {
         }
     }
 
-    public static class PersonaVedente {
-
-        Integer idPersona;
-        Boolean mioDocumento;
-        Boolean pienaVisibilita;
-        String modalitaApertura;
-
-        public Integer getIdPersona() {
-            return idPersona;
-        }
-
-        public void setIdPersona(Integer idPersona) {
-            this.idPersona = idPersona;
-        }
-
-        public Boolean getMioDocumento() {
-            return mioDocumento;
-        }
-
-        public void setMioDocumento(Boolean mioDocumento) {
-            this.mioDocumento = mioDocumento;
-        }
-
-        public Boolean getPienaVisibilita() {
-            return pienaVisibilita;
-        }
-
-        public void setPienaVisibilita(Boolean pienaVisibilita) {
-            this.pienaVisibilita = pienaVisibilita;
-        }
-
-        public String getModalitaApertura() {
-            return modalitaApertura;
-        }
-
-        public void setModalitaApertura(String modalitaApertura) {
-            this.modalitaApertura = modalitaApertura;
-        }
-    }
+//    public static class PersonaVedente {
+//
+//        Integer idPersona;
+//        Boolean mioDocumento;
+//        Boolean pienaVisibilita;
+//        String modalitaApertura;
+//
+//        public Integer getIdPersona() {
+//            return idPersona;
+//        }
+//
+//        public void setIdPersona(Integer idPersona) {
+//            this.idPersona = idPersona;
+//        }
+//
+//        public Boolean getMioDocumento() {
+//            return mioDocumento;
+//        }
+//
+//        public void setMioDocumento(Boolean mioDocumento) {
+//            this.mioDocumento = mioDocumento;
+//        }
+//
+//        public Boolean getPienaVisibilita() {
+//            return pienaVisibilita;
+//        }
+//
+//        public void setPienaVisibilita(Boolean pienaVisibilita) {
+//            this.pienaVisibilita = pienaVisibilita;
+//        }
+//
+//        public String getModalitaApertura() {
+//            return modalitaApertura;
+//        }
+//
+//        public void setModalitaApertura(String modalitaApertura) {
+//            this.modalitaApertura = modalitaApertura;
+//        }
+//    }
 
     public static class PersonaUsante {
 
