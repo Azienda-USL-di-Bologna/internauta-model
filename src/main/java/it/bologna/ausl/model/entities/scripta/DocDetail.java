@@ -51,12 +51,11 @@ import org.springframework.format.annotation.DateTimeFormat;
     @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 })
 @Entity
-@Table(name = "docs_detail", catalog = "internauta", schema = "scripta")
+@Table(name = "docs_details", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-//    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione",
-//    "personeVedentiList"
+    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione,personeVedentiList"      
 })
 @DynamicUpdate
 public class DocDetail implements Serializable {
