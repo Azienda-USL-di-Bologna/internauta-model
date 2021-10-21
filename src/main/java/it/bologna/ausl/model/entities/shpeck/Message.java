@@ -228,6 +228,26 @@ public class Message implements Serializable {
         this.id = id;
     }
 
+    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveTime) {
+        this.id = id;
+        this.uuidMessage = uuidMessage;
+        this.idPec = idPec;
+        this.idApplicazione = idApplicazione;
+        this.idRelated = idRelated;
+        this.subject = subject;
+        this.messageStatus = messageStatus;
+        this.inOut = inOut;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.messageType = messageType;
+        this.isPec = isPec;
+        this.attachmentsNumber = attachmentsNumber;
+        this.uuidRepository = uuidMongo;
+        this.pathRepository = mongoPath;
+        this.name = name;
+        this.receiveTime = receiveTime;
+    }
+    
     public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveTime, ZonedDateTime receiveDateProvider) {
         this.id = id;
         this.uuidMessage = uuidMessage;
