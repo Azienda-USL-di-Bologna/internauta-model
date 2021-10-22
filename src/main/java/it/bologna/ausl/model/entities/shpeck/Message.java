@@ -7,6 +7,7 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configuration.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -137,6 +138,13 @@ public class Message implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime receiveTime = LocalDateTime.now();
+    
+    @Basic(optional = true)
+    @NotNull
+    @Column(name = "receive_date_provider")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private ZonedDateTime receiveDateProvider = ZonedDateTime.now();
 
     @Size(max = 2147483647)
     @Column(name = "external_id")
@@ -239,6 +247,27 @@ public class Message implements Serializable {
         this.name = name;
         this.receiveTime = receiveTime;
     }
+    
+    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, LocalDateTime createTime, LocalDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, LocalDateTime receiveTime, ZonedDateTime receiveDateProvider) {
+        this.id = id;
+        this.uuidMessage = uuidMessage;
+        this.idPec = idPec;
+        this.idApplicazione = idApplicazione;
+        this.idRelated = idRelated;
+        this.subject = subject;
+        this.messageStatus = messageStatus;
+        this.inOut = inOut;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.messageType = messageType;
+        this.isPec = isPec;
+        this.attachmentsNumber = attachmentsNumber;
+        this.uuidRepository = uuidMongo;
+        this.pathRepository = mongoPath;
+        this.name = name;
+        this.receiveTime = receiveTime;
+        this.receiveDateProvider = receiveDateProvider;
+    }
 
     public Integer getId() {
         return id;
@@ -318,6 +347,14 @@ public class Message implements Serializable {
 
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public ZonedDateTime getReceiveDateProvider() {
+        return receiveDateProvider;
+    }
+
+    public void setReceiveDateProvider(ZonedDateTime receiveDateProvider) {
+        this.receiveDateProvider = receiveDateProvider;
     }
 
     public MessageType getMessageType() {
