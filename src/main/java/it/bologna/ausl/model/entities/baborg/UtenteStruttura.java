@@ -71,8 +71,9 @@ public class UtenteStruttura implements Serializable {
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Utente idUtente;
+    
     @JoinColumn(name = "id_dettaglio_contatto", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private DettaglioContatto idDettaglioContatto;
 
     @Column(name = "attributi", columnDefinition = "text[]")

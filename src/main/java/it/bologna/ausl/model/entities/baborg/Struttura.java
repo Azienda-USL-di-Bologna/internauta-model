@@ -2,7 +2,9 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
@@ -48,6 +50,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idStrutturaReplicata, struttureReplicheList"
 })
 @DynamicUpdate
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Struttura.class)
 public class Struttura implements Serializable {
 
     private static final long serialVersionUID = 1L;
