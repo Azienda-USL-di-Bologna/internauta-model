@@ -34,8 +34,6 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -55,53 +53,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione,personeVedentiList"      
+    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione"      
 })
 @DynamicUpdate
-public class DocDetail implements Serializable {
+public class DocDetail implements Serializable, DocDetailInterface {
 
-    public static enum TipologiaDoc {
-        PROTOCOLLO_IN_USCITA,
-        PROTOCOLLO_IN_ENTRATA,
-        DETERMINA,
-        DELIBERA
-    }
-
-    public static enum CommandType {
-        ROUTING,
-        COMPONENT,
-        URL
-    }
-
-    public static enum StatoDoc {
-        REDAZIONE,
-        CLASSIFICAZIONE,
-        PARERE,
-        VISTA,
-        FIRMA,
-        UFFICIO_ATTI,
-        DG,
-        DS,
-        DA,
-        DSC,
-        SMISTAMENTO,
-        SPEDIZIONE,
-        FINE,
-        NUMERAZIONE,
-        REGISTRAZIONE_PROTOCOLLO,
-        AVVIA_SPEDIZIONI,
-        ASPETTA_SPEDIZIONI,
-        ATTENDI_JOBS,
-        CONTROLLO_SEGRETERIA,
-        SPEDIZIONE_MANUALE,
-        APPROVAZIONE
-    }
-
-    public static enum StatoUfficioAtti {
-        SOSPESA,
-        ELABORATA,
-        DA_VALUTARE
-    }
+   
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -268,10 +225,10 @@ public class DocDetail implements Serializable {
 //    private List<JsonNode> personeVedenti;
     
     //@JsonBackReference(value = "personeVedentiList")
-    @OneToMany(mappedBy = "idDocDetail")
-    @Fetch(FetchMode.JOIN)
+    @OneToMany(mappedBy = "idDocDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "personeVedentiList")
     private List<PersonaVedente> personeVedentiList;
-
+    
     @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idStruttureSegreteria;
@@ -764,184 +721,7 @@ public class DocDetail implements Serializable {
         return "it.bologna.ausl.model.entities.scripta.DocsList[ id=" + id + " ]";
     }
 
-    public static class Fascicolazione {
-
-        String nome;
-        String numerazione;
-        String idFascicoloArgo;
-        String idFascicoloRadiceArgo;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public String getNumerazione() {
-            return numerazione;
-        }
-
-        public void setNumerazione(String numerazione) {
-            this.numerazione = numerazione;
-        }
-
-        public String getIdFascicoloArgo() {
-            return idFascicoloArgo;
-        }
-
-        public void setIdFascicoloArgo(String idFascicoloArgo) {
-            this.idFascicoloArgo = idFascicoloArgo;
-        }
-
-        public String getIdFascicoloRadiceArgo() {
-            return idFascicoloRadiceArgo;
-        }
-
-        public void setIdFascicoloRadiceArgo(String idFascicoloRadiceArgo) {
-            this.idFascicoloRadiceArgo = idFascicoloRadiceArgo;
-        }
-        
-    }
-
-    public static class Firmatario {
-
-        String descrizione;
-        Integer idPersona;
-
-        public String getDescrizione() {
-            return descrizione;
-        }
-
-        public void setDescrizione(String descrizione) {
-            this.descrizione = descrizione;
-        }
-
-        public Integer getIdPersona() {
-            return idPersona;
-        }
-
-        public void setIdPersona(Integer idPersona) {
-            this.idPersona = idPersona;
-        }
-    }
-
-    public static class Destinatario {
-
-        String nome;
-        String indirizzo;
-        String tipo;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public String getIndirizzo() {
-            return indirizzo;
-        }
-
-        public void setIndirizzo(String indirizzo) {
-            this.indirizzo = indirizzo;
-        }
-
-        public String getTipo() {
-            return tipo;
-        }
-
-        public void setTipo(String tipo) {
-            this.tipo = tipo;
-        }
-    }
-
-    public static class Classificazione {
-
-        String nome;
-        String numerazione;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public String getNumerazione() {
-            return numerazione;
-        }
-
-        public void setNumerazione(String numerazione) {
-            this.numerazione = numerazione;
-        }
-    }
-
-//    public static class PersonaVedente {
-//
-//        Integer idPersona;
-//        Boolean mioDocumento;
-//        Boolean pienaVisibilita;
-//        String modalitaApertura;
-//
-//        public Integer getIdPersona() {
-//            return idPersona;
-//        }
-//
-//        public void setIdPersona(Integer idPersona) {
-//            this.idPersona = idPersona;
-//        }
-//
-//        public Boolean getMioDocumento() {
-//            return mioDocumento;
-//        }
-//
-//        public void setMioDocumento(Boolean mioDocumento) {
-//            this.mioDocumento = mioDocumento;
-//        }
-//
-//        public Boolean getPienaVisibilita() {
-//            return pienaVisibilita;
-//        }
-//
-//        public void setPienaVisibilita(Boolean pienaVisibilita) {
-//            this.pienaVisibilita = pienaVisibilita;
-//        }
-//
-//        public String getModalitaApertura() {
-//            return modalitaApertura;
-//        }
-//
-//        public void setModalitaApertura(String modalitaApertura) {
-//            this.modalitaApertura = modalitaApertura;
-//        }
-//    }
-
-    public static class PersonaUsante {
-
-        Integer idPersona;
-        String descrizione;
-
-        public Integer getIdPersona() {
-            return idPersona;
-        }
-
-        public void setIdPersona(Integer idPersona) {
-            this.idPersona = idPersona;
-        }
-
-        public String getDescrizione() {
-            return descrizione;
-        }
-
-        public void setDescrizione(String descrizione) {
-            this.descrizione = descrizione;
-        }
-
-    }
+    
 
     public Applicazione getIdApplicazione() {
         return idApplicazione;

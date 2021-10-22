@@ -13,7 +13,7 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
-import it.bologna.ausl.model.entities.scripta.DocDetail.*;
+import it.bologna.ausl.model.entities.scripta.DocDetailInterface.*;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -36,8 +36,6 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -57,10 +55,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione,personeVedentiList"
+    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione"
 })
 @DynamicUpdate
-public class DocDetailView implements Serializable {
+public class DocDetailView implements Serializable, DocDetailInterface {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -227,8 +225,8 @@ public class DocDetailView implements Serializable {
 //    private List<JsonNode> personeVedenti;
     
     //@JsonBackReference(value = "personeVedentiList")
-    @OneToMany(mappedBy = "idDocDetail")
-    @Fetch(FetchMode.JOIN)
+    @OneToMany(mappedBy = "idDocDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "personeVedentiList")
     private List<PersonaVedente> personeVedentiList;
 
     @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
