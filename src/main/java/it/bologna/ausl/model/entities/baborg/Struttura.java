@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.model.entities.EntityInterface;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.Contatto;
 import java.io.Serializable;
@@ -47,11 +48,11 @@ import org.springframework.format.annotation.DateTimeFormat;
     "struttureFiglieList", 
     "idStrutturaPadre, idAzienda", 
     "idStrutturaPadre, idAzienda, attributiStruttura",
-    "idStrutturaReplicata, struttureReplicheList"
+    "idStrutturaReplicata, struttureReplicheList, attributiStruttura"
 })
 @DynamicUpdate
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Struttura.class)
-public class Struttura implements Serializable {
+public class Struttura implements Serializable, EntityInterface {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -502,7 +503,24 @@ public class Struttura implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.baborg.Struttura[ id=" + id + " ]";
+        return getClass().getCanonicalName() + "[ id=" + id + " ]";
+    }
+    
+    @Override
+    public String getEntityAdditionalData(String param) {
+        String res = null;
+        switch (param) {
+            case "tipologia":
+                if (getAttributiStruttura() != null) 
+                    res = getAttributiStruttura().getIdTipologiaStruttura().getTipologia();
+                break;
+        }
+       return res;
+    }
+
+    @Override
+    public String getEntityDescription() {
+        return getNome();
     }
 
 }

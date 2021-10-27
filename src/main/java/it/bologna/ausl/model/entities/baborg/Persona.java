@@ -373,6 +373,11 @@ public class Persona implements Serializable, EntityInterface {
     public String getEntityDescription() {
         return descrizione;
     }
+    
+    @Override
+    public String getEntityAdditionalData(String param) {
+       return null;
+    }
 
     @Override
     public String toString() {
