@@ -53,6 +53,7 @@ public class Tag implements Serializable {
         readdressed_in,
         readdressed_out,
         forwarded,
+        archived,
         annotated,
         in_error,
         registered,

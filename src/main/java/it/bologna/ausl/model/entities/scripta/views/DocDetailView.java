@@ -1,5 +1,6 @@
-package it.bologna.ausl.model.entities.scripta;
+package it.bologna.ausl.model.entities.scripta.views;
 
+import it.bologna.ausl.model.entities.scripta.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -12,6 +13,7 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
+import it.bologna.ausl.model.entities.scripta.DocDetailInterface.*;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -27,6 +29,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -48,57 +51,14 @@ import org.springframework.format.annotation.DateTimeFormat;
     @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 })
 @Entity
-@Table(name = "docs_list", catalog = "internauta", schema = "scripta")
+@Table(name = "docs_details_view", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
     "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione"
 })
 @DynamicUpdate
-public class DocList implements Serializable {
-
-    public static enum TipologiaDoc {
-        PROTOCOLLO_IN_USCITA,
-        PROTOCOLLO_IN_ENTRATA,
-        DETERMINA,
-        DELIBERA
-    }
-
-    public static enum CommandType {
-        ROUTING,
-        COMPONENT,
-        URL
-    }
-
-    public static enum StatoDoc {
-        REDAZIONE,
-        CLASSIFICAZIONE,
-        PARERE,
-        VISTA,
-        FIRMA,
-        UFFICIO_ATTI,
-        DG,
-        DS,
-        DA,
-        DSC,
-        SMISTAMENTO,
-        SPEDIZIONE,
-        FINE,
-        NUMERAZIONE,
-        REGISTRAZIONE_PROTOCOLLO,
-        AVVIA_SPEDIZIONI,
-        ASPETTA_SPEDIZIONI,
-        ATTENDI_JOBS,
-        CONTROLLO_SEGRETERIA,
-        SPEDIZIONE_MANUALE,
-        APPROVAZIONE
-    }
-
-    public static enum StatoUfficioAtti {
-        SOSPESA,
-        ELABORATA,
-        DA_VALUTARE
-    }
+public class DocDetailView implements Serializable, DocDetailInterface {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -260,9 +220,14 @@ public class DocList implements Serializable {
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
 
-    @Type(type = "jsonb")
-    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
-    private List<JsonNode> personeVedenti;
+//    @Type(type = "jsonb")
+//    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
+//    private List<JsonNode> personeVedenti;
+    
+    //@JsonBackReference(value = "personeVedentiList")
+    @OneToMany(mappedBy = "idDocDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "personeVedentiList")
+    private List<PersonaVedente> personeVedentiList;
 
     @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
@@ -288,18 +253,38 @@ public class DocList implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idApplicazione")
     private Applicazione idApplicazione;
+    
+    @JoinColumn(name = "id_persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idPersona")
+    private Persona idPersona;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "mio_documento")
+    private Boolean mioDocumento;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "piena_visibilita")
+    private Boolean pienaVisibilita;
+    
+    @Size(max = 2147483647)
+    @Column(name = "modalita_apertura")
+    private String modalitaApertura;    
+    
     // Proprietà transient
     @Transient
     private String urlComplete;
 
-    public DocList() {
+    public DocDetailView() {
     }
 
-    public DocList(Integer id) {
+    public DocDetailView(Integer id) {
         this.id = id;
     }
 
-    public DocList(Integer id, Azienda idAzienda, String tipologia, String openCommand, String commandType, ZonedDateTime dataCreazione, ZonedDateTime dataInserimentoRiga, ZonedDateTime version) {
+    public DocDetailView(Integer id, Azienda idAzienda, String tipologia, String openCommand, String commandType, ZonedDateTime dataCreazione, ZonedDateTime dataInserimentoRiga, ZonedDateTime version) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.tipologia = tipologia;
@@ -472,7 +457,7 @@ public class DocList implements Serializable {
 
     public List<Firmatario> getFirmatari() {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(firmatari, new TypeReference<List<DocList.Firmatario>>() {
+        return objectMapper.convertValue(firmatari, new TypeReference<List<DocDetail.Firmatario>>() {
         });
     }
 
@@ -631,19 +616,27 @@ public class DocList implements Serializable {
         this.tscol = tscol;
     }
 
-    public List<PersonaVedente> getPersoneVedenti() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(personeVedenti, new TypeReference<List<DocList.PersonaVedente>>() {
-        });
+//    public List<PersonaVedente> getPersoneVedenti() {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        return objectMapper.convertValue(personeVedenti, new TypeReference<List<DocList.PersonaVedente>>() {
+//        });
+//    }
+//
+//    public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
+//        this.personeVedenti = (List<JsonNode>) (Object) personeVedenti;
+//    }
+
+    public List<PersonaVedente> getPersoneVedentiList() {
+        return personeVedentiList;
     }
 
-    public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
-        this.personeVedenti = (List<JsonNode>) (Object) personeVedenti;
+    public void setPersoneVedentiList(List<PersonaVedente> personeVedentiList) {
+        this.personeVedentiList = personeVedentiList;
     }
-
+    
     public List<PersonaUsante> getSullaScrivaniaDi() {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(sullaScrivaniaDi, new TypeReference<List<DocList.PersonaUsante>>() {
+        return objectMapper.convertValue(sullaScrivaniaDi, new TypeReference<List<DocDetail.PersonaUsante>>() {
         });
     }
 
@@ -715,12 +708,52 @@ public class DocList implements Serializable {
         this.ranking = ranking;
     }
 
+    public Persona getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public Boolean getMioDocumento() {
+        return mioDocumento;
+    }
+
+    public void setMioDocumento(Boolean mioDocumento) {
+        this.mioDocumento = mioDocumento;
+    }
+
+    public Boolean getPienaVisibilita() {
+        return pienaVisibilita;
+    }
+
+    public void setPienaVisibilita(Boolean pienaVisibilita) {
+        this.pienaVisibilita = pienaVisibilita;
+    }
+
+    public String getModalitaApertura() {
+        return modalitaApertura;
+    }
+
+    public void setModalitaApertura(String modalitaApertura) {
+        this.modalitaApertura = modalitaApertura;
+    }
+
     public String getUrlComplete() {
         return urlComplete;
     }
 
     public void setUrlComplete(String urlComplete) {
         this.urlComplete = urlComplete;
+    }
+    
+    public Applicazione getIdApplicazione() {
+        return idApplicazione;
+    }
+
+    public void setIdApplicazione(Applicazione idApplicazione) {
+        this.idApplicazione = idApplicazione;
     }
 
     @Override
@@ -733,10 +766,10 @@ public class DocList implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DocList)) {
+        if (!(object instanceof DocDetailView)) {
             return false;
         }
-        DocList other = (DocList) object;
+        DocDetailView other = (DocDetailView) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -746,193 +779,6 @@ public class DocList implements Serializable {
     @Override
     public String toString() {
         return "it.bologna.ausl.model.entities.scripta.DocsList[ id=" + id + " ]";
-    }
-
-    public static class Fascicolazione {
-
-        String nome;
-        String numerazione;
-        String idFascicoloArgo;
-        String idFascicoloRadiceArgo;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public String getNumerazione() {
-            return numerazione;
-        }
-
-        public void setNumerazione(String numerazione) {
-            this.numerazione = numerazione;
-        }
-
-        public String getIdFascicoloArgo() {
-            return idFascicoloArgo;
-        }
-
-        public void setIdFascicoloArgo(String idFascicoloArgo) {
-            this.idFascicoloArgo = idFascicoloArgo;
-        }
-
-        public String getIdFascicoloRadiceArgo() {
-            return idFascicoloRadiceArgo;
-        }
-
-        public void setIdFascicoloRadiceArgo(String idFascicoloRadiceArgo) {
-            this.idFascicoloRadiceArgo = idFascicoloRadiceArgo;
-        }
-        
-    }
-
-    public static class Firmatario {
-
-        String descrizione;
-        Integer idPersona;
-
-        public String getDescrizione() {
-            return descrizione;
-        }
-
-        public void setDescrizione(String descrizione) {
-            this.descrizione = descrizione;
-        }
-
-        public Integer getIdPersona() {
-            return idPersona;
-        }
-
-        public void setIdPersona(Integer idPersona) {
-            this.idPersona = idPersona;
-        }
-    }
-
-    public static class Destinatario {
-
-        String nome;
-        String indirizzo;
-        String tipo;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public String getIndirizzo() {
-            return indirizzo;
-        }
-
-        public void setIndirizzo(String indirizzo) {
-            this.indirizzo = indirizzo;
-        }
-
-        public String getTipo() {
-            return tipo;
-        }
-
-        public void setTipo(String tipo) {
-            this.tipo = tipo;
-        }
-    }
-
-    public static class Classificazione {
-
-        String nome;
-        String numerazione;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public String getNumerazione() {
-            return numerazione;
-        }
-
-        public void setNumerazione(String numerazione) {
-            this.numerazione = numerazione;
-        }
-    }
-
-    public static class PersonaVedente {
-
-        Integer idPersona;
-        Boolean mioDocumento;
-        Boolean pienaVisibilita;
-        String modalitaApertura;
-
-        public Integer getIdPersona() {
-            return idPersona;
-        }
-
-        public void setIdPersona(Integer idPersona) {
-            this.idPersona = idPersona;
-        }
-
-        public Boolean getMioDocumento() {
-            return mioDocumento;
-        }
-
-        public void setMioDocumento(Boolean mioDocumento) {
-            this.mioDocumento = mioDocumento;
-        }
-
-        public Boolean getPienaVisibilita() {
-            return pienaVisibilita;
-        }
-
-        public void setPienaVisibilita(Boolean pienaVisibilita) {
-            this.pienaVisibilita = pienaVisibilita;
-        }
-
-        public String getModalitaApertura() {
-            return modalitaApertura;
-        }
-
-        public void setModalitaApertura(String modalitaApertura) {
-            this.modalitaApertura = modalitaApertura;
-        }
-    }
-
-    public static class PersonaUsante {
-
-        Integer idPersona;
-        String descrizione;
-
-        public Integer getIdPersona() {
-            return idPersona;
-        }
-
-        public void setIdPersona(Integer idPersona) {
-            this.idPersona = idPersona;
-        }
-
-        public String getDescrizione() {
-            return descrizione;
-        }
-
-        public void setDescrizione(String descrizione) {
-            this.descrizione = descrizione;
-        }
-
-    }
-
-    public Applicazione getIdApplicazione() {
-        return idApplicazione;
-    }
-
-    public void setIdApplicazione(Applicazione idApplicazione) {
-        this.idApplicazione = idApplicazione;
     }
 
 }

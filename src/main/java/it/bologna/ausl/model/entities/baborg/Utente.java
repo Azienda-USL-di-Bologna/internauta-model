@@ -475,8 +475,13 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
     }
 
     @Override
+    public String getEntityAdditionalData(String param) {
+       return null;
+    }
+    
+    @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.baborg.Utente[ id=" + id + " ]";
+        return getClass().getCanonicalName() + "[ id=" + id + " ]";
     }
 
 }
