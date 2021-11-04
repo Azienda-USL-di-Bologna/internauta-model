@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 import it.bologna.ausl.internauta.utils.bds.types.PermessoEntitaStoredProcedure;
+import it.bologna.ausl.model.entities.baborg.projections.generated.PersonaWithPlainFields;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.shpeck.Draft;
 import it.bologna.ausl.model.entities.shpeck.Folder;
@@ -130,7 +131,7 @@ public class Pec implements Serializable {
     @NotNull
     @Column(name = "is_pec")
     private Boolean isPec = false;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "publicata_IPA")
@@ -193,7 +194,7 @@ public class Pec implements Serializable {
 
     @Transient
     @QueryType(PropertyType.SIMPLE)
-    private List<Persona> gestori;
+    private List<PersonaWithPlainFields> gestori;
 
     @Transient
     @QueryType(PropertyType.SIMPLE)
@@ -368,11 +369,11 @@ public class Pec implements Serializable {
         this.permessi = permessi;
     }
 
-    public List<Persona> getGestori() {
+    public List<PersonaWithPlainFields> getGestori() {
         return gestori;
     }
 
-    public void setGestori(List<Persona> gestori) {
+    public void setGestori(List<PersonaWithPlainFields> gestori) {
         this.gestori = gestori;
     }
 
