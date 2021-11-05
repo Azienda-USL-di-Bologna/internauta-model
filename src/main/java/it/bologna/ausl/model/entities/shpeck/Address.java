@@ -35,31 +35,31 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 public class Address implements Serializable {
 
-    private  static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public static enum RecipientType {
         PEC, REGULAR_EMAIL, UNKNOWN
     }
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Column(name = "mail_address")
     private String mailAddress;
-    
+
     @Column(name = "original_address")
     private String originalAddress;
-    
+
     @Column(name = "recipient_type")
     private String recipientType;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAddress", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageAddressList")
     private List<MessageAddress> messageAddressList;
-        
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -69,10 +69,11 @@ public class Address implements Serializable {
         return version;
     }
 
+    // version
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
- 
+
     public Address() {
     }
 
@@ -115,7 +116,7 @@ public class Address implements Serializable {
     public void setMessageAddressList(List<MessageAddress> messageAddressList) {
         this.messageAddressList = messageAddressList;
     }
- 
+
     @Override
     public String toString() {
         return "it.bologna.ausl.model.entities.shpeck.Address[ id=" + id + " ]";
