@@ -137,9 +137,11 @@ public class Pec implements Serializable {
     @Column(name = "publicata_IPA")
     private Boolean publicataIPA = false;
 
-    public Boolean getPublicataIPA() {
-        return publicataIPA;
-    }
+    @Basic(optional = false)
+    @NotNull
+    @JsonIgnore
+    @Column(name = "repository_root_path", columnDefinition = "text")
+    private String repositoryRootPath;
 
     public void setPublicataIPA(Boolean publicataIPA) {
         this.publicataIPA = publicataIPA;
@@ -464,6 +466,14 @@ public class Pec implements Serializable {
     @Override
     public String toString() {
         return "it.bologna.ausl.model.entities.baborg.Pec[ id=" + id + " ]";
+    }
+
+    public String getRepositoryRootPath() {
+        return repositoryRootPath;
+    }
+
+    public void setRepositoryRootPath(String repositoryRootPath) {
+        this.repositoryRootPath = repositoryRootPath;
     }
 
 }
