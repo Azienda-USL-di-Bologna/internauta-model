@@ -182,6 +182,10 @@ public class Pec implements Serializable {
     @Column(name = "importa_messages")
     private Boolean importaMessages = false;
 
+    @Basic(optional = true)
+    @Column(name = "keep_backup")
+    private Integer keepBackup = 90;
+
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -461,6 +465,14 @@ public class Pec implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public Integer getKeepBackup() {
+        return keepBackup;
+    }
+
+    public void setKeepBackup(Integer keepBackup) {
+        this.keepBackup = keepBackup;
     }
 
     @Override
