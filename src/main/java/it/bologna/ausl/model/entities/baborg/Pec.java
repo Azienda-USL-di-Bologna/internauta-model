@@ -194,7 +194,7 @@ public class Pec implements Serializable {
 
     @Transient
     @QueryType(PropertyType.SIMPLE)
-    private List<PersonaWithPlainFields> gestori;
+    private Object gestori;
 
     @Transient
     @QueryType(PropertyType.SIMPLE)
@@ -370,7 +370,7 @@ public class Pec implements Serializable {
     }
 
     public List<PersonaWithPlainFields> getGestori() {
-        return gestori;
+        return (List<PersonaWithPlainFields>) gestori;
     }
 
     public void setGestori(List<PersonaWithPlainFields> gestori) {
