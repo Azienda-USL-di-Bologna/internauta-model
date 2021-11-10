@@ -194,6 +194,7 @@ public class Pec implements Serializable {
 
     @Transient
     @QueryType(PropertyType.SIMPLE)
+    @JsonIgnore
     private List<PersonaWithPlainFields> gestori;
 
     @Transient
