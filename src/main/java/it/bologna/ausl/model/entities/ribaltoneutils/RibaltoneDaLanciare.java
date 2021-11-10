@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Utente;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.FetchType;
@@ -55,7 +54,7 @@ public class RibaltoneDaLanciare implements Serializable {
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime dataInserimentoRiga;
+    private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
     @Column(name = "data_ultima_modifica")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
