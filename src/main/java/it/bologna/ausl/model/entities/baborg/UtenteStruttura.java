@@ -93,7 +93,7 @@ public class UtenteStruttura implements Serializable {
     @Column(name = "attivo_al")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime attivoAl;
+    private ZonedDateTime attivoAl = ZonedDateTime.now();
 
     @Basic(optional = false)
     @NotNull
