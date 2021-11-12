@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class AdditionalDataTagComponent {
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class IdGdDoc {
+    public static class IdGdDoc {
         private String id;
         private String oggetto;
 
@@ -41,7 +41,7 @@ public class AdditionalDataTagComponent {
     }
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class idUtente {
+    public static class idUtente {
         private Integer id;
         private String descrizione;
 
@@ -71,7 +71,7 @@ public class AdditionalDataTagComponent {
     }
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class idAzienda {
+    public static class idAzienda {
         private Integer id;
         private String nome;
         private String descrizione;
@@ -111,7 +111,7 @@ public class AdditionalDataTagComponent {
     }
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class idFascicolo {
+    public static class idFascicolo {
         private String id;
         private String oggetto;
         private String numerazioneGerarchica;
@@ -151,7 +151,7 @@ public class AdditionalDataTagComponent {
     }
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class idDocumento {
+    public static class idDocumento {
         private String oggetto;
         private String codiceRegistro;
         private String numeroProposta;
@@ -228,7 +228,7 @@ public class AdditionalDataTagComponent {
     }
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class idPec {
+    public static class idPec {
         private String id;
         private String indirizzo;
 
@@ -258,7 +258,7 @@ public class AdditionalDataTagComponent {
     }
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class AdditionalDataArchiviation implements AdditionalData {
+    public static class AdditionalDataArchiviation implements AdditionalData {
         public IdGdDoc idGdDoc;
         public idUtente idUtente;
         public idAzienda idAzienda;
@@ -318,7 +318,7 @@ public class AdditionalDataTagComponent {
     }
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class AdditionalDataRegistration implements AdditionalData {
+    public static class AdditionalDataRegistration implements AdditionalData {
         public idPec idPec;
         public idUtente idUtente;
         public idAzienda idAzienda;
