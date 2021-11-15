@@ -140,7 +140,6 @@ public class Message implements Serializable {
     private LocalDateTime receiveTime = LocalDateTime.now();
     
     @Basic(optional = true)
-    @NotNull
     @Column(name = "receive_date_provider")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
