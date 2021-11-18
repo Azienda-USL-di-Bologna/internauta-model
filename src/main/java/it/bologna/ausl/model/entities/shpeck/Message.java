@@ -148,6 +148,12 @@ public class Message implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime receiveTime = ZonedDateTime.now();
+    
+    @Basic(optional = true)
+    @Column(name = "receive_date_provider")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime receiveDateProvider = ZonedDateTime.now();
 
     @Size(max = 2147483647)
     @Column(name = "external_id")
@@ -250,6 +256,27 @@ public class Message implements Serializable {
         this.pathRepository = mongoPath;
         this.name = name;
         this.receiveTime = receiveTime;
+    }
+    
+    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, ZonedDateTime createTime, ZonedDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, ZonedDateTime receiveTime, ZonedDateTime receiveDateProvider) {
+        this.id = id;
+        this.uuidMessage = uuidMessage;
+        this.idPec = idPec;
+        this.idApplicazione = idApplicazione;
+        this.idRelated = idRelated;
+        this.subject = subject;
+        this.messageStatus = messageStatus;
+        this.inOut = inOut;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.messageType = messageType;
+        this.isPec = isPec;
+        this.attachmentsNumber = attachmentsNumber;
+        this.uuidRepository = uuidMongo;
+        this.pathRepository = mongoPath;
+        this.name = name;
+        this.receiveTime = receiveTime;
+        this.receiveDateProvider = receiveDateProvider;
     }
 
     public Integer getId() {
@@ -412,6 +439,14 @@ public class Message implements Serializable {
         this.receiveTime = receiveTime;
     }
 
+    public ZonedDateTime getReceiveDateProvider() {
+        return receiveDateProvider;
+    }
+
+    public void setReceiveDateProvider(ZonedDateTime receiveDateProvider) {
+        this.receiveDateProvider = receiveDateProvider;
+    }
+    
     public Boolean getSeen() {
         return seen;
     }
