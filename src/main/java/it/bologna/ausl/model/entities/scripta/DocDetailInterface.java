@@ -53,8 +53,7 @@ public interface DocDetailInterface {
     public static enum StatoUfficioAtti {
         SOSPESA,
         ELABORATA,
-        DA_VALUTARE,
-        NON_RILEVANTE
+        DA_VALUTARE
     }
     
     public Integer getId();

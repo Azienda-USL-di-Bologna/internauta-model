@@ -43,13 +43,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "utenti_strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({
-    "idAfferenzaStruttura, idStruttura", 
-    "idAfferenzaStruttura", 
-    "idAfferenzaStruttura, idDettaglioContatto, idStruttura", 
-    "idAfferenzaStruttura, idUtente", 
+    "idAfferenzaStruttura, idStruttura",
+    "idAfferenzaStruttura",
+    "idAfferenzaStruttura, idDettaglioContatto, idStruttura",
+    "idAfferenzaStruttura, idUtente",
     "idStruttura",
-    "idAfferenzaStruttura, idUtente, idStruttura, idStrutturaVeicolante", 
-})
+    "idAfferenzaStruttura, idUtente, idStruttura, idStrutturaVeicolante",})
 @DynamicUpdate
 public class UtenteStruttura implements Serializable {
 
@@ -71,7 +70,7 @@ public class UtenteStruttura implements Serializable {
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Utente idUtente;
-    
+
     @JoinColumn(name = "id_dettaglio_contatto", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private DettaglioContatto idDettaglioContatto;
@@ -88,13 +87,12 @@ public class UtenteStruttura implements Serializable {
     @Column(name = "attivo_dal")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime attivoDal;
-    ;
+    private ZonedDateTime attivoDal = ZonedDateTime.now();
 
     @Column(name = "attivo_al")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime attivoAl = ZonedDateTime.now();
+    private ZonedDateTime attivoAl;
 
     @Basic(optional = false)
     @NotNull
@@ -105,11 +103,11 @@ public class UtenteStruttura implements Serializable {
     @NotNull
     @Column(name = "bit_ruoli")
     private Integer bitRuoli;
-    
+
     @JoinColumn(name = "id_struttura_veicolante", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Struttura idStrutturaVeicolante;
-    
+
     @Transient
     private List<Ruolo> ruoliUtenteStruttura;
 
@@ -143,7 +141,6 @@ public class UtenteStruttura implements Serializable {
 //    public void setPermessoList(List<Permesso> permessoList) {
 //        this.permessoList = permessoList;
 //    }
-
     public AfferenzaStruttura getIdAfferenzaStruttura() {
         return idAfferenzaStruttura;
     }
