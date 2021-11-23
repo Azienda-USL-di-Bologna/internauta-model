@@ -55,7 +55,7 @@ public class RibaltoneDaLanciare implements Serializable {
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
+    private ZonedDateTime dataInserimentoRiga;
     @Column(name = "data_ultima_modifica")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -86,7 +86,7 @@ public class RibaltoneDaLanciare implements Serializable {
     private Boolean ribaltatoArgo;
     @Column(name = "fonte_ribaltone")
     private String fonteRibaltone;
-
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -99,7 +99,7 @@ public class RibaltoneDaLanciare implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-
+ 
     public RibaltoneDaLanciare() {
     }
 
@@ -267,5 +267,5 @@ public class RibaltoneDaLanciare implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.ribaltoneutils.RibaltoniDaLanciare[ id=" + id + " ]";
     }
-
+    
 }
