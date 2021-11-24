@@ -137,9 +137,11 @@ public class Pec implements Serializable {
     @Column(name = "publicata_IPA")
     private Boolean publicataIPA = false;
 
-    public Boolean getPublicataIPA() {
-        return publicataIPA;
-    }
+    @Basic(optional = false)
+    @NotNull
+    @JsonIgnore
+    @Column(name = "repository_root_path", columnDefinition = "text")
+    private String repositoryRootPath;
 
     public void setPublicataIPA(Boolean publicataIPA) {
         this.publicataIPA = publicataIPA;
@@ -180,6 +182,10 @@ public class Pec implements Serializable {
     @Column(name = "importa_messages")
     private Boolean importaMessages = false;
 
+    @Basic(optional = true)
+    @Column(name = "keep_backup")
+    private Integer keepBackup = 90;
+
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -195,7 +201,7 @@ public class Pec implements Serializable {
     @Transient
     @QueryType(PropertyType.SIMPLE)
     @JsonIgnore
-    private List<PersonaWithPlainFields> gestori;
+    private Object gestori;
 
     @Transient
     @QueryType(PropertyType.SIMPLE)
@@ -371,7 +377,7 @@ public class Pec implements Serializable {
     }
 
     public List<PersonaWithPlainFields> getGestori() {
-        return gestori;
+        return (List<PersonaWithPlainFields>) gestori;
     }
 
     public void setGestori(List<PersonaWithPlainFields> gestori) {
@@ -462,9 +468,25 @@ public class Pec implements Serializable {
         return true;
     }
 
+    public Integer getKeepBackup() {
+        return keepBackup;
+    }
+
+    public void setKeepBackup(Integer keepBackup) {
+        this.keepBackup = keepBackup;
+    }
+
     @Override
     public String toString() {
         return "it.bologna.ausl.model.entities.baborg.Pec[ id=" + id + " ]";
+    }
+
+    public String getRepositoryRootPath() {
+        return repositoryRootPath;
+    }
+
+    public void setRepositoryRootPath(String repositoryRootPath) {
+        this.repositoryRootPath = repositoryRootPath;
     }
 
 }

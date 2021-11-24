@@ -43,74 +43,83 @@ public class Folder implements Serializable {
         DRAFT, INBOX, OUTBOX, TRASH, SPAM, CUSTOM, SENT, REGISTERED
         // READDRESSED
     }
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "name")
     private String name;
-    
+
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "type")
     private String type;
-    
+
     @Basic(optional = true)
     @Column(name = "`order`")
     private Integer order;
-
 
     @JoinColumn(name = "id_pec", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference(value = "idPec")
     private Pec idPec;
-    
+
     @JoinColumn(name = "id_utente", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "idUtente")
     private Utente idUtente;
-    
+
     @Basic(optional = false)
     @Column(name = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime createTime = ZonedDateTime.now();
-    
+
     @Basic(optional = false)
     @Column(name = "update_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime updateTime = ZonedDateTime.now();
-        
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFolder", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageFolderList")
     private List<MessageFolder> messageFolderList;
-    
+
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idPreviousFolder", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messagePreviousFolderList")
     private List<MessageFolder> messagePreviousFolderList;
-        
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
-    
+
+    @Basic(optional = true)
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "name_orig")
+    private String nameInProvider;
+
+    @Basic(optional = true)
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "fullname_orig")
+    private String fullnameInProvider;
+
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private String additionalData;
-    
+
     @Column(name = "unread_messages")
     private Integer unreadMessages = 0;
 
@@ -121,7 +130,7 @@ public class Folder implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
- 
+
     public Folder() {
     }
 
@@ -238,7 +247,23 @@ public class Folder implements Serializable {
     public void setUnreadMessages(Integer unreadMessages) {
         this.unreadMessages = unreadMessages;
     }
-    
+
+    public String getNameInProvider() {
+        return nameInProvider;
+    }
+
+    public void setNameInProvider(String nameInProvider) {
+        this.nameInProvider = nameInProvider;
+    }
+
+    public String getFullnameInProvider() {
+        return fullnameInProvider;
+    }
+
+    public void setFullnameInProvider(String fullnameInProvider) {
+        this.fullnameInProvider = fullnameInProvider;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -263,5 +288,5 @@ public class Folder implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.shpec.Folder[ id=" + id + " ]";
     }
-    
+
 }
