@@ -21,15 +21,17 @@ public class AdditionalDataRegistration extends AdditionalData {
     public AdditionalDataTagComponent.idUtente idUtente;
     public AdditionalDataTagComponent.idAzienda idAzienda;
     public AdditionalDataTagComponent.idDocumento idDocumento;
+    public String casellaPec;
 
     public AdditionalDataRegistration() {
     }
 
-    public AdditionalDataRegistration(AdditionalDataTagComponent.idPec idPec, AdditionalDataTagComponent.idUtente idUtente, AdditionalDataTagComponent.idAzienda idAzienda, AdditionalDataTagComponent.idDocumento idDocumento) {
+    public AdditionalDataRegistration(AdditionalDataTagComponent.idPec idPec, AdditionalDataTagComponent.idUtente idUtente, AdditionalDataTagComponent.idAzienda idAzienda, AdditionalDataTagComponent.idDocumento idDocumento, String casellaPec) {
         this.idPec = idPec;
         this.idUtente = idUtente;
         this.idAzienda = idAzienda;
         this.idDocumento = idDocumento;
+        this.casellaPec = casellaPec;
     }
 
     public AdditionalDataTagComponent.idPec getIdPec() {
@@ -63,7 +65,7 @@ public class AdditionalDataRegistration extends AdditionalData {
     public void setIdDocumento(AdditionalDataTagComponent.idDocumento idDocumento) {
         this.idDocumento = idDocumento;
     }
-    
+
 //    @Override
 //    public String getClassType() {
 //        return classType;
@@ -73,4 +75,11 @@ public class AdditionalDataRegistration extends AdditionalData {
 //    public void setClassType(String classType) {
 //        this.classType = classType;
 //    }
+    public String getCasellaPec() {
+        return casellaPec;
+    }
+
+    public void setCasellaPec(String casellaPec) {
+        this.casellaPec = casellaPec;
+    }
 }
