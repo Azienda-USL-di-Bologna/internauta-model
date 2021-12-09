@@ -70,6 +70,10 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
+    
+    @JoinColumn(name = "id_azienda_doc", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Azienda idAziendaDoc;
 
     @Size(max = 2147483647)
     @Column(name = "guid_documento")
@@ -107,6 +111,13 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_creazione_doc")
+    @Basic(optional = false)
+    @NotNull
+    private ZonedDateTime dataCreazioneDoc;
 
     @Column(name = "numero_proposta")
     private Integer numeroProposta;
@@ -310,6 +321,14 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     public void setIdAzienda(Azienda idAzienda) {
         this.idAzienda = idAzienda;
     }
+    
+    public Azienda getIdAziendaDoc() {
+        return idAziendaDoc;
+    }
+
+    public void setIdAziendaDoc(Azienda idAziendaDoc) {
+        this.idAziendaDoc = idAziendaDoc;
+    }
 
     public String getGuidDocumento() {
         return guidDocumento;
@@ -381,6 +400,14 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     public void setDataCreazione(ZonedDateTime dataCreazione) {
         this.dataCreazione = dataCreazione;
+    }
+    
+    public ZonedDateTime getDataCreazioneDoc() {
+        return dataCreazioneDoc;
+    }
+
+    public void setDataCreazioneDoc(ZonedDateTime dataCreazioneDoc) {
+        this.dataCreazioneDoc = dataCreazioneDoc;
     }
 
     public Integer getNumeroProposta() {
