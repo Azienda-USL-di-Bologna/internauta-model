@@ -38,7 +38,7 @@ public abstract class AdditionalData implements Serializable {
 //
 //    public abstract void setClassType(String classType);
     
-    public static String toJsonString(ObjectMapper objectMapper, List<AdditionalData> value) throws JsonProcessingException {
+    public static String toJsonString(ObjectMapper objectMapper, List<? extends AdditionalData> value) throws JsonProcessingException {
         return objectMapper.writerFor(objectMapper.getTypeFactory().constructCollectionType(List.class, AdditionalData.class)).writeValueAsString(value);
     }
     
