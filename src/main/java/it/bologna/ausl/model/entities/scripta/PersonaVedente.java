@@ -1,10 +1,13 @@
 package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -20,6 +23,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -62,6 +66,17 @@ public class PersonaVedente implements Serializable {
     @JoinColumn(name = "id_doc_detail", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DocDetail idDocDetail;
+    
+    @JoinColumn(name = "id_azienda", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Azienda idAzienda;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_creazione")
+    @Basic(optional = false)
+    @NotNull
+    private ZonedDateTime dataCreazione;
 
     public PersonaVedente() {
     }
@@ -125,7 +140,21 @@ public class PersonaVedente implements Serializable {
         this.idDocDetail = idDocDetail;
     }
 
+    public Azienda getIdAzienda() {
+        return idAzienda;
+    }
 
+    public void setIdAzienda(Azienda idAzienda) {
+        this.idAzienda = idAzienda;
+    }
+
+    public ZonedDateTime getDataCreazione() {
+        return dataCreazione;
+    }
+
+    public void setDataCreazione(ZonedDateTime dataCreazione) {
+        this.dataCreazione = dataCreazione;
+    }
 
     @Override
     public int hashCode() {
