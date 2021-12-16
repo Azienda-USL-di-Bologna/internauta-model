@@ -141,11 +141,7 @@ public class Pec implements Serializable {
     @NotNull
     @JsonIgnore
     @Column(name = "repository_root_path", columnDefinition = "text")
-    private String repositoryRootPath;
-
-    public void setPublicataIPA(Boolean publicataIPA) {
-        this.publicataIPA = publicataIPA;
-    }
+    private String repositoryRootPath = "/internauta/pecstore/";
 
     @Basic(optional = false)
     @NotNull
@@ -489,4 +485,11 @@ public class Pec implements Serializable {
         this.repositoryRootPath = repositoryRootPath;
     }
 
+    public Boolean getPublicataIPA() {
+        return publicataIPA;
+    }
+
+    public void setPublicataIPA(Boolean publicataIPA) {
+        this.publicataIPA = publicataIPA;
+    }
 }
