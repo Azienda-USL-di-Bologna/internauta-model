@@ -47,7 +47,8 @@ public interface DocDetailInterface {
         ATTENDI_JOBS,
         CONTROLLO_SEGRETERIA,
         SPEDIZIONE_MANUALE,
-        APPROVAZIONE
+        APPROVAZIONE,
+        ANNULLATO
     }
 
     public static enum StatoUfficioAtti {

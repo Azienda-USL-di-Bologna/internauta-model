@@ -1,5 +1,6 @@
-package it.bologna.ausl.model.entities.shpeck;
+package it.bologna.ausl.model.entities.shpeck.views;
 
+import it.bologna.ausl.model.entities.shpeck.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,7 +10,6 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -33,15 +33,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author Salo
+ * @author gusgus
  */
 @Entity
-@Table(name = "messages", schema = "shpeck")
+@Table(name = "messages_with_tags_view", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({"idRecepit, messageAddressList", "messageAddressList, messageFolderList, messageTagList"})
 @DynamicUpdate
-public class Message implements Serializable, MessageInterface {
+public class MessageWithTagView implements Serializable, MessageInterface {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -205,6 +205,10 @@ public class Message implements Serializable, MessageInterface {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+    
+    @JoinColumn(name = "id_tag", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Tag idTag;
 
     public ZonedDateTime getVersion() {
         return version;
@@ -214,14 +218,14 @@ public class Message implements Serializable, MessageInterface {
         this.version = version;
     }
 
-    public Message() {
+    public MessageWithTagView() {
     }
 
-    public Message(Integer id) {
+    public MessageWithTagView(Integer id) {
         this.id = id;
     }
 
-    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, ZonedDateTime createTime, ZonedDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, ZonedDateTime receiveTime) {
+    public MessageWithTagView(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, ZonedDateTime createTime, ZonedDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, ZonedDateTime receiveTime) {
         this.id = id;
         this.uuidMessage = uuidMessage;
         this.idPec = idPec;
@@ -241,7 +245,7 @@ public class Message implements Serializable, MessageInterface {
         this.receiveTime = receiveTime;
     }
     
-    public Message(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, ZonedDateTime createTime, ZonedDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, ZonedDateTime receiveTime, ZonedDateTime receiveDateProvider) {
+    public MessageWithTagView(Integer id, String uuidMessage, Pec idPec, Applicazione idApplicazione, Message idRelated, String subject, String messageStatus, String inOut, ZonedDateTime createTime, ZonedDateTime updateTime, String messageType, Boolean isPec, Integer attachmentsNumber, String uuidMongo, String mongoPath, String name, ZonedDateTime receiveTime, ZonedDateTime receiveDateProvider) {
         this.id = id;
         this.uuidMessage = uuidMessage;
         this.idPec = idPec;
@@ -546,7 +550,15 @@ public class Message implements Serializable, MessageInterface {
     public void setIdMessagePecgw(String idMessagePecgw) {
         this.idMessagePecgw = idMessagePecgw;
     }
+    
+    public Tag getIdTag() {
+        return idTag;
+    }
 
+    public void setIdTag(Tag idTag) {
+        this.idTag = idTag;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -557,10 +569,10 @@ public class Message implements Serializable, MessageInterface {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Message)) {
+        if (!(object instanceof MessageWithTagView)) {
             return false;
         }
-        Message other = (Message) object;
+        MessageWithTagView other = (MessageWithTagView) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -569,7 +581,7 @@ public class Message implements Serializable, MessageInterface {
 
     @Override
     public String toString() {
-        return "Message{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", subject=" + subject + ", messageStatus=" + messageStatus
+        return "MessageWithTagView{" + "id=" + id + ", uuidMessage=" + uuidMessage + ", subject=" + subject + ", messageStatus=" + messageStatus
                 + ", inOut=" + inOut + ", createTime=" + createTime + ", updateTime=" + updateTime
                 + ", messageType=" + messageType + ", attachmentsNumber=" + attachmentsNumber
                 + ", uuidRepository=" + uuidRepository + ", pathRepository=" + pathRepository
@@ -577,54 +589,4 @@ public class Message implements Serializable, MessageInterface {
                 + ", relationType=" + relationType + ", idOutbox=" + idOutbox + ", id_message_vecchio=" + idMessagePecgw
                 + ", idAzienda=" + idAziendaRepository + '}';
     }
-
-    @Override
-    public Message clone() throws CloneNotSupportedException {
-
-        // (Message) super.clone();
-        Message m = new Message();
-        m.setIdPec(this.getIdPec());
-        m.setIdApplicazione(this.getIdApplicazione());
-        m.setIdRelated(this.getIdRelated());
-        m.setSubject(this.getSubject());
-        m.setMessageStatus(this.getMessageStatus());
-        m.setInOut(this.getInOut());
-        m.setCreateTime(this.getCreateTime());
-        m.setMessageType(this.getMessageType());
-        m.setIsPec(this.getIsPec());
-        m.setAttachmentsNumber(this.getAttachmentsNumber());
-        m.setUuidRepository(this.getUuidRepository());
-        m.setPathRepository(this.getPathRepository());
-        m.setName(this.getName());
-        m.setReceiveTime(this.getReceiveTime());
-        m.setIdMessagePecgw(this.getIdMessagePecgw());
-        m.setIdOutbox(this.getIdOutbox());
-        m.setIdRecepit(this.getIdRecepit());
-        m.setInReplyTo(this.getInReplyTo());
-        m.setIdAziendaRepository(this.getIdAziendaRepository());
-
-        List<MessageAddress> maList = new ArrayList();
-        MessageAddress mma;
-        for (MessageAddress ma : this.getMessageAddressList()) {
-            mma = ma.clone();
-            mma.setIdMessage(m);
-            maList.add(mma);
-        }
-        m.setMessageAddressList(maList);
-
-        List<MessageTag> mtList = new ArrayList();
-        for (MessageTag mt : this.getMessageTagList()) {
-            mtList.add(mt.clone());
-        }
-        m.setMessageTagList(mtList);
-
-        m.setRelationType(this.getRelationType());
-        m.setSeen(this.getSeen());
-        m.setTscol(this.getTscol());
-        m.setUuidMessage(this.getUuidMessage());
-        m.setMessageStatus(this.getMessageStatus());
-
-        return m;
-    }
-
 }
