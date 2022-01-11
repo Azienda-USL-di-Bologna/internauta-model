@@ -13,6 +13,7 @@ import it.bologna.ausl.model.entities.shpeck.Draft;
 import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Tag;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -40,14 +41,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "pec", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
-@GenerateProjections({
-    "folderList", 
-    "folderList, pecAziendaList", 
-    "folderList, pecAziendaList, tagList", 
-    "folderList, tagList",
-    "idPecProvider", 
-    "idPecProvider, pecAziendaList", 
-    "tagList"})
+@GenerateProjections({"folderList", "folderList, pecAziendaList", "folderList, pecAziendaList, tagList", "folderList, tagList",
+    "idPecProvider", "tagList"})
 @DynamicUpdate
 public class Pec implements Serializable {
 
