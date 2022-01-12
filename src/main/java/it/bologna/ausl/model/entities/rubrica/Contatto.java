@@ -75,7 +75,8 @@ public class Contatto implements Serializable {
         ORGANIGRAMMA,
         PERSONA_FISICA,
         AZIENDA,
-        PUBBLICA_AMMINISTRAZIONE,
+        PUBBLICA_AMMINISTRAZIONE_ITALIANA,
+        PUBBLICA_AMMINISTRAZIONE_ESTERA,
         VARIO,
         FORNITORE
     }

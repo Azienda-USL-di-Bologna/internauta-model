@@ -59,7 +59,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "utenti", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
 @Cacheable(false)
-@GenerateProjections({"idAzienda, idPersona", "idAzienda, idPersona, utenteStrutturaList", "idPersona"})
+@GenerateProjections({"idAzienda, idPersona", "idAzienda, idPersona, utenteStrutturaList", "idPersona", "idAzienda"})
 @DynamicUpdate
 public class Utente implements Serializable, UserDetails, EntityInterface {
 
