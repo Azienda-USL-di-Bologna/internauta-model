@@ -43,7 +43,7 @@ public class PendingJob implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static enum PendigJobsState {
-        IDLE, RUNNING, ERROR, DONE
+        IDLE, RUNNING, ERROR, RETRY, DONE
     }
     
     public static enum PendigJobsServices {
