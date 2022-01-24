@@ -58,8 +58,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 public class DocDetail implements Serializable, DocDetailInterface {
 
-   
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -223,12 +221,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
 //    @Type(type = "jsonb")
 //    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
 //    private List<JsonNode> personeVedenti;
-    
     //@JsonBackReference(value = "personeVedentiList")
     @OneToMany(mappedBy = "idDocDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "personeVedentiList")
     private List<PersonaVedente> personeVedentiList;
-    
+
     @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idStruttureSegreteria;
@@ -275,30 +272,37 @@ public class DocDetail implements Serializable, DocDetailInterface {
         this.version = version;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public Azienda getIdAzienda() {
         return idAzienda;
     }
 
+    @Override
     public void setIdAzienda(Azienda idAzienda) {
         this.idAzienda = idAzienda;
     }
 
+    @Override
     public String getGuidDocumento() {
         return guidDocumento;
     }
 
+    @Override
     public void setGuidDocumento(String guidDocumento) {
         this.guidDocumento = guidDocumento;
     }
 
+    @Override
     public TipologiaDoc getTipologia() {
         if (tipologia != null) {
             return TipologiaDoc.valueOf(tipologia);
@@ -307,6 +311,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
         }
     }
 
+    @Override
     public void setTipologia(TipologiaDoc tipologia) {
         if (tipologia != null) {
             this.tipologia = tipologia.toString();
@@ -315,14 +320,17 @@ public class DocDetail implements Serializable, DocDetailInterface {
         }
     }
 
+    @Override
     public String getOpenCommand() {
         return openCommand;
     }
 
+    @Override
     public void setOpenCommand(String openCommand) {
         this.openCommand = openCommand;
     }
 
+    @Override
     public CommandType getCommandType() {
         if (commandType != null) {
             return CommandType.valueOf(commandType);
@@ -331,6 +339,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
         }
     }
 
+    @Override
     public void setCommandType(CommandType commandType) {
         if (commandType != null) {
             this.commandType = commandType.toString();
@@ -339,108 +348,134 @@ public class DocDetail implements Serializable, DocDetailInterface {
         }
     }
 
+    @Override
     public Persona getIdPersonaResponsabileProcedimento() {
         return idPersonaResponsabileProcedimento;
     }
 
+    @Override
     public void setIdPersonaResponsabileProcedimento(Persona idPersonaResponsabileProcedimento) {
         this.idPersonaResponsabileProcedimento = idPersonaResponsabileProcedimento;
     }
 
+    @Override
     public Persona getIdPersonaRedattrice() {
         return idPersonaRedattrice;
     }
 
+    @Override
     public void setIdPersonaRedattrice(Persona idPersonaRedattrice) {
         this.idPersonaRedattrice = idPersonaRedattrice;
     }
 
+    @Override
     public ZonedDateTime getDataCreazione() {
         return dataCreazione;
     }
 
+    @Override
     public void setDataCreazione(ZonedDateTime dataCreazione) {
         this.dataCreazione = dataCreazione;
     }
 
+    @Override
     public Integer getNumeroProposta() {
         return numeroProposta;
     }
 
+    @Override
     public void setNumeroProposta(Integer numeroProposta) {
         this.numeroProposta = numeroProposta;
     }
 
+    @Override
     public Integer getAnnoProposta() {
         return annoProposta;
     }
 
+    @Override
     public void setAnnoProposta(Integer annoProposta) {
         this.annoProposta = annoProposta;
     }
 
+    @Override
     public Struttura getIdStrutturaRegistrazione() {
         return idStrutturaRegistrazione;
     }
 
+    @Override
     public void setIdStrutturaRegistrazione(Struttura idStrutturaRegistrazione) {
         this.idStrutturaRegistrazione = idStrutturaRegistrazione;
     }
 
+    @Override
     public ZonedDateTime getDataRegistrazione() {
         return dataRegistrazione;
     }
 
+    @Override
     public void setDataRegistrazione(ZonedDateTime dataRegistrazione) {
         this.dataRegistrazione = dataRegistrazione;
     }
 
+    @Override
     public Integer getNumeroRegistrazione() {
         return numeroRegistrazione;
     }
 
+    @Override
     public void setNumeroRegistrazione(Integer numeroRegistrazione) {
         this.numeroRegistrazione = numeroRegistrazione;
     }
 
+    @Override
     public Integer getAnnoRegistrazione() {
         return annoRegistrazione;
     }
 
+    @Override
     public void setAnnoRegistrazione(Integer annoRegistrazione) {
         this.annoRegistrazione = annoRegistrazione;
     }
 
+    @Override
     public ZonedDateTime getDataPubblicazione() {
         return dataPubblicazione;
     }
 
+    @Override
     public void setDataPubblicazione(ZonedDateTime dataPubblicazione) {
         this.dataPubblicazione = dataPubblicazione;
     }
 
+    @Override
     public String getOggetto() {
         return oggetto;
     }
 
+    @Override
     public void setOggetto(String oggetto) {
         this.oggetto = oggetto;
     }
 
+    @Override
     public String getOggettoTscol() {
         return oggettoTscol;
     }
 
+    @Override
     public void setOggettoTscol(String oggettoTscol) {
         this.oggettoTscol = oggettoTscol;
     }
 
+    @Override
     public List<Firmatario> getFirmatari() {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.convertValue(firmatari, new TypeReference<List<DocDetail.Firmatario>>() {
         });
     }
 
+    @Override
     public void setFirmatari(List<Firmatario> firmatari) {
         this.firmatari = (List<JsonNode>) (Object) firmatari;
     }
@@ -452,46 +487,57 @@ public class DocDetail implements Serializable, DocDetailInterface {
 //    public void setFirmatariTscol(String firmatariTscol) {
 //        this.firmatariTscol = firmatariTscol;
 //    }
+    @Override
     public List<Destinatario> getDestinatari() {
         return destinatari;
     }
 
+    @Override
     public void setDestinatari(List<Destinatario> destinatari) {
         this.destinatari = destinatari;
     }
 
+    @Override
     public String getDestinatariTscol() {
         return destinatariTscol;
     }
 
+    @Override
     public void setDestinatariTscol(String destinatariTscol) {
         this.destinatariTscol = destinatariTscol;
     }
 
+    @Override
     public List<Fascicolazione> getFascicolazioni() {
         return fascicolazioni;
     }
 
+    @Override
     public void setFascicolazioni(List<Fascicolazione> fascicolazioni) {
         this.fascicolazioni = fascicolazioni;
     }
 
+    @Override
     public String getFascicolazioniTscol() {
         return fascicolazioniTscol;
     }
 
+    @Override
     public void setFascicolazioniTscol(String fascicolazioniTscol) {
         this.fascicolazioniTscol = fascicolazioniTscol;
     }
 
+    @Override
     public List<Classificazione> getClassificazioni() {
         return classificazioni;
     }
 
+    @Override
     public void setClassificazioni(List<Classificazione> classificazioni) {
         this.classificazioni = classificazioni;
     }
 
+    @Override
     public StatoDoc getStato() {
         if (stato != null) {
             return StatoDoc.valueOf(stato);
@@ -500,6 +546,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
         }
     }
 
+    @Override
     public void setStato(StatoDoc stato) {
         if (stato != null) {
             this.stato = stato.toString();
@@ -508,70 +555,87 @@ public class DocDetail implements Serializable, DocDetailInterface {
         }
     }
 
+    @Override
     public Boolean getVisibilitaLimitata() {
         return visibilitaLimitata;
     }
 
+    @Override
     public void setVisibilitaLimitata(Boolean visibilitaLimitata) {
         this.visibilitaLimitata = visibilitaLimitata;
     }
 
+    @Override
     public Boolean getRiservato() {
         return riservato;
     }
 
+    @Override
     public void setRiservato(Boolean riservato) {
         this.riservato = riservato;
     }
 
+    @Override
     public Boolean getAnnullato() {
         return annullato;
     }
 
+    @Override
     public void setAnnullato(Boolean annullato) {
         this.annullato = annullato;
     }
 
+    @Override
     public String getProtocolloEsterno() {
         return protocolloEsterno;
     }
 
+    @Override
     public void setProtocolloEsterno(String protocolloEsterno) {
         this.protocolloEsterno = protocolloEsterno;
     }
 
+    @Override
     public String getMittente() {
         return mittente;
     }
 
+    @Override
     public void setMittente(String mittente) {
         this.mittente = mittente;
     }
 
+    @Override
     public String getMittenteTscol() {
         return mittenteTscol;
     }
 
+    @Override
     public void setMittenteTscol(String mittenteTscol) {
         this.mittenteTscol = mittenteTscol;
     }
 
+    @Override
     public Mezzo getIdMezzoRicezione() {
         return idMezzoRicezione;
     }
 
+    @Override
     public void setIdMezzoRicezione(Mezzo idMezzoRicezione) {
         this.idMezzoRicezione = idMezzoRicezione;
     }
 
+    @Override
     public String getMailCollegio() {
         return mailCollegio;
     }
 
+    @Override
     public void setMailCollegio(String mailCollegio) {
         this.mailCollegio = mailCollegio;
     }
 
+    @Override
     public StatoUfficioAtti getStatoUfficioAtti() {
         if (statoUfficioAtti != null) {
             return StatoUfficioAtti.valueOf(statoUfficioAtti);
@@ -580,6 +644,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
         }
     }
 
+    @Override
     public void setStatoUfficioAtti(StatoUfficioAtti statoUfficioAtti) {
         if (statoUfficioAtti != null) {
             this.statoUfficioAtti = statoUfficioAtti.toString();
@@ -588,10 +653,12 @@ public class DocDetail implements Serializable, DocDetailInterface {
         }
     }
 
+    @Override
     public String getTscol() {
         return tscol;
     }
 
+    @Override
     public void setTscol(String tscol) {
         this.tscol = tscol;
     }
@@ -605,93 +672,114 @@ public class DocDetail implements Serializable, DocDetailInterface {
 //    public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
 //        this.personeVedenti = (List<JsonNode>) (Object) personeVedenti;
 //    }
-
+    @Override
     public List<PersonaVedente> getPersoneVedentiList() {
         return personeVedentiList;
     }
 
+    @Override
     public void setPersoneVedentiList(List<PersonaVedente> personeVedentiList) {
         this.personeVedentiList = personeVedentiList;
     }
-    
+
+    @Override
     public List<PersonaUsante> getSullaScrivaniaDi() {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.convertValue(sullaScrivaniaDi, new TypeReference<List<DocDetail.PersonaUsante>>() {
         });
     }
 
+    @Override
     public void setSullaScrivaniaDi(List<PersonaUsante> sullaScrivaniaDi) {
         this.sullaScrivaniaDi = (List<JsonNode>) (Object) sullaScrivaniaDi;
     }
 
+    @Override
     public Integer[] getIdStruttureSegreteria() {
         return idStruttureSegreteria;
     }
 
+    @Override
     public void setIdStruttureSegreteria(Integer[] idStruttureSegreteria) {
         this.idStruttureSegreteria = idStruttureSegreteria;
     }
 
+    @Override
     public ZonedDateTime getDataInserimentoRiga() {
         return dataInserimentoRiga;
     }
 
+    @Override
     public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
+    @Override
     public ZonedDateTime getVersion() {
         return version;
     }
 
+    @Override
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
 
+    @Override
     public Double getRankingOggetto() {
         return rankingOggetto;
     }
 
+    @Override
     public void setRankingOggetto(Double rankingOggetto) {
         this.rankingOggetto = rankingOggetto;
     }
 
+    @Override
     public Double getRankingDestinatari() {
         return rankingDestinatari;
     }
 
+    @Override
     public void setRankingDestinatari(Double rankingDestinatari) {
         this.rankingDestinatari = rankingDestinatari;
     }
 
+    @Override
     public Double getRankingFascicolazioni() {
         return rankingFascicolazioni;
     }
 
+    @Override
     public void setRankingFascicolazioni(Double rankingFascicolazioni) {
         this.rankingFascicolazioni = rankingFascicolazioni;
     }
 
+    @Override
     public Double getRankingMittente() {
         return rankingMittente;
     }
 
+    @Override
     public void setRankingMittente(Double rankingMittente) {
         this.rankingMittente = rankingMittente;
     }
 
+    @Override
     public Double getRanking() {
         return ranking;
     }
 
+    @Override
     public void setRanking(Double ranking) {
         this.ranking = ranking;
     }
 
+    @Override
     public String getUrlComplete() {
         return urlComplete;
     }
 
+    @Override
     public void setUrlComplete(String urlComplete) {
         this.urlComplete = urlComplete;
     }
@@ -721,12 +809,12 @@ public class DocDetail implements Serializable, DocDetailInterface {
         return "it.bologna.ausl.model.entities.scripta.DocsList[ id=" + id + " ]";
     }
 
-    
-
+    @Override
     public Applicazione getIdApplicazione() {
         return idApplicazione;
     }
 
+    @Override
     public void setIdApplicazione(Applicazione idApplicazione) {
         this.idApplicazione = idApplicazione;
     }
