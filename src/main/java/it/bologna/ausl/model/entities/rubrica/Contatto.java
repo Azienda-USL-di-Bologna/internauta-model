@@ -159,6 +159,9 @@ public class Contatto implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
+    @Size(max = 2147483647)
+    @Column(name = "titolo")
+    private String titolo;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -505,6 +508,16 @@ public class Contatto implements Serializable {
     public void setGruppiDelContattoList(List<GruppiContatti> gruppiDelContattoList) {
         this.gruppiDelContattoList = gruppiDelContattoList;
     }
+    
+    
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
+    }
+
 
     @Override
     public int hashCode() {
