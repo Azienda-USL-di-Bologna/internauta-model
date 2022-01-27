@@ -17,7 +17,8 @@ public interface DocDetailInterface {
         PROTOCOLLO_IN_USCITA,
         PROTOCOLLO_IN_ENTRATA,
         DETERMINA,
-        DELIBERA
+        DELIBERA,
+        DOCUMENT
     }
 
     public static enum CommandType {
@@ -245,6 +246,14 @@ public interface DocDetailInterface {
     public Applicazione getIdApplicazione();
 
     public void setIdApplicazione(Applicazione idApplicazione);
+        
+    public List<Archiviazione> getArchiviazioni();
+
+    public void setArchiviazioni(List<Archiviazione> archiviazioni);
+
+    public Integer[] getIdArchiviAntenati();
+
+    public void setIdArchiviAntenati(Integer[] idArchiviAntenati);
     
     public static class Fascicolazione {
 
@@ -285,6 +294,29 @@ public interface DocDetailInterface {
             this.idFascicoloRadiceArgo = idFascicoloRadiceArgo;
         }
         
+    }
+    
+    public static class Archiviazione {
+
+        String descrizione;
+        Integer idArchivio;
+
+        public String getDescrizione() {
+            return descrizione;
+        }
+
+        public void setDescrizione(String descrizione) {
+            this.descrizione = descrizione;
+        }
+
+        public Integer getIdArchivio() {
+            return idArchivio;
+        }
+
+        public void setIdArchivio(Integer idArchivio) {
+            this.idArchivio = idArchivio;
+        }
+
     }
 
     public static class Firmatario {

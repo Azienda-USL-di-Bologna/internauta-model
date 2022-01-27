@@ -250,6 +250,16 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idApplicazione")
     private Applicazione idApplicazione;
+    
+    @Type(type = "jsonb")
+    @Column(name = "archiviazioni", columnDefinition = "jsonb")
+    private List<Archiviazione> archiviazioni;
+    
+    @Column(name = "id_archivi_antenati", columnDefinition = "integer[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] idArchiviAntenati;
+
+    
     // Proprietà transient
     @Transient
     private String urlComplete;
@@ -783,7 +793,27 @@ public class DocDetail implements Serializable, DocDetailInterface {
     public void setUrlComplete(String urlComplete) {
         this.urlComplete = urlComplete;
     }
+    
+    @Override
+    public List<Archiviazione> getArchiviazioni() {
+        return archiviazioni;
+    }
 
+    @Override
+    public void setArchiviazioni(List<Archiviazione> archiviazioni) {
+        this.archiviazioni = archiviazioni;
+    }
+
+    @Override
+    public Integer[] getIdArchiviAntenati() {
+        return idArchiviAntenati;
+    }
+
+    @Override
+    public void setIdArchiviAntenati(Integer[] idArchiviAntenati) {
+        this.idArchiviAntenati = idArchiviAntenati;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
