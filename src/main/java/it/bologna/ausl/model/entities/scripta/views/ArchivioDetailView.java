@@ -48,7 +48,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "archivi_details_view", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({})
+@GenerateProjections({
+    "idAzienda, idPersonaResponsabile, idPersonaCreazione, idStruttura"
+})
 @DynamicUpdate
 public class ArchivioDetailView implements Serializable, ArchivioDetailInterface {
 
