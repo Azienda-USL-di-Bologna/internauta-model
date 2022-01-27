@@ -128,6 +128,9 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Column(name = "tipo")
     private String tipo;
     
+    @Column(name = "livello")
+    private Integer livello;
+    
     @JoinColumn(name = "id_persona_responsabile", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Persona idPersonaResponsabile;
@@ -277,6 +280,13 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
         this.anno = anno;
     }
 
+    public Integer getLivello() {
+        return livello;
+    }
+
+    public void setLivello(Integer livello) {
+        this.livello = livello;
+    }
     public String getNumerazioneGerarchica() {
         return numerazioneGerarchica;
     }

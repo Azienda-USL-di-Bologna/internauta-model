@@ -38,7 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Archivio {
     
     public static enum TipoArchivio {
-        FASCICOLO, SOTTOFASCICOLO, INSERTO
+         AFFARE, PROCEDIMENTO, ATTIVITA, SPECIALE
     }
     public static enum StatoArchivio {
         APERTO, PRECHIUSO, CHIUSO
@@ -96,6 +96,9 @@ public class Archivio {
     
     @Column(name = "stato")
     private String stato;
+    
+    @Column(name = "livello")
+    private Integer livello;
     
     @JoinColumn(name = "id_archivio_precedente", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -225,6 +228,14 @@ public class Archivio {
         this.anno = anno;
     }
 
+    public Integer getLivello() {
+        return livello;
+    }
+
+    public void setLivello(Integer livello) {
+        this.livello = livello;
+    }
+    
     public String getOggetto() {
         return oggetto;
     }
