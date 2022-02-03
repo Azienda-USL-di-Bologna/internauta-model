@@ -78,7 +78,7 @@ public class Pec implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "giorni_bozza")
-    private Integer giorniBozza = 30;
+    private Integer giorniBozza = 60;
 
     @Basic(optional = false)
     @NotNull
