@@ -49,6 +49,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 })
 @DynamicUpdate
 public class Doc implements Serializable {
+    
+    public static enum VisibilitaDoc {
+        NORMALE,
+        LIMITATA,
+        RISERVATO
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -76,7 +82,12 @@ public class Doc implements Serializable {
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione = ZonedDateTime.now();
+    
+    @Column(name = "visibilita")
+    private String visibilita;
 
+    @Column(name = "tipologia")
+    private String tipologia;
     //lista di mittenti che conterra per il momento solo un elemento
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
 
@@ -176,6 +187,38 @@ public class Doc implements Serializable {
         this.dataCreazione = dataCreazione;
     }
 
+    public VisibilitaDoc getStatoUfficioAtti() {
+        if (visibilita != null) {
+            return VisibilitaDoc.valueOf(visibilita);
+        } else {
+            return null;
+        }
+    }
+
+    public void setStatoUfficioAtti(VisibilitaDoc visibilita) {
+        if (visibilita != null) {
+            this.visibilita = visibilita.toString();
+        } else {
+            this.visibilita = null;
+        }
+    }
+    
+    public DocDetailInterface.TipologiaDoc getTipologia() {
+        if (tipologia != null) {
+            return DocDetailInterface.TipologiaDoc.valueOf(tipologia);
+        } else {
+            return null;
+        }
+    }
+
+    public void setTipologia(DocDetailInterface.TipologiaDoc tipologia) {
+        if (tipologia != null) {
+            this.tipologia = tipologia.toString();
+        } else {
+            this.tipologia = null;
+        }
+    }
+    
     public List<Related> getMittenti() {
         return mittenti;
     }
