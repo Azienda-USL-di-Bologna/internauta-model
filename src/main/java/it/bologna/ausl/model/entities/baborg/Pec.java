@@ -13,7 +13,6 @@ import it.bologna.ausl.model.entities.shpeck.Draft;
 import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Tag;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -75,6 +74,11 @@ public class Pec implements Serializable {
     @NotNull
     @Column(name = "attiva")
     private Boolean attiva;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "giorni_bozza")
+    private Integer giorniBozza = 60;
 
     @Basic(optional = false)
     @NotNull
@@ -492,4 +496,14 @@ public class Pec implements Serializable {
     public void setPublicataIPA(Boolean publicataIPA) {
         this.publicataIPA = publicataIPA;
     }
+
+    public Integer getGiorniBozza() {
+        return giorniBozza;
+    }
+
+    public void setGiorniBozza(Integer giorniBozza) {
+        this.giorniBozza = giorniBozza;
+    }
+    
+    
 }

@@ -3,3 +3,4 @@ target
 nbactions.xml
 nbactions.tmp
 nb-configuration.xml
+.git/
