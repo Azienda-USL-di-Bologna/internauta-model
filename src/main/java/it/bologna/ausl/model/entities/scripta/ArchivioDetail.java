@@ -47,7 +47,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "archivi_details", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idArchivioPadre, archiviFigliList"})
+@GenerateProjections({"idArchivioPadre, archiviFigliList", "archiviFigliList,archiviNipotiList"})
 @DynamicUpdate
 public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
@@ -57,106 +57,106 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_creazione")
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione;
-    
+
     @JoinColumn(name = "id_archivio_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPadre")
     private ArchivioDetail idArchivioPadre;
-    
+
     @OneToMany(mappedBy = "idArchivioPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "archiviFigliList")
     private List<ArchivioDetail> archiviFigliList;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_creazione_padre")
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazionePadre;
-    
+
     @JoinColumn(name = "id_archivio_nonno", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioNonno")
     private ArchivioDetail idArchivioNonno;
-    
+
     @OneToMany(mappedBy = "idArchivioNonno", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "archiviNipotiList")
     private List<ArchivioDetail> archiviNipotiList;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_creazione_nonno")
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazioneNonno;
-    
+
     @Column(name = "foglia")
     private Boolean foglia;
-    
+
     @Column(name = "numero")
     private Integer numero;
-    
+
     @Column(name = "anno")
     private Integer anno;
-    
+
     @Column(name = "numerazione_gerarchica")
     private String numerazioneGerarchica;
-    
+
     @Column(name = "oggetto")
     private String oggetto;
-    
+
     @Column(name = "oggetto_tscol", columnDefinition = "tsvector")
     private String oggettoTscol;
-    
+
     @Formula("(select ts_rank(oggetto_tscol, to_tsquery('italian',$${oggetto_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double rankingOggetto;
-    
+
     @Column(name = "stato")
     private String stato;
-    
+
     @Column(name = "tipo")
     private String tipo;
-    
+
     @Column(name = "livello")
     private Integer livello;
-    
+
     @JoinColumn(name = "id_persona_responsabile", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Persona idPersonaResponsabile;
-    
+
     @JoinColumn(name = "id_persona_creazione", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Persona idPersonaCreazione;
-    
+
     @JoinColumn(name = "id_struttura", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idStruttura")
     private Struttura idStruttura;
-    
+
     @Column(name = "id_titolo")
     private Integer idTitolo;
-    
+
     @Type(type = "jsonb")
     @Column(name = "vicari", columnDefinition = "jsonb")
     private List<JsonNode> vicari;
-    
+
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_inserimento_riga")
@@ -168,7 +168,7 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
-    
+
     public ArchivioDetail() {
     }
 
@@ -202,7 +202,7 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setIdArchivioPadre(ArchivioDetailInterface idArchivioPadre) {
         if (idArchivioPadre != null) {
-            this.idArchivioPadre = (ArchivioDetail)idArchivioPadre;
+            this.idArchivioPadre = (ArchivioDetail) idArchivioPadre;
         } else {
             this.idArchivioPadre = null;
         }
@@ -214,7 +214,7 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setArchiviFigliList(List archiviFigliList) {
         if (archiviFigliList != null) {
-            this.archiviFigliList = (List<ArchivioDetail>)archiviFigliList;
+            this.archiviFigliList = (List<ArchivioDetail>) archiviFigliList;
         } else {
             this.archiviFigliList = null;
         }
@@ -234,7 +234,7 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setIdArchivioNonno(ArchivioDetailInterface idArchivioNonno) {
         if (idArchivioNonno != null) {
-            this.idArchivioNonno = (ArchivioDetail)idArchivioNonno;
+            this.idArchivioNonno = (ArchivioDetail) idArchivioNonno;
         } else {
             this.idArchivioNonno = null;
         }
@@ -245,7 +245,7 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     }
 
     public void setArchiviNipotiList(List<? extends ArchivioDetailInterface> archiviNipotiList) {
-        this.archiviNipotiList = (List<ArchivioDetail>)archiviNipotiList;
+        this.archiviNipotiList = (List<ArchivioDetail>) archiviNipotiList;
     }
 
     public ZonedDateTime getDataCreazioneNonno() {
@@ -287,6 +287,7 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     public void setLivello(Integer livello) {
         this.livello = livello;
     }
+
     public String getNumerazioneGerarchica() {
         return numerazioneGerarchica;
     }
