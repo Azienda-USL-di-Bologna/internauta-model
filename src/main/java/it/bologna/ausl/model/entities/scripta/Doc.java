@@ -84,7 +84,7 @@ public class Doc implements Serializable {
     private ZonedDateTime dataCreazione = ZonedDateTime.now();
     
     @Column(name = "visibilita")
-    private String visibilita;
+    private String visibilita = VisibilitaDoc.NORMALE.toString();
 
     @Column(name = "tipologia")
     private String tipologia;
