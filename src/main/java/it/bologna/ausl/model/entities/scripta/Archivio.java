@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -70,12 +71,13 @@ public class Archivio {
     @JsonBackReference(value = "archiviFigliList")
     private List<Archivio> archiviFigliList;
     
-    @JoinColumn(name = "id_archivio_nonno", referencedColumnName = "id")
+    @JoinColumn(name = "id_archivio_radice", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "idArchivioNonno")
-    private Archivio idArchivioNonno;
+    @JsonBackReference(value = "idArchivioRadice")
+    private Archivio idArchivioRadice;
     
-    @OneToMany(mappedBy = "idArchivioNonno", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idArchivioRadice", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @Where(clause = "livello = 3")
     @JsonBackReference(value = "archiviNipotiList")
     private List<Archivio> archiviNipotiList;
     
@@ -172,12 +174,12 @@ public class Archivio {
         this.archiviFigliList = archiviFigliList;
     }
 
-    public Archivio getIdArchivioNonno() {
-        return idArchivioNonno;
+    public Archivio getIdArchivioRadice() {
+        return idArchivioRadice;
     }
 
-    public void setIdArchivioNonno(Archivio idArchivioNonno) {
-        this.idArchivioNonno = idArchivioNonno;
+    public void setIdArchivioRadice(Archivio idArchivioRadice) {
+        this.idArchivioRadice = idArchivioRadice;
     }
 
     public List<Archivio> getArchiviNipotiList() {
