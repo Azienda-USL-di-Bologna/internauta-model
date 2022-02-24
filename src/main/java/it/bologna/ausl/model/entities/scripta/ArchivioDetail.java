@@ -34,6 +34,7 @@ import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -85,21 +86,22 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @NotNull
     private ZonedDateTime dataCreazionePadre;
 
-    @JoinColumn(name = "id_archivio_nonno", referencedColumnName = "id")
+    @JoinColumn(name = "id_archivio_radice", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "idArchivioNonno")
-    private ArchivioDetail idArchivioNonno;
+    @JsonBackReference(value = "idArchivioRadice")
+    private ArchivioDetail idArchivioRadice;
 
-    @OneToMany(mappedBy = "idArchivioNonno", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idArchivioRadice", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @Where(clause = "livello = 3")
     @JsonBackReference(value = "archiviNipotiList")
     private List<ArchivioDetail> archiviNipotiList;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @Column(name = "data_creazione_nonno")
+    @Column(name = "data_creazione_radice")
     @Basic(optional = false)
     @NotNull
-    private ZonedDateTime dataCreazioneNonno;
+    private ZonedDateTime dataCreazioneRadice;
 
     @Column(name = "foglia")
     private Boolean foglia;
@@ -228,15 +230,15 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
         this.dataCreazionePadre = dataCreazionePadre;
     }
 
-    public ArchivioDetail getIdArchivioNonno() {
-        return idArchivioNonno;
+    public ArchivioDetail getIdArchivioRadice() {
+        return idArchivioRadice;
     }
 
-    public void setIdArchivioNonno(ArchivioDetailInterface idArchivioNonno) {
-        if (idArchivioNonno != null) {
-            this.idArchivioNonno = (ArchivioDetail) idArchivioNonno;
+    public void setIdArchivioRadice(ArchivioDetailInterface idArchivioRadice) {
+        if (idArchivioRadice != null) {
+            this.idArchivioRadice = (ArchivioDetail) idArchivioRadice;
         } else {
-            this.idArchivioNonno = null;
+            this.idArchivioRadice = null;
         }
     }
 
@@ -248,12 +250,12 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
         this.archiviNipotiList = (List<ArchivioDetail>) archiviNipotiList;
     }
 
-    public ZonedDateTime getDataCreazioneNonno() {
-        return dataCreazioneNonno;
+    public ZonedDateTime getDataCreazioneRadice() {
+        return dataCreazioneRadice;
     }
 
-    public void setDataCreazioneNonno(ZonedDateTime dataCreazioneNonno) {
-        this.dataCreazioneNonno = dataCreazioneNonno;
+    public void setDataCreazioneRadice(ZonedDateTime dataCreazioneRadice) {
+        this.dataCreazioneRadice = dataCreazioneRadice;
     }
 
     public Boolean getFoglia() {

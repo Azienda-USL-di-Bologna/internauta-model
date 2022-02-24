@@ -37,17 +37,17 @@ public interface ArchivioDetailInterface {
 
     public void setDataCreazionePadre(ZonedDateTime dataCreazionePadre);
     
-    public ArchivioDetailInterface getIdArchivioNonno();
+    public ArchivioDetailInterface getIdArchivioRadice();
     
-    public void setIdArchivioNonno(ArchivioDetailInterface idArchivioNonno);
+    public void setIdArchivioRadice(ArchivioDetailInterface idArchivioRadice);
     
     public List<? extends ArchivioDetailInterface> getArchiviNipotiList();
     
     public void setArchiviNipotiList(List<? extends ArchivioDetailInterface> archiviNipotiList);
     
-    public ZonedDateTime getDataCreazioneNonno();
+    public ZonedDateTime getDataCreazioneRadice();
 
-    public void setDataCreazioneNonno(ZonedDateTime dataCreazioneNonno);
+    public void setDataCreazioneRadice(ZonedDateTime dataCreazioneRadice);
     
     public Boolean getFoglia();
 
