@@ -154,10 +154,6 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "id_titolo")
     private Integer idTitolo;
     
-    @Type(type = "jsonb")
-    @Column(name = "vicari", columnDefinition = "jsonb")
-    private List<JsonNode> vicari;
-    
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
@@ -390,16 +386,6 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 
     public void setIdTitolo(Integer idTitolo) {
         this.idTitolo = idTitolo;
-    }
-
-    public List<Vicario> getVicari() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(vicari, new TypeReference<List<Vicario>>() {
-        });
-    }
-
-    public void setVicari(List<Vicario> vicari) {
-        this.vicari = (List<JsonNode>) (Object) vicari;
     }
 
     public String getTscol() {

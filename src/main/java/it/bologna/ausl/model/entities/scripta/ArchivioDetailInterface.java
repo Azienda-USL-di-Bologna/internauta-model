@@ -101,10 +101,6 @@ public interface ArchivioDetailInterface {
     
     public void setIdTitolo(Integer idTitolo);
     
-    public List<Vicario> getVicari();
-
-    public void setVicari(List<Vicario> vicari);
-    
     public Integer[] getIdVicari();
     
     public String getTscol();
@@ -119,26 +115,4 @@ public interface ArchivioDetailInterface {
 
     public void setVersion(ZonedDateTime version);
     
-    public static class Vicario {
-
-        String descrizione;
-        Integer idPersona;
-
-        public String getDescrizione() {
-            return descrizione;
-        }
-
-        public void setDescrizione(String descrizione) {
-            this.descrizione = descrizione;
-        }
-
-        public Integer getIdPersona() {
-            return idPersona;
-        }
-
-        public void setIdPersona(Integer idPersona) {
-            this.idPersona = idPersona;
-        }
-
-    }
 }
