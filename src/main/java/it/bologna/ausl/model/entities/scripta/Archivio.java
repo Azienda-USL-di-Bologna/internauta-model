@@ -93,6 +93,9 @@ public class Archivio {
     @Column(name = "anno")
     private Integer anno;
     
+    @Column(name = "numerazione_gerarchica")
+    private String numerazioneGerarchica;
+    
     @Column(name = "oggetto")
     private String oggetto;
     
@@ -228,6 +231,14 @@ public class Archivio {
 
     public void setAnno(Integer anno) {
         this.anno = anno;
+    }
+
+    public String getNumerazioneGerarchica() {
+        return numerazioneGerarchica;
+    }
+
+    public void setNumerazioneGerarchica(String numerazioneGerarchica) {
+        this.numerazioneGerarchica = numerazioneGerarchica;
     }
 
     public Integer getLivello() {
