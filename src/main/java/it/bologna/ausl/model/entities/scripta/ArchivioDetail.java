@@ -50,7 +50,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "archivi_details", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idArchivioPadre, archiviFigliList", "archiviFigliList,archiviNipotiList"})
+@GenerateProjections({"idArchivioPadre, archiviFigliList", "archiviFigliList,archiviNipotiList","idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura"})
 @DynamicUpdate
 public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
@@ -434,6 +434,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
         this.version = version;
     }
 
+    public Integer[] getIdVicari() {
+        return idVicari;
+    }
+
+    public void setIdVicari(Integer[] idVicari) {
+        this.idVicari = idVicari;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

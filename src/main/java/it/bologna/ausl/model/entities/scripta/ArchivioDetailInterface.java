@@ -105,6 +105,8 @@ public interface ArchivioDetailInterface {
 
     public void setVicari(List<Vicario> vicari);
     
+    public Integer[] getIdVicari();
+    
     public String getTscol();
 
     public void setTscol(String tscol);

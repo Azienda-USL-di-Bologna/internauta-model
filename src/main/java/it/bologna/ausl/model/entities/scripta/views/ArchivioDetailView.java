@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
@@ -32,6 +33,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -182,6 +184,10 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     
     @JoinColumn(name = "bit_permesso")
     private Integer bitPermesso;
+    
+    @Column(name = "id_vicari", columnDefinition = "integer[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] idVicari;
     
     public ArchivioDetailView() {
     }
@@ -458,6 +464,15 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     public void setBitPermesso(Integer bitPermesso) {
         this.bitPermesso = bitPermesso;
     }
+        
+    public Integer[] getIdVicari() {
+        return idVicari;
+    }
+
+    public void setIdVicari(Integer[] idVicari) {
+        this.idVicari = idVicari;
+    }
+    
     
     @Override
     public int hashCode() {
