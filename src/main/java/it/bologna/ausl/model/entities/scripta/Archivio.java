@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -70,14 +71,10 @@ public class Archivio {
     @JsonBackReference(value = "archiviFigliList")
     private List<Archivio> archiviFigliList;
     
-    @JoinColumn(name = "id_archivio_nonno", referencedColumnName = "id")
+    @JoinColumn(name = "id_archivio_radice", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "idArchivioNonno")
-    private Archivio idArchivioNonno;
-    
-    @OneToMany(mappedBy = "idArchivioNonno", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "archiviNipotiList")
-    private List<Archivio> archiviNipotiList;
+    @JsonBackReference(value = "idArchivioRadice")
+    private Archivio idArchivioRadice;
     
     @Column(name = "tipo")
     private String tipo;
@@ -90,6 +87,9 @@ public class Archivio {
     
     @Column(name = "anno")
     private Integer anno;
+    
+    @Column(name = "numerazione_gerarchica")
+    private String numerazioneGerarchica;
     
     @Column(name = "oggetto")
     private String oggetto;
@@ -172,20 +172,12 @@ public class Archivio {
         this.archiviFigliList = archiviFigliList;
     }
 
-    public Archivio getIdArchivioNonno() {
-        return idArchivioNonno;
+    public Archivio getIdArchivioRadice() {
+        return idArchivioRadice;
     }
 
-    public void setIdArchivioNonno(Archivio idArchivioNonno) {
-        this.idArchivioNonno = idArchivioNonno;
-    }
-
-    public List<Archivio> getArchiviNipotiList() {
-        return archiviNipotiList;
-    }
-
-    public void setArchiviNipotiList(List<Archivio> archiviNipotiList) {
-        this.archiviNipotiList = archiviNipotiList;
+    public void setIdArchivioRadice(Archivio idArchivioRadice) {
+        this.idArchivioRadice = idArchivioRadice;
     }
 
     public TipoArchivio getTipo() {
@@ -226,6 +218,14 @@ public class Archivio {
 
     public void setAnno(Integer anno) {
         this.anno = anno;
+    }
+
+    public String getNumerazioneGerarchica() {
+        return numerazioneGerarchica;
+    }
+
+    public void setNumerazioneGerarchica(String numerazioneGerarchica) {
+        this.numerazioneGerarchica = numerazioneGerarchica;
     }
 
     public Integer getLivello() {

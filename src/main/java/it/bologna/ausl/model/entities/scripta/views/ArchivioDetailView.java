@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
@@ -32,9 +33,11 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -88,21 +91,17 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @NotNull
     private ZonedDateTime dataCreazionePadre;
     
-    @JoinColumn(name = "id_archivio_nonno", referencedColumnName = "id")
+    @JoinColumn(name = "id_archivio_radice", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "idArchivioNonno")
-    private ArchivioDetailView idArchivioNonno;
-    
-    @OneToMany(mappedBy = "idArchivioNonno", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "archiviNipotiList")
-    private List<ArchivioDetailView> archiviNipotiList;
+    @JsonBackReference(value = "idArchivioRadice")
+    private ArchivioDetailView idArchivioRadice;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @Column(name = "data_creazione_nonno")
+    @Column(name = "data_creazione_radice")
     @Basic(optional = false)
     @NotNull
-    private ZonedDateTime dataCreazioneNonno;
+    private ZonedDateTime dataCreazioneRadice;
     
     @Column(name = "foglia")
     private Boolean foglia;
@@ -150,10 +149,6 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "id_titolo")
     private Integer idTitolo;
     
-    @Type(type = "jsonb")
-    @Column(name = "vicari", columnDefinition = "jsonb")
-    private List<JsonNode> vicari;
-    
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
@@ -180,6 +175,10 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     
     @JoinColumn(name = "bit_permesso")
     private Integer bitPermesso;
+    
+    @Column(name = "id_vicari", columnDefinition = "integer[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] idVicari;
     
     public ArchivioDetailView() {
     }
@@ -232,28 +231,20 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
         this.dataCreazionePadre = dataCreazionePadre;
     }
 
-    public ArchivioDetailView getIdArchivioNonno() {
-        return idArchivioNonno;
+    public ArchivioDetailView getIdArchivioRadice() {
+        return idArchivioRadice;
     }
 
-    public void setIdArchivioNonno(ArchivioDetailInterface idArchivioNonno) {
-        this.idArchivioNonno = (ArchivioDetailView)idArchivioNonno;
+    public void setIdArchivioRadice(ArchivioDetailInterface idArchivioRadice) {
+        this.idArchivioRadice = (ArchivioDetailView)idArchivioRadice;
     }
 
-    public List<ArchivioDetailView> getArchiviNipotiList() {
-        return archiviNipotiList;
+    public ZonedDateTime getDataCreazioneRadice() {
+        return dataCreazioneRadice;
     }
 
-    public void setArchiviNipotiList(List<? extends ArchivioDetailInterface> archiviNipotiList) {
-        this.archiviNipotiList = (List<ArchivioDetailView>)archiviNipotiList;
-    }
-
-    public ZonedDateTime getDataCreazioneNonno() {
-        return dataCreazioneNonno;
-    }
-
-    public void setDataCreazioneNonno(ZonedDateTime dataCreazioneNonno) {
-        this.dataCreazioneNonno = dataCreazioneNonno;
+    public void setDataCreazioneRadice(ZonedDateTime dataCreazioneRadice) {
+        this.dataCreazioneRadice = dataCreazioneRadice;
     }
 
     public Boolean getFoglia() {
@@ -384,16 +375,6 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
         this.idTitolo = idTitolo;
     }
 
-    public List<Vicario> getVicari() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(vicari, new TypeReference<List<Vicario>>() {
-        });
-    }
-
-    public void setVicari(List<Vicario> vicari) {
-        this.vicari = (List<JsonNode>) (Object) vicari;
-    }
-
     public String getTscol() {
         return tscol;
     }
@@ -456,6 +437,15 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     public void setBitPermesso(Integer bitPermesso) {
         this.bitPermesso = bitPermesso;
     }
+        
+    public Integer[] getIdVicari() {
+        return idVicari;
+    }
+
+    public void setIdVicari(Integer[] idVicari) {
+        this.idVicari = idVicari;
+    }
+    
     
     @Override
     public int hashCode() {
