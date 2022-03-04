@@ -50,7 +50,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "archivi_details", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idArchivioPadre, archiviFigliList", "archiviFigliList,archiviNipotiList","idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura"})
+@GenerateProjections({"idArchivioPadre, archiviFigliList", "archiviFigliList","idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura"})
 @DynamicUpdate
 public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
