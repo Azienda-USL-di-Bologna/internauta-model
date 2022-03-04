@@ -41,10 +41,6 @@ public interface ArchivioDetailInterface {
     
     public void setIdArchivioRadice(ArchivioDetailInterface idArchivioRadice);
     
-    public List<? extends ArchivioDetailInterface> getArchiviNipotiList();
-    
-    public void setArchiviNipotiList(List<? extends ArchivioDetailInterface> archiviNipotiList);
-    
     public ZonedDateTime getDataCreazioneRadice();
 
     public void setDataCreazioneRadice(ZonedDateTime dataCreazioneRadice);

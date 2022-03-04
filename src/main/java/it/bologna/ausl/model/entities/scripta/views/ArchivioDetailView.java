@@ -96,11 +96,6 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @JsonBackReference(value = "idArchivioRadice")
     private ArchivioDetailView idArchivioRadice;
     
-    @OneToMany(mappedBy = "idArchivioRadice", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @Where(clause = "livello = 3")
-    @JsonBackReference(value = "archiviNipotiList")
-    private List<ArchivioDetailView> archiviNipotiList;
-    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_creazione_radice")
@@ -242,14 +237,6 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 
     public void setIdArchivioRadice(ArchivioDetailInterface idArchivioRadice) {
         this.idArchivioRadice = (ArchivioDetailView)idArchivioRadice;
-    }
-
-    public List<ArchivioDetailView> getArchiviNipotiList() {
-        return archiviNipotiList;
-    }
-
-    public void setArchiviNipotiList(List<? extends ArchivioDetailInterface> archiviNipotiList) {
-        this.archiviNipotiList = (List<ArchivioDetailView>)archiviNipotiList;
     }
 
     public ZonedDateTime getDataCreazioneRadice() {

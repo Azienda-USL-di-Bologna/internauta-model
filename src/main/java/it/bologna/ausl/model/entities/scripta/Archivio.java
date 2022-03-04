@@ -76,11 +76,6 @@ public class Archivio {
     @JsonBackReference(value = "idArchivioRadice")
     private Archivio idArchivioRadice;
     
-    @OneToMany(mappedBy = "idArchivioRadice", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @Where(clause = "livello = 3")
-    @JsonBackReference(value = "archiviNipotiList")
-    private List<Archivio> archiviNipotiList;
-    
     @Column(name = "tipo")
     private String tipo;
     
@@ -183,14 +178,6 @@ public class Archivio {
 
     public void setIdArchivioRadice(Archivio idArchivioRadice) {
         this.idArchivioRadice = idArchivioRadice;
-    }
-
-    public List<Archivio> getArchiviNipotiList() {
-        return archiviNipotiList;
-    }
-
-    public void setArchiviNipotiList(List<Archivio> archiviNipotiList) {
-        this.archiviNipotiList = archiviNipotiList;
     }
 
     public TipoArchivio getTipo() {
