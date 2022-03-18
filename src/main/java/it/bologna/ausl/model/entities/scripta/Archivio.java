@@ -42,7 +42,7 @@ public class Archivio {
          AFFARE, PROCEDIMENTO, ATTIVITA, SPECIALE
     }
     public static enum StatoArchivio {
-        APERTO, PRECHIUSO, CHIUSO
+        APERTO, PRECHIUSO, CHIUSO, BOZZA
     }
     
     @Id
