@@ -23,7 +23,6 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -82,6 +81,9 @@ public class Archivio {
     @Column(name = "foglia")
     private Boolean foglia;
     
+    @Column(name = "riservato")
+    private Boolean riservato = false;
+    
     @Column(name = "numero")
     private Integer numero;
     
@@ -128,6 +130,10 @@ public class Archivio {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+    
+    @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "attoriList")
+    private List<AttoreArchivio> attoriList;
 
     public Archivio() {
     }
@@ -202,6 +208,14 @@ public class Archivio {
 
     public void setFoglia(Boolean foglia) {
         this.foglia = foglia;
+    }
+
+    public Boolean getRiservato() {
+        return riservato;
+    }
+
+    public void setRiservato(Boolean riservato) {
+        this.riservato = riservato;
     }
 
     public Integer getNumero() {
@@ -306,6 +320,14 @@ public class Archivio {
 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
+    }
+
+    public List<AttoreArchivio> getAttoriList() {
+        return attoriList;
+    }
+
+    public void setAttoriList(List<AttoreArchivio> attoriList) {
+        this.attoriList = attoriList;
     }
     
     @Override
