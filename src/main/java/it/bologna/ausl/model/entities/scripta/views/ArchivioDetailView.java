@@ -4,9 +4,6 @@ import it.bologna.ausl.model.entities.scripta.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
@@ -37,7 +34,6 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -106,6 +102,9 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "foglia")
     private Boolean foglia;
     
+    @Column(name = "riservato")
+    private Boolean riservato;
+    
     @Column(name = "numero")
     private Integer numero;
     
@@ -167,18 +166,23 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
     
-    @JoinColumn(name = "id_soggetto")
-    private Integer idSoggetto;
-    
-    @JoinColumn(name = "tipo_soggetto")
-    private String tipoSoggetto;
-    
-    @JoinColumn(name = "bit_permesso")
-    private Integer bitPermesso;
+//    @JoinColumn(name = "id_soggetto")
+//    private Integer idSoggetto;
+//    
+//    @JoinColumn(name = "tipo_soggetto")
+//    private String tipoSoggetto;
+//    
+//    @JoinColumn(name = "bit_permesso")
+//    private Integer bitPermesso;
     
     @Column(name = "id_vicari", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idVicari;
+    
+    @JoinColumn(name = "id_persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idPersona")
+    private Persona idPersona;
     
     public ArchivioDetailView() {
     }
@@ -253,6 +257,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 
     public void setFoglia(Boolean foglia) {
         this.foglia = foglia;
+    }
+
+    public Boolean getRiservato() {
+        return riservato;
+    }
+
+    public void setRiservato(Boolean riservato) {
+        this.riservato = riservato;
     }
 
     public Integer getNumero() {
@@ -406,37 +418,46 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
+
+    public Persona getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
+    }
     
-    public Integer getIdSoggetto() {
-        return idSoggetto;
-    }
-
-    public void setIdSoggetto(Integer idSoggetto) {
-        this.idSoggetto = idSoggetto;
-    }
-
-    public PermessoArchivio.TipoSoggetto getTipoSoggetto() {
-        if (tipoSoggetto != null) {
-            return PermessoArchivio.TipoSoggetto.valueOf(tipoSoggetto);
-        } else {
-            return null;
-        }
-    }
-
-    public void setTipoSoggetto(PermessoArchivio.TipoSoggetto tipoSoggetto) {
-        if (tipoSoggetto != null) {
-            this.tipoSoggetto = tipoSoggetto.toString();
-        } else {
-            this.tipoSoggetto = null;
-        }
-    }
-    public Integer getBitPermesso() {
-        return bitPermesso;
-    }
-
-    public void setBitPermesso(Integer bitPermesso) {
-        this.bitPermesso = bitPermesso;
-    }
+    
+//    public Integer getIdSoggetto() {
+//        return idSoggetto;
+//    }
+//
+//    public void setIdSoggetto(Integer idSoggetto) {
+//        this.idSoggetto = idSoggetto;
+//    }
+//
+//    public PermessoArchivio.TipoSoggetto getTipoSoggetto() {
+//        if (tipoSoggetto != null) {
+//            return PermessoArchivio.TipoSoggetto.valueOf(tipoSoggetto);
+//        } else {
+//            return null;
+//        }
+//    }
+//
+//    public void setTipoSoggetto(PermessoArchivio.TipoSoggetto tipoSoggetto) {
+//        if (tipoSoggetto != null) {
+//            this.tipoSoggetto = tipoSoggetto.toString();
+//        } else {
+//            this.tipoSoggetto = null;
+//        }
+//    }
+//    public Integer getBitPermesso() {
+//        return bitPermesso;
+//    }
+//
+//    public void setBitPermesso(Integer bitPermesso) {
+//        this.bitPermesso = bitPermesso;
+//    }
         
     public Integer[] getIdVicari() {
         return idVicari;

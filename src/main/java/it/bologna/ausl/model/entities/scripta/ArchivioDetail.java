@@ -3,9 +3,6 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
@@ -36,7 +33,6 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -50,7 +46,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "archivi_details", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idArchivioPadre, archiviFigliList", "archiviFigliList","idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura"})
+@GenerateProjections({
+    "idArchivioPadre, archiviFigliList", 
+    "archiviFigliList",
+    "idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura"
+})
 @DynamicUpdate
 public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
@@ -103,6 +103,9 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Column(name = "foglia")
     private Boolean foglia;
 
+    @Column(name = "riservato")
+    private Boolean riservato;
+    
     @Column(name = "numero")
     private Integer numero;
 
@@ -168,6 +171,10 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Column(name = "id_vicari", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idVicari;
+    
+    @OneToMany(mappedBy = "idArchivioDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "permessiArchivioList")
+    private List<PermessoArchivio> permessiArchivioList;
 
     public ArchivioDetail() {
     }
@@ -254,6 +261,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setFoglia(Boolean foglia) {
         this.foglia = foglia;
+    }
+
+    public Boolean getRiservato() {
+        return riservato;
+    }
+
+    public void setRiservato(Boolean riservato) {
+        this.riservato = riservato;
     }
 
     public Integer getNumero() {
@@ -414,6 +429,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setIdVicari(Integer[] idVicari) {
         this.idVicari = idVicari;
+    }
+
+    public List<PermessoArchivio> getPermessiArchivioList() {
+        return permessiArchivioList;
+    }
+
+    public void setPermessiArchivioList(List<PermessoArchivio> permessiArchivioList) {
+        this.permessiArchivioList = permessiArchivioList;
     }
     
     @Override

@@ -1,13 +1,16 @@
 package it.bologna.ausl.model.entities.scripta;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
+import it.bologna.ausl.model.entities.baborg.Persona;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,11 +48,10 @@ public class PermessoArchivio implements Serializable {
     @Column(name = "id")
     private Long id;
     
-    @JoinColumn(name = "id_soggetto")
-    private Integer idSoggetto;
-    
-    @JoinColumn(name = "tipo_soggetto")
-    private String tipoSoggetto;
+    @JoinColumn(name = "id_persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idPersona")
+    private Persona idPersona;
     
     @JoinColumn(name = "id_archivio_detail", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -66,9 +68,6 @@ public class PermessoArchivio implements Serializable {
     @NotNull
     private ZonedDateTime dataCreazione;
 
-    @JoinColumn(name = "bit_permesso")
-    private Integer bitPermesso;
-    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -105,29 +104,37 @@ public class PermessoArchivio implements Serializable {
         this.dataCreazione = dataCreazione;
     }
 
-    public Integer getIdSoggetto() {
-        return idSoggetto;
+    public Persona getIdPersona() {
+        return idPersona;
     }
 
-    public void setIdSoggetto(Integer idSoggetto) {
-        this.idSoggetto = idSoggetto;
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
     }
 
-    public TipoSoggetto getTipoSoggetto() {
-        if (tipoSoggetto != null) {
-            return TipoSoggetto.valueOf(tipoSoggetto);
-        } else {
-            return null;
-        }
-    }
+//    public Integer getIdSoggetto() {
+//        return idSoggetto;
+//    }
+//
+//    public void setIdSoggetto(Integer idSoggetto) {
+//        this.idSoggetto = idSoggetto;
+//    }
 
-    public void setTipoSoggetto(TipoSoggetto tipoSoggetto) {
-        if (tipoSoggetto != null) {
-            this.tipoSoggetto = tipoSoggetto.toString();
-        } else {
-            this.tipoSoggetto = null;
-        }
-    }
+//    public TipoSoggetto getTipoSoggetto() {
+//        if (tipoSoggetto != null) {
+//            return TipoSoggetto.valueOf(tipoSoggetto);
+//        } else {
+//            return null;
+//        }
+//    }
+//
+//    public void setTipoSoggetto(TipoSoggetto tipoSoggetto) {
+//        if (tipoSoggetto != null) {
+//            this.tipoSoggetto = tipoSoggetto.toString();
+//        } else {
+//            this.tipoSoggetto = null;
+//        }
+//    }
 
     public ArchivioDetail getIdArchivioDetail() {
         return idArchivioDetail;
@@ -137,13 +144,13 @@ public class PermessoArchivio implements Serializable {
         this.idArchivioDetail = idArchivioDetail;
     }
 
-    public Integer getBitPermesso() {
-        return bitPermesso;
-    }
-
-    public void setBitPermesso(Integer bitPermesso) {
-        this.bitPermesso = bitPermesso;
-    }
+//    public Integer getBitPermesso() {
+//        return bitPermesso;
+//    }
+//
+//    public void setBitPermesso(Integer bitPermesso) {
+//        this.bitPermesso = bitPermesso;
+//    }
 
     public ZonedDateTime getVersion() {
         return version;
@@ -175,7 +182,7 @@ public class PermessoArchivio implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.scripta.PersoneVedenti[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.scripta.PermessoArchivio[ id=" + id + " ]";
     }
     
 }
