@@ -1,8 +1,9 @@
-package it.bologna.ausl.model.entities.baborg;
+package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -32,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author spritz
  */
 @Entity
-@Table(name = "massimario", catalog = "internauta", schema = "baborg")
+@Table(name = "massimario", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @GenerateProjections({"titoli"})
 @DynamicUpdate
@@ -69,7 +70,7 @@ public class Massimario implements Serializable {
     @ManyToMany(cascade = {
         CascadeType.ALL
     }, fetch = FetchType.LAZY, targetEntity = Titolo.class)
-    @JoinTable(name = "massimario_titoli", schema = "baborg", catalog = "internauta",
+    @JoinTable(name = "massimario_titoli", schema = "scripta", catalog = "internauta",
             joinColumns = @JoinColumn(name = "id_massimario"),
             inverseJoinColumns = @JoinColumn(name = "id_titolo"))
     @JsonBackReference("titoli")
@@ -166,7 +167,7 @@ public class Massimario implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.baborg.Massimario[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.scripta.Massimario[ id=" + id + " ]";
     }
 
 }
