@@ -1,8 +1,9 @@
-package it.bologna.ausl.model.entities.baborg;
+package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -32,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author spritz
  */
 @Entity
-@Table(name = "titoli", catalog = "internauta", schema = "baborg")
+@Table(name = "titoli", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @GenerateProjections({})
 @DynamicUpdate
@@ -190,7 +191,7 @@ public class Titolo implements Serializable {
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.baborg.Titoli[ id=" + id + " ]";
+        return "it.bologna.ausl.model.entities.scripta.Titoli[ id=" + id + " ]";
     }
 
 }

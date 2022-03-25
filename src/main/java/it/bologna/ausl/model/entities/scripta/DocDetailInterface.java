@@ -18,7 +18,10 @@ public interface DocDetailInterface {
         PROTOCOLLO_IN_ENTRATA,
         DETERMINA,
         DELIBERA,
-        DOCUMENT
+        DOCUMENT,
+        DOCUMENT_PEC, 
+        DOCUMENT_REGISTRO, 
+        DOCUMENT_UTENTE
     }
 
     public static enum CommandType {
