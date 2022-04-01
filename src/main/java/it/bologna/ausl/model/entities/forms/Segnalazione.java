@@ -10,6 +10,7 @@ public class Segnalazione {
     private String azienda;
     private String cognome;
     private String nome;
+    private String struttura;
     private String username;
     private String telefono;
     private String mail;
@@ -23,6 +24,14 @@ public class Segnalazione {
 
     public void setAzienda(String azienda) {
         this.azienda = azienda;
+    }
+
+    public String getStruttura() {
+        return struttura;
+    }
+
+    public void setStruttura(String struttura) {
+        this.struttura = struttura;
     }
 
     public String getCognome() {

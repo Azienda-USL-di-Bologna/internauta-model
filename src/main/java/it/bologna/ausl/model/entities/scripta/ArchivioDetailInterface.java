@@ -45,6 +45,10 @@ public interface ArchivioDetailInterface {
 
     public void setDataCreazioneRadice(ZonedDateTime dataCreazioneRadice);
     
+    public Boolean getRiservato();
+
+    public void setRiservato(Boolean riservato);
+    
     public Boolean getFoglia();
 
     public void setFoglia(Boolean foglia);
