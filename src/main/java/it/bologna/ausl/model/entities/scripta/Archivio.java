@@ -33,23 +33,26 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "archivi", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({})
+@GenerateProjections({
+    "idMassimario, idTitolo, idAzienda"
+})
 @DynamicUpdate
 public class Archivio {
-    
+
     public static enum TipoArchivio {
-         AFFARE, PROCEDIMENTO, ATTIVITA, SPECIALE
+        AFFARE, PROCEDIMENTO, ATTIVITA, SPECIALE
     }
+
     public static enum StatoArchivio {
         APERTO, PRECHIUSO, CHIUSO, BOZZA
     }
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
@@ -60,77 +63,83 @@ public class Archivio {
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione = ZonedDateTime.now();
-    
+
     @JoinColumn(name = "id_archivio_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPadre")
     private Archivio idArchivioPadre;
-    
+
     @OneToMany(mappedBy = "idArchivioPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "archiviFigliList")
     private List<Archivio> archiviFigliList;
-    
+
     @JoinColumn(name = "id_archivio_radice", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioRadice")
     private Archivio idArchivioRadice;
-    
+
     @Column(name = "tipo")
     private String tipo;
-    
+
     @Column(name = "foglia")
     private Boolean foglia;
-    
+
     @Column(name = "riservato")
     private Boolean riservato = false;
-    
+
     @Column(name = "numero")
     private Integer numero;
-    
+
     @Column(name = "anno")
     private Integer anno;
-    
+
     @Column(name = "numerazione_gerarchica")
     private String numerazioneGerarchica;
-    
+
     @Column(name = "oggetto")
     private String oggetto;
-    
+
     @Column(name = "stato")
     private String stato;
-    
+
     @Column(name = "livello")
     private Integer livello;
-    
+
     @JoinColumn(name = "id_archivio_precedente", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPrecedente")
     private Archivio idArchivioPrecedente;
-    
+
     @OneToMany(mappedBy = "idArchivioPrecedente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "archiviSeguentiList")
     private List<Archivio> archiviSeguentiList;
-    
-    @Basic(optional = true)
-    @Column(name = "id_titolo")
-    private Integer idTitolo;
-    
+
+    @JoinColumn(name = "id_titolo", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idTitolo")
+    private Titolo idTitolo;
+
+    @JoinColumn(name = "id_massimario", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idMassimario")
+    private Massimario idMassimario;
+
     @Basic(optional = true)
     @Column(name = "id_archivio_argo")
     private String idArchivioArgo;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_inserimento_riga")
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
-    
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
-    
+
     @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attoriList")
     private List<AttoreArchivio> attoriList;
@@ -249,7 +258,7 @@ public class Archivio {
     public void setLivello(Integer livello) {
         this.livello = livello;
     }
-    
+
     public String getOggetto() {
         return oggetto;
     }
@@ -290,11 +299,11 @@ public class Archivio {
         this.archiviSeguentiList = archiviSeguentiList;
     }
 
-    public Integer getIdTitolo() {
+    public Titolo getIdTitolo() {
         return idTitolo;
     }
 
-    public void setIdTitolo(Integer idTitolo) {
+    public void setIdTitolo(Titolo idTitolo) {
         this.idTitolo = idTitolo;
     }
 
@@ -329,7 +338,15 @@ public class Archivio {
     public void setAttoriList(List<AttoreArchivio> attoriList) {
         this.attoriList = attoriList;
     }
-    
+
+    public Massimario getIdMassimario() {
+        return idMassimario;
+    }
+
+    public void setIdMassimario(Massimario idMassimario) {
+        this.idMassimario = idMassimario;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
