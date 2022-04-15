@@ -43,7 +43,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @GenerateProjections({"idContatto", "utenteStruttura, indirizzo", "telefono, email, indirizzo", "idContatto, telefono, indirizzo, email"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = DettaglioContatto.class)
 @DynamicUpdate
-public class DettaglioContatto implements Serializable {
+public class DettaglioContatto implements Serializable, DettaglioContattoInterface {
 
     public static enum TipoDettaglio {
         UTENTE_STRUTTURA,
@@ -195,13 +195,6 @@ public class DettaglioContatto implements Serializable {
         this.eliminato = eliminato;
     }
 
-//    public Email getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(Email email) {
-//        this.email = email;
-//    }
     public void setEmail(Email email) {
         this.email = email;
     }
