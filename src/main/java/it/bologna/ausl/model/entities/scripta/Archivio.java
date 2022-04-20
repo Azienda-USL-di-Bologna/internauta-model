@@ -123,6 +123,9 @@ public class Archivio {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idMassimario")
     private Massimario idMassimario;
+    
+    @Column(name = "note")
+    private String note;
 
     @Basic(optional = true)
     @Column(name = "id_archivio_argo")
@@ -345,6 +348,14 @@ public class Archivio {
 
     public void setIdMassimario(Massimario idMassimario) {
         this.idMassimario = idMassimario;
+    }
+    
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override
