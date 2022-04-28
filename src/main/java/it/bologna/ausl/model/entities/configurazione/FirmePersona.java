@@ -193,6 +193,7 @@ public class FirmePersona implements Serializable {
         String username;
         String password;
         String dominio;
+        String hostId;
         String autenticazione;
 
         public AdditionalData() {
@@ -220,6 +221,14 @@ public class FirmePersona implements Serializable {
 
         public void setDominio(String dominio) {
             this.dominio = dominio;
+        }
+
+        public String getHostId() {
+            return hostId;
+        }
+
+        public void setHostId(String hostId) {
+            this.hostId = hostId;
         }
 
         public String getAutenticazione() {
