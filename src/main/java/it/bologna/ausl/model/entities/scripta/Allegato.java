@@ -57,7 +57,9 @@ public class Allegato implements Serializable {
         LETTERA,
         FRONTESPIZIO,
         STAMPA_UNICA,
-        FASCICOLATO
+        FASCICOLATO,
+        STAMPA_UNICA_OMISSIS,
+        LETTERA_OMISSIS
     }
 
     @Id

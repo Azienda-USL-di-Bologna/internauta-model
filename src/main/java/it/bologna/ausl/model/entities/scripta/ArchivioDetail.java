@@ -149,7 +149,6 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Column(name = "id_titolo")
     private Integer idTitolo;
 
-
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
