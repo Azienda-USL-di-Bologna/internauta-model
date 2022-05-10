@@ -105,6 +105,10 @@ public class Archivio {
     @Column(name = "livello")
     private Integer livello;
 
+ 
+    @Column(name = "anni_tenuta")
+    private Integer anniTenuta;
+
     @JoinColumn(name = "id_archivio_precedente", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPrecedente")
@@ -357,6 +361,15 @@ public class Archivio {
     public void setNote(String note) {
         this.note = note;
     }
+    
+       public Integer getAnniTenuta() {
+        return anniTenuta;
+    }
+
+    public void setAnniTenuta(Integer anniTenuta) {
+        this.anniTenuta = anniTenuta;
+    }
+    
 
     @Override
     public int hashCode() {
