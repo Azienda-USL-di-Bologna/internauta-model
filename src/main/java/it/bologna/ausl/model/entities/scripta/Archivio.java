@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -34,7 +35,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idMassimario, idTitolo, idAzienda"
+    "idMassimario, idTitolo, idAzienda"    
 })
 @DynamicUpdate
 public class Archivio {
@@ -53,6 +54,10 @@ public class Archivio {
     @Column(name = "id")
     private Integer id;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
+    @JsonBackReference(value = "idArchivioDetail")
+    private ArchivioDetail idArchivioDetail;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
@@ -63,7 +68,7 @@ public class Archivio {
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione = ZonedDateTime.now();
-
+    
     @JoinColumn(name = "id_archivio_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPadre")
@@ -202,6 +207,14 @@ public class Archivio {
         this.idArchivioRadice = idArchivioRadice;
     }
 
+    public ArchivioDetail getIdArchivioDetail() {
+        return idArchivioDetail;
+    }
+
+    public void setIdArchivioDetail(ArchivioDetail idArchivioDetail) {
+        this.idArchivioDetail = idArchivioDetail;
+    }
+    
     public TipoArchivio getTipo() {
         if (tipo != null) {
             return TipoArchivio.valueOf(tipo);
