@@ -33,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idArchivio"
+    "idArchivio, idPersonaArchiviazione"
 })
 @DynamicUpdate
 public class ArchivioDoc implements Serializable {
