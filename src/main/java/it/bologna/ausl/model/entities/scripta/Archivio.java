@@ -35,7 +35,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idMassimario, idTitolo, idAzienda"    
+    "idMassimario, idTitolo, idAzienda",
+    "idArchivioRadice"
 })
 @DynamicUpdate
 public class Archivio {
