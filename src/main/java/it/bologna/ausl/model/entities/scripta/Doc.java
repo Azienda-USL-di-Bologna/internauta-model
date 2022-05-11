@@ -88,6 +88,9 @@ public class Doc implements Serializable {
 
     @Column(name = "tipologia")
     private String tipologia;
+    
+    @Column(name = "id_esterno")
+    private String idEsterno;
     //lista di mittenti che conterra per il momento solo un elemento
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
 
@@ -281,6 +284,14 @@ public class Doc implements Serializable {
 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
+    }
+
+    public String getIdEsterno() {
+        return idEsterno;
+    }
+
+    public void setIdEsterno(String idEsterno) {
+        this.idEsterno = idEsterno;
     }
 
     @Override
