@@ -2,6 +2,8 @@ package it.bologna.ausl.model.entities.configurazione;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.nextsw.common.annotations.GenerateProjections;
@@ -19,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,6 +55,7 @@ public class FirmePersona implements Serializable {
         APPLET,
         WEBSTART,
         ARUBA,
+        INFOCERT,
         JR
     }
 
@@ -86,6 +90,9 @@ public class FirmePersona implements Serializable {
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private AdditionalData additionalData;
+    
+    @Transient
+    private String password;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -155,6 +162,14 @@ public class FirmePersona implements Serializable {
         this.additionalData = additionalData;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -188,12 +203,16 @@ public class FirmePersona implements Serializable {
         return "it.bologna.ausl.model.entities.configuration.FirmePersona[ id=" + id + " ]";
     }
 
+    @JsonInclude(Include.NON_NULL)
     public static class AdditionalData {
 
-        String username;
-        String password;
-        String dominio;
-        String autenticazione;
+        private String username;
+        private String password;
+        private String dominio;
+        private String hostId;
+        private String autenticazione;
+        private String configurazione;
+        private Boolean savedCredential;
 
         public AdditionalData() {
         }
@@ -222,12 +241,36 @@ public class FirmePersona implements Serializable {
             this.dominio = dominio;
         }
 
+        public String getHostId() {
+            return hostId;
+        }
+
+        public void setHostId(String hostId) {
+            this.hostId = hostId;
+        }
+
         public String getAutenticazione() {
             return autenticazione;
         }
 
         public void setAutenticazione(String autenticazione) {
             this.autenticazione = autenticazione;
+        }
+
+        public String getConfigurazione() {
+            return configurazione;
+        }
+
+        public void setConfigurazione(String configurazione) {
+            this.configurazione = configurazione;
+        }
+
+        public Boolean getSavedCredential() {
+            return savedCredential;
+        }
+
+        public void setSavedCredential(Boolean savedCredential) {
+            this.savedCredential = savedCredential;
         }
     }
 }
