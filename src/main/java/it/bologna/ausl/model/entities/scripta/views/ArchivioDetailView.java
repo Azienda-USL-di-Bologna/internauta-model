@@ -60,6 +60,9 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "id")
     private Integer id;
     
+    @Column(name = "bit")
+    private Integer bit;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
@@ -193,6 +196,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getBit() {
+        return bit;
+    }
+
+    public void setBit(Integer bit) {
+        this.bit = bit;
     }
 
     public Azienda getIdAzienda() {

@@ -48,6 +48,9 @@ public class PermessoArchivio implements Serializable {
     @Column(name = "id")
     private Long id;
     
+    @Column(name = "bit")
+    private Integer bit;
+    
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPersona")
@@ -86,6 +89,14 @@ public class PermessoArchivio implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getBit() {
+        return bit;
+    }
+
+    public void setBit(Integer bit) {
+        this.bit = bit;
     }
 
     public Azienda getIdAzienda() {
