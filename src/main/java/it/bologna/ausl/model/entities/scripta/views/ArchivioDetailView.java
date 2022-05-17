@@ -187,6 +187,9 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @JsonBackReference(value = "idPersona")
     private Persona idPersona;
     
+    @Column(name = "id_iter")
+    private Integer idIter;
+    
     public ArchivioDetailView() {
     }
 
@@ -477,7 +480,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     public void setIdVicari(Integer[] idVicari) {
         this.idVicari = idVicari;
     }
-    
+
+    public Integer getIdIter() {
+        return idIter;
+    }
+
+    public void setIdIter(Integer idIter) {
+        this.idIter = idIter;
+    }
     
     @Override
     public int hashCode() {

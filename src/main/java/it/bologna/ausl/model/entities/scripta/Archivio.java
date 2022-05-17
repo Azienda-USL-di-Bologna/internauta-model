@@ -156,6 +156,9 @@ public class Archivio {
     @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attoriList")
     private List<AttoreArchivio> attoriList;
+    
+    @Column(name = "id_iter")
+    private Integer idIter;
 
     public Archivio() {
     }
@@ -383,8 +386,15 @@ public class Archivio {
     public void setAnniTenuta(Integer anniTenuta) {
         this.anniTenuta = anniTenuta;
     }
-    
 
+    public Integer getIdIter() {
+        return idIter;
+    }
+
+    public void setIdIter(Integer idIter) {
+        this.idIter = idIter;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -184,6 +184,9 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @OneToMany(mappedBy = "idArchivioDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "permessiArchivioList")
     private List<PermessoArchivio> permessiArchivioList;
+    
+    @Column(name = "id_iter")
+    private Integer idIter;
 
     public ArchivioDetail() {
     }
@@ -456,6 +459,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setPermessiArchivioList(List<PermessoArchivio> permessiArchivioList) {
         this.permessiArchivioList = permessiArchivioList;
+    }
+
+    public Integer getIdIter() {
+        return idIter;
+    }
+
+    public void setIdIter(Integer idIter) {
+        this.idIter = idIter;
     }
     
     @Override
