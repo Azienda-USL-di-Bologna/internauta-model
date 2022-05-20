@@ -292,6 +292,9 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idArchiviAntenati;
 
+    @Column(name = "id_archivi", columnDefinition = "integer[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] idArchivi;
     
     
     // Proprietà transient
@@ -811,6 +814,16 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Override
     public void setIdArchiviAntenati(Integer[] idArchiviAntenati) {
         this.idArchiviAntenati = idArchiviAntenati;
+    }
+    
+    @Override
+    public Integer[] getIdArchivi() {
+        return idArchivi;    
+    }
+
+    @Override
+    public void setIdArchivi(Integer[] idArchivi) {
+        this.idArchivi = idArchivi;
     }
     
     @Override

@@ -258,8 +258,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Column(name = "id_archivi_antenati", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idArchiviAntenati;
-
     
+    @Column(name = "id_archivi", columnDefinition = "integer[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] idArchivi;
+   
     // Proprietà transient
     @Transient
     private String urlComplete;
@@ -812,6 +815,16 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Override
     public void setIdArchiviAntenati(Integer[] idArchiviAntenati) {
         this.idArchiviAntenati = idArchiviAntenati;
+    }
+    
+    @Override
+    public Integer[] getIdArchivi() {
+        return idArchivi;
+    }
+    
+    @Override
+    public void setIdArchivi(Integer[] idArchivi) {
+        this.idArchivi = idArchivi;
     }
     
     @Override
