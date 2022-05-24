@@ -60,7 +60,7 @@ public class PermessoArchivio implements Serializable {
         ELIMINA(8),      
         VICARIO(16), 
         REPONSABILE_PROPOSTO(32), 
-        RESPONSABNILE(64);
+        RESPONSABILE(64);
 
         private Integer typeOfBit;
 
