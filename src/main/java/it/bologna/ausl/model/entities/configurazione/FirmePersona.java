@@ -56,7 +56,8 @@ public class FirmePersona implements Serializable {
         WEBSTART,
         ARUBA,
         INFOCERT,
-        JR
+        JR,
+        JNJ
     }
 
     private static final long serialVersionUID = 1L;

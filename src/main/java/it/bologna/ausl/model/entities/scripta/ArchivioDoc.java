@@ -65,15 +65,13 @@ public class ArchivioDoc implements Serializable {
     @Column(name = "data_archiviazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    private ZonedDateTime dataArchiviazione;
+    private ZonedDateTime dataArchiviazione = ZonedDateTime.now();
     
     @JoinColumn(name = "id_persona_eliminazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPersonaEliminazione")
     private Persona idPersonaEliminazione;
     
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "data_eliminazione")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")

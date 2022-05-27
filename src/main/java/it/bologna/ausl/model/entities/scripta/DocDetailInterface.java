@@ -258,6 +258,11 @@ public interface DocDetailInterface {
 
     public void setIdArchiviAntenati(Integer[] idArchiviAntenati);
     
+    public Integer[] getIdArchivi();
+
+    public void setIdArchivi(Integer[] idArchivi);
+    
+    
     public static class Fascicolazione {
 
         String nome;

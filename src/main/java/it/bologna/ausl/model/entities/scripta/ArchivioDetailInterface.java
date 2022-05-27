@@ -118,4 +118,7 @@ public interface ArchivioDetailInterface {
 
     public void setVersion(ZonedDateTime version);
     
+    public Integer getIdIter();
+    
+    public void setIdIter(Integer idIter);
 }

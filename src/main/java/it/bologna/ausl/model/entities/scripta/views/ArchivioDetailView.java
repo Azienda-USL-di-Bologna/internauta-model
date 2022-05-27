@@ -60,6 +60,9 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "id")
     private Integer id;
     
+    @Column(name = "bit")
+    private Integer bit;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
@@ -184,6 +187,9 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @JsonBackReference(value = "idPersona")
     private Persona idPersona;
     
+    @Column(name = "id_iter")
+    private Integer idIter;
+    
     public ArchivioDetailView() {
     }
 
@@ -193,6 +199,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getBit() {
+        return bit;
+    }
+
+    public void setBit(Integer bit) {
+        this.bit = bit;
     }
 
     public Azienda getIdAzienda() {
@@ -466,7 +480,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     public void setIdVicari(Integer[] idVicari) {
         this.idVicari = idVicari;
     }
-    
+
+    public Integer getIdIter() {
+        return idIter;
+    }
+
+    public void setIdIter(Integer idIter) {
+        this.idIter = idIter;
+    }
     
     @Override
     public int hashCode() {
