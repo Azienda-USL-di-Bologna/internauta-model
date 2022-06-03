@@ -12,7 +12,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -57,7 +56,9 @@ public class Allegato implements Serializable {
         LETTERA,
         FRONTESPIZIO,
         STAMPA_UNICA,
-        FASCICOLATO
+        FASCICOLATO,
+        STAMPA_UNICA_OMISSIS,
+        LETTERA_OMISSIS
     }
 
     @Id

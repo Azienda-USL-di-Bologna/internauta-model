@@ -3,9 +3,6 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
@@ -26,7 +23,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -36,12 +35,13 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author gusgus
+ * Archivio detail rappresenta la lista degli archivi serve per le performance 
+ * ed è la rappresentazione della tabella partizionata sul db
  */
 @TypeDefs({
     @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
@@ -50,7 +50,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "archivi_details", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idArchivioPadre, archiviFigliList", "archiviFigliList","idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura"})
+@GenerateProjections({
+    "idArchivioPadre, archiviFigliList", 
+    "archiviFigliList",
+    "idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura"
+})
 @DynamicUpdate
 public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
@@ -60,6 +64,12 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @MapsId
+    @JsonBackReference(value = "idArchivio")
+    private Archivio idArchivio;
 
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -103,6 +113,9 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Column(name = "foglia")
     private Boolean foglia;
 
+    @Column(name = "riservato")
+    private Boolean riservato;
+    
     @Column(name = "numero")
     private Integer numero;
 
@@ -146,7 +159,6 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Column(name = "id_titolo")
     private Integer idTitolo;
 
-
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
 
@@ -168,6 +180,13 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Column(name = "id_vicari", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idVicari;
+    
+    @OneToMany(mappedBy = "idArchivioDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "permessiArchivioList")
+    private List<PermessoArchivio> permessiArchivioList;
+    
+    @Column(name = "id_iter")
+    private Integer idIter;
 
     public ArchivioDetail() {
     }
@@ -195,6 +214,16 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     public void setDataCreazione(ZonedDateTime dataCreazione) {
         this.dataCreazione = dataCreazione;
     }
+
+    public Archivio getIdArchivio() {
+        return idArchivio;
+    }
+
+    public void setIdArchivio(Archivio idArchivio) {
+        this.idArchivio = idArchivio;
+    }
+    
+    
 
     public ArchivioDetail getIdArchivioPadre() {
         return idArchivioPadre;
@@ -254,6 +283,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setFoglia(Boolean foglia) {
         this.foglia = foglia;
+    }
+
+    public Boolean getRiservato() {
+        return riservato;
+    }
+
+    public void setRiservato(Boolean riservato) {
+        this.riservato = riservato;
     }
 
     public Integer getNumero() {
@@ -414,6 +451,22 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setIdVicari(Integer[] idVicari) {
         this.idVicari = idVicari;
+    }
+
+    public List<PermessoArchivio> getPermessiArchivioList() {
+        return permessiArchivioList;
+    }
+
+    public void setPermessiArchivioList(List<PermessoArchivio> permessiArchivioList) {
+        this.permessiArchivioList = permessiArchivioList;
+    }
+
+    public Integer getIdIter() {
+        return idIter;
+    }
+
+    public void setIdIter(Integer idIter) {
+        this.idIter = idIter;
     }
     
     @Override

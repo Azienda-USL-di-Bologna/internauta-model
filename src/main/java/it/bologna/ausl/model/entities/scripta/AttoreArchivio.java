@@ -33,46 +33,48 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "attori_archivi", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({})
+@GenerateProjections({
+    "idStruttura, idPersona"
+})
 @DynamicUpdate
 public class AttoreArchivio implements Serializable {
 
     public static enum RuoloAttoreArchivio {
         RESPONSABILE, CREATORE, VICARIO, RESPONSABILE_PROPOSTO
     }
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @JoinColumn(name = "id_archivio", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference(value = "idArchivio")
     private Archivio idArchivio;
-    
+
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPersona")
     private Persona idPersona;
-    
+
     @JoinColumn(name = "id_struttura", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idStruttura")
     private Struttura idStruttura;
-    
+
     @Column(name = "ruolo")
     private String ruolo;
-   
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_inserimento_riga")
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
-    
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -173,5 +175,5 @@ public class AttoreArchivio implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.scripta.AttoreArchivio[ id=" + id + " ]";
     }
-    
+
 }

@@ -1,15 +1,24 @@
-package it.bologna.ausl.model.entities.rubrica;
+package it.bologna.ausl.model.entities.rubrica.views;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.baborg.Utente;
+import it.bologna.ausl.model.entities.rubrica.Contatto;
+import it.bologna.ausl.model.entities.rubrica.Contatto.CategoriaContatto;
+import it.bologna.ausl.model.entities.rubrica.Contatto.TipoContatto;
+import it.bologna.ausl.model.entities.rubrica.ContattoInterface;
+import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
+import it.bologna.ausl.model.entities.rubrica.DettaglioContattoInterface;
+import it.bologna.ausl.model.entities.rubrica.Email;
+import it.bologna.ausl.model.entities.rubrica.GruppiContatti;
+import it.bologna.ausl.model.entities.rubrica.Indirizzo;
+import it.bologna.ausl.model.entities.rubrica.Telefono;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -35,130 +44,125 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author gusgus
+ * @author mido
  */
 @Entity
-@Table(name = "contatti", catalog = "internauta", schema = "rubrica")
+@Table(name = "contatti_con_dettaglio_principale", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "contattiDelGruppoList, emailList, gruppiDelContattoList, idContattoPadre, idPersona, idPersonaCreazione, idStruttura, idUtenteCreazione, indirizziList, telefonoList",
-    "contattiDelGruppoList, emailList, idPersonaCreazione, indirizziList, telefonoList", //forse si può togliere
-    "contattiDelGruppoList, idPersonaCreazione, idUtenteCreazione",
-    "contattiDelGruppoList, dettaglioContattoList, idPersonaCreazione",
-    "dettaglioContattoList",
-    "dettaglioContattoList, emailList, gruppiDelContattoList, idPersona, idPersonaCreazione, idUtenteCreazione",
-    "dettaglioContattoList, idPersonaCreazione, idStruttura",
-    "dettaglioContattoList, idPersonaCreazione",
-    "emailList",
-    "emailList, gruppiDelContattoList, idPersonaCreazione, idUtenteCreazione, indirizziList, telefonoList",
-    "emailList, idPersona, idPersonaCreazione, indirizziList, telefonoList",
-    "emailList, idPersonaCreazione, indirizziList, telefonoList",
-    "gruppiDelContattoList, idPersonaCreazione, idStruttura, idUtenteCreazione",
-    "idPersona, idPersonaCreazione, idStruttura"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Contatto.class)
+    "idPersonaCreazione, idStruttura"})
 @DynamicUpdate
-public class Contatto implements Serializable, ContattoInterface {
+@TypeDefs({
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
+public class ContattoConDettaglioPrincipale implements Serializable, ContattoInterface {
 
-    public static enum CategoriaContatto {
-        PERSONA,
-        STRUTTURA,
-        ESTERNO,
-        GRUPPO
-    }
-
-    public static enum TipoContatto {
-        ORGANIGRAMMA,
-        PERSONA_FISICA,
-        AZIENDA,
-        PUBBLICA_AMMINISTRAZIONE_ITALIANA,
-        PUBBLICA_AMMINISTRAZIONE_ESTERA,
-        VARIO,
-        FORNITORE
-    }
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "descrizione")
     private String descrizione;
-    // @JsonView(RubricaJsonViews.ContattoForSimilarity.class)
+    
     @Size(max = 2147483647)
     @Column(name = "cognome")
     private String cognome;
+    
     @Size(max = 2147483647)
     @Column(name = "nome")
     private String nome;
+    
     @Size(max = 2147483647)
     @Column(name = "codice_fiscale")
     private String codiceFiscale;
+    
     @Size(max = 2147483647)
     @Column(name = "ragione_sociale")
     private String ragioneSociale;
+    
     @Size(max = 2147483647)
     @Column(name = "partita_iva")
     private String partitaIva;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
     private String tipo;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "categoria")
     private String categoria;
+    
     @JoinColumn(name = "id_utente_creazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idUtenteCreazione")
     private Utente idUtenteCreazione;
+    
     @JoinColumn(name = "id_persona_creazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPersonaCreazione")
     private Persona idPersonaCreazione;
+    
     @Column(name = "id_aziende", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idAziende;
+    
     @Size(max = 2147483647)
     @Column(name = "id_esterno")
     private String idEsterno;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "provenienza")
     private String provenienza;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "da_verificare")
     private Boolean daVerificare = false;
+    
     @Column(name = "protocontatto")
     private Boolean protocontatto = false;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "modificabile")
     private Boolean modificabile;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "eliminato")
     private Boolean eliminato;
+    
     @Column(name = "riservato")
     private Boolean riservato;
+    
     @Size(max = 2147483647)
     @Column(name = "contatto_errato")
     private String contattoErrato;
+    
     @Size(max = 2147483647)
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
+    
     @Size(max = 2147483647)
     @Column(name = "titolo")
     private String titolo;
@@ -214,6 +218,43 @@ public class Contatto implements Serializable, ContattoInterface {
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
     
+    @Column(name = "id_dettaglio")
+    private Integer idDettaglio;
+    
+    @Size(max = 2147483647)
+    @Column(name = "dettaglio_descrizione")
+    private String dettaglioDescrizione;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "eliminato_dettaglio")
+    private Boolean eliminatoDettaglio;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "principale_dettaglio")
+    private Boolean principaleDettaglio;
+            
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "tipo_dettaglio")
+    private String tipoDettaglio;       
+
+    @Size(max = 2147483647)
+    @Column(name = "tscol_dettaglio", columnDefinition = "tsvector")
+    private String tscolDettaglio;
+    
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "version_dettaglio")
+    private ZonedDateTime versionDettaglio;
+  
+    @Column(name = "id_contatto_esterno_dettaglio")
+    private Integer idContattoEsternoDettaglio;
+
+    
     public Double getRanking() {
         return ranking;
     }
@@ -230,10 +271,10 @@ public class Contatto implements Serializable, ContattoInterface {
         this.contattiContenuti = contattiContenuti;
     }
 
-    public Contatto() {
+    public ContattoConDettaglioPrincipale() {
     }
 
-    public Contatto(Integer id) {
+    public ContattoConDettaglioPrincipale(Integer id) {
         this.id = id;
     }
 
@@ -293,6 +334,7 @@ public class Contatto implements Serializable, ContattoInterface {
         this.partitaIva = partitaIva;
     }
 
+    @Override
     public TipoContatto getTipo() {
         if (tipo != null) {
             return TipoContatto.valueOf(tipo);
@@ -509,7 +551,6 @@ public class Contatto implements Serializable, ContattoInterface {
         this.gruppiDelContattoList = gruppiDelContattoList;
     }
     
-    
     public String getTitolo() {
         return titolo;
     }
@@ -518,6 +559,14 @@ public class Contatto implements Serializable, ContattoInterface {
         this.titolo = titolo;
     }
 
+    public String getDettaglioDescrizione() {
+        return dettaglioDescrizione;
+    }
+
+    public void setDettaglioDescrizione(String dettaglioDescrizione) {
+        this.dettaglioDescrizione = dettaglioDescrizione;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -526,22 +575,62 @@ public class Contatto implements Serializable, ContattoInterface {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contatto)) {
-            return false;
-        }
-        Contatto other = (Contatto) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public Integer getIdDettaglio() {
+        return idDettaglio;
     }
 
-    @Override
-    public String toString() {
-        return "it.bologna.ausl.model.entities.rubrica.Contatti[ id=" + id + " ]";
+    public void setIdDettaglio(Integer idDettaglio) {
+        this.idDettaglio = idDettaglio;
     }
+
+    public Boolean getEliminatoDettaglio() {
+        return eliminatoDettaglio;
+    }
+
+    public void setEliminatoDettaglio(Boolean eliminatoDettaglio) {
+        this.eliminatoDettaglio = eliminatoDettaglio;
+    }
+
+    public Boolean getPrincipaleDettaglio() {
+        return principaleDettaglio;
+    }
+
+    public void setPrincipaleDettaglio(Boolean principaleDettaglio) {
+        this.principaleDettaglio = principaleDettaglio;
+    }
+
+    public String getTipoDettaglio() {
+        return tipoDettaglio;
+    }
+
+    public void setTipoDettaglio(String tipoDettaglio) {
+        this.tipoDettaglio = tipoDettaglio;
+    }
+
+    public String getTscolDettaglio() {
+        return tscolDettaglio;
+    }
+
+    public void setTscolDettaglio(String tscolDettaglio) {
+        this.tscolDettaglio = tscolDettaglio;
+    }
+
+    public ZonedDateTime getVersionDettaglio() {
+        return versionDettaglio;
+    }
+
+    public void setVersionDettaglio(ZonedDateTime versionDettaglio) {
+        this.versionDettaglio = versionDettaglio;
+    }
+
+    public Integer getIdContattoEsternoDettaglio() {
+        return idContattoEsternoDettaglio;
+    }
+
+    public void setIdContattoEsternoDettaglio(Integer idContattoEsternoDettaglio) {
+        this.idContattoEsternoDettaglio = idContattoEsternoDettaglio;
+    }
+    
+    
 
 }

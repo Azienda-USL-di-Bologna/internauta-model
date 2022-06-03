@@ -19,11 +19,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -34,22 +34,30 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "archivi", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({})
+@GenerateProjections({
+    "idMassimario, idTitolo, idAzienda",
+    "idArchivioRadice"
+})
 @DynamicUpdate
 public class Archivio {
-    
+
     public static enum TipoArchivio {
-         AFFARE, PROCEDIMENTO, ATTIVITA, SPECIALE
+        AFFARE, PROCEDIMENTO, ATTIVITA, SPECIALE
     }
+
     public static enum StatoArchivio {
         APERTO, PRECHIUSO, CHIUSO, BOZZA
     }
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
+    @JsonBackReference(value = "idArchivioDetail")
+    private ArchivioDetail idArchivioDetail;
     
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -66,68 +74,91 @@ public class Archivio {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPadre")
     private Archivio idArchivioPadre;
-    
+
     @OneToMany(mappedBy = "idArchivioPadre", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "archiviFigliList")
     private List<Archivio> archiviFigliList;
-    
+
     @JoinColumn(name = "id_archivio_radice", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioRadice")
     private Archivio idArchivioRadice;
-    
+
     @Column(name = "tipo")
     private String tipo;
-    
+
     @Column(name = "foglia")
     private Boolean foglia;
-    
+
+    @Column(name = "riservato")
+    private Boolean riservato = false;
+
     @Column(name = "numero")
     private Integer numero;
-    
+
     @Column(name = "anno")
     private Integer anno;
-    
+
     @Column(name = "numerazione_gerarchica")
     private String numerazioneGerarchica;
-    
+
     @Column(name = "oggetto")
     private String oggetto;
-    
+
     @Column(name = "stato")
     private String stato;
-    
+
     @Column(name = "livello")
     private Integer livello;
-    
+
+ 
+    @Column(name = "anni_tenuta")
+    private Integer anniTenuta;
+
     @JoinColumn(name = "id_archivio_precedente", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPrecedente")
     private Archivio idArchivioPrecedente;
-    
+
     @OneToMany(mappedBy = "idArchivioPrecedente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "archiviSeguentiList")
     private List<Archivio> archiviSeguentiList;
+
+    @JoinColumn(name = "id_titolo", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idTitolo")
+    private Titolo idTitolo;
+
+    @JoinColumn(name = "id_massimario", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idMassimario")
+    private Massimario idMassimario;
     
-    @Basic(optional = true)
-    @Column(name = "id_titolo")
-    private Integer idTitolo;
-    
+    @Column(name = "note")
+    private String note;
+
     @Basic(optional = true)
     @Column(name = "id_archivio_argo")
     private String idArchivioArgo;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_inserimento_riga")
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
-    
+
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+
+    @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "attoriList")
+    private List<AttoreArchivio> attoriList;
+    
+    @Column(name = "id_iter")
+    private Integer idIter;
 
     public Archivio() {
     }
@@ -180,6 +211,14 @@ public class Archivio {
         this.idArchivioRadice = idArchivioRadice;
     }
 
+    public ArchivioDetail getIdArchivioDetail() {
+        return idArchivioDetail;
+    }
+
+    public void setIdArchivioDetail(ArchivioDetail idArchivioDetail) {
+        this.idArchivioDetail = idArchivioDetail;
+    }
+    
     public TipoArchivio getTipo() {
         if (tipo != null) {
             return TipoArchivio.valueOf(tipo);
@@ -202,6 +241,14 @@ public class Archivio {
 
     public void setFoglia(Boolean foglia) {
         this.foglia = foglia;
+    }
+
+    public Boolean getRiservato() {
+        return riservato;
+    }
+
+    public void setRiservato(Boolean riservato) {
+        this.riservato = riservato;
     }
 
     public Integer getNumero() {
@@ -235,7 +282,7 @@ public class Archivio {
     public void setLivello(Integer livello) {
         this.livello = livello;
     }
-    
+
     public String getOggetto() {
         return oggetto;
     }
@@ -276,11 +323,11 @@ public class Archivio {
         this.archiviSeguentiList = archiviSeguentiList;
     }
 
-    public Integer getIdTitolo() {
+    public Titolo getIdTitolo() {
         return idTitolo;
     }
 
-    public void setIdTitolo(Integer idTitolo) {
+    public void setIdTitolo(Titolo idTitolo) {
         this.idTitolo = idTitolo;
     }
 
@@ -306,6 +353,46 @@ public class Archivio {
 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
+    }
+
+    public List<AttoreArchivio> getAttoriList() {
+        return attoriList;
+    }
+
+    public void setAttoriList(List<AttoreArchivio> attoriList) {
+        this.attoriList = attoriList;
+    }
+
+    public Massimario getIdMassimario() {
+        return idMassimario;
+    }
+
+    public void setIdMassimario(Massimario idMassimario) {
+        this.idMassimario = idMassimario;
+    }
+    
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+    
+       public Integer getAnniTenuta() {
+        return anniTenuta;
+    }
+
+    public void setAnniTenuta(Integer anniTenuta) {
+        this.anniTenuta = anniTenuta;
+    }
+
+    public Integer getIdIter() {
+        return idIter;
+    }
+
+    public void setIdIter(Integer idIter) {
+        this.idIter = idIter;
     }
     
     @Override

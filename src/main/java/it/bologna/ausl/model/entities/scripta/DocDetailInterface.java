@@ -18,7 +18,10 @@ public interface DocDetailInterface {
         PROTOCOLLO_IN_ENTRATA,
         DETERMINA,
         DELIBERA,
-        DOCUMENT
+        DOCUMENT,
+        DOCUMENT_PEC, 
+        DOCUMENT_REGISTRO, 
+        DOCUMENT_UTENTE
     }
 
     public static enum CommandType {
@@ -254,6 +257,11 @@ public interface DocDetailInterface {
     public Integer[] getIdArchiviAntenati();
 
     public void setIdArchiviAntenati(Integer[] idArchiviAntenati);
+    
+    public Integer[] getIdArchivi();
+
+    public void setIdArchivi(Integer[] idArchivi);
+    
     
     public static class Fascicolazione {
 
