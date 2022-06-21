@@ -159,7 +159,10 @@ public class Archivio {
     
     @Column(name = "id_iter")
     private Integer idIter;
-
+    
+    @Column(name="numero_sottoarchivi")
+    private Integer numeroSottoarchivi;
+    
     public Archivio() {
     }
 
@@ -394,6 +397,16 @@ public class Archivio {
     public void setIdIter(Integer idIter) {
         this.idIter = idIter;
     }
+
+    public Integer getNumeroSottoarchivi() {
+        return numeroSottoarchivi;
+    }
+
+    public void setNumeroSottoarchivi(Integer numeroSottoarchivi) {
+        this.numeroSottoarchivi = numeroSottoarchivi;
+    }
+    
+    
     
     @Override
     public int hashCode() {
