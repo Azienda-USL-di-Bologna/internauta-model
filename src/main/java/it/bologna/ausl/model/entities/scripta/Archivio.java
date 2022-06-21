@@ -161,7 +161,7 @@ public class Archivio {
     private Integer idIter;
     
     @Column(name="numero_sottoarchivi")
-    private Integer numeroSottoarchivi;
+    private Integer numeroSottoarchivi = 0;
     
     public Archivio() {
     }
