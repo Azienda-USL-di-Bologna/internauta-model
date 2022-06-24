@@ -86,7 +86,7 @@ public class PermessoArchivio implements Serializable {
     
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "idPersona")
+    //@JsonBackReference(value = "idPersona")
     private Persona idPersona;
     
     @JoinColumn(name = "id_archivio_detail", referencedColumnName = "id")
