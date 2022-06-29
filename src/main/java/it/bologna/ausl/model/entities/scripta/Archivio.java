@@ -36,7 +36,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({
     "idMassimario, idTitolo, idAzienda",
-    "idArchivioRadice"
+    "idArchivioRadice",
+    "idMassimario, idTitolo, idAzienda, attoriList",
 })
 @DynamicUpdate
 public class Archivio {
