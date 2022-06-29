@@ -135,6 +135,9 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "livello")
     private Integer livello;
     
+    @Column(name="numero_sottoarchivi")
+    private Integer numeroSottoarchivi;
+    
     @JoinColumn(name = "id_persona_responsabile", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Persona idPersonaResponsabile;
