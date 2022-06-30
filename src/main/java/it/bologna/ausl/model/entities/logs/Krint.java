@@ -52,7 +52,10 @@ public class Krint implements Serializable {
         RUBRICA_CONTATTO, 
         RUBRICA_DETTAGLIO_CONTATTO, 
         RUBRICA_GRUPPO,
-        RUBRICA_GRUPPO_CONTATTO
+        RUBRICA_GRUPPO_CONTATTO,
+        
+        SCRIPTA_ARCHIVIO,
+        SCRIPTA_ATTORE_ARCHIVIO,
     };
     
 //    public static enum KrintField {
