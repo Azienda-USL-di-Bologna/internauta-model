@@ -65,7 +65,7 @@ public class MdrStruttura implements Serializable {
     private String tipoLegame;
 
     @Column(name = "codice_ente")
-    private Integer codiceEnte;
+    private String codiceEnte;
 
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -137,11 +137,11 @@ public class MdrStruttura implements Serializable {
         this.tipoLegame = tipoLegame;
     }
 
-    public Integer getCodiceEnte() {
+    public String getCodiceEnte() {
         return codiceEnte;
     }
 
-    public void setCodiceEnte(Integer codiceEnte) {
+    public void setCodiceEnte(String codiceEnte) {
         this.codiceEnte = codiceEnte;
     }
 
