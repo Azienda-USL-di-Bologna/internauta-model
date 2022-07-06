@@ -296,6 +296,9 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idArchivi;
     
+    @Column(name = "conservazione")
+    private Boolean conservazione;
+    
     
     // Proprietà transient
     @Transient
@@ -582,6 +585,14 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     public void setRiservato(Boolean riservato) {
         this.riservato = riservato;
+    }
+
+    public Boolean getConservazione() {
+        return conservazione;
+    }
+
+    public void setConservazione(Boolean conservazione) {
+        this.conservazione = conservazione;
     }
 
     public Boolean getAnnullato() {
