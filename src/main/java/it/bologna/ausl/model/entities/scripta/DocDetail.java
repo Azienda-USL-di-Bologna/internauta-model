@@ -217,6 +217,9 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
+    
+    @Column(name = "conservazione")
+    private Boolean conservazione;
 
 //    @Type(type = "jsonb")
 //    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
@@ -389,6 +392,14 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Override
     public void setDataCreazione(ZonedDateTime dataCreazione) {
         this.dataCreazione = dataCreazione;
+    }
+
+    public Boolean getConservazione() {
+        return conservazione;
+    }
+
+    public void setConservazione(Boolean conservazione) {
+        this.conservazione = conservazione;
     }
 
     @Override

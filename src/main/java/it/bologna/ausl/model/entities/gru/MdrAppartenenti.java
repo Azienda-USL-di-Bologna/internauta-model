@@ -44,7 +44,7 @@ public class MdrAppartenenti implements Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     @Column(name = "codice_ente")
-    private Integer codiceEnte;
+    private String codiceEnte;
 
     @Column(name = "codice_matricola")
     private Integer codiceMatricola;
@@ -114,11 +114,11 @@ public class MdrAppartenenti implements Serializable {
         this.id = id;
     }
 
-    public Integer getCodiceEnte() {
+    public String getCodiceEnte() {
         return codiceEnte;
     }
 
-    public void setCodiceEnte(Integer codiceEnte) {
+    public void setCodiceEnte(String codiceEnte) {
         this.codiceEnte = codiceEnte;
     }
 

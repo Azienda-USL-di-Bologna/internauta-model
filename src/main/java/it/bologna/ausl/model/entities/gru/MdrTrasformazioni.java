@@ -66,7 +66,7 @@ public class MdrTrasformazioni implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataoraOper;
     @Column(name = "codice_ente")
-    private Integer codiceEnte;
+    private String codiceEnte;
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
@@ -139,11 +139,11 @@ public class MdrTrasformazioni implements Serializable {
         this.dataoraOper = dataoraOper;
     }
 
-    public Integer getCodiceEnte() {
+    public String getCodiceEnte() {
         return codiceEnte;
     }
 
-    public void setCodiceEnte(Integer codiceEnte) {
+    public void setCodiceEnte(String codiceEnte) {
         this.codiceEnte = codiceEnte;
     }
 
