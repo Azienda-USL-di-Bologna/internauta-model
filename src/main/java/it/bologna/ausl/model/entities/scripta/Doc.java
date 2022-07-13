@@ -133,6 +133,10 @@ public class Doc implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "allagati")
     private List<Allegato> allegati;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "archiviDocList")
+    private List<ArchivioDoc> archiviDocList;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -292,6 +296,14 @@ public class Doc implements Serializable {
 
     public void setIdEsterno(String idEsterno) {
         this.idEsterno = idEsterno;
+    }
+
+    public List<ArchivioDoc> getArchiviDocList() {
+        return archiviDocList;
+    }
+
+    public void setArchiviDocList(List<ArchivioDoc> archiviDocList) {
+        this.archiviDocList = archiviDocList;
     }
 
     @Override

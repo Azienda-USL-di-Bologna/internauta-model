@@ -41,7 +41,7 @@ public class MdrResponsabili implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "codice_ente")
-    private Integer codiceEnte;
+    private String codiceEnte;
 
     @Column(name = "codice_matricola")
     private Integer codiceMatricola;
@@ -85,11 +85,11 @@ public class MdrResponsabili implements Serializable {
         this.id = id;
     }
 
-    public Integer getCodiceEnte() {
+    public String getCodiceEnte() {
         return codiceEnte;
     }
 
-    public void setCodiceEnte(Integer codiceEnte) {
+    public void setCodiceEnte(String codiceEnte) {
         this.codiceEnte = codiceEnte;
     }
 
