@@ -23,7 +23,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -38,6 +40,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
  *
  * @author gusgus
+ * Archivio detail rappresenta la lista degli archivi serve per le performance 
+ * ed è la rappresentazione della tabella partizionata sul db
  */
 @TypeDefs({
     @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
@@ -60,6 +64,12 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @MapsId
+    @JsonBackReference(value = "idArchivio")
+    private Archivio idArchivio;
 
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -148,6 +158,9 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     @Column(name = "id_titolo")
     private Integer idTitolo;
+    
+    @Column(name="numero_sottoarchivi")
+    private Integer numeroSottoarchivi;
 
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
@@ -174,6 +187,9 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @OneToMany(mappedBy = "idArchivioDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "permessiArchivioList")
     private List<PermessoArchivio> permessiArchivioList;
+    
+    @Column(name = "id_iter")
+    private Integer idIter;
 
     public ArchivioDetail() {
     }
@@ -201,6 +217,16 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     public void setDataCreazione(ZonedDateTime dataCreazione) {
         this.dataCreazione = dataCreazione;
     }
+
+    public Archivio getIdArchivio() {
+        return idArchivio;
+    }
+
+    public void setIdArchivio(Archivio idArchivio) {
+        this.idArchivio = idArchivio;
+    }
+    
+    
 
     public ArchivioDetail getIdArchivioPadre() {
         return idArchivioPadre;
@@ -436,6 +462,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setPermessiArchivioList(List<PermessoArchivio> permessiArchivioList) {
         this.permessiArchivioList = permessiArchivioList;
+    }
+
+    public Integer getIdIter() {
+        return idIter;
+    }
+
+    public void setIdIter(Integer idIter) {
+        this.idIter = idIter;
     }
     
     @Override

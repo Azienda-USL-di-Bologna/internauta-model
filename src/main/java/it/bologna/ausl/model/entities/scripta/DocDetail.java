@@ -217,6 +217,9 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
+    
+    @Column(name = "conservazione")
+    private Boolean conservazione;
 
 //    @Type(type = "jsonb")
 //    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
@@ -258,8 +261,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Column(name = "id_archivi_antenati", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idArchiviAntenati;
-
     
+    @Column(name = "id_archivi", columnDefinition = "integer[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] idArchivi;
+   
     // Proprietà transient
     @Transient
     private String urlComplete;
@@ -386,6 +392,14 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Override
     public void setDataCreazione(ZonedDateTime dataCreazione) {
         this.dataCreazione = dataCreazione;
+    }
+
+    public Boolean getConservazione() {
+        return conservazione;
+    }
+
+    public void setConservazione(Boolean conservazione) {
+        this.conservazione = conservazione;
     }
 
     @Override
@@ -812,6 +826,16 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Override
     public void setIdArchiviAntenati(Integer[] idArchiviAntenati) {
         this.idArchiviAntenati = idArchiviAntenati;
+    }
+    
+    @Override
+    public Integer[] getIdArchivi() {
+        return idArchivi;
+    }
+    
+    @Override
+    public void setIdArchivi(Integer[] idArchivi) {
+        this.idArchivi = idArchivi;
     }
     
     @Override

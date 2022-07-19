@@ -5,7 +5,6 @@ import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import java.time.ZonedDateTime;
 import java.util.List;
-import javax.persistence.Id;
 
 /**
  *
@@ -24,6 +23,10 @@ public interface ArchivioDetailInterface {
     public ZonedDateTime getDataCreazione();
 
     public void setDataCreazione(ZonedDateTime dataCreazione);
+    
+//    public Archivio getIdArchivio();
+//    
+//    public void setIdArchivio(Archivio archivio);
 
     public ArchivioDetailInterface getIdArchivioPadre();
     
@@ -115,4 +118,7 @@ public interface ArchivioDetailInterface {
 
     public void setVersion(ZonedDateTime version);
     
+    public Integer getIdIter();
+    
+    public void setIdIter(Integer idIter);
 }

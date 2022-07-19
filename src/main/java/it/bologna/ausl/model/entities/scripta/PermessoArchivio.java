@@ -36,9 +36,42 @@ import org.springframework.format.annotation.DateTimeFormat;
 @GenerateProjections({})
 @DynamicUpdate
 public class PermessoArchivio implements Serializable {
+    /**
+     * Bit
+     * Binary  -DEC- PREDICATO
+     * 0000001 - 1 - PASSAGGIO
+     * 0000010 - 2 - VISUALIZZA
+     * 0000100 - 4 - MODIFICA
+     * 0001000 - 8 - ELIMINA
+     * 0010000 - 16 - VICARIO
+     * 0100000 - 32 - REPONSABILE_PROPOSTO
+     * 1000000 - 64 - RESPONSABILE
+     */
     
     public static enum TipoSoggetto {
         PERSONA, STRUTTURA
+    }
+    
+     public enum DecimalePredicato {
+    
+        PASSAGGIO(1),
+        VISUALIZZA(2), 
+        MODIFICA(4), 
+        ELIMINA(8),      
+        VICARIO(16), 
+        RESPONSABILE_PROPOSTO(32), 
+        RESPONSABILE(64);
+
+        private Integer typeOfBit;
+
+        DecimalePredicato(Integer typeOfBit) {
+            this.typeOfBit = typeOfBit;
+        }
+        
+        public Integer getValue(){
+            return typeOfBit;
+        }
+
     }
 
     private static final long serialVersionUID = 1L;
@@ -48,9 +81,12 @@ public class PermessoArchivio implements Serializable {
     @Column(name = "id")
     private Long id;
     
+    @Column(name = "bit")
+    private Integer bit;
+    
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference(value = "idPersona")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    //@JsonBackReference(value = "idPersona")
     private Persona idPersona;
     
     @JoinColumn(name = "id_archivio_detail", referencedColumnName = "id")
@@ -86,6 +122,14 @@ public class PermessoArchivio implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getBit() {
+        return bit;
+    }
+
+    public void setBit(Integer bit) {
+        this.bit = bit;
     }
 
     public Azienda getIdAzienda() {
