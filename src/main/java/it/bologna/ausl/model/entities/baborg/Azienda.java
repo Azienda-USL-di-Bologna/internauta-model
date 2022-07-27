@@ -359,6 +359,14 @@ public class Azienda implements Serializable {
         this.ribaltoneDaLanciareList = ribaltoneDaLanciareList;
     }
 
+    public String getIdAziendaAlbi() {
+        return idAziendaAlbi;
+    }
+
+    public void setIdAziendaAlbi(String idAziendaAlbi) {
+        this.idAziendaAlbi = idAziendaAlbi;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
