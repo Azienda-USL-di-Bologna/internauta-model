@@ -102,6 +102,11 @@ public class Azienda implements Serializable {
     @Column(name = "path", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] path;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 1000)
+    @Column(name = "id_azienda_albi")
+    private String idAziendaAlbi;
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idpEntityIdList")
     private List<IdpEntityId> idpEntityIdList;
