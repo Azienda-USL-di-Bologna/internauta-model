@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.forms;
 
+import it.bologna.ausl.model.entities.scrivania.AutorizzatoreModificheDocumentali;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -17,6 +18,10 @@ public class Segnalazione {
     private String oggetto;
     private String descrizione;
     private MultipartFile[] allegati;
+    private String tipologiaSegnalazione;
+    private AutorizzatoreModificheDocumentali autorizzatore;
+    private String emailAutorizzatore;
+    private String descrizioneAutorizzatore;
 
     public String getAzienda() {
         return azienda;
@@ -97,7 +102,37 @@ public class Segnalazione {
     public void setAllegati(MultipartFile[] allegati) {
         this.allegati = allegati;
     }
-    
-    
+
+    public String getTipologiaSegnalazione() {
+        return tipologiaSegnalazione;
+    }
+
+    public void setTipologiaSegnalazione(String tipologiaSegnalazione) {
+        this.tipologiaSegnalazione = tipologiaSegnalazione;
+    }
+
+    public AutorizzatoreModificheDocumentali getAutorizzatore() {
+        return autorizzatore;
+    }
+
+    public void setAutorizzatore(AutorizzatoreModificheDocumentali autorizzatore) {
+        this.autorizzatore = autorizzatore;
+    }
+
+    public String getEmailAutorizzatore() {
+        return emailAutorizzatore;
+    }
+
+    public void setEmailAutorizzatore(String emailAutorizzatore) {
+        this.emailAutorizzatore = emailAutorizzatore;
+    }
+
+    public String getDescrizioneAutorizzatore() {
+        return descrizioneAutorizzatore;
+    }
+
+    public void setDescrizioneAutorizzatore(String descrizioneAutorizzatore) {
+        this.descrizioneAutorizzatore = descrizioneAutorizzatore;
+    }
     
 }

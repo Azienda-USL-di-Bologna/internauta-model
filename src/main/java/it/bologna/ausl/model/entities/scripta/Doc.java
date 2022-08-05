@@ -69,7 +69,7 @@ public class Doc implements Serializable {
     private String oggetto;
 
     @JoinColumn(name = "id_persona_creazione", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Persona idPersonaCreazione;
 
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
