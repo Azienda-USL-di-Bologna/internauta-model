@@ -74,6 +74,9 @@ public class Pec implements Serializable {
     @NotNull
     @Column(name = "attiva")
     private Boolean attiva;
+
+    @Column(name = "ignora_interfaccia")
+    private Boolean ignoraInterfaccia;
     
     @Basic(optional = false)
     @NotNull
@@ -262,6 +265,14 @@ public class Pec implements Serializable {
 
     public void setAttiva(Boolean attiva) {
         this.attiva = attiva;
+    }
+
+    public Boolean getIgnoraInterfaccia() {
+        return ignoraInterfaccia;
+    }
+
+    public void setIgnoraInterfaccia(Boolean ignoraInterfaccia) {
+        this.ignoraInterfaccia = ignoraInterfaccia;
     }
 
     public Integer getMessagePolicy() {
