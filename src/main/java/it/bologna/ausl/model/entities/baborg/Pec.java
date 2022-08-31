@@ -109,7 +109,7 @@ public class Pec implements Serializable {
     private List<PecAzienda> pecAziendaList;
 
     @JoinColumn(name = "id_pec_provider", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private PecProvider idPecProvider;
 
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
