@@ -154,6 +154,13 @@ public class Doc implements Serializable {
         this.dataCreazione = dataCreazione;
     }
 
+    public Doc(String oggetto, Persona idPersonaCreazione, Azienda idAzienda, String tipologia) {
+        this.oggetto = oggetto;
+        this.idPersonaCreazione = idPersonaCreazione;
+        this.idAzienda = idAzienda;
+        this.tipologia = tipologia;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -107,6 +107,9 @@ public class Allegato implements Serializable {
     @Column(name = "firmato")
     private Boolean firmato;
     
+    @Column(name = "estraibile")
+    private Boolean estraibile = false;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataInserimento = ZonedDateTime.now();
@@ -212,6 +215,14 @@ public class Allegato implements Serializable {
 
     public void setOrdinale(Integer ordinale) {
         this.ordinale = ordinale;
+    }
+
+    public Boolean getEstraibile() {
+        return estraibile;
+    }
+
+    public void setEstraibile(Boolean estraibile) {
+        this.estraibile = estraibile;
     }
 
     public ZonedDateTime getDataInserimento() {
@@ -345,6 +356,8 @@ public class Allegato implements Serializable {
         String hashMd5;
         String hashSha256;
         ZonedDateTime dataCreazione;
+        Boolean daVersare;
+        String bucket;
 
         public DettaglioAllegato() {
         }
@@ -411,6 +424,22 @@ public class Allegato implements Serializable {
 
         public void setDataCreazione(ZonedDateTime dataCreazione) {
             this.dataCreazione = dataCreazione;
+        }
+
+        public Boolean getDaVersare() {
+            return daVersare;
+        }
+
+        public void setDaVersare(Boolean daVersare) {
+            this.daVersare = daVersare;
+        }
+
+        public String getBucket() {
+            return bucket;
+        }
+
+        public void setBucket(String bucket) {
+            this.bucket = bucket;
         }
 
     }    
