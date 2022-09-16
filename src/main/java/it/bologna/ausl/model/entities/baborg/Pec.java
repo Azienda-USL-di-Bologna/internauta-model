@@ -76,7 +76,7 @@ public class Pec implements Serializable {
     private Boolean attiva;
 
     @Column(name = "ignora_interfaccia")
-    private Boolean ignoraInterfaccia;
+    private Boolean ignoraInterfaccia = false;
     
     @Basic(optional = false)
     @NotNull
