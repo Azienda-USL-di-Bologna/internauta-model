@@ -69,7 +69,7 @@ public class Doc implements Serializable {
     private String oggetto;
 
     @JoinColumn(name = "id_persona_creazione", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Persona idPersonaCreazione;
 
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
@@ -152,6 +152,13 @@ public class Doc implements Serializable {
         this.idPersonaCreazione = idPersonaCreazione;
         this.idAzienda = idAzienda;
         this.dataCreazione = dataCreazione;
+    }
+
+    public Doc(String oggetto, Persona idPersonaCreazione, Azienda idAzienda, String tipologia) {
+        this.oggetto = oggetto;
+        this.idPersonaCreazione = idPersonaCreazione;
+        this.idAzienda = idAzienda;
+        this.tipologia = tipologia;
     }
 
     public Integer getId() {

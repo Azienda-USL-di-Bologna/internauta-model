@@ -74,6 +74,9 @@ public class Pec implements Serializable {
     @NotNull
     @Column(name = "attiva")
     private Boolean attiva;
+
+    @Column(name = "ignora_interfaccia")
+    private Boolean ignoraInterfaccia = false;
     
     @Basic(optional = false)
     @NotNull
@@ -106,7 +109,7 @@ public class Pec implements Serializable {
     private List<PecAzienda> pecAziendaList;
 
     @JoinColumn(name = "id_pec_provider", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private PecProvider idPecProvider;
 
     @OneToMany(mappedBy = "idPec", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
@@ -262,6 +265,14 @@ public class Pec implements Serializable {
 
     public void setAttiva(Boolean attiva) {
         this.attiva = attiva;
+    }
+
+    public Boolean getIgnoraInterfaccia() {
+        return ignoraInterfaccia;
+    }
+
+    public void setIgnoraInterfaccia(Boolean ignoraInterfaccia) {
+        this.ignoraInterfaccia = ignoraInterfaccia;
     }
 
     public Integer getMessagePolicy() {

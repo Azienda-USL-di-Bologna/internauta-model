@@ -102,6 +102,9 @@ public class Azienda implements Serializable {
     @Column(name = "path", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] path;
+    @Size(min = 1, max = 1000)
+    @Column(name = "id_azienda_albi")
+    private String idAziendaAlbi;
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idpEntityIdList")
     private List<IdpEntityId> idpEntityIdList;
@@ -352,6 +355,14 @@ public class Azienda implements Serializable {
 
     public void setRibaltoneDaLanciareList(List<RibaltoneDaLanciare> ribaltoneDaLanciareList) {
         this.ribaltoneDaLanciareList = ribaltoneDaLanciareList;
+    }
+
+    public String getIdAziendaAlbi() {
+        return idAziendaAlbi;
+    }
+
+    public void setIdAziendaAlbi(String idAziendaAlbi) {
+        this.idAziendaAlbi = idAziendaAlbi;
     }
 
     @Override
