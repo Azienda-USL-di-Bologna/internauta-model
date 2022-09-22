@@ -8,6 +8,7 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import it.bologna.ausl.model.entities.scripta.Doc;
+import it.bologna.ausl.model.entities.scripta.MessageDoc;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -202,9 +203,13 @@ public class Message implements Serializable, MessageInterface {
     @Column(name = "id_message_pecgw")
     private String idMessagePecgw;
     
-    @JoinColumn(name = "id_doc", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Doc idDoc;
+//    @JoinColumn(name = "id_doc", referencedColumnName = "id")
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Doc idDoc;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageDocList")
+    private List<MessageDoc> messageDocList;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -551,14 +556,22 @@ public class Message implements Serializable, MessageInterface {
     public void setIdMessagePecgw(String idMessagePecgw) {
         this.idMessagePecgw = idMessagePecgw;
     }
-
-    public Doc getIdDoc() {
-        return idDoc;
+    
+    public List<MessageDoc> getMessageDocList() {
+        return messageDocList;
     }
 
-    public void setIdDoc(Doc idDoc) {
-        this.idDoc = idDoc;
+    public void setMessageDocList(List<MessageDoc> messageDocList) {
+        this.messageDocList = messageDocList;
     }
+
+//    public Doc getIdDoc() {
+//        return idDoc;
+//    }
+//
+//    public void setIdDoc(Doc idDoc) {
+//        this.idDoc = idDoc;
+//    }
 
     @Override
     public int hashCode() {
