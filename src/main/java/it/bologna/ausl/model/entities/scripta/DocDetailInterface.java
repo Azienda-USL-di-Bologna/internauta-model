@@ -146,17 +146,17 @@ public interface DocDetailInterface {
 
     public void setDestinatariTscol(String destinatariTscol);
 
-    public List<Fascicolazione> getFascicolazioni();
+//    public List<Fascicolazione> getFascicolazioni();
+//
+//    public void setFascicolazioni(List<Fascicolazione> fascicolazioni);
+//
+//    public String getFascicolazioniTscol();
+//
+//    public void setFascicolazioniTscol(String fascicolazioniTscol);
 
-    public void setFascicolazioni(List<Fascicolazione> fascicolazioni);
-
-    public String getFascicolazioniTscol();
-
-    public void setFascicolazioniTscol(String fascicolazioniTscol);
-
-    public List<Classificazione> getClassificazioni();
-
-    public void setClassificazioni(List<Classificazione> classificazioni);
+//    public List<Classificazione> getClassificazioni();
+//
+//    public void setClassificazioni(List<Classificazione> classificazioni);
 
     public StatoDoc getStato(); 
 
@@ -230,9 +230,9 @@ public interface DocDetailInterface {
 
     public void setRankingDestinatari(Double rankingDestinatari);
 
-    public Double getRankingFascicolazioni();
-
-    public void setRankingFascicolazioni(Double rankingFascicolazioni);
+//    public Double getRankingFascicolazioni();
+//
+//    public void setRankingFascicolazioni(Double rankingFascicolazioni);
 
     public Double getRankingMittente();
 
@@ -250,9 +250,9 @@ public interface DocDetailInterface {
 
     public void setIdApplicazione(Applicazione idApplicazione);
         
-    public List<Archiviazione> getArchiviazioni();
-
-    public void setArchiviazioni(List<Archiviazione> archiviazioni);
+//    public List<Archiviazione> getArchiviazioni();
+//
+//    public void setArchiviazioni(List<Archiviazione> archiviazioni);
 
     public Integer[] getIdArchiviAntenati();
 
@@ -262,70 +262,73 @@ public interface DocDetailInterface {
 
     public void setIdArchivi(Integer[] idArchivi);
     
+    public List<ArchivioDoc> getArchiviDocList();
+
+    public void setArchiviDocList(List<ArchivioDoc> archiviDocList);
     
-    public static class Fascicolazione {
-
-        String nome;
-        String numerazione;
-        String idFascicoloArgo;
-        String idFascicoloRadiceArgo;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public String getNumerazione() {
-            return numerazione;
-        }
-
-        public void setNumerazione(String numerazione) {
-            this.numerazione = numerazione;
-        }
-
-        public String getIdFascicoloArgo() {
-            return idFascicoloArgo;
-        }
-
-        public void setIdFascicoloArgo(String idFascicoloArgo) {
-            this.idFascicoloArgo = idFascicoloArgo;
-        }
-
-        public String getIdFascicoloRadiceArgo() {
-            return idFascicoloRadiceArgo;
-        }
-
-        public void setIdFascicoloRadiceArgo(String idFascicoloRadiceArgo) {
-            this.idFascicoloRadiceArgo = idFascicoloRadiceArgo;
-        }
-        
-    }
+//    public static class Fascicolazione {
+//
+//        String nome;
+//        String numerazione;
+//        String idFascicoloArgo;
+//        String idFascicoloRadiceArgo;
+//
+//        public String getNome() {
+//            return nome;
+//        }
+//
+//        public void setNome(String nome) {
+//            this.nome = nome;
+//        }
+//
+//        public String getNumerazione() {
+//            return numerazione;
+//        }
+//
+//        public void setNumerazione(String numerazione) {
+//            this.numerazione = numerazione;
+//        }
+//
+//        public String getIdFascicoloArgo() {
+//            return idFascicoloArgo;
+//        }
+//
+//        public void setIdFascicoloArgo(String idFascicoloArgo) {
+//            this.idFascicoloArgo = idFascicoloArgo;
+//        }
+//
+//        public String getIdFascicoloRadiceArgo() {
+//            return idFascicoloRadiceArgo;
+//        }
+//
+//        public void setIdFascicoloRadiceArgo(String idFascicoloRadiceArgo) {
+//            this.idFascicoloRadiceArgo = idFascicoloRadiceArgo;
+//        }
+//        
+//    }
     
-    public static class Archiviazione {
-
-        String descrizione;
-        Integer idArchivio;
-
-        public String getDescrizione() {
-            return descrizione;
-        }
-
-        public void setDescrizione(String descrizione) {
-            this.descrizione = descrizione;
-        }
-
-        public Integer getIdArchivio() {
-            return idArchivio;
-        }
-
-        public void setIdArchivio(Integer idArchivio) {
-            this.idArchivio = idArchivio;
-        }
-
-    }
+//    public static class Archiviazione {
+//
+//        String descrizione;
+//        Integer idArchivio;
+//
+//        public String getDescrizione() {
+//            return descrizione;
+//        }
+//
+//        public void setDescrizione(String descrizione) {
+//            this.descrizione = descrizione;
+//        }
+//
+//        public Integer getIdArchivio() {
+//            return idArchivio;
+//        }
+//
+//        public void setIdArchivio(Integer idArchivio) {
+//            this.idArchivio = idArchivio;
+//        }
+//
+//    }
 
     public static class Firmatario {
 
@@ -380,27 +383,27 @@ public interface DocDetailInterface {
         }
     }
 
-    public static class Classificazione {
-
-        String nome;
-        String numerazione;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public String getNumerazione() {
-            return numerazione;
-        }
-
-        public void setNumerazione(String numerazione) {
-            this.numerazione = numerazione;
-        }
-    }
+//    public static class Classificazione {
+//
+//        String nome;
+//        String numerazione;
+//
+//        public String getNome() {
+//            return nome;
+//        }
+//
+//        public void setNome(String nome) {
+//            this.nome = nome;
+//        }
+//
+//        public String getNumerazione() {
+//            return numerazione;
+//        }
+//
+//        public void setNumerazione(String numerazione) {
+//            this.numerazione = numerazione;
+//        }
+//    }
 
 //    public static class PersonaVedente {
 //

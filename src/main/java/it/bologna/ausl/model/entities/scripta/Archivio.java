@@ -38,6 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idMassimario, idTitolo, idAzienda",
     "idArchivioRadice",
     "idMassimario, idTitolo, idAzienda, attoriList",
+    "idAzienda"
 })
 @DynamicUpdate
 public class Archivio {
