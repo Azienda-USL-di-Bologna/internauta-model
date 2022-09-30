@@ -42,6 +42,11 @@ public class MessageDoc implements Serializable {
         OUT
     }
     
+    public static enum ScopeMessageDoc {
+        PROTOCOLLAZIONE,
+        ARCHIVIAZIONE
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,11 +82,29 @@ public class MessageDoc implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
+    @Column(name = "scope")
+    private String scope = "PROTOCOLLAZIONE";
+    
     public MessageDoc() {
     }
 
     public MessageDoc(Integer id) {
         this.id = id;
+    }
+
+    public MessageDoc(Message idMessage, Doc idDoc, TipoMessageDoc tipo, ScopeMessageDoc scope) {
+        this.idMessage = idMessage;
+        this.idDoc = idDoc;
+        if (tipo != null) {
+            this.tipo = tipo.toString();
+        } else {
+            this.tipo = null;
+        }
+        if (scope != null) {
+            this.scope = scope.toString();
+        } else {
+            this.scope = null;
+        }
     }
 
     public MessageDoc(Integer id, Message idMessage, String tipo, ZonedDateTime dataInserimento, ZonedDateTime version) {
@@ -129,6 +152,22 @@ public class MessageDoc implements Serializable {
             this.tipo = tipo.toString();
         } else {
             this.tipo = null;
+        }
+    }
+    
+    public ScopeMessageDoc getScope() {
+        if (scope != null) {
+            return ScopeMessageDoc.valueOf(scope);
+        } else {
+            return null;
+        }
+    }
+
+    public void setScope(ScopeMessageDoc scope) {
+        if (scope != null) {
+            this.scope = scope.toString();
+        } else {
+            this.scope = null;
         }
     }
 

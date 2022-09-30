@@ -8,6 +8,7 @@ import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
+import it.bologna.ausl.model.entities.scripta.MessageDoc;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -200,6 +201,10 @@ public class MessageWithTagView implements Serializable, MessageInterface {
 
     @Column(name = "id_message_pecgw")
     private String idMessagePecgw;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idMessage", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "messageDocList")
+    private List<MessageDoc> messageDocList;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -557,6 +562,14 @@ public class MessageWithTagView implements Serializable, MessageInterface {
 
     public void setIdTag(Tag idTag) {
         this.idTag = idTag;
+    }
+    
+    public List<MessageDoc> getMessageDocList() {
+        return messageDocList;
+    }
+
+    public void setMessageDocList(List<MessageDoc> messageDocList) {
+        this.messageDocList = messageDocList;
     }
     
     @Override

@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.shpeck;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
+import it.bologna.ausl.model.entities.scripta.MessageDoc;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -166,4 +167,8 @@ public interface MessageInterface {
     public String getIdMessagePecgw();
 
     public void setIdMessagePecgw(String idMessagePecgw);
+    
+    public List<MessageDoc> getMessageDocList();
+
+    public void setMessageDocList(List<MessageDoc> messageDocList);
 }

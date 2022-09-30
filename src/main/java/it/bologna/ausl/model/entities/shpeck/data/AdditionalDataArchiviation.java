@@ -1,6 +1,5 @@
 package it.bologna.ausl.model.entities.shpeck.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.bologna.ausl.model.entities.data.AdditionalData;
 import java.time.LocalDateTime;
@@ -23,6 +22,8 @@ public class AdditionalDataArchiviation extends AdditionalData {
     public AdditionalDataTagComponent.idUtente idUtente;
     public AdditionalDataTagComponent.idAzienda idAzienda;
     public AdditionalDataTagComponent.idFascicolo idFascicolo;
+    //public AdditionalDataTagComponent.idDoc idDoc;
+    public AdditionalDataTagComponent.idArchivio idArchivio;
 //    @JsonIgnore
     public LocalDateTime dataArchiviazione;
     
@@ -36,6 +37,13 @@ public class AdditionalDataArchiviation extends AdditionalData {
         this.idUtente = idUtente;
         this.idAzienda = idAzienda;
         this.idFascicolo = idFascicolo;
+        this.dataArchiviazione = dataArchiviazione;
+    }
+    
+    public AdditionalDataArchiviation(AdditionalDataTagComponent.idUtente idUtente, AdditionalDataTagComponent.idAzienda idAzienda, AdditionalDataTagComponent.idArchivio idArchivio, LocalDateTime dataArchiviazione) {
+        this.idUtente = idUtente;
+        this.idAzienda = idAzienda;
+        this.idArchivio = idArchivio;
         this.dataArchiviazione = dataArchiviazione;
     }
 
@@ -70,6 +78,22 @@ public class AdditionalDataArchiviation extends AdditionalData {
     public void setIdFascicolo(AdditionalDataTagComponent.idFascicolo idFascicolo) {
         this.idFascicolo = idFascicolo;
     }
+    
+    public AdditionalDataTagComponent.idArchivio getIdArchivio() {
+        return idArchivio;
+    }
+
+    public void setIdArchivio(AdditionalDataTagComponent.idArchivio idArchivio) {
+        this.idArchivio = idArchivio;
+    }
+
+//    public AdditionalDataTagComponent.idDoc getIdDoc() {
+//        return idDoc;
+//    }
+//
+//    public void setIdDoc(AdditionalDataTagComponent.idDoc idDoc) {
+//        this.idDoc = idDoc;
+//    }
 
     public LocalDateTime getDataArchiviazione() {
         return dataArchiviazione;
@@ -88,6 +112,4 @@ public class AdditionalDataArchiviation extends AdditionalData {
 //    public void setClassType(String classType) {
 //        this.classType = classType;
 //    }
-    
-    
 }

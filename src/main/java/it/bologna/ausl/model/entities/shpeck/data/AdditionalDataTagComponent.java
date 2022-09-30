@@ -149,6 +149,47 @@ public class AdditionalDataTagComponent {
     }
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class idArchivio {
+        private Integer id;
+        private String oggetto;
+        private String numerazioneGerarchica;
+
+        public idArchivio() {
+        }
+
+        public idArchivio(Integer id, String oggetto, String numerazioneGerarchica) {
+            this.id = id;
+            this.oggetto = oggetto;
+            this.numerazioneGerarchica = numerazioneGerarchica;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getOggetto() {
+            return oggetto;
+        }
+
+        public void setOggetto(String oggetto) {
+            this.oggetto = oggetto;
+        }
+
+        public String getNumerazioneGerarchica() {
+            return numerazioneGerarchica;
+        }
+
+        public void setNumerazioneGerarchica(String numerazioneGerarchica) {
+            this.numerazioneGerarchica = numerazioneGerarchica;
+        }
+    }
+
+    
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class idDocumento {
         private String oggetto;
         private String codiceRegistro;
