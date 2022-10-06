@@ -55,7 +55,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione"
+    "idAzienda,idPersonaResponsabileProcedimento,idPersonaRedattrice,idStrutturaRegistrazione,idApplicazione,archiviDocList"
 })
 @DynamicUpdate
 public class DocDetailView implements Serializable, DocDetailInterface {
@@ -172,19 +172,19 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Formula("(select ts_rank(destinatari_tscol, to_tsquery('italian',$${destinatari_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double rankingDestinatari;
 
-    @Type(type = "jsonb")
-    @Column(name = "fascicolazioni", columnDefinition = "jsonb")
-    private List<Fascicolazione> fascicolazioni;
-
-    @Column(name = "fascicolazioni_tscol", columnDefinition = "tsvector")
-    private String fascicolazioniTscol;
-
-    @Formula("(select ts_rank(fascicolazioni_tscol, to_tsquery('italian',$${fascicolazioni_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
-    private Double rankingFascicolazioni;
-
-    @Type(type = "jsonb")
-    @Column(name = "classificazioni", columnDefinition = "jsonb")
-    private List<Classificazione> classificazioni;
+//    @Type(type = "jsonb")
+//    @Column(name = "fascicolazioni", columnDefinition = "jsonb")
+//    private List<Fascicolazione> fascicolazioni;
+//
+//    @Column(name = "fascicolazioni_tscol", columnDefinition = "tsvector")
+//    private String fascicolazioniTscol;
+//
+//    @Formula("(select ts_rank(fascicolazioni_tscol, to_tsquery('italian',$${fascicolazioni_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
+//    private Double rankingFascicolazioni;
+//
+//    @Type(type = "jsonb")
+//    @Column(name = "classificazioni", columnDefinition = "jsonb")
+//    private List<Classificazione> classificazioni;
 
     @Size(max = 2147483647)
     @Column(name = "stato")
@@ -284,9 +284,9 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Column(name = "modalita_apertura")
     private String modalitaApertura;    
     
-    @Type(type = "jsonb")
-    @Column(name = "archiviazioni", columnDefinition = "jsonb")
-    private List<Archiviazione> archiviazioni;
+//    @Type(type = "jsonb")
+//    @Column(name = "archiviazioni", columnDefinition = "jsonb")
+//    private List<Archiviazione> archiviazioni;
     
     @Column(name = "id_archivi_antenati", columnDefinition = "integer[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
@@ -299,6 +299,9 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Column(name = "conservazione")
     private Boolean conservazione;
     
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "archiviDocList")
+    private List<ArchivioDoc> archiviDocList;    
     
     // Proprietà transient
     @Transient
@@ -531,29 +534,29 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.destinatariTscol = destinatariTscol;
     }
 
-    public List<Fascicolazione> getFascicolazioni() {
-        return fascicolazioni;
-    }
-
-    public void setFascicolazioni(List<Fascicolazione> fascicolazioni) {
-        this.fascicolazioni = fascicolazioni;
-    }
-
-    public String getFascicolazioniTscol() {
-        return fascicolazioniTscol;
-    }
-
-    public void setFascicolazioniTscol(String fascicolazioniTscol) {
-        this.fascicolazioniTscol = fascicolazioniTscol;
-    }
-
-    public List<Classificazione> getClassificazioni() {
-        return classificazioni;
-    }
-
-    public void setClassificazioni(List<Classificazione> classificazioni) {
-        this.classificazioni = classificazioni;
-    }
+//    public List<Fascicolazione> getFascicolazioni() {
+//        return fascicolazioni;
+//    }
+//
+//    public void setFascicolazioni(List<Fascicolazione> fascicolazioni) {
+//        this.fascicolazioni = fascicolazioni;
+//    }
+//
+//    public String getFascicolazioniTscol() {
+//        return fascicolazioniTscol;
+//    }
+//
+//    public void setFascicolazioniTscol(String fascicolazioniTscol) {
+//        this.fascicolazioniTscol = fascicolazioniTscol;
+//    }
+//
+//    public List<Classificazione> getClassificazioni() {
+//        return classificazioni;
+//    }
+//
+//    public void setClassificazioni(List<Classificazione> classificazioni) {
+//        this.classificazioni = classificazioni;
+//    }
 
     public StatoDoc getStato() {
         if (stato != null) {
@@ -735,13 +738,13 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.rankingDestinatari = rankingDestinatari;
     }
 
-    public Double getRankingFascicolazioni() {
-        return rankingFascicolazioni;
-    }
-
-    public void setRankingFascicolazioni(Double rankingFascicolazioni) {
-        this.rankingFascicolazioni = rankingFascicolazioni;
-    }
+//    public Double getRankingFascicolazioni() {
+//        return rankingFascicolazioni;
+//    }
+//
+//    public void setRankingFascicolazioni(Double rankingFascicolazioni) {
+//        this.rankingFascicolazioni = rankingFascicolazioni;
+//    }
 
     public Double getRankingMittente() {
         return rankingMittente;
@@ -806,16 +809,26 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     public void setIdApplicazione(Applicazione idApplicazione) {
         this.idApplicazione = idApplicazione;
     }
-
+    
     @Override
-    public List<Archiviazione> getArchiviazioni() {
-        return archiviazioni;
+    public List<ArchivioDoc> getArchiviDocList() {
+        return archiviDocList;
     }
 
     @Override
-    public void setArchiviazioni(List<Archiviazione> archiviazioni) {
-        this.archiviazioni = archiviazioni;
+    public void setArchiviDocList(List<ArchivioDoc> archiviDocList) {
+        this.archiviDocList = archiviDocList;
     }
+
+//    @Override
+//    public List<Archiviazione> getArchiviazioni() {
+//        return archiviazioni;
+//    }
+//
+//    @Override
+//    public void setArchiviazioni(List<Archiviazione> archiviazioni) {
+//        this.archiviazioni = archiviazioni;
+//    }
 
     @Override
     public Integer[] getIdArchiviAntenati() {

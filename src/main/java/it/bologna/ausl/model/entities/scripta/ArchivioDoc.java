@@ -94,6 +94,12 @@ public class ArchivioDoc implements Serializable {
     public ArchivioDoc() {
     }
 
+    public ArchivioDoc(Archivio idArchivio, Doc idDoc, Persona idPersonaArchiviazione) {
+        this.idArchivio = idArchivio;
+        this.idDoc = idDoc;
+        this.idPersonaArchiviazione = idPersonaArchiviazione;
+    }
+
     public ArchivioDoc(Integer id) {
         this.id = id;
     }
