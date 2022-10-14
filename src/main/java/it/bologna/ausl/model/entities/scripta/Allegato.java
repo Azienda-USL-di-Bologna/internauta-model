@@ -2,6 +2,8 @@ package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import static com.fasterxml.jackson.annotation.JsonFormat.DEFAULT_LOCALE;
+import static com.fasterxml.jackson.annotation.JsonFormat.DEFAULT_TIMEZONE;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.CaseFormat;
@@ -11,6 +13,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -355,11 +358,20 @@ public class Allegato implements Serializable {
         String mimeType;
         String hashMd5;
         String hashSha256;
-        ZonedDateTime dataCreazione;
+        
+//        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'", fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss.SSSSSS", "yyyy-MM-dd'T'HH:mm:ss+01"})
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+//        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+//        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")//, fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss z"}
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S][z]", locale = DEFAULT_LOCALE, timezone="Europe/Berlin", lenient = com.fasterxml.jackson.annotation.OptBoolean.TRUE)//, 
+        String dataCreazione;
         Boolean daVersare;
         String bucket;
+        
 
         public DettaglioAllegato() {
+            //ZonedDateTime.from(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'").parse("2022-05-31T15:12:09.000"));
         }
 
         public String getIdRepository() {
@@ -418,11 +430,11 @@ public class Allegato implements Serializable {
             this.hashSha256 = hashSha256;
         }
 
-        public ZonedDateTime getDataCreazione() {
+        public String getDataCreazione() {
             return dataCreazione;
         }
 
-        public void setDataCreazione(ZonedDateTime dataCreazione) {
+        public void setDataCreazione(String dataCreazione) {
             this.dataCreazione = dataCreazione;
         }
 
