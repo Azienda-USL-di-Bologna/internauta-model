@@ -53,12 +53,14 @@ public class Allegato implements Serializable {
 
     public static enum TipoAllegato {
         ALLEGATO,
-        LETTERA,
+        TESTO,
         FRONTESPIZIO,
         STAMPA_UNICA,
         FASCICOLATO,
         STAMPA_UNICA_OMISSIS,
-        LETTERA_OMISSIS
+        TESTO_OMISSIS,
+        ANNESSO,
+        ANNOTAZIONE
     }
 
     @Id
