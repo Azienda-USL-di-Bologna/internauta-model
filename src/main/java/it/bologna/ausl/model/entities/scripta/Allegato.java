@@ -2,8 +2,6 @@ package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import static com.fasterxml.jackson.annotation.JsonFormat.DEFAULT_LOCALE;
-import static com.fasterxml.jackson.annotation.JsonFormat.DEFAULT_TIMEZONE;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.CaseFormat;
@@ -13,7 +11,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -56,12 +53,14 @@ public class Allegato implements Serializable {
 
     public static enum TipoAllegato {
         ALLEGATO,
-        LETTERA,
+        TESTO,
         FRONTESPIZIO,
         STAMPA_UNICA,
         FASCICOLATO,
         STAMPA_UNICA_OMISSIS,
-        LETTERA_OMISSIS
+        TESTO_OMISSIS,
+        ANNESSO,
+        ANNOTAZIONE
     }
 
     @Id
@@ -260,7 +259,7 @@ public class Allegato implements Serializable {
         public static enum TipoDettaglioAllegato {
             ORIGINALE,
             CONVERTITO,
-            SEGNAPOSTO,
+            //SEGNAPOSTO,
             ORIGINALE_FIRMATO,
             ORIGINALE_FIRMATO_P7M,
             CONVERTITO_FIRMATO,
@@ -269,7 +268,7 @@ public class Allegato implements Serializable {
         
         DettaglioAllegato originale;
         DettaglioAllegato convertito;
-        DettaglioAllegato segnaposto;
+        //DettaglioAllegato segnaposto;
         DettaglioAllegato originaleFirmato;
         DettaglioAllegato convertitoFirmato;
         DettaglioAllegato originaleFirmatoP7m;
@@ -310,13 +309,13 @@ public class Allegato implements Serializable {
             this.convertitoFirmato = convertitoFirmato;
         }
 
-        public DettaglioAllegato getSegnaposto() {
-            return segnaposto;
-        }
-
-        public void setSegnaposto(DettaglioAllegato segnaposto) {
-            this.segnaposto = segnaposto;
-        }
+//        public DettaglioAllegato getSegnaposto() {
+//            return segnaposto;
+//        }
+//
+//        public void setSegnaposto(DettaglioAllegato segnaposto) {
+//            this.segnaposto = segnaposto;
+//        }
 
         public DettaglioAllegato getOriginaleFirmatoP7m() {
             return originaleFirmatoP7m;
