@@ -53,12 +53,14 @@ public class Allegato implements Serializable {
 
     public static enum TipoAllegato {
         ALLEGATO,
-        LETTERA,
+        TESTO,
         FRONTESPIZIO,
         STAMPA_UNICA,
         FASCICOLATO,
         STAMPA_UNICA_OMISSIS,
-        LETTERA_OMISSIS
+        TESTO_OMISSIS,
+        ANNESSO,
+        ANNOTAZIONE
     }
 
     @Id
@@ -257,7 +259,7 @@ public class Allegato implements Serializable {
         public static enum TipoDettaglioAllegato {
             ORIGINALE,
             CONVERTITO,
-            SEGNAPOSTO,
+            //SEGNAPOSTO,
             ORIGINALE_FIRMATO,
             ORIGINALE_FIRMATO_P7M,
             CONVERTITO_FIRMATO,
@@ -266,7 +268,7 @@ public class Allegato implements Serializable {
         
         DettaglioAllegato originale;
         DettaglioAllegato convertito;
-        DettaglioAllegato segnaposto;
+        //DettaglioAllegato segnaposto;
         DettaglioAllegato originaleFirmato;
         DettaglioAllegato convertitoFirmato;
         DettaglioAllegato originaleFirmatoP7m;
@@ -307,13 +309,13 @@ public class Allegato implements Serializable {
             this.convertitoFirmato = convertitoFirmato;
         }
 
-        public DettaglioAllegato getSegnaposto() {
-            return segnaposto;
-        }
-
-        public void setSegnaposto(DettaglioAllegato segnaposto) {
-            this.segnaposto = segnaposto;
-        }
+//        public DettaglioAllegato getSegnaposto() {
+//            return segnaposto;
+//        }
+//
+//        public void setSegnaposto(DettaglioAllegato segnaposto) {
+//            this.segnaposto = segnaposto;
+//        }
 
         public DettaglioAllegato getOriginaleFirmatoP7m() {
             return originaleFirmatoP7m;
@@ -355,11 +357,20 @@ public class Allegato implements Serializable {
         String mimeType;
         String hashMd5;
         String hashSha256;
-        ZonedDateTime dataCreazione;
+        
+//        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'", fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss.SSSSSS", "yyyy-MM-dd'T'HH:mm:ss+01"})
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+//        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+//        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")//, fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss z"}
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S][z]", locale = DEFAULT_LOCALE, timezone="Europe/Berlin", lenient = com.fasterxml.jackson.annotation.OptBoolean.TRUE)//, 
+        String dataCreazione;
         Boolean daVersare;
         String bucket;
+        
 
         public DettaglioAllegato() {
+            //ZonedDateTime.from(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'").parse("2022-05-31T15:12:09.000"));
         }
 
         public String getIdRepository() {
@@ -418,11 +429,11 @@ public class Allegato implements Serializable {
             this.hashSha256 = hashSha256;
         }
 
-        public ZonedDateTime getDataCreazione() {
+        public String getDataCreazione() {
             return dataCreazione;
         }
 
-        public void setDataCreazione(ZonedDateTime dataCreazione) {
+        public void setDataCreazione(String dataCreazione) {
             this.dataCreazione = dataCreazione;
         }
 

@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.forms;
 
+import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.scrivania.AutorizzatoreModificheDocumentali;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +12,7 @@ public class Segnalazione {
     private String azienda;
     private String cognome;
     private String nome;
-    private String struttura;
+    private Struttura struttura;
     private String username;
     private String telefono;
     private String mail;
@@ -31,11 +32,11 @@ public class Segnalazione {
         this.azienda = azienda;
     }
 
-    public String getStruttura() {
+    public Struttura getStruttura() {
         return struttura;
     }
 
-    public void setStruttura(String struttura) {
+    public void setStruttura(Struttura struttura) {
         this.struttura = struttura;
     }
 
