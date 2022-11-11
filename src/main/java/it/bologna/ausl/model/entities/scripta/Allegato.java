@@ -122,7 +122,7 @@ public class Allegato implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
     
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idAllegato", fetch = FetchType.LAZY)
     @JsonBackReference(value = "versamentiAllegatiList")
     private List<VersamentoAllegato> versamentiAllegatiList;
 
