@@ -47,7 +47,7 @@ public class MdrAnagrafica implements Serializable {
     private String codiceEnte;
 
     @Column(name = "codice_matricola")
-    private Integer codiceMatricola;
+    private String codiceMatricola;
 
     @Size(max = 2147483647)
     @Column(name = "cognome")
@@ -95,11 +95,11 @@ public class MdrAnagrafica implements Serializable {
         this.codiceEnte = codiceEnte;
     }
 
-    public Integer getCodiceMatricola() {
+    public String getCodiceMatricola() {
         return codiceMatricola;
     }
 
-    public void setCodiceMatricola(Integer codiceMatricola) {
+    public void setCodiceMatricola(String codiceMatricola) {
         this.codiceMatricola = codiceMatricola;
     }
 

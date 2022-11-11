@@ -21,7 +21,10 @@ public interface DocDetailInterface {
         DOCUMENT,
         DOCUMENT_PEC, 
         DOCUMENT_REGISTRO, 
-        DOCUMENT_UTENTE
+        DOCUMENT_UTENTE,
+        RGPICO,
+        RGDETE,
+        RGDELI
     }
 
     public static enum CommandType {
