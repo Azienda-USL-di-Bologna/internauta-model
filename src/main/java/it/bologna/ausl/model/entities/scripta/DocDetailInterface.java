@@ -4,6 +4,7 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
+import it.bologna.ausl.model.entities.scripta.DocDetail.StatiVersamento;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -268,6 +269,18 @@ public interface DocDetailInterface {
     public List<ArchivioDoc> getArchiviDocList();
 
     public void setArchiviDocList(List<ArchivioDoc> archiviDocList);
+    
+    public StatiVersamento getStatoUltimoVersamento();
+
+    public void setStatoUltimoVersamento(StatiVersamento statoUltimoVersamento);
+
+    public ZonedDateTime getDataUltimoVersamento();
+    
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento);
+    
+    public Boolean getStatoVersamentoVisto();
+
+    public void setStatoVersamentoVisto(Boolean statoVersamentoVisto);
     
 //    public static class Fascicolazione {
 //
