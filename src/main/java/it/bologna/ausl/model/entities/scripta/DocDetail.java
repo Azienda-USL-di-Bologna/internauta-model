@@ -872,6 +872,36 @@ public class DocDetail implements Serializable, DocDetailInterface {
     public void setArchiviDocList(List<ArchivioDoc> archiviDocList) {
         this.archiviDocList = archiviDocList;
     }
+
+    @Override
+    public Boolean getStatoVersamentoVisto() {
+        return statoVersamentoVisto;
+    }
+
+    @Override
+    public void setStatoVersamentoVisto(Boolean statoVersamentoVisto) {
+        this.statoVersamentoVisto = statoVersamentoVisto;
+    }
+
+    @Override
+    public StatiVersamento getStatoUltimoVersamento() {
+        return statoUltimoVersamento;
+    }
+
+    @Override
+    public void setStatoUltimoVersamento(StatiVersamento statoUltimoVersamento) {
+        this.statoUltimoVersamento = statoUltimoVersamento;
+    }
+
+    @Override
+    public ZonedDateTime getDataUltimoVersamento() {
+        return dataUltimoVersamento;
+    }
+
+    @Override
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
+        this.dataUltimoVersamento = dataUltimoVersamento;
+    }
     
     @Override
     public int hashCode() {
