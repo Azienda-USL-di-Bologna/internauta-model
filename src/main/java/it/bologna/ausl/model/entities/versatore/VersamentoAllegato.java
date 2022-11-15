@@ -42,7 +42,7 @@ public class VersamentoAllegato implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     
     @JoinColumn(name = "id_versamento", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -84,11 +84,11 @@ public class VersamentoAllegato implements Serializable {
     public VersamentoAllegato() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

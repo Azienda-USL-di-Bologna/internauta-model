@@ -53,7 +53,7 @@ public class Versamento implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     
     @JoinColumn(name = "id_doc", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -64,6 +64,11 @@ public class Versamento implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference(value = "idSessioneVersamento")
     private SessioneVersamento idSessioneVersamento;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data")
+    private ZonedDateTime data = ZonedDateTime.now();
     
     @Column(name = "stato")
     private String stato;
@@ -105,11 +110,11 @@ public class Versamento implements Serializable {
     public Versamento() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -127,6 +132,14 @@ public class Versamento implements Serializable {
 
     public void setIdSessioneVersamento(SessioneVersamento idSessioneVersamento) {
         this.idSessioneVersamento = idSessioneVersamento;
+    }
+
+    public ZonedDateTime getData() {
+        return data;
+    }
+
+    public void setData(ZonedDateTime data) {
+        this.data = data;
     }
 
     public StatoVersamento getStato() {

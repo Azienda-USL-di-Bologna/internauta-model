@@ -49,7 +49,7 @@ public class SessioneVersamento implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     
     @Basic(optional = false)
     @Column(name = "tipologia")
@@ -72,11 +72,11 @@ public class SessioneVersamento implements Serializable {
     public SessioneVersamento() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
