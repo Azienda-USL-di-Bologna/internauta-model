@@ -53,7 +53,7 @@ public class SessioneVersamento implements Serializable {
     
     @Basic(optional = false)
     @Column(name = "tipologia")
-    private TipologiaVersamento tipologia;
+    private String tipologia;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -80,12 +80,20 @@ public class SessioneVersamento implements Serializable {
         this.id = id;
     }
 
-    public TipologiaVersamento getTipologia() {
-        return tipologia;
+ public TipologiaVersamento getStato() {
+        if (tipologia != null) {
+            return TipologiaVersamento.valueOf(tipologia);
+        } else {
+            return null;
+        }
     }
 
-    public void setTipologia(TipologiaVersamento tipologia) {
-        this.tipologia = tipologia;
+    public void setStato(TipologiaVersamento tipologia) {
+        if (tipologia != null) {
+            this.tipologia = tipologia.toString();
+        } else {
+            this.tipologia = null;
+        }
     }
 
     public Range<ZonedDateTime> getTimeInterval() {
