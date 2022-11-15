@@ -58,6 +58,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 public class DocDetail implements Serializable, DocDetailInterface {
 
+    public static enum StatiVersamento {
+        DA_VERSARE, 
+        VERSAMENTO_PARZIALE, 
+        VERSATO, 
+        VERSAMENTO_ANNULLATO, 
+        ERRORE_NON_FORZABILE, 
+        ERRORE_FORZABILE, 
+        ERRORE_CRITTOGRAFICO
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -220,6 +230,17 @@ public class DocDetail implements Serializable, DocDetailInterface {
     
     @Column(name = "conservazione")
     private Boolean conservazione;
+    
+    @Column(name = "stato_ultimo_versamento")
+    private StatiVersamento statoUltimoVersamento;
+    
+    @Column(name = "stato_versamento_visto")
+    private Boolean statoVersamentoVisto;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_ultimo_versamento")
+    private ZonedDateTime dataUltimoVersamento;
 
 //    @Type(type = "jsonb")
 //    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
