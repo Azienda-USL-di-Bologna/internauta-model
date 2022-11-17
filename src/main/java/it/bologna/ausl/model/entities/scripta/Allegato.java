@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.CaseFormat;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import it.bologna.ausl.model.entities.versatore.VersamentoAllegato;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -120,6 +121,10 @@ public class Allegato implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idAllegato", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "versamentiAllegatiList")
+    private List<VersamentoAllegato> versamentiAllegatiList;
 
     public Allegato() {
     }
@@ -233,6 +238,14 @@ public class Allegato implements Serializable {
 
     public void setDataInserimento(ZonedDateTime dataInserimento) {
         this.dataInserimento = dataInserimento;
+    }
+
+    public List<VersamentoAllegato> getVersamentiAllegatiList() {
+        return versamentiAllegatiList;
+    }
+
+    public void setVersamentiAllegatiList(List<VersamentoAllegato> versamentiAllegatiList) {
+        this.versamentiAllegatiList = versamentiAllegatiList;
     }
 
     public ZonedDateTime getVersion() {

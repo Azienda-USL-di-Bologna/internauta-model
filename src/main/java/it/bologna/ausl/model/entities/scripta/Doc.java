@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -137,6 +138,10 @@ public class Doc implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
     private List<ArchivioDoc> archiviDocList;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "versamentiList")
+    private List<Versamento> versamentiList;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -311,6 +316,14 @@ public class Doc implements Serializable {
 
     public void setArchiviDocList(List<ArchivioDoc> archiviDocList) {
         this.archiviDocList = archiviDocList;
+    }
+
+    public List<Versamento> getVersamentiList() {
+        return versamentiList;
+    }
+
+    public void setVersamentiList(List<Versamento> versamentiList) {
+        this.versamentiList = versamentiList;
     }
 
     @Override
