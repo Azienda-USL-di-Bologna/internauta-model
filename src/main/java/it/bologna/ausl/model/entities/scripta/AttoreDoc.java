@@ -30,7 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gusgus
  */
 @Entity
-@Table(name = "attori_doc", catalog = "internauta", schema = "scripta")
+@Table(name = "attori_docs", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({})
