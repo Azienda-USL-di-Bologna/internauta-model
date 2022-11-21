@@ -300,7 +300,7 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     private Boolean conservazione;
     
     @Column(name = "stato_ultimo_versamento")
-    private DocDetail.StatiVersamento statoUltimoVersamento;
+    private String statoUltimoVersamento;
     
     @Column(name = "stato_versamento_visto")
     private Boolean statoVersamentoVisto;
@@ -546,13 +546,20 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     }
 
     public DocDetail.StatiVersamento getStatoUltimoVersamento() {
-        return statoUltimoVersamento;
+        if (statoUltimoVersamento != null) {
+            return DocDetail.StatiVersamento.valueOf(statoUltimoVersamento);
+        } else {
+            return null;
+        }
     }
 
     public void setStatoUltimoVersamento(DocDetail.StatiVersamento statoUltimoVersamento) {
-        this.statoUltimoVersamento = statoUltimoVersamento;
+        if (statoUltimoVersamento != null) {
+            this.statoUltimoVersamento = statoUltimoVersamento.toString();
+        } else {
+            this.statoUltimoVersamento = null;
+        }
     }
-
     public Boolean getStatoVersamentoVisto() {
         return statoVersamentoVisto;
     }

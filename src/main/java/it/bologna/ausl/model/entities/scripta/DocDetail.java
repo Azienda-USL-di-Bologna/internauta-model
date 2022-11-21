@@ -232,7 +232,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
     private Boolean conservazione;
     
     @Column(name = "stato_ultimo_versamento")
-    private StatiVersamento statoUltimoVersamento;
+    private String statoUltimoVersamento;
     
     @Column(name = "stato_versamento_visto")
     private Boolean statoVersamentoVisto;
@@ -885,14 +885,21 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Override
     public StatiVersamento getStatoUltimoVersamento() {
-        return statoUltimoVersamento;
+        if (statoUltimoVersamento != null) {
+            return StatiVersamento.valueOf(statoUltimoVersamento);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void setStatoUltimoVersamento(StatiVersamento statoUltimoVersamento) {
-        this.statoUltimoVersamento = statoUltimoVersamento;
+        if (statoUltimoVersamento != null) {
+            this.statoUltimoVersamento = statoUltimoVersamento.toString();
+        } else {
+            this.statoUltimoVersamento = null;
+        }
     }
-
     @Override
     public ZonedDateTime getDataUltimoVersamento() {
         return dataUltimoVersamento;
