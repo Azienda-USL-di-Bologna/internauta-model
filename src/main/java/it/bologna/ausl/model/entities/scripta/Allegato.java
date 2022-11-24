@@ -9,9 +9,11 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.versatore.VersamentoAllegato;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -31,6 +33,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -51,6 +54,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 })
 @DynamicUpdate
 public class Allegato implements Serializable {
+    
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(Allegato.class);
 
     public static enum TipoAllegato {
         ALLEGATO,
@@ -344,6 +349,35 @@ public class Allegato implements Serializable {
 
         public void setConvertitoFirmatoP7m(DettaglioAllegato convertitoFirmatoP7m) {
             this.convertitoFirmatoP7m = convertitoFirmatoP7m;
+        }
+        
+        /**
+         * Restituisce tutti i formati dell'allegato contenuti nei dettagli.
+         * Eg: Originale, Convertito, OriginaleFirmato, etc.
+         * @return La lista di tutti i file dell'allegato.
+         */
+        @JsonIgnore
+        public List<DettaglioAllegato> getAllTipiDettagliAllegati() {
+            List<DettaglioAllegato> dettagliAllegato = new ArrayList();
+
+            Class<? extends DettagliAllegato> aClass = this.getClass();
+            for (Field f: aClass.getDeclaredFields()) {
+                for (Method method : aClass.getDeclaredMethods()) {
+                    try {                        
+                        if ((method.getName().startsWith("get")) && (method.getName().length() == (f.getName().length() + 3)) && 
+                            method.getName().toLowerCase().endsWith(f.getName().toLowerCase()) &&
+                            method.getAnnotation(JsonIgnore.class) == null) {
+                            DettaglioAllegato value = (DettaglioAllegato) method.invoke(this);
+                            if (value != null) {
+                                dettagliAllegato.add(value);
+                            }
+                        }        
+                    } catch (Exception ex) {
+                        log.error(ex.getMessage());
+                    } 
+                } 
+            }
+            return dettagliAllegato;
         }
         
         @JsonIgnore

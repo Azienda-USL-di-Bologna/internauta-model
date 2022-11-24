@@ -15,11 +15,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -44,9 +47,17 @@ public class SessioneVersamento implements Serializable {
         INVIO_GIORNALIERO,
         CHIUSURA_FASCICOLO;    
     }
+    
+    public static enum StatoSessioneVersamento {
+        IDLE,
+        RUNNING,
+        DONE,
+        PARTIALLY;
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -55,15 +66,24 @@ public class SessioneVersamento implements Serializable {
     @Column(name = "tipologia")
     private String tipologia;
     
+    @Basic(optional = false)
+    @Column(name = "stato")
+    private String stato;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "time_interval", columnDefinition = "tstzrange")
     private Range<ZonedDateTime> timeInterval;
     
     @JoinColumn(name = "id_archivio", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JsonBackReference(value = "idArchivio")
     private Archivio idArchivio;
+    
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime version;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idSessioneVersamento", fetch = FetchType.LAZY)
     @JsonBackReference(value = "versamentiList")
@@ -80,7 +100,7 @@ public class SessioneVersamento implements Serializable {
         this.id = id;
     }
 
- public TipologiaVersamento getStato() {
+    public TipologiaVersamento getTipologia() {
         if (tipologia != null) {
             return TipologiaVersamento.valueOf(tipologia);
         } else {
@@ -88,11 +108,27 @@ public class SessioneVersamento implements Serializable {
         }
     }
 
-    public void setStato(TipologiaVersamento tipologia) {
+    public void setTipologia(TipologiaVersamento tipologia) {
         if (tipologia != null) {
             this.tipologia = tipologia.toString();
         } else {
             this.tipologia = null;
+        }
+    }
+
+    public StatoSessioneVersamento getStato() {
+        if (stato != null) {
+            return StatoSessioneVersamento.valueOf(stato);
+        } else {
+            return null;
+        }
+    }
+
+    public void setStato(StatoSessioneVersamento stato) {
+        if (stato != null) {
+            this.stato = stato.toString();
+        } else {
+            this.stato = null;
         }
     }
 
@@ -112,6 +148,14 @@ public class SessioneVersamento implements Serializable {
         this.idArchivio = idArchivio;
     }
 
+    public ZonedDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(ZonedDateTime version) {
+        this.version = version;
+    }
+  
     public List<Versamento> getVersamentiList() {
         return versamentiList;
     }
