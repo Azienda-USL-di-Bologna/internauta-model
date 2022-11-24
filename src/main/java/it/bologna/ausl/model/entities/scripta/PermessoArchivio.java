@@ -2,11 +2,13 @@ package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -22,6 +24,8 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -82,6 +86,11 @@ public class PermessoArchivio implements Serializable {
     
     @Column(name = "bit")
     private Integer bit;
+    
+    
+    @Column(name = "id_permessi_sorgente", columnDefinition = "integer[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    private Integer[] idPermessiSorgente;
     
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -155,6 +164,16 @@ public class PermessoArchivio implements Serializable {
         this.idPersona = idPersona;
     }
 
+    public Integer[] getIdPermessiSorgente() {
+        return idPermessiSorgente;
+    }
+
+    public void setIdPermessiSorgente(Integer[] idPermessiSorgente) {
+        this.idPermessiSorgente = idPermessiSorgente;
+    }
+    
+    
+
 //    public Integer getIdSoggetto() {
 //        return idSoggetto;
 //    }
@@ -202,6 +221,9 @@ public class PermessoArchivio implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
+
+   
+    
 
     @Override
     public int hashCode() {
