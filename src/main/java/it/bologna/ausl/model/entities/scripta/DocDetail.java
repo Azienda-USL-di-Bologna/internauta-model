@@ -58,6 +58,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 public class DocDetail implements Serializable, DocDetailInterface {
 
+    public static enum StatiVersamento {
+        DA_VERSARE, 
+        VERSAMENTO_PARZIALE, 
+        VERSATO, 
+        VERSAMENTO_ANNULLATO, 
+        ERRORE_NON_FORZABILE, 
+        ERRORE_FORZABILE, 
+        ERRORE_CRITTOGRAFICO
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -220,6 +230,17 @@ public class DocDetail implements Serializable, DocDetailInterface {
     
     @Column(name = "conservazione")
     private Boolean conservazione;
+    
+    @Column(name = "stato_ultimo_versamento")
+    private String statoUltimoVersamento;
+    
+    @Column(name = "stato_versamento_visto")
+    private Boolean statoVersamentoVisto;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_ultimo_versamento")
+    private ZonedDateTime dataUltimoVersamento;
 
 //    @Type(type = "jsonb")
 //    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
@@ -850,6 +871,43 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Override
     public void setArchiviDocList(List<ArchivioDoc> archiviDocList) {
         this.archiviDocList = archiviDocList;
+    }
+
+    @Override
+    public Boolean getStatoVersamentoVisto() {
+        return statoVersamentoVisto;
+    }
+
+    @Override
+    public void setStatoVersamentoVisto(Boolean statoVersamentoVisto) {
+        this.statoVersamentoVisto = statoVersamentoVisto;
+    }
+
+    @Override
+    public StatiVersamento getStatoUltimoVersamento() {
+        if (statoUltimoVersamento != null) {
+            return StatiVersamento.valueOf(statoUltimoVersamento);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void setStatoUltimoVersamento(StatiVersamento statoUltimoVersamento) {
+        if (statoUltimoVersamento != null) {
+            this.statoUltimoVersamento = statoUltimoVersamento.toString();
+        } else {
+            this.statoUltimoVersamento = null;
+        }
+    }
+    @Override
+    public ZonedDateTime getDataUltimoVersamento() {
+        return dataUltimoVersamento;
+    }
+
+    @Override
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
+        this.dataUltimoVersamento = dataUltimoVersamento;
     }
     
     @Override

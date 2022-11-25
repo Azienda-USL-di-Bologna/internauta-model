@@ -299,6 +299,17 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Column(name = "conservazione")
     private Boolean conservazione;
     
+    @Column(name = "stato_ultimo_versamento")
+    private String statoUltimoVersamento;
+    
+    @Column(name = "stato_versamento_visto")
+    private Boolean statoVersamentoVisto;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_ultimo_versamento")
+    private ZonedDateTime dataUltimoVersamento;
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
     private List<ArchivioDoc> archiviDocList;    
@@ -534,6 +545,33 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.destinatariTscol = destinatariTscol;
     }
 
+    public DocDetail.StatiVersamento getStatoUltimoVersamento() {
+        if (statoUltimoVersamento != null) {
+            return DocDetail.StatiVersamento.valueOf(statoUltimoVersamento);
+        } else {
+            return null;
+        }
+    }
+
+    public void setStatoUltimoVersamento(DocDetail.StatiVersamento statoUltimoVersamento) {
+        if (statoUltimoVersamento != null) {
+            this.statoUltimoVersamento = statoUltimoVersamento.toString();
+        } else {
+            this.statoUltimoVersamento = null;
+        }
+    }
+    public Boolean getStatoVersamentoVisto() {
+        return statoVersamentoVisto;
+    }
+
+    public void setStatoVersamentoVisto(Boolean statoVersamentoVisto) {
+        this.statoVersamentoVisto = statoVersamentoVisto;
+    }
+
+    public ZonedDateTime getDataUltimoVersamento() {
+        return dataUltimoVersamento;
+    }
+
 //    public List<Fascicolazione> getFascicolazioni() {
 //        return fascicolazioni;
 //    }
@@ -557,6 +595,9 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 //    public void setClassificazioni(List<Classificazione> classificazioni) {
 //        this.classificazioni = classificazioni;
 //    }
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
+        this.dataUltimoVersamento = dataUltimoVersamento;
+    }
 
     public StatoDoc getStato() {
         if (stato != null) {
