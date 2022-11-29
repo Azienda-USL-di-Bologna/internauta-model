@@ -29,7 +29,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Ruolo implements Serializable {
     
     public static enum CodiciRuolo {
-        UG, MOS, OS, CA, CI, AS, SD, SR, R
+        UG, MOS, OS, CA, CI, AS, SD, SR, R, RV
     }
 
     public static enum ModuliRuolo {
