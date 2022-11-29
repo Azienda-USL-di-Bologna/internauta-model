@@ -50,13 +50,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 })
 @DynamicUpdate
 public class Doc implements Serializable {
-    
+
     public static enum VisibilitaDoc {
         NORMALE,
         LIMITATA,
         RISERVATO
     }
-
+    
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -92,9 +92,14 @@ public class Doc implements Serializable {
     
     @Column(name = "id_esterno")
     private String idEsterno;
+    
+    @Column(name = "stato_versamento")
+    private String statoVersamento;
     //lista di mittenti che conterra per il momento solo un elemento
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
 
+    
+    
     //@Filter(name = "mittenti")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo='MITTENTE'")
@@ -309,7 +314,23 @@ public class Doc implements Serializable {
     public void setIdEsterno(String idEsterno) {
         this.idEsterno = idEsterno;
     }
+    
+    public Versamento.StatoVersamento getStatoVersamento() {
+        if (statoVersamento != null) {
+            return Versamento.StatoVersamento.valueOf(statoVersamento);
+        } else {
+            return null;
+        }
+    }
 
+    public void setStatoVersamento(Versamento.StatoVersamento statoVersamento) {
+        if (statoVersamento != null) {
+            this.statoVersamento = statoVersamento.toString();
+        } else {
+            this.statoVersamento = null;
+        }
+    }
+    
     public List<ArchivioDoc> getArchiviDocList() {
         return archiviDocList;
     }

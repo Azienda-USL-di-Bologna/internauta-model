@@ -67,7 +67,12 @@ public class VersamentoAllegato implements Serializable {
     private String codiceErrore;
     
     @Column(name = "descrizione_errore")
-    private String descrizioneErrore;    
+    private String descrizioneErrore;
+    
+    @Column(name = "dettaglio_allegato")
+    @NotNull
+    @Basic(optional = false)
+    private String dettaglioAllegato;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -124,21 +129,21 @@ public class VersamentoAllegato implements Serializable {
         }
     }
 
-//    public String getMetadatiVersati() {
-//        return metadatiVersati;
-//    }
-//
-//    public void setMetadatiVersati(String metadatiVersati) {
-//        this.metadatiVersati = metadatiVersati;
-//    }
-//
-//    public String getRapporto() {
-//        return rapporto;
-//    }
-//
-//    public void setRapporto(String rapporto) {
-//        this.rapporto = rapporto;
-//    }
+    public Allegato.DettagliAllegato.TipoDettaglioAllegato getDettaglioAllegato() {
+        if (dettaglioAllegato != null) {
+            return Allegato.DettagliAllegato.TipoDettaglioAllegato.valueOf(dettaglioAllegato);
+        } else {
+            return null;
+        }
+    }
+    
+    public void setDettaglioAllegato(Allegato.DettagliAllegato.TipoDettaglioAllegato dettaglioAllegato) {
+        if (dettaglioAllegato != null) {
+            this.dettaglioAllegato = dettaglioAllegato.toString();
+        } else {
+            this.dettaglioAllegato = null;
+        }
+    }
 
     public String getCodiceErrore() {
         return codiceErrore;
@@ -171,8 +176,6 @@ public class VersamentoAllegato implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
-    
     
     @Override
     public boolean equals(Object object) {

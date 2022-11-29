@@ -40,13 +40,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Versamento implements Serializable {
     
     public static enum StatoVersamento {
-        DA_VERSARE,
-        VERSAMENTO_PARZIALE,
-        VERSATO,
-        VERSAMENTO_ANNULLATO,
-        ERRORE_NON_FORZABILE,
-        ERRORE_FORZABILE,
-        ERRORE_CRITTOGRAFICO;
+        IN_CARICO,
+	VERSARE,
+        AGGIORNARE,
+	PARZIALE,
+	VERSATO,
+	ANNULLATO,
+        IN_CARICO_CON_ERRORI,
+	ERRORE,
+	ERRORE_FORZABILE,
+	ERRORE_RITENTABILE
     }
 
     private static final long serialVersionUID = 1L;

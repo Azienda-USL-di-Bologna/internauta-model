@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.CaseFormat;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.bologna.ausl.model.entities.versatore.VersamentoAllegato;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
@@ -396,7 +397,7 @@ public class Allegato implements Serializable {
     }
     
     public static class DettaglioAllegato {
-       
+
         String idRepository;
         String estensione;
         String nome;
@@ -412,7 +413,8 @@ public class Allegato implements Serializable {
 //        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")//, fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss z"}
 //        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S][z]", locale = DEFAULT_LOCALE, timezone="Europe/Berlin", lenient = com.fasterxml.jackson.annotation.OptBoolean.TRUE)//, 
         String dataCreazione;
-        Boolean daVersare;
+        Versamento.StatoVersamento statoUltimoVersamento;
+        Versamento.StatoVersamento statoVersamento;
         String bucket;
         
 
@@ -484,14 +486,6 @@ public class Allegato implements Serializable {
             this.dataCreazione = dataCreazione;
         }
 
-        public Boolean getDaVersare() {
-            return daVersare;
-        }
-
-        public void setDaVersare(Boolean daVersare) {
-            this.daVersare = daVersare;
-        }
-
         public String getBucket() {
             return bucket;
         }
@@ -500,5 +494,20 @@ public class Allegato implements Serializable {
             this.bucket = bucket;
         }
 
-    }    
+        public Versamento.StatoVersamento getStatoUltimoVersamento() {
+            return statoUltimoVersamento;
+        }
+
+        public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
+            this.statoUltimoVersamento = statoUltimoVersamento;
+        }
+        
+        public Versamento.StatoVersamento getStatoVersamento() {
+            return statoVersamento;
+        }
+
+        public void setStatoVersamento(Versamento.StatoVersamento statoVersamento) {
+            this.statoVersamento = statoVersamento;
+        }
+    }
 }

@@ -12,6 +12,7 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -58,15 +59,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 public class DocDetail implements Serializable, DocDetailInterface {
 
-    public static enum StatiVersamento {
-        DA_VERSARE, 
-        VERSAMENTO_PARZIALE, 
-        VERSATO, 
-        VERSAMENTO_ANNULLATO, 
-        ERRORE_NON_FORZABILE, 
-        ERRORE_FORZABILE, 
-        ERRORE_CRITTOGRAFICO
-    }
+
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -884,22 +877,23 @@ public class DocDetail implements Serializable, DocDetailInterface {
     }
 
     @Override
-    public StatiVersamento getStatoUltimoVersamento() {
+    public Versamento.StatoVersamento getStatoUltimoVersamento() {
         if (statoUltimoVersamento != null) {
-            return StatiVersamento.valueOf(statoUltimoVersamento);
+            return Versamento.StatoVersamento.valueOf(statoUltimoVersamento);
         } else {
             return null;
         }
     }
 
     @Override
-    public void setStatoUltimoVersamento(StatiVersamento statoUltimoVersamento) {
+    public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
         if (statoUltimoVersamento != null) {
             this.statoUltimoVersamento = statoUltimoVersamento.toString();
         } else {
             this.statoUltimoVersamento = null;
         }
     }
+    
     @Override
     public ZonedDateTime getDataUltimoVersamento() {
         return dataUltimoVersamento;
