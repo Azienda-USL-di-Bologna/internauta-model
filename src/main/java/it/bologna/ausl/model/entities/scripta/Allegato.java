@@ -285,17 +285,61 @@ public class Allegato implements Serializable {
             CONVERTITO_FIRMATO_P7M
         } 
         
-        DettaglioAllegato originale;
-        DettaglioAllegato convertito;
+        private DettaglioAllegato originale;
+        private DettaglioAllegato convertito;
         //DettaglioAllegato segnaposto;
-        DettaglioAllegato originaleFirmato;
-        DettaglioAllegato convertitoFirmato;
-        DettaglioAllegato originaleFirmatoP7m;
-        DettaglioAllegato convertitoFirmatoP7m;
+        private DettaglioAllegato originaleFirmato;
+        private DettaglioAllegato convertitoFirmato;
+        private DettaglioAllegato originaleFirmatoP7m;
+        private DettaglioAllegato convertitoFirmatoP7m;
 
         public DettagliAllegato() {
         }
 
+        @JsonIgnore
+        public DettaglioAllegato getByKey(TipoDettaglioAllegato tipoDettaglioAllegato){
+            switch (tipoDettaglioAllegato) {
+                case ORIGINALE:
+                    return this.originale;
+                case CONVERTITO_FIRMATO:
+                    return this.convertitoFirmato;
+                case CONVERTITO:
+                    return this.convertito;
+                case CONVERTITO_FIRMATO_P7M:
+                    return this.convertitoFirmatoP7m;
+                case ORIGINALE_FIRMATO:
+                    return this.originaleFirmato;
+                case ORIGINALE_FIRMATO_P7M:
+                    return this.originaleFirmatoP7m;
+                default:
+                    return null;
+            }
+        }
+        
+        @JsonIgnore
+        public void setByKey(TipoDettaglioAllegato tipoDettaglioAllegato, DettaglioAllegato dettaglioAllegato){
+            switch (tipoDettaglioAllegato) {
+                case ORIGINALE:
+                    this.originale = dettaglioAllegato;
+                    break;
+                case CONVERTITO_FIRMATO:
+                    this.convertitoFirmato = dettaglioAllegato;
+                    break;
+                case CONVERTITO:
+                    this.convertito = dettaglioAllegato;
+                    break;
+                case CONVERTITO_FIRMATO_P7M:
+                    this.convertitoFirmatoP7m = dettaglioAllegato;
+                    break;
+                case ORIGINALE_FIRMATO:
+                    this.originaleFirmato = dettaglioAllegato;
+                    break;
+                case ORIGINALE_FIRMATO_P7M:
+                    this.originaleFirmatoP7m = dettaglioAllegato;
+                    break;
+            }
+        }
+        
         public DettaglioAllegato getOriginale() {
             return originale;
         }
@@ -396,7 +440,7 @@ public class Allegato implements Serializable {
         }
     }
     
-    public static class DettaglioAllegato {
+    public class DettaglioAllegato {
 
         String idRepository;
         String estensione;

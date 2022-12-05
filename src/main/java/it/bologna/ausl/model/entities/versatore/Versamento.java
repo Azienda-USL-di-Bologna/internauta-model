@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.scripta.Archivio;
 import it.bologna.ausl.model.entities.scripta.Doc;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -86,7 +87,22 @@ public class Versamento implements Serializable {
     private String codiceErrore;
     
     @Column(name = "descrizione_errore")
-    private String descrizioneErrore;    
+    private String descrizioneErrore;
+        
+    @JoinColumn(name = "id_archivio", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JsonBackReference(value = "idArchivio")
+    private Archivio idArchivio;
+    
+    @Column(name = "ignora")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean ignora = false;
+    
+    @JoinColumn(name = "id_versamento_ritentato", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JsonBackReference(value = "idVersamentoRitentato")
+    private Versamento idVersamentoRitentato;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -215,6 +231,30 @@ public class Versamento implements Serializable {
 
     public void setDataForzatura(ZonedDateTime dataForzatura) {
         this.dataForzatura = dataForzatura;
+    }
+
+    public Archivio getIdArchivio() {
+        return idArchivio;
+    }
+
+    public void setIdArchivio(Archivio idArchivio) {
+        this.idArchivio = idArchivio;
+    }
+
+    public Boolean getIgnora() {
+        return ignora;
+    }
+
+    public void setIgnora(Boolean ignora) {
+        this.ignora = ignora;
+    }
+
+    public Versamento getIdVersamentoRitentato() {
+        return idVersamentoRitentato;
+    }
+
+    public void setIdVersamentoRitentato(Versamento idVersamentoRitentato) {
+        this.idVersamentoRitentato = idVersamentoRitentato;
     }
 
     public ZonedDateTime getVersion() {

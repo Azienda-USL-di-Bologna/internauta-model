@@ -75,11 +75,6 @@ public class SessioneVersamento implements Serializable {
     @Column(name = "time_interval", columnDefinition = "tstzrange")
     private Range<ZonedDateTime> timeInterval;
     
-    @JoinColumn(name = "id_archivio", referencedColumnName = "id")
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JsonBackReference(value = "idArchivio")
-    private Archivio idArchivio;
-    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -138,14 +133,6 @@ public class SessioneVersamento implements Serializable {
 
     public void setTimeInterval(Range<ZonedDateTime> timeInterval) {
         this.timeInterval = timeInterval;
-    }
-
-    public Archivio getIdArchivio() {
-        return idArchivio;
-    }
-
-    public void setIdArchivio(Archivio idArchivio) {
-        this.idArchivio = idArchivio;
     }
 
     public ZonedDateTime getVersion() {
