@@ -69,6 +69,7 @@ public class CambiamentiAssociazione implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate attivoDal;
+    
     @Column(name = "attivo_al")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -83,6 +84,11 @@ public class CambiamentiAssociazione implements Serializable {
     
     @Column(name = "fatto")
     private Boolean fatto = false;
+    
+    @Column(name = "data_esecuzione")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataEsecuzione;
     
     @NotNull
     @Column(name = "data_inserimento_riga")
@@ -161,6 +167,14 @@ public class CambiamentiAssociazione implements Serializable {
 
     public void setIdUtenteStruttura(Integer idUtenteStruttura) {
         this.idUtenteStruttura = idUtenteStruttura;
+    }
+
+    public ZonedDateTime getDataEsecuzione() {
+        return dataEsecuzione;
+    }
+
+    public void setDataEsecuzione(ZonedDateTime dataEsecuzione) {
+        this.dataEsecuzione = dataEsecuzione;
     }
 
     public ZonedDateTime getDataInserimentoRiga() {
