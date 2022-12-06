@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import com.vladmihalcea.hibernate.type.range.Range;
+import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.scripta.Archivio;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -74,6 +75,10 @@ public class SessioneVersamento implements Serializable {
     @Column(name = "time_interval", columnDefinition = "tstzrange")
     private Range<ZonedDateTime> timeInterval;
     
+    @JoinColumn(name = "id_azienda", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Azienda idAzienda;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -141,7 +146,15 @@ public class SessioneVersamento implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-  
+
+    public Azienda getIdAzienda() {
+        return idAzienda;
+    }
+
+    public void setIdAzienda(Azienda idAzienda) {
+        this.idAzienda = idAzienda;
+    }
+
     public List<Versamento> getVersamentiList() {
         return versamentiList;
     }
