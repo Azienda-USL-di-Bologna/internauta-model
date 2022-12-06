@@ -8,6 +8,7 @@ import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -190,6 +191,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     
     @Column(name = "id_iter")
     private Integer idIter;
+    
+    @Column(name = "stato_ultimo_versamento")
+    private String statoUltimoVersamento;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_ultimo_versamento")
+    private ZonedDateTime dataUltimoVersamento;
 
     public ArchivioDetail() {
     }
@@ -472,6 +481,32 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
         this.idIter = idIter;
     }
     
+    @Override
+    public Versamento.StatoVersamento getStatoUltimoVersamento() {
+        if (statoUltimoVersamento != null) {
+            return Versamento.StatoVersamento.valueOf(statoUltimoVersamento);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
+        if (statoUltimoVersamento != null) {
+            this.statoUltimoVersamento = statoUltimoVersamento.toString();
+        } else {
+            this.statoUltimoVersamento = null;
+        }
+    }    
+
+    public ZonedDateTime getDataUltimoVersamento() {
+        return dataUltimoVersamento;
+    }
+
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
+        this.dataUltimoVersamento = dataUltimoVersamento;
+    }
+   
     @Override
     public int hashCode() {
         int hash = 0;

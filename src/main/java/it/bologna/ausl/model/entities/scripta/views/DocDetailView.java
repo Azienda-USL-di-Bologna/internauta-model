@@ -585,6 +585,11 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     public ZonedDateTime getDataUltimoVersamento() {
         return dataUltimoVersamento;
     }
+    
+    @Override
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
+        this.dataUltimoVersamento = dataUltimoVersamento;
+    }
 
 //    public List<Fascicolazione> getFascicolazioni() {
 //        return fascicolazioni;
@@ -609,9 +614,6 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 //    public void setClassificazioni(List<Classificazione> classificazioni) {
 //        this.classificazioni = classificazioni;
 //    }
-    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
-        this.dataUltimoVersamento = dataUltimoVersamento;
-    }
 
     public StatoDoc getStato() {
         if (stato != null) {

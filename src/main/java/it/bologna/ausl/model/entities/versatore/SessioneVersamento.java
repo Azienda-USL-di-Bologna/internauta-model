@@ -44,8 +44,7 @@ public class SessioneVersamento implements Serializable {
     
     public static enum TipologiaVersamento {
         FORZATURA,
-        GIORNALIERO_DOCUMENTI,
-        GIORNALIERO_FASCICOLI;    
+        GIORNALIERO;    
     }
     
     public static enum StatoSessioneVersamento {

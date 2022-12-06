@@ -440,7 +440,7 @@ public class Allegato implements Serializable {
         }
     }
     
-    public class DettaglioAllegato {
+    public static class DettaglioAllegato {
 
         String idRepository;
         String estensione;
