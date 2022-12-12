@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -54,6 +55,10 @@ public class SessioneVersamento implements Serializable {
         DONE,
         PARTIALLY;
     }
+       
+    public static enum AzioneVersamento {
+        VERSAMENTO, CONTROLLO_VERSAMENTO
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,12 +68,19 @@ public class SessioneVersamento implements Serializable {
     private Integer id;
     
     @Basic(optional = false)
+    @NotNull
     @Column(name = "tipologia")
     private String tipologia;
     
     @Basic(optional = false)
+    @NotNull
     @Column(name = "stato")
     private String stato;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "azione")
+    private String azione;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -128,6 +140,22 @@ public class SessioneVersamento implements Serializable {
             this.stato = stato.toString();
         } else {
             this.stato = null;
+        }
+    }
+    
+    public AzioneVersamento getAzione() {
+        if (azione != null) {
+            return AzioneVersamento.valueOf(azione);
+        } else {
+            return null;
+        }
+    }
+
+    public void setAzione(AzioneVersamento azione) {
+        if (azione != null) {
+            this.azione = azione.toString();
+        } else {
+            this.azione = null;
         }
     }
 
