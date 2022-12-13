@@ -311,6 +311,11 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Column(name = "data_ultimo_versamento")
     private ZonedDateTime dataUltimoVersamento;
     
+    @Column(name = "errore_forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean versamentoForzabile;
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
     private List<ArchivioDoc> archiviDocList;    
@@ -589,6 +594,16 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Override
     public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
         this.dataUltimoVersamento = dataUltimoVersamento;
+    }
+
+    @Override
+    public Boolean getVersamentoForzabile() {
+        return versamentoForzabile;
+    }
+
+    @Override
+    public void setVersamentoForzabile(Boolean versamentoForzabile) {
+        this.versamentoForzabile = versamentoForzabile;
     }
 
 //    public List<Fascicolazione> getFascicolazioni() {

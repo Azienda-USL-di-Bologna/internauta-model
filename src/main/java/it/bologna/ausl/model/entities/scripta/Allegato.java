@@ -442,13 +442,13 @@ public class Allegato implements Serializable {
     
     public static class DettaglioAllegato {
 
-        String idRepository;
-        String estensione;
-        String nome;
-        Integer dimensioneByte;
-        String mimeType;
-        String hashMd5;
-        String hashSha256;
+        private String idRepository;
+        private String estensione;
+        private String nome;
+        private Integer dimensioneByte;
+        private String mimeType;
+        private String hashMd5;
+        private String hashSha256;
         
 //        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'", fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss.SSSSSS", "yyyy-MM-dd'T'HH:mm:ss+01"})
 //        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -456,10 +456,11 @@ public class Allegato implements Serializable {
 //        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
 //        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")//, fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss z"}
 //        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S][z]", locale = DEFAULT_LOCALE, timezone="Europe/Berlin", lenient = com.fasterxml.jackson.annotation.OptBoolean.TRUE)//, 
-        String dataCreazione;
-        Versamento.StatoVersamento statoUltimoVersamento;
-        Versamento.StatoVersamento statoVersamento;
-        String bucket;
+        private String dataCreazione;
+        private Versamento.StatoVersamento statoUltimoVersamento;
+        private Versamento.StatoVersamento statoVersamento;
+        private Boolean versamentoForzabile = false;
+        private String bucket;
         
 
         public DettaglioAllegato() {
@@ -552,6 +553,14 @@ public class Allegato implements Serializable {
 
         public void setStatoVersamento(Versamento.StatoVersamento statoVersamento) {
             this.statoVersamento = statoVersamento;
+        }
+
+        public Boolean getVersamentoForzabile() {
+            return versamentoForzabile;
+        }
+
+        public void setVersamentoForzabile(Boolean versamentoForzabile) {
+            this.versamentoForzabile = versamentoForzabile;
         }
     }
 }

@@ -3,7 +3,6 @@ package it.bologna.ausl.model.entities.versatore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.scripta.Allegato;
 import it.bologna.ausl.model.entities.versatore.Versamento.StatoVersamento;
@@ -21,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -59,6 +59,11 @@ public class VersamentoAllegato implements Serializable {
     
     @Column(name = "stato")
     private String stato;
+    
+    @Column(name = "errore_forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean forzabile = false;
     
 //    @Column(name = "metadati_versati")
 //    private String metadatiVersati;
@@ -130,6 +135,14 @@ public class VersamentoAllegato implements Serializable {
         } else {
             this.stato = null;
         }
+    }
+
+    public Boolean getForzabile() {
+        return forzabile;
+    }
+
+    public void setForzabile(Boolean forzabile) {
+        this.forzabile = forzabile;
     }
 
     public Allegato.DettagliAllegato.TipoDettaglioAllegato getDettaglioAllegato() {

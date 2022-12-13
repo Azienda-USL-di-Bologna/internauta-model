@@ -282,6 +282,10 @@ public interface DocDetailInterface {
 
     public void setStatoVersamentoVisto(Boolean statoVersamentoVisto);
     
+    public Boolean getVersamentoForzabile();
+    
+    public void setVersamentoForzabile(Boolean versamentoForzabile);
+    
 //    public static class Fascicolazione {
 //
 //        String nome;

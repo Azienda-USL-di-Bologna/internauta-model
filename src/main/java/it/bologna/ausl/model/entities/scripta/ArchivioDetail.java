@@ -200,6 +200,11 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Column(name = "data_ultimo_versamento")
     private ZonedDateTime dataUltimoVersamento;
 
+    @Column(name = "versamento_forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean versamentoForzabile = false;
+    
     public ArchivioDetail() {
     }
 
@@ -473,10 +478,12 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
         this.permessiArchivioList = permessiArchivioList;
     }
 
+    @Override
     public Integer getIdIter() {
         return idIter;
     }
 
+    @Override
     public void setIdIter(Integer idIter) {
         this.idIter = idIter;
     }
@@ -499,12 +506,24 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
         }
     }    
 
+    @Override
     public ZonedDateTime getDataUltimoVersamento() {
         return dataUltimoVersamento;
     }
 
+    @Override
     public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
         this.dataUltimoVersamento = dataUltimoVersamento;
+    }
+
+    @Override
+    public Boolean getVersamentoForzabile() {
+        return versamentoForzabile;
+    }
+
+    @Override
+    public void setVersamentoForzabile(Boolean versamentoForzabile) {
+        this.versamentoForzabile = versamentoForzabile;
     }
    
     @Override

@@ -3,7 +3,6 @@ package it.bologna.ausl.model.entities.versatore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.scripta.Archivio;
@@ -23,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -50,8 +50,8 @@ public class Versamento implements Serializable {
 	VERSATO,
 	ANNULLATO,
         IN_CARICO_CON_ERRORI,
+        IN_CARICO_CON_ERRORI_RITENTABILI,
 	ERRORE,
-	ERRORE_FORZABILE,
 	ERRORE_RITENTABILE
     }
 
@@ -101,6 +101,11 @@ public class Versamento implements Serializable {
     @NotNull
     @Basic(optional = false)
     private Boolean ignora = false;
+    
+    @Column(name = "forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean forzabile = false;
     
     @JoinColumn(name = "id_versamento_ritentato", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
@@ -250,6 +255,14 @@ public class Versamento implements Serializable {
 
     public void setIgnora(Boolean ignora) {
         this.ignora = ignora;
+    }
+
+    public Boolean getForzabile() {
+        return forzabile;
+    }
+
+    public void setForzabile(Boolean forzabile) {
+        this.forzabile = forzabile;
     }
 
     public Versamento getIdVersamentoRitentato() {

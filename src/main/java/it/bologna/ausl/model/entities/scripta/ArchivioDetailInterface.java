@@ -130,4 +130,8 @@ public interface ArchivioDetailInterface {
     public ZonedDateTime getDataUltimoVersamento();
     
     public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento);
+    
+    public Boolean getVersamentoForzabile();
+    
+    public void setVersamentoForzabile(Boolean versamentoForzabile);
 }

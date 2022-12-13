@@ -202,6 +202,11 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "data_ultimo_versamento")
     private ZonedDateTime dataUltimoVersamento;
     
+    @Column(name = "errore_forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean versamentoForzabile;
+    
     public ArchivioDetailView() {
     }
 
@@ -527,6 +532,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
         } else {
             this.statoUltimoVersamento = null;
         }
+    }
+
+    public Boolean getVersamentoForzabile() {
+        return versamentoForzabile;
+    }
+
+    public void setVersamentoForzabile(Boolean versamentoForzabile) {
+        this.versamentoForzabile = versamentoForzabile;
     }
     
     @Override

@@ -230,6 +230,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Column(name = "stato_versamento_visto")
     private Boolean statoVersamentoVisto;
     
+    @Column(name = "versamento_forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean versamentoForzabile = false;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_ultimo_versamento")
@@ -902,6 +907,16 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Override
     public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
         this.dataUltimoVersamento = dataUltimoVersamento;
+    }
+
+    @Override
+    public Boolean getVersamentoForzabile() {
+        return versamentoForzabile;
+    }
+
+    @Override
+    public void setVersamentoForzabile(Boolean versamentoForzabile) {
+        this.versamentoForzabile = versamentoForzabile;
     }
     
     @Override
