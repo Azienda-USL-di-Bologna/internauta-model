@@ -65,11 +65,11 @@ public class VersamentoAllegato implements Serializable {
     @Basic(optional = false)
     private Boolean forzabile = false;
     
-//    @Column(name = "metadati_versati")
-//    private String metadatiVersati;
-//    
-//    @Column(name = "rapporto")
-//    private String rapporto;
+    @Column(name = "metadati_versati")
+    private String metadatiVersati;
+    
+    @Column(name = "rapporto")
+    private String rapporto;
     
     @Column(name = "codice_errore")
     private String codiceErrore;
@@ -159,6 +159,22 @@ public class VersamentoAllegato implements Serializable {
         } else {
             this.dettaglioAllegato = null;
         }
+    }
+
+    public String getMetadatiVersati() {
+        return metadatiVersati;
+    }
+
+    public void setMetadatiVersati(String metadatiVersati) {
+        this.metadatiVersati = metadatiVersati;
+    }
+
+    public String getRapporto() {
+        return rapporto;
+    }
+
+    public void setRapporto(String rapporto) {
+        this.rapporto = rapporto;
     }
 
     public String getCodiceErrore() {
