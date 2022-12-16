@@ -95,7 +95,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
     private String commandType;
 
     @JoinColumn(name = "id_persona_responsabile_procedimento", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Persona idPersonaResponsabileProcedimento;
 
     @JoinColumn(name = "id_persona_redattrice", referencedColumnName = "id")

@@ -60,7 +60,7 @@ public class VersamentoAllegato implements Serializable {
     @Column(name = "stato")
     private String stato;
     
-    @Column(name = "errore_forzabile")
+    @Column(name = "forzabile")
     @NotNull
     @Basic(optional = false)
     private Boolean forzabile = false;
