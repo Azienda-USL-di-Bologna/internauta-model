@@ -9,6 +9,7 @@ import it.bologna.ausl.model.entities.scripta.Archivio;
 import it.bologna.ausl.model.entities.scripta.Doc;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -20,6 +21,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -128,6 +130,10 @@ public class Versamento implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_forzatura")
     private ZonedDateTime dataForzatura;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idVersamento", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "versamentoAllegatoList")
+    private List<VersamentoAllegato> versamentoAllegatoList;
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -271,6 +277,14 @@ public class Versamento implements Serializable {
 
     public void setIdVersamentoRitentato(Versamento idVersamentoRitentato) {
         this.idVersamentoRitentato = idVersamentoRitentato;
+    }
+
+    public List<VersamentoAllegato> getVersamentoAllegatoList() {
+        return versamentoAllegatoList;
+    }
+
+    public void setVersamentoAllegatoList(List<VersamentoAllegato> versamentoAllegatoList) {
+        this.versamentoAllegatoList = versamentoAllegatoList;
     }
 
     public ZonedDateTime getVersion() {

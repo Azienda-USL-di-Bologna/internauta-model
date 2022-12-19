@@ -137,7 +137,7 @@ public class Doc implements Serializable {
     private List<RegistroDoc> registroDocList;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "allagati")
+    @JsonBackReference(value = "allegati")
     private List<Allegato> allegati;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
