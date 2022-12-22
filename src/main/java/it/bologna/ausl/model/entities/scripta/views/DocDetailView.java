@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
+import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
@@ -319,6 +320,11 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
     private List<ArchivioDoc> archiviDocList;    
+    
+    @JoinColumn(name = "id_pec_mittente", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idPecMittente")
+    private Pec idPecMittente;
     
     // Proprietà transient
     @Transient
@@ -881,6 +887,15 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     public void setIdApplicazione(Applicazione idApplicazione) {
         this.idApplicazione = idApplicazione;
     }
+
+    public Pec getIdPecMittente() {
+        return idPecMittente;
+    }
+
+    public void setIdPecMittente(Pec idPecMittente) {
+        this.idPecMittente = idPecMittente;
+    }
+    
     
     @Override
     public List<ArchivioDoc> getArchiviDocList() {
