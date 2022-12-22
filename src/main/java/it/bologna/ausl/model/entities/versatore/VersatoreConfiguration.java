@@ -31,7 +31,7 @@ import org.hibernate.annotations.TypeDefs;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @DynamicUpdate
-public class Configuration implements Serializable {
+public class VersatoreConfiguration implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,7 +51,7 @@ public class Configuration implements Serializable {
     @Column(name = "descrizione")
     private String descrizione;
 
-    public Configuration() {
+    public VersatoreConfiguration() {
     }
 
     public String getHostId() {
@@ -89,10 +89,10 @@ public class Configuration implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Configuration)) {
+        if (!(object instanceof VersatoreConfiguration)) {
             return false;
         }
-        Configuration other = (Configuration) object;
+        VersatoreConfiguration other = (VersatoreConfiguration) object;
         return !((this.hostId == null && other.hostId != null) || (this.hostId != null && !this.hostId.equals(other.hostId)));
     }
 

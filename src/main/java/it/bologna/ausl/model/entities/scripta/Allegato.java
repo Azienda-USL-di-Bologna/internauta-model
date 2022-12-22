@@ -6,12 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.CaseFormat;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.bologna.ausl.model.entities.versatore.VersamentoAllegato;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -31,6 +34,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -51,6 +55,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 })
 @DynamicUpdate
 public class Allegato implements Serializable {
+    
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(Allegato.class);
 
     public static enum TipoAllegato {
         ALLEGATO,
@@ -279,17 +285,61 @@ public class Allegato implements Serializable {
             CONVERTITO_FIRMATO_P7M
         } 
         
-        DettaglioAllegato originale;
-        DettaglioAllegato convertito;
+        private DettaglioAllegato originale;
+        private DettaglioAllegato convertito;
         //DettaglioAllegato segnaposto;
-        DettaglioAllegato originaleFirmato;
-        DettaglioAllegato convertitoFirmato;
-        DettaglioAllegato originaleFirmatoP7m;
-        DettaglioAllegato convertitoFirmatoP7m;
+        private DettaglioAllegato originaleFirmato;
+        private DettaglioAllegato convertitoFirmato;
+        private DettaglioAllegato originaleFirmatoP7m;
+        private DettaglioAllegato convertitoFirmatoP7m;
 
         public DettagliAllegato() {
         }
 
+        @JsonIgnore
+        public DettaglioAllegato getByKey(TipoDettaglioAllegato tipoDettaglioAllegato){
+            switch (tipoDettaglioAllegato) {
+                case ORIGINALE:
+                    return this.originale;
+                case CONVERTITO_FIRMATO:
+                    return this.convertitoFirmato;
+                case CONVERTITO:
+                    return this.convertito;
+                case CONVERTITO_FIRMATO_P7M:
+                    return this.convertitoFirmatoP7m;
+                case ORIGINALE_FIRMATO:
+                    return this.originaleFirmato;
+                case ORIGINALE_FIRMATO_P7M:
+                    return this.originaleFirmatoP7m;
+                default:
+                    return null;
+            }
+        }
+        
+        @JsonIgnore
+        public void setByKey(TipoDettaglioAllegato tipoDettaglioAllegato, DettaglioAllegato dettaglioAllegato){
+            switch (tipoDettaglioAllegato) {
+                case ORIGINALE:
+                    this.originale = dettaglioAllegato;
+                    break;
+                case CONVERTITO_FIRMATO:
+                    this.convertitoFirmato = dettaglioAllegato;
+                    break;
+                case CONVERTITO:
+                    this.convertito = dettaglioAllegato;
+                    break;
+                case CONVERTITO_FIRMATO_P7M:
+                    this.convertitoFirmatoP7m = dettaglioAllegato;
+                    break;
+                case ORIGINALE_FIRMATO:
+                    this.originaleFirmato = dettaglioAllegato;
+                    break;
+                case ORIGINALE_FIRMATO_P7M:
+                    this.originaleFirmatoP7m = dettaglioAllegato;
+                    break;
+            }
+        }
+        
         public DettaglioAllegato getOriginale() {
             return originale;
         }
@@ -346,6 +396,35 @@ public class Allegato implements Serializable {
             this.convertitoFirmatoP7m = convertitoFirmatoP7m;
         }
         
+        /**
+         * Restituisce tutti i formati dell'allegato contenuti nei dettagli.
+         * Eg: Originale, Convertito, OriginaleFirmato, etc.
+         * @return La lista di tutti i file dell'allegato.
+         */
+        @JsonIgnore
+        public List<DettaglioAllegato> getAllTipiDettagliAllegati() {
+            List<DettaglioAllegato> dettagliAllegato = new ArrayList();
+
+            Class<? extends DettagliAllegato> aClass = this.getClass();
+            for (Field f: aClass.getDeclaredFields()) {
+                for (Method method : aClass.getDeclaredMethods()) {
+                    try {                        
+                        if ((method.getName().startsWith("get")) && (method.getName().length() == (f.getName().length() + 3)) && 
+                            method.getName().toLowerCase().endsWith(f.getName().toLowerCase()) &&
+                            method.getAnnotation(JsonIgnore.class) == null) {
+                            DettaglioAllegato value = (DettaglioAllegato) method.invoke(this);
+                            if (value != null) {
+                                dettagliAllegato.add(value);
+                            }
+                        }        
+                    } catch (Exception ex) {
+                        log.error(ex.getMessage());
+                    } 
+                } 
+            }
+            return dettagliAllegato;
+        }
+        
         @JsonIgnore
         public DettaglioAllegato getDettaglioAllegato(TipoDettaglioAllegato tipoDettaglioAllegato) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
             Class<? extends DettagliAllegato> aClass = this.getClass();
@@ -362,14 +441,14 @@ public class Allegato implements Serializable {
     }
     
     public static class DettaglioAllegato {
-       
-        String idRepository;
-        String estensione;
-        String nome;
-        Integer dimensioneByte;
-        String mimeType;
-        String hashMd5;
-        String hashSha256;
+
+        private String idRepository;
+        private String estensione;
+        private String nome;
+        private Integer dimensioneByte;
+        private String mimeType;
+        private String hashMd5;
+        private String hashSha256;
         
 //        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'", fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss.SSSSSS", "yyyy-MM-dd'T'HH:mm:ss+01"})
 //        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -377,9 +456,11 @@ public class Allegato implements Serializable {
 //        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
 //        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")//, fallbackPatterns = {"yyyy-MM-dd'T'HH:mm:ss z"}
 //        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S][z]", locale = DEFAULT_LOCALE, timezone="Europe/Berlin", lenient = com.fasterxml.jackson.annotation.OptBoolean.TRUE)//, 
-        String dataCreazione;
-        Boolean daVersare;
-        String bucket;
+        private String dataCreazione;
+        private Versamento.StatoVersamento statoUltimoVersamento;
+        private Versamento.StatoVersamento statoVersamento;
+        private Boolean versamentoForzabile = false;
+        private String bucket;
         
 
         public DettaglioAllegato() {
@@ -450,14 +531,6 @@ public class Allegato implements Serializable {
             this.dataCreazione = dataCreazione;
         }
 
-        public Boolean getDaVersare() {
-            return daVersare;
-        }
-
-        public void setDaVersare(Boolean daVersare) {
-            this.daVersare = daVersare;
-        }
-
         public String getBucket() {
             return bucket;
         }
@@ -466,5 +539,28 @@ public class Allegato implements Serializable {
             this.bucket = bucket;
         }
 
-    }    
+        public Versamento.StatoVersamento getStatoUltimoVersamento() {
+            return statoUltimoVersamento;
+        }
+
+        public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
+            this.statoUltimoVersamento = statoUltimoVersamento;
+        }
+        
+        public Versamento.StatoVersamento getStatoVersamento() {
+            return statoVersamento;
+        }
+
+        public void setStatoVersamento(Versamento.StatoVersamento statoVersamento) {
+            this.statoVersamento = statoVersamento;
+        }
+
+        public Boolean getVersamentoForzabile() {
+            return versamentoForzabile;
+        }
+
+        public void setVersamentoForzabile(Boolean versamentoForzabile) {
+            this.versamentoForzabile = versamentoForzabile;
+        }
+    }
 }

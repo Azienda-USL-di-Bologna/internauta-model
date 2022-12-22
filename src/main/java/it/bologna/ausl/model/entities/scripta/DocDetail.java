@@ -13,6 +13,7 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -59,15 +60,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 public class DocDetail implements Serializable, DocDetailInterface {
 
-    public static enum StatiVersamento {
-        DA_VERSARE, 
-        VERSAMENTO_PARZIALE, 
-        VERSATO, 
-        VERSAMENTO_ANNULLATO, 
-        ERRORE_NON_FORZABILE, 
-        ERRORE_FORZABILE, 
-        ERRORE_CRITTOGRAFICO
-    }
+
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -103,7 +96,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
     private String commandType;
 
     @JoinColumn(name = "id_persona_responsabile_procedimento", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Persona idPersonaResponsabileProcedimento;
 
     @JoinColumn(name = "id_persona_redattrice", referencedColumnName = "id")
@@ -237,6 +230,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
     
     @Column(name = "stato_versamento_visto")
     private Boolean statoVersamentoVisto;
+    
+    @Column(name = "versamento_forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean versamentoForzabile = false;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -890,22 +888,23 @@ public class DocDetail implements Serializable, DocDetailInterface {
     }
 
     @Override
-    public StatiVersamento getStatoUltimoVersamento() {
+    public Versamento.StatoVersamento getStatoUltimoVersamento() {
         if (statoUltimoVersamento != null) {
-            return StatiVersamento.valueOf(statoUltimoVersamento);
+            return Versamento.StatoVersamento.valueOf(statoUltimoVersamento);
         } else {
             return null;
         }
     }
 
     @Override
-    public void setStatoUltimoVersamento(StatiVersamento statoUltimoVersamento) {
+    public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
         if (statoUltimoVersamento != null) {
             this.statoUltimoVersamento = statoUltimoVersamento.toString();
         } else {
             this.statoUltimoVersamento = null;
         }
     }
+    
     @Override
     public ZonedDateTime getDataUltimoVersamento() {
         return dataUltimoVersamento;
@@ -914,6 +913,16 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Override
     public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
         this.dataUltimoVersamento = dataUltimoVersamento;
+    }
+
+    @Override
+    public Boolean getVersamentoForzabile() {
+        return versamentoForzabile;
+    }
+
+    @Override
+    public void setVersamentoForzabile(Boolean versamentoForzabile) {
+        this.versamentoForzabile = versamentoForzabile;
     }
     
     @Override

@@ -3,7 +3,6 @@ package it.bologna.ausl.model.entities.versatore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.scripta.Allegato;
 import it.bologna.ausl.model.entities.versatore.Versamento.StatoVersamento;
@@ -14,11 +13,14 @@ import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -41,6 +43,7 @@ public class VersamentoAllegato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     
@@ -57,17 +60,27 @@ public class VersamentoAllegato implements Serializable {
     @Column(name = "stato")
     private String stato;
     
-//    @Column(name = "metadati_versati")
-//    private String metadatiVersati;
-//    
-//    @Column(name = "rapporto")
-//    private String rapporto;
+    @Column(name = "forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean forzabile = false;
+    
+    @Column(name = "metadati_versati")
+    private String metadatiVersati;
+    
+    @Column(name = "rapporto")
+    private String rapporto;
     
     @Column(name = "codice_errore")
     private String codiceErrore;
     
     @Column(name = "descrizione_errore")
-    private String descrizioneErrore;    
+    private String descrizioneErrore;
+    
+    @Column(name = "dettaglio_allegato")
+    @NotNull
+    @Basic(optional = false)
+    private String dettaglioAllegato;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -124,21 +137,45 @@ public class VersamentoAllegato implements Serializable {
         }
     }
 
-//    public String getMetadatiVersati() {
-//        return metadatiVersati;
-//    }
-//
-//    public void setMetadatiVersati(String metadatiVersati) {
-//        this.metadatiVersati = metadatiVersati;
-//    }
-//
-//    public String getRapporto() {
-//        return rapporto;
-//    }
-//
-//    public void setRapporto(String rapporto) {
-//        this.rapporto = rapporto;
-//    }
+    public Boolean getForzabile() {
+        return forzabile;
+    }
+
+    public void setForzabile(Boolean forzabile) {
+        this.forzabile = forzabile;
+    }
+
+    public Allegato.DettagliAllegato.TipoDettaglioAllegato getDettaglioAllegato() {
+        if (dettaglioAllegato != null) {
+            return Allegato.DettagliAllegato.TipoDettaglioAllegato.valueOf(dettaglioAllegato);
+        } else {
+            return null;
+        }
+    }
+    
+    public void setDettaglioAllegato(Allegato.DettagliAllegato.TipoDettaglioAllegato dettaglioAllegato) {
+        if (dettaglioAllegato != null) {
+            this.dettaglioAllegato = dettaglioAllegato.toString();
+        } else {
+            this.dettaglioAllegato = null;
+        }
+    }
+
+    public String getMetadatiVersati() {
+        return metadatiVersati;
+    }
+
+    public void setMetadatiVersati(String metadatiVersati) {
+        this.metadatiVersati = metadatiVersati;
+    }
+
+    public String getRapporto() {
+        return rapporto;
+    }
+
+    public void setRapporto(String rapporto) {
+        this.rapporto = rapporto;
+    }
 
     public String getCodiceErrore() {
         return codiceErrore;
@@ -171,8 +208,6 @@ public class VersamentoAllegato implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
-    
-    
     
     @Override
     public boolean equals(Object object) {
