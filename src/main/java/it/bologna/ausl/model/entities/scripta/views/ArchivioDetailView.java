@@ -202,7 +202,7 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "data_ultimo_versamento")
     private ZonedDateTime dataUltimoVersamento;
     
-    @Column(name = "errore_forzabile")
+    @Column(name = "versamento_forzabile")
     @NotNull
     @Basic(optional = false)
     private Boolean versamentoForzabile;
