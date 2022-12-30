@@ -21,6 +21,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -69,6 +71,23 @@ public class Allegato implements Serializable {
         ANNESSO,
         ANNOTAZIONE
     }
+    
+    public static enum SottotipoAllegato {
+        DELIBERA_NO_OMISSIS,
+        DELIBERA_OMISSIS,
+        DESTINATARI,
+        NOTE_DOCUMENTO,
+        RICEVUTA_ACCETTAZIONE_PEC,
+        RICEVUTA_CONSEGNA_PEC,
+        RICEVUTA_ERRORE_PEC,
+        RICEVUTA_MANCATA_CONSEGNA_PEC,
+        RICEVUTA_SCONOSCIUTA_PEC,
+        SEGNATURA,
+        SMISTAMENTO,
+        MITTENTI,
+        RELATA,
+        BIRD
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,6 +123,10 @@ public class Allegato implements Serializable {
     @Column(name = "tipo")
     private String tipo;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sottotipo")
+    private SottotipoAllegato sottotipo;
+    
     @Basic(optional = false)
     @Column(name = "principale")
     private Boolean principale;
@@ -206,6 +229,14 @@ public class Allegato implements Serializable {
         }
     }
 
+    public SottotipoAllegato getSottotipo() {
+        return sottotipo;
+    }
+
+    public void setSottotipo(SottotipoAllegato sottotipo) {
+        this.sottotipo = sottotipo;
+    }
+    
     public Boolean getPrincipale() {
         return principale;
     }
