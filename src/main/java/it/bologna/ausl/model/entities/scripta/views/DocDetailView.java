@@ -10,10 +10,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
+import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import it.bologna.ausl.model.entities.scripta.DocDetailInterface.*;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -299,9 +301,30 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Column(name = "conservazione")
     private Boolean conservazione;
     
+    @Column(name = "stato_ultimo_versamento")
+    private String statoUltimoVersamento;
+    
+    @Column(name = "stato_versamento_visto")
+    private Boolean statoVersamentoVisto;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_ultimo_versamento")
+    private ZonedDateTime dataUltimoVersamento;
+    
+    @Column(name = "versamento_forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean versamentoForzabile;
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
     private List<ArchivioDoc> archiviDocList;    
+    
+    @JoinColumn(name = "id_pec_mittente", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idPecMittente")
+    private Pec idPecMittente;
     
     // Proprietà transient
     @Transient
@@ -497,16 +520,19 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         return oggettoTscol;
     }
 
+    @Override
     public void setOggettoTscol(String oggettoTscol) {
         this.oggettoTscol = oggettoTscol;
     }
 
+    @Override
     public List<Firmatario> getFirmatari() {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.convertValue(firmatari, new TypeReference<List<DocDetail.Firmatario>>() {
         });
     }
 
+    @Override
     public void setFirmatari(List<Firmatario> firmatari) {
         this.firmatari = (List<JsonNode>) (Object) firmatari;
     }
@@ -518,20 +544,72 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 //    public void setFirmatariTscol(String firmatariTscol) {
 //        this.firmatariTscol = firmatariTscol;
 //    }
+    @Override
     public List<Destinatario> getDestinatari() {
         return destinatari;
     }
 
+    @Override
     public void setDestinatari(List<Destinatario> destinatari) {
         this.destinatari = destinatari;
     }
 
+    @Override
     public String getDestinatariTscol() {
         return destinatariTscol;
     }
 
+    @Override
     public void setDestinatariTscol(String destinatariTscol) {
         this.destinatariTscol = destinatariTscol;
+    }
+
+    @Override
+    public Versamento.StatoVersamento getStatoUltimoVersamento() {
+        if (statoUltimoVersamento != null) {
+            return Versamento.StatoVersamento.valueOf(statoUltimoVersamento);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
+        if (statoUltimoVersamento != null) {
+            this.statoUltimoVersamento = statoUltimoVersamento.toString();
+        } else {
+            this.statoUltimoVersamento = null;
+        }
+    }
+    
+    @Override
+    public Boolean getStatoVersamentoVisto() {
+        return statoVersamentoVisto;
+    }
+
+    @Override
+    public void setStatoVersamentoVisto(Boolean statoVersamentoVisto) {
+        this.statoVersamentoVisto = statoVersamentoVisto;
+    }
+
+    @Override
+    public ZonedDateTime getDataUltimoVersamento() {
+        return dataUltimoVersamento;
+    }
+    
+    @Override
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento) {
+        this.dataUltimoVersamento = dataUltimoVersamento;
+    }
+
+    @Override
+    public Boolean getVersamentoForzabile() {
+        return versamentoForzabile;
+    }
+
+    @Override
+    public void setVersamentoForzabile(Boolean versamentoForzabile) {
+        this.versamentoForzabile = versamentoForzabile;
     }
 
 //    public List<Fascicolazione> getFascicolazioni() {
@@ -809,6 +887,15 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     public void setIdApplicazione(Applicazione idApplicazione) {
         this.idApplicazione = idApplicazione;
     }
+
+    public Pec getIdPecMittente() {
+        return idPecMittente;
+    }
+
+    public void setIdPecMittente(Pec idPecMittente) {
+        this.idPecMittente = idPecMittente;
+    }
+    
     
     @Override
     public List<ArchivioDoc> getArchiviDocList() {

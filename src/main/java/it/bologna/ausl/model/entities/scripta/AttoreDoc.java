@@ -30,7 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gusgus
  */
 @Entity
-@Table(name = "attori_doc", catalog = "internauta", schema = "scripta")
+@Table(name = "attori_docs", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({})
@@ -40,7 +40,7 @@ public class AttoreDoc implements Serializable {
     public static enum RuoloAttoreDoc {
         REDATTORE, CONTROLLO_SEGRETERIA, PARERATORE, VISTATORE, FIRMATARIO,
 	RESPONSABILE_PROCEDIMENTO, DA, DS, DSC, DG,
-	RESCRITTO, SEGRETERIA, ASSEGNATARIO, SPEDIZIONE_MANUALE
+	RESCRITTO, SEGRETARIO, ASSEGNATARIO, SPEDIZIONE_MANUALE, RESPONSABILE
     }
     
     private static final long serialVersionUID = 1L;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -49,13 +50,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 })
 @DynamicUpdate
 public class Doc implements Serializable {
-    
+
     public static enum VisibilitaDoc {
         NORMALE,
         LIMITATA,
         RISERVATO
     }
-
+    
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -91,9 +92,14 @@ public class Doc implements Serializable {
     
     @Column(name = "id_esterno")
     private String idEsterno;
+    
+    @Column(name = "stato_versamento")
+    private String statoVersamento;
     //lista di mittenti che conterra per il momento solo un elemento
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
 
+    
+    
     //@Filter(name = "mittenti")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @Where(clause = "tipo='MITTENTE'")
@@ -131,12 +137,16 @@ public class Doc implements Serializable {
     private List<RegistroDoc> registroDocList;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
-    @JsonBackReference(value = "allagati")
+    @JsonBackReference(value = "allegati")
     private List<Allegato> allegati;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
     private List<ArchivioDoc> archiviDocList;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "versamentiList")
+    private List<Versamento> versamentiList;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -304,13 +314,37 @@ public class Doc implements Serializable {
     public void setIdEsterno(String idEsterno) {
         this.idEsterno = idEsterno;
     }
+    
+    public Versamento.StatoVersamento getStatoVersamento() {
+        if (statoVersamento != null) {
+            return Versamento.StatoVersamento.valueOf(statoVersamento);
+        } else {
+            return null;
+        }
+    }
 
+    public void setStatoVersamento(Versamento.StatoVersamento statoVersamento) {
+        if (statoVersamento != null) {
+            this.statoVersamento = statoVersamento.toString();
+        } else {
+            this.statoVersamento = null;
+        }
+    }
+    
     public List<ArchivioDoc> getArchiviDocList() {
         return archiviDocList;
     }
 
     public void setArchiviDocList(List<ArchivioDoc> archiviDocList) {
         this.archiviDocList = archiviDocList;
+    }
+
+    public List<Versamento> getVersamentiList() {
+        return versamentiList;
+    }
+
+    public void setVersamentiList(List<Versamento> versamentiList) {
+        this.versamentiList = versamentiList;
     }
 
     @Override

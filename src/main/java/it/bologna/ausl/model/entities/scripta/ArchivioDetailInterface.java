@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.scripta;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -121,4 +122,16 @@ public interface ArchivioDetailInterface {
     public Integer getIdIter();
     
     public void setIdIter(Integer idIter);
+    
+    public Versamento.StatoVersamento getStatoUltimoVersamento();
+    
+    public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento);
+    
+    public ZonedDateTime getDataUltimoVersamento();
+    
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento);
+    
+    public Boolean getVersamentoForzabile();
+    
+    public void setVersamentoForzabile(Boolean versamentoForzabile);
 }

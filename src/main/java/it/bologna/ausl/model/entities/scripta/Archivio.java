@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -38,6 +39,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idMassimario, idTitolo, idAzienda",
     "idArchivioRadice",
     "idMassimario, idTitolo, idAzienda, attoriList",
+    "idMassimario, idTitolo, idAzienda, attoriList, archiviFigliList",
     "idAzienda"
 })
 @DynamicUpdate
@@ -60,7 +62,7 @@ public class Archivio {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
     @JsonBackReference(value = "idArchivioDetail")
     private ArchivioDetail idArchivioDetail;
-    
+
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
@@ -71,7 +73,7 @@ public class Archivio {
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione = ZonedDateTime.now();
-    
+
     @JoinColumn(name = "id_archivio_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPadre")
@@ -113,7 +115,6 @@ public class Archivio {
     @Column(name = "livello")
     private Integer livello;
 
- 
     @Column(name = "anni_tenuta")
     private Integer anniTenuta;
 
@@ -135,7 +136,7 @@ public class Archivio {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idMassimario")
     private Massimario idMassimario;
-    
+
     @Column(name = "note")
     private String note;
 
@@ -158,13 +159,16 @@ public class Archivio {
     @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attoriList")
     private List<AttoreArchivio> attoriList;
-    
+
     @Column(name = "id_iter")
     private Integer idIter;
-    
-    @Column(name="numero_sottoarchivi")
+
+    @Column(name = "numero_sottoarchivi")
     private Integer numeroSottoarchivi = 0;
-    
+
+    @Column(name = "stato_versamento")
+    private String statoVersamento;
+ 
     public Archivio() {
     }
 
@@ -223,7 +227,7 @@ public class Archivio {
     public void setIdArchivioDetail(ArchivioDetail idArchivioDetail) {
         this.idArchivioDetail = idArchivioDetail;
     }
-    
+
     public TipoArchivio getTipo() {
         if (tipo != null) {
             return TipoArchivio.valueOf(tipo);
@@ -375,7 +379,7 @@ public class Archivio {
     public void setIdMassimario(Massimario idMassimario) {
         this.idMassimario = idMassimario;
     }
-    
+
     public String getNote() {
         return note;
     }
@@ -383,8 +387,8 @@ public class Archivio {
     public void setNote(String note) {
         this.note = note;
     }
-    
-       public Integer getAnniTenuta() {
+
+    public Integer getAnniTenuta() {
         return anniTenuta;
     }
 
@@ -407,8 +411,22 @@ public class Archivio {
     public void setNumeroSottoarchivi(Integer numeroSottoarchivi) {
         this.numeroSottoarchivi = numeroSottoarchivi;
     }
-    
-    
+
+    public Versamento.StatoVersamento getStatoVersamento() {
+        if (statoVersamento != null) {
+            return Versamento.StatoVersamento.valueOf(statoVersamento);
+        } else {
+            return null;
+        }
+    }
+
+    public void setStatoVersamento(Versamento.StatoVersamento statoVersamento) {
+        if (statoVersamento != null) {
+            this.statoVersamento = statoVersamento.toString();
+        } else {
+            this.statoVersamento = null;
+        }
+    }
     
     @Override
     public int hashCode() {
