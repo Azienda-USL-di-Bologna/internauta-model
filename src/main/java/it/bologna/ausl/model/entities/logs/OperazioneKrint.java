@@ -79,6 +79,7 @@ public class OperazioneKrint implements Serializable {
         RUBRICA_CONTACT_DETAIL_CREATION,
         RUBRICA_CONTACT_DETAIL_DELETE,
         RUBRICA_CONTACT_DETAIL_UPDATE,
+        RUBRICA_CONTACT_RISERVATO,
         RUBRICA_GROUP_CREATION,
         RUBRICA_GROUP_DELETE,
         RUBRICA_GROUP_RESTORE,
@@ -86,6 +87,7 @@ public class OperazioneKrint implements Serializable {
         RUBRICA_GROUP_CONTACT_CREATION,
         RUBRICA_GROUP_CONTACT_DELETE,
         RUBRICA_GROUP_CONTACT_UPDATE,
+        RUBRICA_GROUP_RISERVATO,
         RUBRICA_CONTACT_MERGE,
         
         // Operazioni Archivio
