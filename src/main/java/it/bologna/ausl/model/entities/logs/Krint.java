@@ -56,6 +56,7 @@ public class Krint implements Serializable {
         
         SCRIPTA_ARCHIVIO,
         SCRIPTA_ATTORE_ARCHIVIO,
+        SCRIPTA_ARCHIVIO_DOC,
     };
     
 //    public static enum KrintField {
