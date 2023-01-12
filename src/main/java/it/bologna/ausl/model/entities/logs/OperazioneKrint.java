@@ -107,10 +107,8 @@ public class OperazioneKrint implements Serializable {
         SCRIPTA_ARCHIVIO_RISERVATO_UPDATE,
         SCRIPTA_ARCHIVIO_NOTE_UPDATE,
         SCRIPTA_ARCHIVIO_DOC_LOAD,
-        
-        
-        
-        
+        SCRIPTA_ARCHIVIO_DOC_BY_ADI,
+        SCRIPTA_ARCHIVIO_DOC_BY_DI
     }
 
     private static final long serialVersionUID = 1L;
