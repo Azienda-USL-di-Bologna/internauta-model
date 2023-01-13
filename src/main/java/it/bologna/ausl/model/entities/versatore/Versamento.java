@@ -3,23 +3,28 @@ package it.bologna.ausl.model.entities.versatore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.scripta.Archivio;
 import it.bologna.ausl.model.entities.scripta.Doc;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -40,17 +45,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Versamento implements Serializable {
     
     public static enum StatoVersamento {
-        DA_VERSARE,
-        VERSAMENTO_PARZIALE,
-        VERSATO,
-        VERSAMENTO_ANNULLATO,
-        ERRORE_NON_FORZABILE,
-        ERRORE_FORZABILE,
-        ERRORE_CRITTOGRAFICO;
+        IN_CARICO,
+	VERSARE,
+        AGGIORNARE,
+	PARZIALE,
+	VERSATO,
+	ANNULLATO,
+        IN_CARICO_CON_ERRORI,
+        IN_CARICO_CON_ERRORI_RITENTABILI,
+	ERRORE,
+	ERRORE_RITENTABILE
     }
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -83,7 +92,27 @@ public class Versamento implements Serializable {
     private String codiceErrore;
     
     @Column(name = "descrizione_errore")
-    private String descrizioneErrore;    
+    private String descrizioneErrore;
+        
+    @JoinColumn(name = "id_archivio", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JsonBackReference(value = "idArchivio")
+    private Archivio idArchivio;
+    
+    @Column(name = "ignora")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean ignora = false;
+    
+    @Column(name = "forzabile")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean forzabile = false;
+    
+    @JoinColumn(name = "id_versamento_ritentato", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JsonBackReference(value = "idVersamentoRitentato")
+    private Versamento idVersamentoRitentato;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -101,6 +130,10 @@ public class Versamento implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_forzatura")
     private ZonedDateTime dataForzatura;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idVersamento", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "versamentoAllegatoList")
+    private List<VersamentoAllegato> versamentoAllegatoList;
         
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -212,6 +245,46 @@ public class Versamento implements Serializable {
 
     public void setDataForzatura(ZonedDateTime dataForzatura) {
         this.dataForzatura = dataForzatura;
+    }
+
+    public Archivio getIdArchivio() {
+        return idArchivio;
+    }
+
+    public void setIdArchivio(Archivio idArchivio) {
+        this.idArchivio = idArchivio;
+    }
+
+    public Boolean getIgnora() {
+        return ignora;
+    }
+
+    public void setIgnora(Boolean ignora) {
+        this.ignora = ignora;
+    }
+
+    public Boolean getForzabile() {
+        return forzabile;
+    }
+
+    public void setForzabile(Boolean forzabile) {
+        this.forzabile = forzabile;
+    }
+
+    public Versamento getIdVersamentoRitentato() {
+        return idVersamentoRitentato;
+    }
+
+    public void setIdVersamentoRitentato(Versamento idVersamentoRitentato) {
+        this.idVersamentoRitentato = idVersamentoRitentato;
+    }
+
+    public List<VersamentoAllegato> getVersamentoAllegatoList() {
+        return versamentoAllegatoList;
+    }
+
+    public void setVersamentoAllegatoList(List<VersamentoAllegato> versamentoAllegatoList) {
+        this.versamentoAllegatoList = versamentoAllegatoList;
     }
 
     public ZonedDateTime getVersion() {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -165,6 +166,9 @@ public class Archivio {
     @Column(name = "numero_sottoarchivi")
     private Integer numeroSottoarchivi = 0;
 
+    @Column(name = "stato_versamento")
+    private String statoVersamento;
+ 
     public Archivio() {
     }
 
@@ -408,6 +412,22 @@ public class Archivio {
         this.numeroSottoarchivi = numeroSottoarchivi;
     }
 
+    public Versamento.StatoVersamento getStatoVersamento() {
+        if (statoVersamento != null) {
+            return Versamento.StatoVersamento.valueOf(statoVersamento);
+        } else {
+            return null;
+        }
+    }
+
+    public void setStatoVersamento(Versamento.StatoVersamento statoVersamento) {
+        if (statoVersamento != null) {
+            this.statoVersamento = statoVersamento.toString();
+        } else {
+            this.statoVersamento = null;
+        }
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
