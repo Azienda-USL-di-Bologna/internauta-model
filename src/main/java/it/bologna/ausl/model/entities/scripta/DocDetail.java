@@ -13,6 +13,7 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
+import it.bologna.ausl.model.entities.rubrica.Contatto;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
@@ -294,6 +295,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPecMittente")
     private Pec idPecMittente;
+    
+    @JoinColumn(name = "id_contatto_mittente", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idContattoMittente")
+    private Contatto idContattoMittente;
    
     // Proprietà transient
     @Transient
@@ -924,7 +930,33 @@ public class DocDetail implements Serializable, DocDetailInterface {
     public void setVersamentoForzabile(Boolean versamentoForzabile) {
         this.versamentoForzabile = versamentoForzabile;
     }
-    
+
+    @Override
+    public Applicazione getIdApplicazione() {
+        return idApplicazione;
+    }
+
+    @Override
+    public void setIdApplicazione(Applicazione idApplicazione) {
+        this.idApplicazione = idApplicazione;
+    }
+
+    public Pec getIdPecMittente() {
+        return idPecMittente;
+    }
+
+    public void setIdPecMittente(Pec idPecMittente) {
+        this.idPecMittente = idPecMittente;
+    }
+
+    public Contatto getIdContattoMittente() {
+        return idContattoMittente;
+    }
+
+    public void setIdContattoMittente(Contatto idContattoMittente) {
+        this.idContattoMittente = idContattoMittente;
+    }
+        
     @Override
     public int hashCode() {
         int hash = 0;
@@ -949,25 +981,4 @@ public class DocDetail implements Serializable, DocDetailInterface {
     public String toString() {
         return "it.bologna.ausl.model.entities.scripta.DocsList[ id=" + id + " ]";
     }
-
-    @Override
-    public Applicazione getIdApplicazione() {
-        return idApplicazione;
-    }
-
-    @Override
-    public void setIdApplicazione(Applicazione idApplicazione) {
-        this.idApplicazione = idApplicazione;
-    }
-
-    public Pec getIdPecMittente() {
-        return idPecMittente;
-    }
-
-    public void setIdPecMittente(Pec idPecMittente) {
-        this.idPecMittente = idPecMittente;
-    }
-    
-    
-
 }
