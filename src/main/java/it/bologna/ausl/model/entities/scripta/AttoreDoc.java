@@ -38,7 +38,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class AttoreDoc implements Serializable {
 
     public static enum RuoloAttoreDoc {
-        REDATTORE, CONTROLLO_SEGRETERIA, PARERATORE, VISTATORE, FIRMATARIO,
+        REDATTORE,
+        REDAZIONE, RICEZIONE, 
+        CONTROLLO_SEGRETERIA, 
+        PARERATORE, 
+        VISTATORE, 
+        FIRMATARIO,
 	RESPONSABILE_PROCEDIMENTO, DA, DS, DSC, DG,
 	RESCRITTO, SEGRETARIO, ASSEGNATARIO, SPEDIZIONE_MANUALE, RESPONSABILE
     }
@@ -69,7 +74,7 @@ public class AttoreDoc implements Serializable {
     private String ruolo;
    
     @Column(name = "sulla_scrivania")
-    private Boolean sullaScrivania;
+    private Boolean sullaScrivania = false;
     
     @Column(name = "ordinale")
     private Integer ordinale;

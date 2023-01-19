@@ -141,6 +141,10 @@ public class Doc implements Serializable {
     private List<Allegato> allegati;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "attori")
+    private List<AttoreDoc> attori;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
     private List<ArchivioDoc> archiviDocList;
     
@@ -297,6 +301,14 @@ public class Doc implements Serializable {
 
     public void setAllegati(List<Allegato> allegati) {
         this.allegati = allegati;
+    }
+
+    public List<AttoreDoc> getAttori() {
+        return attori;
+    }
+
+    public void setAttori(List<AttoreDoc> attori) {
+        this.attori = attori;
     }
 
     public ZonedDateTime getVersion() {
