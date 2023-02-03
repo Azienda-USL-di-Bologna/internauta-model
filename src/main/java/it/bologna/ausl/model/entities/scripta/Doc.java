@@ -156,7 +156,7 @@ public class Doc implements Serializable {
     
     @Column(name = "additional_data", columnDefinition = "jsonb")
     @Type(type = "jsonb")
-    private List<JsonNode> additionalData;
+    private JsonNode additionalData;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -365,11 +365,11 @@ public class Doc implements Serializable {
         this.versamentiList = versamentiList;
     }
 
-    public List<JsonNode> getAdditionalData() {
+    public JsonNode getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(List<JsonNode> additionalData) {
+    public void setAdditionalData(JsonNode additionalData) {
         this.additionalData = additionalData;
     }
     
