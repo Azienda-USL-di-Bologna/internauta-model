@@ -86,7 +86,8 @@ public class Allegato implements Serializable {
         SMISTAMENTO,
         MITTENTI,
         RELATA,
-        BIRD
+        BIRD,
+        SINTESI_TRASPARENZA
     }
 
     @Id
