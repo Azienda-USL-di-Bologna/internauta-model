@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Utente;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Cacheable;
 import javax.persistence.FetchType;
@@ -84,8 +83,12 @@ public class RibaltoneDaLanciare implements Serializable {
     private Boolean ribaltatoInternauta;
     @Column(name = "ribaltato_argo")
     private Boolean ribaltatoArgo;
+    @Column(name = "trasforma")
+    private Boolean trasforma;
     @Column(name = "fonte_ribaltone")
     private String fonteRibaltone;
+    @Column(name = "trasformato")
+    private Boolean trasformato;    
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -235,6 +238,14 @@ public class RibaltoneDaLanciare implements Serializable {
         this.ribaltatoArgo = ribaltatoArgo;
     }
 
+    public Boolean getTrasforma() {
+        return trasforma;
+    }
+
+    public void setTrasforma(Boolean trasforma) {
+        this.trasforma = trasforma;
+    }
+    
     public String getFonteRibaltone() {
         return fonteRibaltone;
     }
@@ -243,6 +254,14 @@ public class RibaltoneDaLanciare implements Serializable {
         this.fonteRibaltone = fonteRibaltone;
     }
 
+    public Boolean getTrasformato() {
+        return trasformato;
+    }
+
+    public void setTrasformato(Boolean trasformato) {
+        this.trasformato = trasformato;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
