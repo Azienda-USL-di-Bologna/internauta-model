@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.versatore.Versamento;
@@ -26,6 +27,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -151,6 +153,10 @@ public class Doc implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "versamentiList")
     private List<Versamento> versamentiList;
+    
+    @Column(name = "additional_data", columnDefinition = "jsonb")
+    @Type(type = "jsonb")
+    private JsonNode additionalData;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -358,6 +364,16 @@ public class Doc implements Serializable {
     public void setVersamentiList(List<Versamento> versamentiList) {
         this.versamentiList = versamentiList;
     }
+
+    public JsonNode getAdditionalData() {
+        return additionalData;
+    }
+
+    public void setAdditionalData(JsonNode additionalData) {
+        this.additionalData = additionalData;
+    }
+    
+    
 
     @Override
     public int hashCode() {

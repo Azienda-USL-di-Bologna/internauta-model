@@ -13,6 +13,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,6 +53,10 @@ public class Archivio {
 
     public static enum StatoArchivio {
         APERTO, PRECHIUSO, CHIUSO, BOZZA
+    }
+    
+    public static enum ProvenienzaArchivio {
+        GEDI, SIRER, TOOL_IMPORTAZIONE_INTERNAUTA
     }
 
     @Id
@@ -168,6 +174,13 @@ public class Archivio {
 
     @Column(name = "stato_versamento")
     private String statoVersamento;
+    
+    @Column(name = "id_archivio_importato")
+    private String idArchivioImportato;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "provenienza")
+    private ProvenienzaArchivio provenienza;
  
     public Archivio() {
     }
@@ -426,6 +439,22 @@ public class Archivio {
         } else {
             this.statoVersamento = null;
         }
+    }
+
+    public String getIdArchivioImportato() {
+        return idArchivioImportato;
+    }
+
+    public void setIdArchivioImportato(String idArchivioImportato) {
+        this.idArchivioImportato = idArchivioImportato;
+    }
+
+    public ProvenienzaArchivio getProvenienza() {
+        return provenienza;
+    }
+
+    public void setProvenienza(ProvenienzaArchivio provenienza) {
+        this.provenienza = provenienza;
     }
     
     @Override
