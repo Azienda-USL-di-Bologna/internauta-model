@@ -30,7 +30,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -69,6 +71,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @MapsId
+    private Doc idDoc;
 
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -955,6 +962,14 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     public void setIdContattoMittente(Contatto idContattoMittente) {
         this.idContattoMittente = idContattoMittente;
+    }
+
+    public Doc getIdDoc() {
+        return idDoc;
+    }
+
+    public void setIdDoc(Doc idDoc) {
+        this.idDoc = idDoc;
     }
         
     @Override
