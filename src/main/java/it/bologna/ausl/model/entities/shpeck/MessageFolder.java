@@ -7,6 +7,7 @@ import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,6 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "messages_folders", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Cacheable(false)
 @GenerateProjections({"idFolder"})
 @DynamicUpdate
 public class MessageFolder implements Serializable {

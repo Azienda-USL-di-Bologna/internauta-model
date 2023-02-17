@@ -4,6 +4,7 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
+import it.bologna.ausl.model.entities.versatore.Versamento;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -21,7 +22,10 @@ public interface DocDetailInterface {
         DOCUMENT,
         DOCUMENT_PEC, 
         DOCUMENT_REGISTRO, 
-        DOCUMENT_UTENTE
+        DOCUMENT_UTENTE,
+        RGPICO,
+        RGDETE,
+        RGDELI
     }
 
     public static enum CommandType {
@@ -265,6 +269,22 @@ public interface DocDetailInterface {
     public List<ArchivioDoc> getArchiviDocList();
 
     public void setArchiviDocList(List<ArchivioDoc> archiviDocList);
+    
+    public Versamento.StatoVersamento getStatoUltimoVersamento();
+
+    public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento);
+
+    public ZonedDateTime getDataUltimoVersamento();
+    
+    public void setDataUltimoVersamento(ZonedDateTime dataUltimoVersamento);
+    
+    public Boolean getStatoVersamentoVisto();
+
+    public void setStatoVersamentoVisto(Boolean statoVersamentoVisto);
+    
+    public Boolean getVersamentoForzabile();
+    
+    public void setVersamentoForzabile(Boolean versamentoForzabile);
     
 //    public static class Fascicolazione {
 //
