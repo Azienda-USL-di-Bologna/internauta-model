@@ -24,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -36,11 +37,6 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author solidus83
  */
-//@TypeDefs(
-//        {
-//            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-//        }
-//)
 @Entity
 @Table(name = "docs", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -68,6 +64,10 @@ public class Doc implements Serializable {
     @Column(name = "id")
     private Integer id;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY, optional = true)
+    @JsonBackReference(value = "idDocDetail")    
+    private DocDetail idDocDetail;
+    
     @Basic(optional = true)
     @Column(name = "oggetto")
     private String oggetto;
@@ -190,6 +190,14 @@ public class Doc implements Serializable {
         this.id = id;
     }
 
+    public DocDetail getIdDocDetail() {
+        return idDocDetail;
+    }
+
+    public void setIdDocDetail(DocDetail idDocDetail) {
+        this.idDocDetail = idDocDetail;
+    }
+    
     public String getOggetto() {
         return oggetto;
     }
