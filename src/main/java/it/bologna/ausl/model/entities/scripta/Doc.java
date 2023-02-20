@@ -10,6 +10,7 @@ import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -156,7 +157,7 @@ public class Doc implements Serializable {
     
     @Column(name = "additional_data", columnDefinition = "jsonb")
     @Type(type = "jsonb")
-    private JsonNode additionalData;
+    private HashMap<String,Object> additionalData;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -365,13 +366,15 @@ public class Doc implements Serializable {
         this.versamentiList = versamentiList;
     }
 
-    public JsonNode getAdditionalData() {
+    public HashMap<String, Object> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(JsonNode additionalData) {
+    public void setAdditionalData(HashMap<String, Object> additionalData) {
         this.additionalData = additionalData;
     }
+
+    
     
     
 
