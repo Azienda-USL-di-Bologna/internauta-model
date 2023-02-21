@@ -45,7 +45,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @GenerateProjections({
     "idPersonaCreazione,idAzienda", 
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", 
-    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList"
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList",
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList"
 })
 @DynamicUpdate
 public class Doc implements Serializable {
@@ -145,7 +146,7 @@ public class Doc implements Serializable {
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "attori")
-    private List<AttoreDoc> attori;
+    private List<AttoreDoc> attoriList;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
@@ -318,12 +319,12 @@ public class Doc implements Serializable {
         this.allegati = allegati;
     }
 
-    public List<AttoreDoc> getAttori() {
-        return attori;
+    public List<AttoreDoc> getAttoriList() {
+        return attoriList;
     }
 
-    public void setAttori(List<AttoreDoc> attori) {
-        this.attori = attori;
+    public void setAttoriList(List<AttoreDoc> attoriList) {
+        this.attoriList = attoriList;
     }
 
     public ZonedDateTime getVersion() {
