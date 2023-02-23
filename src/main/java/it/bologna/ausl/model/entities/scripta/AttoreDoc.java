@@ -33,20 +33,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "attori_docs", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({})
+@GenerateProjections({"idPersona"})
 @DynamicUpdate
 public class AttoreDoc implements Serializable {
 
     public static enum RuoloAttoreDoc {
-        REDATTORE,
-        REDAZIONE, RICEZIONE, 
-        CONTROLLO_SEGRETERIA, 
-        PARERI, 
-        VISTI, 
-        FIRMA,
-	RESPONSABILE_PROCEDIMENTO, DIRETTORE_AMMINISTRATIVO, DIRETTORE_SANITARIO, DIRETTORE_SCIENTIFICO, DIRETTORE_GENERALE,
-        DIRETTORE_AFFARI_GENERALI_LEGALI,
-	RESCRITTO, SEGRETARIO, ASSEGNATARIO, SPEDIZIONE_MANUALE, RESPONSABILE, UFFICIO_ATTI
+        REDATTORE, REDAZIONE, RICEZIONE, CONTROLLO_SEGRETERIA, PARERATORE, VISTATORE, FIRMATARIO, RESPONSABILE_PROCEDIMENTO,
+        DA, DS, DSC, DG, RESCRITTO, SEGRETARIO, ASSEGNATARIO, SPEDIZIONE_MANUALE, RESPONSABILE, FIRMA, PARERI,
+        ASSEGNATARIO_INTERNO, APPROVAZIONE, DIRETTORE_AFFARI_GENERALI_LEGALI, DIRETTORE_AMMINISTRATIVO,
+        DIRETTORE_GENERALE, DIRETTORE_SANITARIO, DIRETTORE_SCIENTIFICO, VISTI, UFFICIO_ATTI, VEDENZA_EMERGENZA
+        
+        
     }
     
     private static final long serialVersionUID = 1L;
