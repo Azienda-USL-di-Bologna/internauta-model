@@ -3,7 +3,6 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.JsonNode;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.versatore.Versamento;
@@ -96,6 +95,9 @@ public class Doc implements Serializable {
     
     @Column(name = "id_esterno")
     private String idEsterno;
+    
+    @Column(name = "pregresso")
+    private Boolean pregresso;
     
     @Column(name = "stato_versamento")
     private String statoVersamento;
@@ -381,6 +383,14 @@ public class Doc implements Serializable {
 
     public void setAdditionalData(HashMap<String, Object> additionalData) {
         this.additionalData = additionalData;
+    }
+
+    public Boolean getPregresso() {
+        return pregresso;
+    }
+
+    public void setPregresso(Boolean pregresso) {
+        this.pregresso = pregresso;
     }
 
     
