@@ -326,6 +326,9 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @JsonBackReference(value = "idPecMittente")
     private Pec idPecMittente;
     
+    @Column(name = "pregresso")
+    private Boolean pregresso;
+    
     // Proprietà transient
     @Transient
     private String urlComplete;
@@ -935,6 +938,14 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Override
     public void setIdArchivi(Integer[] idArchivi) {
         this.idArchivi = idArchivi;
+    }
+
+    public Boolean getPregresso() {
+        return pregresso;
+    }
+
+    public void setPregresso(Boolean pregresso) {
+        this.pregresso = pregresso;
     }
     
     @Override

@@ -3,13 +3,13 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.JsonNode;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -44,7 +44,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @GenerateProjections({
     "idPersonaCreazione,idAzienda", 
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", 
-    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList"
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList",
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList"
 })
 @DynamicUpdate
 public class Doc implements Serializable {
@@ -95,6 +96,9 @@ public class Doc implements Serializable {
     @Column(name = "id_esterno")
     private String idEsterno;
     
+    @Column(name = "pregresso")
+    private Boolean pregresso;
+    
     @Column(name = "stato_versamento")
     private String statoVersamento;
     //lista di mittenti che conterra per il momento solo un elemento
@@ -144,7 +148,7 @@ public class Doc implements Serializable {
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "attori")
-    private List<AttoreDoc> attori;
+    private List<AttoreDoc> attoriList;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
@@ -156,7 +160,7 @@ public class Doc implements Serializable {
     
     @Column(name = "additional_data", columnDefinition = "jsonb")
     @Type(type = "jsonb")
-    private JsonNode additionalData;
+    private HashMap<String,Object> additionalData;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -317,12 +321,12 @@ public class Doc implements Serializable {
         this.allegati = allegati;
     }
 
-    public List<AttoreDoc> getAttori() {
-        return attori;
+    public List<AttoreDoc> getAttoriList() {
+        return attoriList;
     }
 
-    public void setAttori(List<AttoreDoc> attori) {
-        this.attori = attori;
+    public void setAttoriList(List<AttoreDoc> attoriList) {
+        this.attoriList = attoriList;
     }
 
     public ZonedDateTime getVersion() {
@@ -373,13 +377,23 @@ public class Doc implements Serializable {
         this.versamentiList = versamentiList;
     }
 
-    public JsonNode getAdditionalData() {
+    public HashMap<String, Object> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(JsonNode additionalData) {
+    public void setAdditionalData(HashMap<String, Object> additionalData) {
         this.additionalData = additionalData;
     }
+
+    public Boolean getPregresso() {
+        return pregresso;
+    }
+
+    public void setPregresso(Boolean pregresso) {
+        this.pregresso = pregresso;
+    }
+
+    
     
     
 

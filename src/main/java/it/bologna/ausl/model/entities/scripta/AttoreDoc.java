@@ -33,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "attori_docs", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({})
+@GenerateProjections({"idPersona"})
 @DynamicUpdate
 public class AttoreDoc implements Serializable {
 
@@ -41,11 +41,13 @@ public class AttoreDoc implements Serializable {
         REDATTORE,
         REDAZIONE, RICEZIONE, 
         CONTROLLO_SEGRETERIA, 
-        PARERATORE, 
-        VISTATORE, 
-        FIRMATARIO,
-	RESPONSABILE_PROCEDIMENTO, DA, DS, DSC, DG,
-	RESCRITTO, SEGRETARIO, ASSEGNATARIO, SPEDIZIONE_MANUALE, RESPONSABILE
+        PARERI, 
+        VISTI, 
+        FIRMA,
+	RESPONSABILE_PROCEDIMENTO, DIRETTORE_AMMINISTRATIVO, DIRETTORE_SANITARIO, DIRETTORE_SCIENTIFICO, DIRETTORE_GENERALE,
+        DIRETTORE_AFFARI_GENERALI_LEGALI,
+	RESCRITTO, SEGRETARIO, ASSEGNATARIO, SPEDIZIONE_MANUALE, RESPONSABILE, UFFICIO_ATTI
+        
     }
     
     private static final long serialVersionUID = 1L;
