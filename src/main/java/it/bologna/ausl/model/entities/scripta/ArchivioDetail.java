@@ -95,8 +95,6 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_creazione_padre")
-    @Basic(optional = false)
-    @NotNull
     private ZonedDateTime dataCreazionePadre;
 
     @JoinColumn(name = "id_archivio_radice", referencedColumnName = "id")

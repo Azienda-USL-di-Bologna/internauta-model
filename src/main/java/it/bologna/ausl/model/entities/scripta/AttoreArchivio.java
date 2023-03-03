@@ -86,6 +86,17 @@ public class AttoreArchivio implements Serializable {
     public AttoreArchivio(Integer id) {
         this.id = id;
     }
+    
+    public AttoreArchivio(Archivio idArchivio, Persona idPersona, Struttura idStruttura, RuoloAttoreArchivio ruolo) {
+        this.idArchivio = idArchivio;
+        this.idPersona = idPersona;
+        this.idStruttura = idStruttura;
+        if (ruolo != null) {
+            this.ruolo = ruolo.toString();
+        } else {
+            this.ruolo = null;
+        }
+    }
 
     public Integer getId() {
         return id;
