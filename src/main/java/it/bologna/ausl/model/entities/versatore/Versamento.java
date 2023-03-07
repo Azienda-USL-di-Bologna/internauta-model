@@ -46,6 +46,7 @@ public class Versamento implements Serializable {
     
     public static enum StatoVersamento {
         IN_CARICO,
+        FORZARE,
 	VERSARE,
         AGGIORNARE,
 	PARZIALE,
