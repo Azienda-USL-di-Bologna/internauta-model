@@ -69,7 +69,8 @@ public class Allegato implements Serializable {
         STAMPA_UNICA_OMISSIS,
         TESTO_OMISSIS,
         ANNESSO,
-        ANNOTAZIONE
+        ANNOTAZIONE,
+        REGISTRO_GIORNALIERO
     }
     
     public static enum SottotipoAllegato {
