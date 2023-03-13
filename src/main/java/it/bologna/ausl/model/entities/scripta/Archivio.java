@@ -179,6 +179,11 @@ public class Archivio {
     @Column(name = "id_archivio_importato")
     private String idArchivioImportato;
     
+    @JoinColumn(name = "id_archivio_copiato", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idArchivioCopiato")
+    private Archivio idArchivioCopiato;
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "provenienza")
     private ProvenienzaArchivio provenienza;
@@ -448,6 +453,14 @@ public class Archivio {
 
     public void setIdArchivioImportato(String idArchivioImportato) {
         this.idArchivioImportato = idArchivioImportato;
+    }
+    
+    public Archivio getIdArchivioCopiato() {
+        return idArchivioCopiato;
+    }
+
+    public void setIdArchivioCopiato(Archivio idArchivioCopiato) {
+        this.idArchivioCopiato = idArchivioCopiato;
     }
 
     public ProvenienzaArchivio getProvenienza() {
