@@ -203,6 +203,9 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Basic(optional = false)
     private Boolean versamentoForzabile = false;
     
+    @Column(name = "pregresso")
+    private Boolean pregresso;
+    
     public ArchivioDetail() {
     }
 
@@ -522,6 +525,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @Override
     public void setVersamentoForzabile(Boolean versamentoForzabile) {
         this.versamentoForzabile = versamentoForzabile;
+    }
+    
+    public Boolean getPregresso() {
+        return pregresso;
+    }
+
+    public void setPregresso(Boolean pregresso) {
+        this.pregresso = pregresso;
     }
    
     @Override
