@@ -25,6 +25,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -276,7 +277,8 @@ public class TipImportazioneDocumento implements Serializable {
     private TipSessioneImportazione idTipSessioneImportazione;
     
     @Basic(optional = true)
-    @Column(name = "errori")
+    @Type(type = "jsonb")
+    @Column(name = "errori", columnDefinition = "jsonb")
     private TipErroriImportazione errori;
     
     @Version()

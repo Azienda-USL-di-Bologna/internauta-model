@@ -94,7 +94,7 @@ public class TipErroriImportazione {
             return null;
     }
     
-    public class InfoColonna {
+    public static class InfoColonna {
         private String note;
         private String warning;
         private String error;

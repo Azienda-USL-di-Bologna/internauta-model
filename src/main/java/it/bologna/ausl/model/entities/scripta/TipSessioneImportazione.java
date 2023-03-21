@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -48,9 +49,14 @@ public class TipSessioneImportazione implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipologia")
     @NotNull
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private DocDetailInterface.TipologiaDoc tipologia;
 
+    @Basic(optional = false)
+    @Column(name = "nome")
+    @NotNull
+    private String nome;
+    
     @Basic(optional = false)
     @Column(name = "separatore")
     @NotNull
@@ -84,10 +90,15 @@ public class TipSessioneImportazione implements Serializable {
     public TipSessioneImportazione() {
     }
 
-    public TipSessioneImportazione(Long id, DocDetailInterface.TipologiaDoc tipologia, String idRepoCsv, ZonedDateTime version) {
+    public TipSessioneImportazione(Long id, DocDetailInterface.TipologiaDoc tipologia, String nome, String idRepoCsv, Azienda idAzienda, Struttura idStrutturaDefault, Archivio idArchivioDefault, Persona idPersonaVicarioDefault, ZonedDateTime version) {
         this.id = id;
         this.tipologia = tipologia;
+        this.nome = nome;
         this.idRepoCsv = idRepoCsv;
+        this.idAzienda = idAzienda;
+        this.idStrutturaDefault = idStrutturaDefault;
+        this.idArchivioDefault = idArchivioDefault;
+        this.idPersonaVicarioDefault = idPersonaVicarioDefault;
         this.version = version;
     }
 
@@ -97,6 +108,14 @@ public class TipSessioneImportazione implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public DocDetailInterface.TipologiaDoc getTipologia() {
