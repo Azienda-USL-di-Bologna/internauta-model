@@ -42,7 +42,8 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idArchivioRadice",
     "idMassimario, idTitolo, idAzienda, attoriList",
     "idMassimario, idTitolo, idAzienda, attoriList, archiviFigliList",
-    "idAzienda"
+    "idAzienda",
+    "idTitolo"
 })
 @DynamicUpdate
 public class Archivio {
@@ -123,6 +124,9 @@ public class Archivio {
 
     @Column(name = "anni_tenuta")
     private Integer anniTenuta;
+    
+    @Column(name = "pregresso")
+    private Boolean pregresso;
 
     @JoinColumn(name = "id_archivio_precedente", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -177,6 +181,11 @@ public class Archivio {
     
     @Column(name = "id_archivio_importato")
     private String idArchivioImportato;
+    
+    @JoinColumn(name = "id_archivio_copiato", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idArchivioCopiato")
+    private Archivio idArchivioCopiato;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "provenienza")
@@ -448,6 +457,14 @@ public class Archivio {
     public void setIdArchivioImportato(String idArchivioImportato) {
         this.idArchivioImportato = idArchivioImportato;
     }
+    
+    public Archivio getIdArchivioCopiato() {
+        return idArchivioCopiato;
+    }
+
+    public void setIdArchivioCopiato(Archivio idArchivioCopiato) {
+        this.idArchivioCopiato = idArchivioCopiato;
+    }
 
     public ProvenienzaArchivio getProvenienza() {
         return provenienza;
@@ -455,6 +472,14 @@ public class Archivio {
 
     public void setProvenienza(ProvenienzaArchivio provenienza) {
         this.provenienza = provenienza;
+    }
+    
+    public Boolean getPregresso() {
+        return pregresso;
+    }
+
+    public void setPregresso(Boolean pregresso) {
+        this.pregresso = pregresso;
     }
     
     @Override
