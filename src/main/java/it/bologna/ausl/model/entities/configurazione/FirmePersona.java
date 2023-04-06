@@ -56,6 +56,7 @@ public class FirmePersona implements Serializable {
         WEBSTART,
         ARUBA,
         INFOCERT,
+        NAMIRIAL,
         JR,
         JNJ
     }
