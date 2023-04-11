@@ -244,6 +244,9 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Basic(optional = false)
     private Boolean versamentoForzabile = false;
     
+    @Column(name = "pregresso")
+    private Boolean pregresso;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_ultimo_versamento")
@@ -970,6 +973,14 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     public void setIdDoc(Doc idDoc) {
         this.idDoc = idDoc;
+    }
+    
+    public Boolean getPregresso() {
+        return pregresso;
+    }
+
+    public void setPregresso(Boolean pregresso) {
+        this.pregresso = pregresso;
     }
         
     @Override

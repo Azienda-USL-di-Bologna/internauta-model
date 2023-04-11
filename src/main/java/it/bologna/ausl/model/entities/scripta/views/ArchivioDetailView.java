@@ -197,6 +197,9 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Column(name = "stato_ultimo_versamento")
     private String statoUltimoVersamento;
     
+    @Column(name = "pregresso")
+    private Boolean pregresso;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_ultimo_versamento")
@@ -540,6 +543,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 
     public void setVersamentoForzabile(Boolean versamentoForzabile) {
         this.versamentoForzabile = versamentoForzabile;
+    }
+    
+    public Boolean getPregresso() {
+        return pregresso;
+    }
+
+    public void setPregresso(Boolean pregresso) {
+        this.pregresso = pregresso;
     }
     
     @Override

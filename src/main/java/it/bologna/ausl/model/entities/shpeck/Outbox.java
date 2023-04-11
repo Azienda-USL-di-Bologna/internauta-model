@@ -115,6 +115,27 @@ public class Outbox implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
+    @Column(name = "message_id")
+    private String messageId;
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
+    public void setMessageId() {
+        if (this.rawData != null) {
+            int messageIndex = rawData.indexOf("Message-Id: ") + 12;
+            int endIndex = rawData.indexOf('>', messageIndex) + 1;
+            this.messageId = rawData.substring(messageIndex, endIndex);
+        } else {
+            this.messageId = null;
+        }
+    }
+
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -130,6 +151,9 @@ public class Outbox implements Serializable {
         this.id = id;
         this.idPec = idPec;
         this.rawData = rawData;
+        int messageIndex = rawData.indexOf("Message-Id: ") + 12;
+        int endIndex = rawData.indexOf('>', messageIndex) + 1;
+        this.messageId = rawData.substring(messageIndex, endIndex);
     }
 
     public Outbox(Integer id, Pec idPec, Boolean ignore, String rawData, Applicazione idApplicazione,
@@ -150,6 +174,9 @@ public class Outbox implements Serializable {
         this.updateTime = updateTime;
         this.attachmentsNumber = attachmentsNumber;
         this.attachmentsName = attachmentsName;
+        int messageIndex = rawData.indexOf("Message-Id: ") + 12;
+        int endIndex = rawData.indexOf('>', messageIndex) + 1;
+        this.messageId = rawData.substring(messageIndex, endIndex);
     }
 
     public Integer getId() {
