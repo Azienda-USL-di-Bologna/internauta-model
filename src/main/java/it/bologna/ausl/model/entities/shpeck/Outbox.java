@@ -7,7 +7,6 @@ import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -26,6 +25,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 /**
  *
@@ -125,17 +125,7 @@ public class Outbox implements Serializable {
     public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
-
-    public void setMessageId() {
-        if (this.rawData != null) {
-            int messageIndex = rawData.indexOf("Message-Id: ") + 12;
-            int endIndex = rawData.indexOf('>', messageIndex) + 1;
-            this.messageId = rawData.substring(messageIndex, endIndex);
-        } else {
-            this.messageId = null;
-        }
-    }
-
+    
     public ZonedDateTime getVersion() {
         return version;
     }
