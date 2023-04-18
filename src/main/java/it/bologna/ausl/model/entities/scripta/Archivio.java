@@ -194,6 +194,22 @@ public class Archivio {
     public Archivio() {
     }
 
+    public Archivio(Azienda idAzienda, Archivio idArchivioPadre, Archivio idArchivioRadice, Integer numero, Integer anno, String numerazioneGerarchica, String tipo, Boolean foglia, String oggetto, String stato, Integer livello, Titolo idTitolo, List<AttoreArchivio> attoriList) {
+        this.idAzienda = idAzienda;
+        this.idArchivioPadre = idArchivioPadre;
+        this.idArchivioRadice = idArchivioRadice;
+        this.numero = numero;
+        this.anno = anno;
+        this.numerazioneGerarchica = numerazioneGerarchica;
+        this.tipo = tipo;
+        this.foglia = foglia;
+        this.oggetto = oggetto;
+        this.stato = stato;
+        this.livello = livello;
+        this.idTitolo = idTitolo;
+        this.attoriList = attoriList;
+    }
+
     public Integer getId() {
         return id;
     }
