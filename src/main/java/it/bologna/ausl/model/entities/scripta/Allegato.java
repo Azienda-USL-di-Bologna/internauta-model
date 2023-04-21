@@ -311,7 +311,7 @@ public class Allegato implements Serializable {
         public static enum TipoDettaglioAllegato {
             ORIGINALE,
             CONVERTITO,
-            //SEGNAPOSTO,
+            SEGNAPOSTO,
             ORIGINALE_FIRMATO,
             ORIGINALE_FIRMATO_P7M,
             CONVERTITO_FIRMATO,
@@ -320,7 +320,7 @@ public class Allegato implements Serializable {
         
         private DettaglioAllegato originale;
         private DettaglioAllegato convertito;
-        //DettaglioAllegato segnaposto;
+        private DettaglioAllegato segnaposto;
         private DettaglioAllegato originaleFirmato;
         private DettaglioAllegato convertitoFirmato;
         private DettaglioAllegato originaleFirmatoP7m;
@@ -334,6 +334,8 @@ public class Allegato implements Serializable {
             switch (tipoDettaglioAllegato) {
                 case ORIGINALE:
                     return this.originale;
+                case SEGNAPOSTO:
+                    return this.segnaposto;
                 case CONVERTITO_FIRMATO:
                     return this.convertitoFirmato;
                 case CONVERTITO:
@@ -354,6 +356,9 @@ public class Allegato implements Serializable {
             switch (tipoDettaglioAllegato) {
                 case ORIGINALE:
                     this.originale = dettaglioAllegato;
+                    break;
+                case SEGNAPOSTO:
+                    this.segnaposto = dettaglioAllegato;
                     break;
                 case CONVERTITO_FIRMATO:
                     this.convertitoFirmato = dettaglioAllegato;
@@ -405,13 +410,13 @@ public class Allegato implements Serializable {
             this.convertitoFirmato = convertitoFirmato;
         }
 
-//        public DettaglioAllegato getSegnaposto() {
-//            return segnaposto;
-//        }
-//
-//        public void setSegnaposto(DettaglioAllegato segnaposto) {
-//            this.segnaposto = segnaposto;
-//        }
+        public DettaglioAllegato getSegnaposto() {
+            return segnaposto;
+        }
+
+        public void setSegnaposto(DettaglioAllegato segnaposto) {
+            this.segnaposto = segnaposto;
+        }
 
         public DettaglioAllegato getOriginaleFirmatoP7m() {
             return originaleFirmatoP7m;

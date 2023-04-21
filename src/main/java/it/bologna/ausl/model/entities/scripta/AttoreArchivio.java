@@ -51,7 +51,7 @@ public class AttoreArchivio implements Serializable {
     private Integer id;
 
     @JoinColumn(name = "id_archivio", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivio")
     private Archivio idArchivio;
 
@@ -98,6 +98,12 @@ public class AttoreArchivio implements Serializable {
         }
     }
 
+    public AttoreArchivio(Persona idPersona, Struttura idStruttura, String ruolo) {
+        this.idPersona = idPersona;
+        this.idStruttura = idStruttura;
+        this.ruolo = ruolo;
+    }
+    
     public Integer getId() {
         return id;
     }
