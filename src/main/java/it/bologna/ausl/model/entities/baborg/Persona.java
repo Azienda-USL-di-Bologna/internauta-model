@@ -107,7 +107,7 @@ public class Persona implements Serializable, EntityInterface {
     @Column(name = "accessibilita", columnDefinition = "boolean")
     private Boolean accessibilita;
 
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idPersona", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
     private List<Utente> utenteList;
 
