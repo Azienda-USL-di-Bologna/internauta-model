@@ -1,20 +1,15 @@
-package it.bologna.ausl.model.entities.scripta;
+package it.bologna.ausl.model.entities.tip;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.model.entities.baborg.Azienda;
-import it.bologna.ausl.model.entities.baborg.Persona;
-import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.scripta.data.TipErroriImportazione;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,12 +27,12 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gdm
  */
 @Entity
-@Table(name = "tip_importazioni_documenti", catalog = "internauta", schema = "scripta")
+@Table(name = "importazioni_documenti", catalog = "internauta", schema = "tip")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections()
 @DynamicUpdate
-public class TipImportazioneDocumento implements Serializable {
+public class ImportazioneDocumento implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -272,9 +266,9 @@ public class TipImportazioneDocumento implements Serializable {
     @Column(name = "annullato")
     private String annullato;
     
-    @JoinColumn(name = "id_tip_sessioni_importazioni", referencedColumnName = "id")
+    @JoinColumn(name = "id_sessione_importazioni", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private TipSessioneImportazione idTipSessioneImportazione;
+    private SessioneImportazione idSessioneImportazione;
     
     @Basic(optional = true)
     @Type(type = "jsonb")
@@ -286,7 +280,7 @@ public class TipImportazioneDocumento implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    public TipImportazioneDocumento() {
+    public ImportazioneDocumento() {
     }
 
     public Long getId() {
@@ -745,12 +739,12 @@ public class TipImportazioneDocumento implements Serializable {
         this.annullato = annullato;
     }
 
-    public TipSessioneImportazione getIdTipSessioneImportazione() {
-        return idTipSessioneImportazione;
+    public SessioneImportazione getIdSessioneImportazione() {
+        return idSessioneImportazione;
     }
 
-    public void setIdTipSessioneImportazione(TipSessioneImportazione idTipSessioneImportazione) {
-        this.idTipSessioneImportazione = idTipSessioneImportazione;
+    public void setIdSessioneImportazione(SessioneImportazione idSessioneImportazione) {
+        this.idSessioneImportazione = idSessioneImportazione;
     }
 
     public ZonedDateTime getVersion() {
@@ -771,10 +765,10 @@ public class TipImportazioneDocumento implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipImportazioneDocumento)) {
+        if (!(object instanceof ImportazioneDocumento)) {
             return false;
         }
-        TipImportazioneDocumento other = (TipImportazioneDocumento) object;
+        ImportazioneDocumento other = (ImportazioneDocumento) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

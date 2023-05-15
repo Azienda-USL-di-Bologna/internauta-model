@@ -1,10 +1,12 @@
-package it.bologna.ausl.model.entities.scripta;
+package it.bologna.ausl.model.entities.tip;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
+import it.bologna.ausl.model.entities.scripta.Archivio;
+import it.bologna.ausl.model.entities.scripta.DocDetailInterface;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -31,12 +33,12 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gdm
  */
 @Entity
-@Table(name = "tip_sessioni_importazioni", catalog = "internauta", schema = "scripta")
+@Table(name = "sessioni_importazioni", catalog = "internauta", schema = "tip")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections()
 @DynamicUpdate
-public class TipSessioneImportazione implements Serializable {
+public class SessioneImportazione implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -87,10 +89,10 @@ public class TipSessioneImportazione implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    public TipSessioneImportazione() {
+    public SessioneImportazione() {
     }
 
-    public TipSessioneImportazione(Long id, DocDetailInterface.TipologiaDoc tipologia, String nome, String idRepoCsv, Azienda idAzienda, Struttura idStrutturaDefault, Archivio idArchivioDefault, Persona idPersonaVicarioDefault, ZonedDateTime version) {
+    public SessioneImportazione(Long id, DocDetailInterface.TipologiaDoc tipologia, String nome, String idRepoCsv, Azienda idAzienda, Struttura idStrutturaDefault, Archivio idArchivioDefault, Persona idPersonaVicarioDefault, ZonedDateTime version) {
         this.id = id;
         this.tipologia = tipologia;
         this.nome = nome;
@@ -184,10 +186,10 @@ public class TipSessioneImportazione implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipSessioneImportazione)) {
+        if (!(object instanceof SessioneImportazione)) {
             return false;
         }
-        TipSessioneImportazione other = (TipSessioneImportazione) object;
+        SessioneImportazione other = (SessioneImportazione) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
