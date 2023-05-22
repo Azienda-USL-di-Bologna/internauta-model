@@ -78,7 +78,8 @@ public class Attivita implements Serializable {
     public enum IdApplicazione{
         PICO("procton"),
         DETE("dete"),
-        DELI("deli");
+        DELI("deli"),
+        DOWNLOADER("downloader");
         
         private final String key;
         
