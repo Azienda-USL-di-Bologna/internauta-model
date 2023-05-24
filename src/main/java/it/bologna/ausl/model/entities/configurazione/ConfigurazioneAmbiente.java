@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -35,10 +36,13 @@ public class ConfigurazioneAmbiente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Column(name = "nome", columnDefinition = "text")
     private String nome;
-    @Column(name = "valore", columnDefinition = "text")
-    private String valore;
+    
+    @Column(name = "valore", columnDefinition = "jsonb")
+    private Map<String,Object> valore;
+    
     @Column(name = "attiva")
     private Boolean attiva;
         
@@ -78,11 +82,11 @@ public class ConfigurazioneAmbiente implements Serializable {
         this.nome = nome;
     }
 
-    public String getValore() {
+    public Map<String, Object> getValore() {
         return valore;
     }
 
-    public void setValore(String valore) {
+    public void setValore(Map<String, Object> valore) {
         this.valore = valore;
     }
 

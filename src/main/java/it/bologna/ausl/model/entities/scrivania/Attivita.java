@@ -8,8 +8,9 @@ import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -131,8 +132,9 @@ public class Attivita implements Serializable {
     private String oggetto;
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
-    @Column(name = "urls", columnDefinition = "text")
-    private String urls;
+    
+    @Column(name = "urls", columnDefinition = "jsonb")
+    private List<Map<String,String>> urls;
     @Column(name = "aperta")
     private Boolean aperta;
     @Basic(optional = false)
@@ -172,12 +174,12 @@ public class Attivita implements Serializable {
     private String oggettoEsternoSecondario;
     @Column(name = "tipo_oggetto_esterno_secondario", columnDefinition = "text")
     private String tipoOggettoEsternoSecondario;
-    @Column(name = "dati_aggiuntivi", columnDefinition = "text")
-    private String datiAggiuntivi;
+    @Column(name = "dati_aggiuntivi", columnDefinition = "jsonb")
+    private Map<String,String> datiAggiuntivi;
     @Column(name = "classe", columnDefinition = "text")
     private String classe;
-    @Column(name = "allegati", columnDefinition = "text")
-    private String allegati;
+    @Column(name = "allegati", columnDefinition = "jsonb")
+    private List<Map<String,Object>> allegati;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -268,11 +270,11 @@ public class Attivita implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public String getUrls() {
+    public List<Map<String, String>> getUrls() {
         return urls;
     }
 
-    public void setUrls(String urls) {
+    public void setUrls(List<Map<String,String>> urls) {
         this.urls = urls;
     }
 
@@ -380,11 +382,11 @@ public class Attivita implements Serializable {
         this.tipoOggettoEsternoSecondario = tipoOggettoEsternoSecondario;
     }
 
-    public String getDatiAggiuntivi() {
+    public Map<String, String> getDatiAggiuntivi() {
         return datiAggiuntivi;
     }
 
-    public void setDatiAggiuntivi(String datiAggiuntivi) {
+    public void setDatiAggiuntivi(Map<String, String> datiAggiuntivi) {
         this.datiAggiuntivi = datiAggiuntivi;
     }
 
@@ -396,11 +398,11 @@ public class Attivita implements Serializable {
         this.classe = classe;
     }
 
-    public String getAllegati() {
+    public List<Map<String, Object>> getAllegati() {
         return allegati;
     }
 
-    public void setAllegati(String allegati) {
+    public void setAllegati(List<Map<String, Object>> allegati) {
         this.allegati = allegati;
     }
 

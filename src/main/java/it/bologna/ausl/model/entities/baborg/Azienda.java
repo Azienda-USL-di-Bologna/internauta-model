@@ -13,6 +13,7 @@ import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -83,8 +84,10 @@ public class Azienda implements Serializable {
     private String schemaGru;
     @Column(name = "id_azienda_gru")
     private Integer idAziendaGru;
-    @Column(name = "parametri")
-    private String parametri;
+    
+    @Column(name = "parametri", columnDefinition = "jsonb")
+    private AziendaParametriJson parametri;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
@@ -158,7 +161,7 @@ public class Azienda implements Serializable {
         this.id = id;
     }
 
-    public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String schemaGru, Integer idAziendaGru, String parametri, String codiceRegione, Boolean ribaltaInternauta, Boolean ribaltaArgo, String[] path, List<IdpEntityId> idpEntityIdList, List<Utente> utenteList, List<Struttura> strutturaList, List<Pec> pecList, List<Attivita> attivitaList) {
+    public Azienda(Integer id, String codice, String nome, String descrizione, String aoo, String schemaGru, Integer idAziendaGru, AziendaParametriJson parametri, String codiceRegione, Boolean ribaltaInternauta, Boolean ribaltaArgo, String[] path, List<IdpEntityId> idpEntityIdList, List<Utente> utenteList, List<Struttura> strutturaList, List<Pec> pecList, List<Attivita> attivitaList) {
         this.id = id;
         this.codice = codice;
         this.nome = nome;
@@ -245,11 +248,11 @@ public class Azienda implements Serializable {
         this.idAziendaGru = idAziendaGru;
     }
 
-    public String getParametri() {
+    public AziendaParametriJson getParametri() {
         return parametri;
     }
 
-    public void setParametri(String parametri) {
+    public void setParametri(AziendaParametriJson parametri) {
         this.parametri = parametri;
     }
 

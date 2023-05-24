@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.configurazione;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import java.io.Serializable;
@@ -52,8 +53,9 @@ public class ImpostazioniApplicazioni implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @NotNull
     private Applicazione idApplicazione;
-
-    @Column(name = "impostazioni_visualizzazione", columnDefinition = "text")
+    
+     
+    @Column(name = "impostazioni_visualizzazione", columnDefinition = "jsonb")
     @Basic(optional = false)
     @NotNull
     private String impostazioniVisualizzazione;

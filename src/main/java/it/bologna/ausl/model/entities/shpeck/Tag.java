@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -109,7 +109,7 @@ public class Tag implements Serializable {
     private ZonedDateTime version;
     
     @Column(name = "additional_data", columnDefinition = "jsonb")
-    private String additionalData;
+    private Map<String,Object> additionalData;
     
     public ZonedDateTime getVersion() {
         return version;
@@ -196,11 +196,11 @@ public class Tag implements Serializable {
         this.messageTagList = messageTagList;
     }
 
-    public String getAdditionalData() {
+    public Map<String,Object> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(String additionalData) {
+    public void setAdditionalData(Map<String,Object> additionalData) {
         this.additionalData = additionalData;
     }
 

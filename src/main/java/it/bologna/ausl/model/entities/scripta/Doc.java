@@ -159,8 +159,8 @@ public class Doc implements Serializable {
     @JsonBackReference(value = "versamentiList")
     private List<Versamento> versamentiList;
     
-    @Column(name = "additional_data", columnDefinition = "jsonb")
     @Type(type = "jsonb")
+    @Column(name = "additional_data", columnDefinition = "jsonb")
     private HashMap<String,Object> additionalData;
 
     @Version()

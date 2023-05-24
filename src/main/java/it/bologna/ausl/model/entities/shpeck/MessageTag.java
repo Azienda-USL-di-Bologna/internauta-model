@@ -6,6 +6,9 @@ import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,7 +62,7 @@ public class MessageTag implements Serializable {
     private ZonedDateTime inserted = ZonedDateTime.now();
 
     @Column(name = "additional_data", columnDefinition = "jsonb")
-    private String additionalData;
+    private ArrayList<HashMap> additionalData;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -121,11 +124,11 @@ public class MessageTag implements Serializable {
         this.idTag = idTag;
     }
 
-    public String getAdditionalData() {
+    public ArrayList<HashMap> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(String additionalData) {
+    public void setAdditionalData(ArrayList<HashMap> additionalData) {
         this.additionalData = additionalData;
     }
 
