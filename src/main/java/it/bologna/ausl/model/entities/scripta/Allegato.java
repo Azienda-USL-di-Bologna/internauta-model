@@ -498,11 +498,21 @@ public class Allegato implements Serializable {
         private Versamento.StatoVersamento statoUltimoVersamento;
         private Versamento.StatoVersamento statoVersamento;
         private Boolean versamentoForzabile = false;
+        private Boolean daVersare = false;
+
         private String bucket;
         
 
         public DettaglioAllegato() {
             //ZonedDateTime.from(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'").parse("2022-05-31T15:12:09.000"));
+        }
+        
+        public Boolean getDaVersare() {
+            return daVersare;
+        }
+
+        public void setDaVersare(Boolean daVersare) {
+            this.daVersare = daVersare;
         }
 
         public String getIdRepository() {
