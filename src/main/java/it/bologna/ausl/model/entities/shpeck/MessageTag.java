@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
+import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class MessageTag implements Serializable {
     private ZonedDateTime inserted = ZonedDateTime.now();
 
     @Column(name = "additional_data", columnDefinition = "jsonb")
-    private ArrayList<HashMap> additionalData;
+    private AdditionalDataShpeck additionalData;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -124,11 +125,11 @@ public class MessageTag implements Serializable {
         this.idTag = idTag;
     }
 
-    public ArrayList<HashMap> getAdditionalData() {
+    public AdditionalDataShpeck getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(ArrayList<HashMap> additionalData) {
+    public void setAdditionalData(AdditionalDataShpeck additionalData) {
         this.additionalData = additionalData;
     }
 

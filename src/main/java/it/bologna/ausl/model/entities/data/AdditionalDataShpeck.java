@@ -22,7 +22,7 @@ import java.util.List;
     @JsonSubTypes.Type(value = AdditionalDataArchiviation.class, name = "AdditionalDataArchiviation"),
     @JsonSubTypes.Type(value = AdditionalDataRegistration.class, name = "AdditionalDataRegistration")
 })
-public abstract class AdditionalData implements Serializable {
+public abstract class AdditionalDataShpeck implements Serializable {
     
 //    protected String classType;
 //
@@ -38,15 +38,15 @@ public abstract class AdditionalData implements Serializable {
 //
 //    public abstract void setClassType(String classType);
     
-    public static String toJsonString(ObjectMapper objectMapper, List<? extends AdditionalData> value) throws JsonProcessingException {
-        return objectMapper.writerFor(objectMapper.getTypeFactory().constructCollectionType(List.class, AdditionalData.class)).writeValueAsString(value);
+    public static String toJsonString(ObjectMapper objectMapper, List<? extends AdditionalDataShpeck> value) throws JsonProcessingException {
+        return objectMapper.writerFor(objectMapper.getTypeFactory().constructCollectionType(List.class, AdditionalDataShpeck.class)).writeValueAsString(value);
     }
     
-    public static List<AdditionalData> fromJsonString(ObjectMapper objectMapper, String value) throws JsonProcessingException {
-        return objectMapper.readValue(value, new TypeReference<List<AdditionalData>>() {});
+    public static List<AdditionalDataShpeck> fromJsonString(ObjectMapper objectMapper, String value) throws JsonProcessingException {
+        return objectMapper.readValue(value, new TypeReference<List<AdditionalDataShpeck>>() {});
     }
     
-//    public static <T extends AdditionalData> List<T> fromJsonString(ObjectMapper objectMapper, String value, Class<T> specificAdditionalDataClass ) throws JsonProcessingException {
+//    public static <T extends AdditionalDataShpeck> List<T> fromJsonString(ObjectMapper objectMapper, String value, Class<T> specificAdditionalDataClass ) throws JsonProcessingException {
 //        return objectMapper.readValue(value, new TypeReference<List<T>>() {});
 //    }
 }

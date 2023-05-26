@@ -1,7 +1,7 @@
 package it.bologna.ausl.model.entities.shpeck.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.bologna.ausl.model.entities.data.AdditionalData;
+import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 //    @JsonSubTypes({
 //        @JsonSubTypes.Type(value = AdditionalDataArchiviation.class, name = "AdditionalDataArchiviation"),
 //    })
-public class AdditionalDataArchiviation extends AdditionalData {
+public class AdditionalDataArchiviation extends AdditionalDataShpeck {
 
     public AdditionalDataTagComponent.IdGdDoc idGdDoc;
     public AdditionalDataTagComponent.idUtente idUtente;

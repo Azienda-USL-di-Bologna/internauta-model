@@ -1,7 +1,7 @@
 package it.bologna.ausl.model.entities.shpeck.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.bologna.ausl.model.entities.data.AdditionalData;
+import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
 
 /**
  *
@@ -14,8 +14,8 @@ import it.bologna.ausl.model.entities.data.AdditionalData;
 //        property = "classType")
 //    @JsonSubTypes({
 //        @JsonSubTypes.Type(value = AdditionalDataRegistration.class, name = "AdditionalDataRegistration")
-//    })
-public class AdditionalDataRegistration extends AdditionalData {
+//    })AdditionalDataShpeck
+public class AdditionalDataRegistration extends AdditionalDataShpeck {
 
     public AdditionalDataTagComponent.idPec idPec;
     public AdditionalDataTagComponent.idUtente idUtente;
