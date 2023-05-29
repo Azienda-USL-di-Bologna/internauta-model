@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.bologna.ausl.model.entities.shpeck.data.AdditionalDataArchiviation;
+import it.bologna.ausl.model.entities.shpeck.data.AdditionalDataReaddressed;
 import it.bologna.ausl.model.entities.shpeck.data.AdditionalDataRegistration;
 import java.io.Serializable;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
         property = "classType")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = AdditionalDataArchiviation.class, name = "AdditionalDataArchiviation"),
+    @JsonSubTypes.Type(value = AdditionalDataReaddressed.class, name = "AdditionalDataReaddressed"),
     @JsonSubTypes.Type(value = AdditionalDataRegistration.class, name = "AdditionalDataRegistration")
 })
 public abstract class AdditionalDataShpeck implements Serializable {

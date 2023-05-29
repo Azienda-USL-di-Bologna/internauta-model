@@ -7,9 +7,7 @@ import it.bologna.ausl.model.entities.baborg.Utente;
 import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -63,7 +61,7 @@ public class MessageTag implements Serializable {
     private ZonedDateTime inserted = ZonedDateTime.now();
 
     @Column(name = "additional_data", columnDefinition = "jsonb")
-    private AdditionalDataShpeck additionalData;
+    private List<AdditionalDataShpeck> additionalData;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -125,11 +123,11 @@ public class MessageTag implements Serializable {
         this.idTag = idTag;
     }
 
-    public AdditionalDataShpeck getAdditionalData() {
+    public List<AdditionalDataShpeck> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(AdditionalDataShpeck additionalData) {
+    public void setAdditionalData(List<AdditionalDataShpeck> additionalData) {
         this.additionalData = additionalData;
     }
 
