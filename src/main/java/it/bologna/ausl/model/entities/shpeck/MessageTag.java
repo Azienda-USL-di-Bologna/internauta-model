@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
+import it.bologna.ausl.model.entities.shpeck.data.AdditionalDataRegistration;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
