@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.shpeck;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Utente;
@@ -26,6 +27,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -37,6 +40,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({})
 @DynamicUpdate
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Folder implements Serializable {
 
     public static enum FolderType {
@@ -116,7 +120,8 @@ public class Folder implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "fullname_orig")
     private String fullnameInProvider;
-
+    
+    @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private Map<String,Object> additionalData;
 

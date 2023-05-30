@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
@@ -22,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -33,6 +36,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({"idMessage", "idMessage, idTag", "idMessage, idTag, idUtente", "idTag", "idTag, idUtente"})
 @DynamicUpdate
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class MessageTag implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,7 +64,8 @@ public class MessageTag implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime inserted = ZonedDateTime.now();
-
+    
+    @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private List<AdditionalDataShpeck> additionalData;
 

@@ -13,7 +13,6 @@ import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -85,6 +84,7 @@ public class Azienda implements Serializable {
     @Column(name = "id_azienda_gru")
     private Integer idAziendaGru;
     
+    @Type(type = "jsonb")
     @Column(name = "parametri", columnDefinition = "jsonb")
     private AziendaParametriJson parametri;
     

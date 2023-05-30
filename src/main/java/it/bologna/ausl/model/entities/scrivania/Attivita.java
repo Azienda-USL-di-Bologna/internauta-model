@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.scrivania;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
@@ -39,7 +40,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @TypeDefs(
         {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+            @TypeDef(name = "array", typeClass = GenericArrayUserType.class),
+            @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
         }
 )
 @Entity
@@ -48,6 +50,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({"idApplicazione, idAzienda", "idPersona"})
 @DynamicUpdate
+
 public class Attivita implements Serializable {
 
     public enum TipoAttivita {
@@ -133,8 +136,10 @@ public class Attivita implements Serializable {
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
     
+    @Type(type = "jsonb")
     @Column(name = "urls", columnDefinition = "jsonb")
     private List<Map<String,String>> urls;
+    
     @Column(name = "aperta")
     private Boolean aperta;
     @Basic(optional = false)
@@ -174,10 +179,13 @@ public class Attivita implements Serializable {
     private String oggettoEsternoSecondario;
     @Column(name = "tipo_oggetto_esterno_secondario", columnDefinition = "text")
     private String tipoOggettoEsternoSecondario;
+    @Type(type = "jsonb")
     @Column(name = "dati_aggiuntivi", columnDefinition = "jsonb")
     private Map<String,String> datiAggiuntivi;
     @Column(name = "classe", columnDefinition = "text")
     private String classe;
+    
+    @Type(type = "jsonb")
     @Column(name = "allegati", columnDefinition = "jsonb")
     private List<Map<String,Object>> allegati;
 

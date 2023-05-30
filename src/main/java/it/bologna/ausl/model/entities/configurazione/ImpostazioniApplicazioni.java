@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.configurazione;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import java.io.Serializable;
@@ -22,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -34,6 +37,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({})
 @DynamicUpdate
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class ImpostazioniApplicazioni implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,7 +58,7 @@ public class ImpostazioniApplicazioni implements Serializable {
     @NotNull
     private Applicazione idApplicazione;
     
-     
+    @Type(type = "jsonb")
     @Column(name = "impostazioni_visualizzazione", columnDefinition = "jsonb")
     @Basic(optional = false)
     @NotNull

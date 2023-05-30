@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.logs;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import java.io.Serializable;
@@ -22,6 +23,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -35,6 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({})
 @DynamicUpdate
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Krint implements Serializable {
     
     public static enum TipoOggettoKrint {
@@ -99,6 +103,7 @@ public class Krint implements Serializable {
     
     @Basic(optional = false)
     @NotNull
+    @Type(type = "jsonb")
     @Column(name = "informazioni_utente", columnDefinition = "jsonb")
     private Map<String,Object> informazioniUtente;
     
@@ -109,6 +114,7 @@ public class Krint implements Serializable {
     @Column(name = "descrizione_real_user")
     private String descrizioneRealUser;
     
+    @Type(type = "jsonb")
     @Column(name = "informazioni_real_user", columnDefinition = "jsonb")
     private Map<String,Object> informazioniRealUser;
     
@@ -124,6 +130,7 @@ public class Krint implements Serializable {
     @Column(name = "descrizione_oggetto")
     private String descrizioneOggetto;
     
+    @Type(type = "jsonb")
     @Column(name = "informazioni_oggetto", columnDefinition = "jsonb")  
     private Map<String,Object> informazioniOggetto;
     
@@ -139,6 +146,7 @@ public class Krint implements Serializable {
     @Column(name = "descrizione_oggetto_contenitore")
     private String descrizioneOggettoContenitore;
     
+    @Type(type = "jsonb")
     @Column(name = "informazioni_oggetto_contenitore", columnDefinition = "jsonb")
     private Map<String,Object> informazioniOggettoContenitore;
     
