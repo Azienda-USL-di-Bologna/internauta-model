@@ -1,6 +1,7 @@
 package it.bologna.ausl.model.entities.tip.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,9 +9,9 @@ import java.util.Map;
  *
  * @author gdm
  */
-public final class TipErroriImportazione {
+public class TipErroriImportazione implements Serializable {
     
-    private Map<ColonneImportazioneOggetto, Flusso> flussi;
+    private Map<String, Flusso> flussi;
 
     public TipErroriImportazione() {
         this.flussi = new HashMap<>();
@@ -22,20 +23,20 @@ public final class TipErroriImportazione {
         flusso.setTipologia(tipoFlusso, new Tipologia(info, warning, error));
     }
 
-    public Map<ColonneImportazioneOggetto, Flusso> getFlussi() {
+    public Map<String, Flusso> getFlussi() {
         return flussi;
     }
 
-    public void setFlussi(Map<ColonneImportazioneOggetto, Flusso> flussi) {
+    public void setFlussi(Map<String, Flusso> flussi) {
         this.flussi = flussi;
     }
     
     @JsonIgnore
     public Flusso getFlusso (ColonneImportazioneOggetto nomeColonna) {
-        Flusso flusso = flussi.get(nomeColonna);
+        Flusso flusso = flussi.get(nomeColonna.toString());
         if (flusso == null) {
             flusso = new Flusso();
-            flussi.put(nomeColonna, flusso);
+            flussi.put(nomeColonna.toString(), flusso);
         }
         return flusso;
     }
@@ -61,14 +62,14 @@ public final class TipErroriImportazione {
     public void setWarning(ColonneImportazioneOggetto nomeColonna, Flusso.TipoFlusso tipoFlusso, String warning) {
         Flusso flusso = getFlusso(nomeColonna);
         Tipologia tipologia = getTipologia(nomeColonna, tipoFlusso, flusso);
-        tipologia.setInfo(warning);
+        tipologia.setWarning(warning);
         flusso.setTipologia(tipoFlusso, tipologia);
     }
     @JsonIgnore
     public void setError(ColonneImportazioneOggetto nomeColonna, Flusso.TipoFlusso tipoFlusso, String error) {
         Flusso flusso = getFlusso(nomeColonna);
         Tipologia tipologia = getTipologia(nomeColonna, tipoFlusso, flusso);
-        tipologia.setInfo(error);
+        tipologia.setError(error);
         flusso.setTipologia(tipoFlusso, tipologia);
     }
     
