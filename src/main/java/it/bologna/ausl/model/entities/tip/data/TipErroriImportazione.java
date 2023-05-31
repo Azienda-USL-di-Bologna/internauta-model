@@ -1,4 +1,4 @@
-package it.bologna.ausl.model.entities.scripta.data;
+package it.bologna.ausl.model.entities.tip.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.HashMap;
@@ -8,109 +8,149 @@ import java.util.Map;
  *
  * @author gdm
  */
-public class TipErroriImportazione {
-    private Map<String, InfoColonna> infoColonne;
+public final class TipErroriImportazione {
+    
+    private Map<ColonneImportazioneOggetto, Flusso> flussi;
 
     public TipErroriImportazione() {
-        this.infoColonne = new HashMap<>();
+        this.flussi = new HashMap<>();
     }
 
-    public TipErroriImportazione(String nomeColonna, String note, String warning, String error) {
+    public TipErroriImportazione(ColonneImportazioneOggetto nomeColonna, Flusso.TipoFlusso tipoFlusso, String info, String warning, String error) {
         this();
-        this.infoColonne.put(nomeColonna, new InfoColonna(note, warning, error));
+        Flusso flusso = getFlusso(nomeColonna);
+        flusso.setTipologia(tipoFlusso, new Tipologia(info, warning, error));
     }
 
-    public Map<String, InfoColonna> getInfoColonne() {
-        return infoColonne;
+    public Map<ColonneImportazioneOggetto, Flusso> getFlussi() {
+        return flussi;
     }
 
-    public void setInfoColonne(Map<String, InfoColonna> infoColonne) {
-        this.infoColonne = infoColonne;
-    }
-    
-    public void setAllInfoColonna(String nomeColonna, String note, String warning, String error) {
-        infoColonne.put(nomeColonna, new InfoColonna(note, warning, error));
+    public void setFlussi(Map<ColonneImportazioneOggetto, Flusso> flussi) {
+        this.flussi = flussi;
     }
     
     @JsonIgnore
-    public void setNoteInfoColonna(String nomeColonna, String note) {
-        InfoColonna infoColonna = infoColonne.get(nomeColonna);
-        if (infoColonna != null) {
-            infoColonna.setNote(note);
-        } else {
-            setAllInfoColonna(nomeColonna, note, null, null);
+    public Flusso getFlusso (ColonneImportazioneOggetto nomeColonna) {
+        Flusso flusso = flussi.get(nomeColonna);
+        if (flusso == null) {
+            flusso = new Flusso();
+            flussi.put(nomeColonna, flusso);
+        }
+        return flusso;
+    }
+    
+    @JsonIgnore
+    public Tipologia getTipologia (ColonneImportazioneOggetto nomeColonna, Flusso.TipoFlusso tipoFlusso, Flusso flusso) {
+        Tipologia tipologia = flusso.getTipologia(tipoFlusso);
+        if (tipologia == null) {
+            tipologia = new Tipologia();
+        }
+        return tipologia;
+    }
+    
+    @JsonIgnore
+    public void setInfo(ColonneImportazioneOggetto nomeColonna, Flusso.TipoFlusso tipoFlusso, String info) {
+        Flusso flusso = getFlusso(nomeColonna);
+        Tipologia tipologia = getTipologia(nomeColonna, tipoFlusso, flusso);
+        tipologia.setInfo(info);
+        flusso.setTipologia(tipoFlusso, tipologia);
+    }
+    
+    @JsonIgnore
+    public void setWarning(ColonneImportazioneOggetto nomeColonna, Flusso.TipoFlusso tipoFlusso, String warning) {
+        Flusso flusso = getFlusso(nomeColonna);
+        Tipologia tipologia = getTipologia(nomeColonna, tipoFlusso, flusso);
+        tipologia.setInfo(warning);
+        flusso.setTipologia(tipoFlusso, tipologia);
+    }
+    @JsonIgnore
+    public void setError(ColonneImportazioneOggetto nomeColonna, Flusso.TipoFlusso tipoFlusso, String error) {
+        Flusso flusso = getFlusso(nomeColonna);
+        Tipologia tipologia = getTipologia(nomeColonna, tipoFlusso, flusso);
+        tipologia.setInfo(error);
+        flusso.setTipologia(tipoFlusso, tipologia);
+    }
+    
+    
+    public static class Flusso {
+        public static enum TipoFlusso {
+            VALIDAZIONE, IMPORTAZIONE
+        }
+        private Tipologia validazione;
+        private Tipologia importazione;
+
+        public Flusso() {
+        }
+
+        public Flusso(Tipologia validazione, Tipologia importazione) {
+            this.validazione = validazione;
+            this.importazione = importazione;
+        }
+
+        @JsonIgnore
+        public void setTipologia(TipoFlusso flusso, Tipologia tipologia) {
+            switch (flusso) {
+                case VALIDAZIONE:
+                    setValidazione(tipologia);
+                    break;
+                case IMPORTAZIONE:
+                    setImportazione(tipologia);
+                    break;
+            }
+        }
+        
+        @JsonIgnore
+        public Tipologia getTipologia(TipoFlusso flusso) {
+            Tipologia tipologia = null;
+            switch (flusso) {
+                case VALIDAZIONE:
+                    tipologia = getValidazione();
+                    break;
+                case IMPORTAZIONE:
+                    tipologia = getImportazione();
+                    break;
+            }
+            return tipologia;
+        }
+        
+        public Tipologia getValidazione() {
+            return validazione;
+        }
+
+        public void setValidazione(Tipologia validazione) {
+            this.validazione = validazione;
+        }
+
+        public Tipologia getImportazione() {
+            return importazione;
+        }
+
+        public void setImportazione(Tipologia importazione) {
+            this.importazione = importazione;
         }
     }
     
-    @JsonIgnore
-    public void setWarningInfoColonna(String nomeColonna, String warning) {
-        InfoColonna infoColonna = infoColonne.get(nomeColonna);
-        if (infoColonna != null) {
-            infoColonna.setWarning(warning);
-        } else {
-            setAllInfoColonna(nomeColonna, null, warning, null);
-        }
-    }
-    
-    @JsonIgnore
-    public void setErrorInfoColonna(String nomeColonna, String error) {
-        InfoColonna infoColonna = infoColonne.get(nomeColonna);
-        if (infoColonna != null) {
-            infoColonna.setError(error);
-        } else {
-            setAllInfoColonna(nomeColonna, null, null, error);
-        }
-    }
-    
-    @JsonIgnore
-    public InfoColonna getInfoColonna(String nomeColonna) {
-        return this.infoColonne.get(nomeColonna);
-    }
-    
-    @JsonIgnore
-    public String getNoteInfoColonna(String nomeColonna) {
-        InfoColonna infoColonna = this.infoColonne.get(nomeColonna);
-        if (infoColonna != null)
-            return infoColonna.getNote();
-        else
-            return null;
-    }
-    
-    @JsonIgnore
-    public String getWarningInfoColonna(String nomeColonna) {
-        InfoColonna infoColonna = this.infoColonne.get(nomeColonna);
-        if (infoColonna != null)
-            return infoColonna.getWarning();
-        else
-            return null;
-    }
-    
-    @JsonIgnore
-    public String getErrorInfoColonna(String nomeColonna) {
-        InfoColonna infoColonna = this.infoColonne.get(nomeColonna);
-        if (infoColonna != null)
-            return infoColonna.getError();
-        else
-            return null;
-    }
-    
-    public static class InfoColonna {
-        private String note;
+    public static class Tipologia {
+        private String info;
         private String warning;
         private String error;
 
-        public InfoColonna(String note, String warning, String error) {
-            this.note = note;
+        public Tipologia() {
+        }
+
+        public Tipologia(String info, String warning, String error) {
+            this.info = info;
             this.warning = warning;
             this.error = error;
         }
 
-        public String getNote() {
-            return note;
+        public String getInfo() {
+            return info;
         }
 
-        public void setNote(String note) {
-            this.note = note;
+        public void setInfo(String info) {
+            this.info = info;
         }
 
         public String getWarning() {

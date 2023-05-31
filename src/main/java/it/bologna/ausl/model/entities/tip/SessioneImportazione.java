@@ -40,6 +40,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 public class SessioneImportazione implements Serializable {
 
+    public static enum TipologiaPregresso {
+        PROTOCOLLO_IN_USCITA,
+        PROTOCOLLO_IN_ENTRATA,
+        DETERMINA,
+        DELIBERA,
+        FASCICOLO
+    }
+    
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -52,7 +60,7 @@ public class SessioneImportazione implements Serializable {
     @Column(name = "tipologia")
     @NotNull
     @Enumerated(EnumType.STRING)
-    private DocDetailInterface.TipologiaDoc tipologia;
+    private TipologiaPregresso tipologia;
 
     @Basic(optional = false)
     @Column(name = "nome")
@@ -92,7 +100,7 @@ public class SessioneImportazione implements Serializable {
     public SessioneImportazione() {
     }
 
-    public SessioneImportazione(Long id, DocDetailInterface.TipologiaDoc tipologia, String nome, String idRepoCsv, Azienda idAzienda, Struttura idStrutturaDefault, Archivio idArchivioDefault, Persona idPersonaVicarioDefault, ZonedDateTime version) {
+    public SessioneImportazione(Long id, TipologiaPregresso tipologia, String nome, String idRepoCsv, Azienda idAzienda, Struttura idStrutturaDefault, Archivio idArchivioDefault, Persona idPersonaVicarioDefault, ZonedDateTime version) {
         this.id = id;
         this.tipologia = tipologia;
         this.nome = nome;
@@ -120,11 +128,11 @@ public class SessioneImportazione implements Serializable {
         this.nome = nome;
     }
 
-    public DocDetailInterface.TipologiaDoc getTipologia() {
+    public TipologiaPregresso getTipologia() {
         return tipologia;
     }
 
-    public void setTipologia(DocDetailInterface.TipologiaDoc tipologia) {
+    public void setTipologia(TipologiaPregresso tipologia) {
         this.tipologia = tipologia;
     }
 

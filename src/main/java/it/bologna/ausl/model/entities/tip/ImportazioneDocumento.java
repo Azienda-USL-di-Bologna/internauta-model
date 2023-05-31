@@ -2,7 +2,7 @@ package it.bologna.ausl.model.entities.tip;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.model.entities.scripta.data.TipErroriImportazione;
+import it.bologna.ausl.model.entities.tip.data.TipErroriImportazione;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -32,8 +32,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections()
 @DynamicUpdate
-public class ImportazioneDocumento implements Serializable {
-
+public class ImportazioneDocumento implements Serializable, ImportazioneOggetto {
+    
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -191,6 +191,10 @@ public class ImportazioneDocumento implements Serializable {
     private String strutturaVisibilita;
 
     @Basic(optional = true)
+    @Column(name = "registro")
+    private String registro;
+    
+    @Basic(optional = true)
     @Column(name = "numero")
     private String numero;
 
@@ -234,6 +238,10 @@ public class ImportazioneDocumento implements Serializable {
     @Column(name = "visto")
     private String visto;
 
+    @Basic(optional = true)
+    @Column(name = "id_fascicolo_pregresso")
+    private String idFascicoloPregresso;
+    
     @Basic(optional = true)
     @Column(name = "fascicolazione")
     private String fascicolazione;
@@ -587,6 +595,14 @@ public class ImportazioneDocumento implements Serializable {
         this.strutturaVisibilita = strutturaVisibilita;
     }
 
+    public String getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(String registro) {
+        this.registro = registro;
+    }
+
     public String getNumero() {
         return numero;
     }
@@ -675,6 +691,14 @@ public class ImportazioneDocumento implements Serializable {
         this.visto = visto;
     }
 
+    public String getIdFascicoloPregresso() {
+        return idFascicoloPregresso;
+    }
+
+    public void setIdFascicoloPregresso(String idFascicoloPregresso) {
+        this.idFascicoloPregresso = idFascicoloPregresso;
+    }
+
     public String getFascicolazione() {
         return fascicolazione;
     }
@@ -751,10 +775,12 @@ public class ImportazioneDocumento implements Serializable {
         return version;
     }
 
+    @Override
     public TipErroriImportazione getErrori() {
         return errori;
     }
 
+    @Override
     public void setErrori(TipErroriImportazione errori) {
         this.errori = errori;
     }
