@@ -113,7 +113,7 @@ public class Archivio {
     @Column(name = "numerazione_gerarchica")
     private String numerazioneGerarchica;
 
-    @Column(name = "oggetto")
+    @Column(name = "oggetto", columnDefinition = "text")
     private String oggetto;
 
     @Column(name = "stato")

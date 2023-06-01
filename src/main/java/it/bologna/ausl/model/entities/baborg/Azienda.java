@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
@@ -40,7 +41,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @TypeDefs(
         {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+            @TypeDef(name = "array", typeClass = GenericArrayUserType.class),
+            @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
         }
 )
 @Entity
@@ -57,30 +59,36 @@ public class Azienda implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    // TODO: sostituire i codiciAzienda con un enum
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "codice")
-    // TODO: sostituire i codiciAzienda con un enum
     private String codice;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "nome")
     private String nome;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1000)
     @Column(name = "descrizione")
     private String descrizione;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "aoo")
     private String aoo;
+    
     @Size(max = 20)
     @Column(name = "schema_gru")
     private String schemaGru;
+    
     @Column(name = "id_azienda_gru")
     private Integer idAziendaGru;
     
@@ -93,42 +101,54 @@ public class Azienda implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "codice_regione")
     private String codiceRegione;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "ribalta_internauta")
     private Boolean ribaltaInternauta;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "ribalta_argo")
     private Boolean ribaltaArgo;
+    
     @Basic(optional = true)
     @Column(name = "path", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] path;
+    
     @Size(min = 1, max = 1000)
     @Column(name = "id_azienda_albi")
     private String idAziendaAlbi;
+    
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idpEntityIdList")
     private List<IdpEntityId> idpEntityIdList;
+    
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")
     private List<Utente> utenteList;
+    
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "strutturaList")
     private List<Struttura> strutturaList;
+    
     @OneToMany(mappedBy = "idAziendaRepository", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecList")
     private List<Pec> pecList;
+    
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @JsonBackReference(value = "attivitaList")
     private List<Attivita> attivitaList;
+    
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "attivitaFattaList")
     private List<AttivitaFatta> attivitaFattaList;
+    
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "menuList")
     private List<Menu> menuList;
+    
     @OneToMany(mappedBy = "idAzienda", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "storicoAttivazioneList")
     private List<StoricoAttivazione> storicoAttivazioneList;

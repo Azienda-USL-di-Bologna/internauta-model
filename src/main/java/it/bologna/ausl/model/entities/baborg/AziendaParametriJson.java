@@ -1,6 +1,5 @@
 package it.bologna.ausl.model.entities.baborg;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -12,25 +11,25 @@ import java.io.Serializable;
  */
 public class AziendaParametriJson implements Serializable {
 
-    private String babelSuiteBdsToolsUrl;
-    private String babelSuiteWebApiUrl;
-    private String descBreve;
-    private String loginSSOField;
-    private String loginDBField;
-    private String loginDBFieldBaborg;
-    private String shalboApiUrl;
-    private MasterChefParmas masterchefParams;
-    private String entityId;
-    private String loginPath;
     private String basePath;
+    private String entityId;
+    private String descBreve;
+    private String loginPath;
+    private String logoutUrl;
+    private MailParams mailParams;
+    private MongoParams mongoParams;
+    private DbConnParams dbConnParams;
+    private String loginDBField;
+    private String shalboApiUrl;
+    private String loginSSOField;
     private String InternetBasePath;
+    private MasterChefParmas masterchefParams;
+    private String InternetLogoutUrl;
+    private String loginDBFieldBaborg;
+    private String babelSuiteWebApiUrl;
+    private String babelSuiteBdsToolsUrl;
     private String crossLoginUrlTemplate;
     private String simpleCrossLoginUrlTemplate;
-    private MongoParams mongoParams;
-    private String logoutUrl;
-    private String InternetLogoutUrl;
-    private MailParams mailParams;
-    private DbConnParams dbConnParams;
     //private String mongoConnectionString;
 
     public AziendaParametriJson() {
@@ -225,7 +224,7 @@ public class AziendaParametriJson implements Serializable {
         return objectMapper.writeValueAsString(aziendaParametriJson);
     }
 
-    public class MasterChefParmas {
+    public class MasterChefParmas implements Serializable {
 
         private String redisHost;
         private Integer redisPort;
@@ -265,7 +264,7 @@ public class AziendaParametriJson implements Serializable {
         }
     }
 
-    public static class MongoParams {
+    public static class MongoParams implements Serializable{
 
         private String connectionString;
         private String root;
@@ -295,7 +294,7 @@ public class AziendaParametriJson implements Serializable {
         }
     }
 
-    public class MailParams {
+    public class MailParams implements Serializable{
 
         private String mailServerSmtpUrl;
         private Integer mailServerSmtpPort;
@@ -365,7 +364,7 @@ public class AziendaParametriJson implements Serializable {
         }
     }
 
-    public class DbConnParams {
+    public class DbConnParams implements Serializable {
 
         private String jdbcUrl;
         private String password;
