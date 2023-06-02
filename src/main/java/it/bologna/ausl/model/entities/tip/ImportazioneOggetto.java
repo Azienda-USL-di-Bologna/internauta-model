@@ -22,6 +22,27 @@ public interface ImportazioneOggetto {
         return res;
     }
     
+    public String getRegistro();
+    public void setRegistro(String registro);
+    
+    public String getNumero();
+    public void setNumero(String numero);
+    
+    public String getAnno();
+    public void setAnno(String anno);
+    
+    public SessioneImportazione getIdSessioneImportazione();
+    public void setIdSessioneImportazione(SessioneImportazione idSessioneImportazione);
+
+    public ImportazioneDocumento.StatiImportazioneDocumento getStato();
+    public void setStato(ImportazioneDocumento.StatiImportazioneDocumento stato);
+    
+    public String getNote();
+    public void setNote(String note);
+    
+    public String getIdRepoCsv();
+    public void setIdRepoCsv(String idRepoCsv);
+    
     public TipErroriImportazione getErrori();
     public void setErrori(TipErroriImportazione errori);
 }

@@ -1,9 +1,13 @@
 package it.bologna.ausl.model.entities.tip.data;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.bologna.ausl.model.entities.tip.ImportazioneDocumento;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.util.StringUtils;
 
 /**
  *
@@ -23,12 +27,22 @@ public class TipErroriImportazione implements Serializable {
         flusso.setTipologia(tipoFlusso, new Tipologia(info, warning, error));
     }
 
-    public Map<String, Flusso> getFlussi() {
+//    public Map<String, Flusso> getFlussi() {
+//        return flussi;
+//    }
+//
+//    public void setFlussi(Map<String, Flusso> flussi) {
+//        this.flussi = flussi;
+//    }
+    
+    @JsonAnyGetter
+    public Map<String, Flusso> any() {
         return flussi;
     }
 
-    public void setFlussi(Map<String, Flusso> flussi) {
-        this.flussi = flussi;
+    @JsonAnySetter
+    public void set(String name, Flusso value) {
+        flussi.put(name, value);
     }
     
     @JsonIgnore
@@ -65,6 +79,7 @@ public class TipErroriImportazione implements Serializable {
         tipologia.setWarning(warning);
         flusso.setTipologia(tipoFlusso, tipologia);
     }
+    
     @JsonIgnore
     public void setError(ColonneImportazioneOggetto nomeColonna, Flusso.TipoFlusso tipoFlusso, String error) {
         Flusso flusso = getFlusso(nomeColonna);
@@ -73,6 +88,45 @@ public class TipErroriImportazione implements Serializable {
         flusso.setTipologia(tipoFlusso, tipologia);
     }
     
+    @JsonIgnore
+    public ImportazioneDocumento.StatiImportazioneDocumento getStatoValidazione() {
+        ImportazioneDocumento.StatiImportazioneDocumento res = ImportazioneDocumento.StatiImportazioneDocumento.VALIDARE;
+        if (flussi != null) {
+            for (Map.Entry<String, Flusso> entry : flussi.entrySet()) {
+                String key = entry.getKey();
+                Flusso value = entry.getValue();
+                if (value != null && value.getValidazione() != null && StringUtils.hasText(value.getValidazione().getError())) {
+                    res = ImportazioneDocumento.StatiImportazioneDocumento.ERRORE_VALIDAZIONE;
+                    break;
+                } else if (value != null && value.getValidazione() != null && StringUtils.hasText(value.getValidazione().getWarning())) {
+                    res = ImportazioneDocumento.StatiImportazioneDocumento.ANOMALIA;
+                } else {
+                    res = ImportazioneDocumento.StatiImportazioneDocumento.IMPORTARE;
+                }
+            }
+        }
+        return res;
+    }
+    
+    @JsonIgnore
+    public ImportazioneDocumento.StatiImportazioneDocumento getStatoImportazione(ImportazioneDocumento.StatiImportazioneDocumento statoValidazione) {
+        ImportazioneDocumento.StatiImportazioneDocumento res = statoValidazione;
+        if (flussi != null) {
+            for (Map.Entry<String, Flusso> entry : flussi.entrySet()) {
+                String key = entry.getKey();
+                Flusso value = entry.getValue();
+                if (value != null && value.getImportazione() != null && StringUtils.hasText(value.getImportazione().getError())) {
+                    res = ImportazioneDocumento.StatiImportazioneDocumento.ERRORE_IMPORTAZIONE;
+                    break;
+                } else if (value != null && value.getImportazione() != null && StringUtils.hasText(value.getImportazione().getWarning())) {
+                    res = ImportazioneDocumento.StatiImportazioneDocumento.ANOMALIA;
+                } else {
+                    res = ImportazioneDocumento.StatiImportazioneDocumento.IMPORTATO;
+                }
+            }
+        }
+        return res;
+    }
     
     public static class Flusso {
         public static enum TipoFlusso {

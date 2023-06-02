@@ -12,6 +12,8 @@ import java.util.List;
 /**
  *
  * @author gdm
+ * 
+ * Interfaccia che accomuna i vari enum che descrivono i campi delle entità delle tabelle di importazione (importazioni_documenti/importazioni_archivi)
  */
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.CLASS,
@@ -25,9 +27,19 @@ import java.util.List;
     @JsonSubTypes.Type(value = ColonneProtocolloEntrata.class, name = "ColonneProtocolloEntrata"),
     @JsonSubTypes.Type(value = ColonneProtocolloUscita.class, name = "ColonneProtocolloUscita")})
 public interface ColonneImportazioneOggetto {
+    
+    /**
+     * torna la lista dei valori associati alla chiave enum (di fatto sono i nomi degli header che rappresentano il campo dell'entità)
+     * @return la lista dei valori associati alla chiave enum
+     */
     public List<String> getValuesList();
     
-    public static Class<? extends ColonneImportazioneOggetto> getEnum(SessioneImportazione.TipologiaPregresso tipologia) {
+    /**
+     * torna l'enum corretto in base alla tipologia
+     * @param tipologia
+     * @return 
+     */
+    public static Class<? extends ColonneImportazioneOggetto> getColumnsEnum(SessioneImportazione.TipologiaPregresso tipologia) {
         switch (tipologia) {
             case PROTOCOLLO_IN_ENTRATA:
                 return ColonneProtocolloEntrata.class;
@@ -42,10 +54,17 @@ public interface ColonneImportazioneOggetto {
         }
     }
     
+    /**
+     * Reperisce l'enum delle colonne specifiche dell'oggetto che si vuole importare e ne trova il singolo valore corrispondente a seconda del header.
+     * Per farlo viene usato un enum che ha come chiave il nome del campo della classe e come valori i possibili nomi degli header associati
+     * @param value il valore del valore enum da cercare (corrisponde al nome dell'header del csv)
+     * @param tipologia la tipologia di importazione. Serve per capire in quale enum cercare, dato che ce n'è uno per ogni tipologia
+     * @return il singolo valore enum che si chiama come il campo sull'entità
+     */
     public static ColonneImportazioneOggetto findKey(String value, SessioneImportazione.TipologiaPregresso tipologia) {
         String toFind = value.toLowerCase();
         ColonneImportazioneOggetto foundKey = null;
-        Class aEnum = getEnum(tipologia);
+        Class aEnum = getColumnsEnum(tipologia);
         
         Object[] enumConstants = aEnum.getEnumConstants();
         ColonneImportazioneOggetto[] values = (ColonneImportazioneOggetto[]) enumConstants;

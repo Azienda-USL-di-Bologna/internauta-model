@@ -6,7 +6,6 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.scripta.Archivio;
-import it.bologna.ausl.model.entities.scripta.DocDetailInterface;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -66,15 +65,6 @@ public class SessioneImportazione implements Serializable {
     @Column(name = "nome")
     @NotNull
     private String nome;
-    
-    @Basic(optional = false)
-    @Column(name = "separatore")
-    @NotNull
-    private String separatore = ";";
-    
-    @Basic(optional = true)
-    @Column(name = "id_repo_csv")
-    private String idRepoCsv;
 
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -100,11 +90,19 @@ public class SessioneImportazione implements Serializable {
     public SessioneImportazione() {
     }
 
-    public SessioneImportazione(Long id, TipologiaPregresso tipologia, String nome, String idRepoCsv, Azienda idAzienda, Struttura idStrutturaDefault, Archivio idArchivioDefault, Persona idPersonaVicarioDefault, ZonedDateTime version) {
+    public SessioneImportazione(TipologiaPregresso tipologia, String nome, Azienda idAzienda, Struttura idStrutturaDefault, Archivio idArchivioDefault, Persona idPersonaVicarioDefault) {
+        this.tipologia = tipologia;
+        this.nome = nome;
+        this.idAzienda = idAzienda;
+        this.idStrutturaDefault = idStrutturaDefault;
+        this.idArchivioDefault = idArchivioDefault;
+        this.idPersonaVicarioDefault = idPersonaVicarioDefault;
+    }
+    
+    public SessioneImportazione(Long id, TipologiaPregresso tipologia, String nome, Azienda idAzienda, Struttura idStrutturaDefault, Archivio idArchivioDefault, Persona idPersonaVicarioDefault, ZonedDateTime version) {
         this.id = id;
         this.tipologia = tipologia;
         this.nome = nome;
-        this.idRepoCsv = idRepoCsv;
         this.idAzienda = idAzienda;
         this.idStrutturaDefault = idStrutturaDefault;
         this.idArchivioDefault = idArchivioDefault;
@@ -134,22 +132,6 @@ public class SessioneImportazione implements Serializable {
 
     public void setTipologia(TipologiaPregresso tipologia) {
         this.tipologia = tipologia;
-    }
-
-    public String getSeparatore() {
-        return separatore;
-    }
-
-    public void setSeparatore(String separatore) {
-        this.separatore = separatore;
-    }
-
-    public String getIdRepoCsv() {
-        return idRepoCsv;
-    }
-
-    public void setIdRepoCsv(String idRepoCsv) {
-        this.idRepoCsv = idRepoCsv;
     }
 
     public Azienda getIdAzienda() {

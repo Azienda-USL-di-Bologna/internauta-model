@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +38,16 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     
     private static final long serialVersionUID = 1L;
 
+    public static enum StatiImportazioneDocumento {
+        VALIDARE,
+        IMPORTARE,
+        ANOMALIA,
+        IMPORTATO,
+        GIA_IMPORTATO,
+        ERRORE_VALIDAZIONE,
+        ERRORE_IMPORTAZIONE
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -273,6 +285,15 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     @Basic(optional = true)
     @Column(name = "annullato")
     private String annullato;
+        
+    @Basic(optional = true)
+    @Column(name = "id_repo_csv")
+    private String idRepoCsv;
+    
+    @Basic(optional = false)
+    @Column(name = "stato")
+    @Enumerated(EnumType.STRING)
+    private StatiImportazioneDocumento stato;
     
     @JoinColumn(name = "id_sessione_importazioni", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -595,26 +616,32 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
         this.strutturaVisibilita = strutturaVisibilita;
     }
 
+    @Override
     public String getRegistro() {
         return registro;
     }
 
+    @Override
     public void setRegistro(String registro) {
         this.registro = registro;
     }
 
+    @Override
     public String getNumero() {
         return numero;
     }
 
+    @Override
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
+    @Override
     public String getAnno() {
         return anno;
     }
 
+    @Override
     public void setAnno(String anno) {
         this.anno = anno;
     }
@@ -747,12 +774,9 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
         this.conservato = conservato;
     }
 
+    @Override
     public String getNote() {
         return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 
     public String getAnnullato() {
@@ -762,17 +786,40 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     public void setAnnullato(String annullato) {
         this.annullato = annullato;
     }
+    
+    @Override
+    public void setNote(String note) {
+        this.note = note;
+    }
 
+    @Override
+    public String getIdRepoCsv() {
+        return idRepoCsv;
+    }
+
+    @Override
+    public void setIdRepoCsv(String idRepoCsv) {
+        this.idRepoCsv = idRepoCsv;
+    }
+
+    @Override
     public SessioneImportazione getIdSessioneImportazione() {
         return idSessioneImportazione;
     }
 
+    @Override
     public void setIdSessioneImportazione(SessioneImportazione idSessioneImportazione) {
         this.idSessioneImportazione = idSessioneImportazione;
     }
 
-    public ZonedDateTime getVersion() {
-        return version;
+    @Override
+    public StatiImportazioneDocumento getStato() {
+        return stato;
+    }
+
+    @Override
+    public void setStato(StatiImportazioneDocumento stato) {
+        this.stato = stato;
     }
 
     @Override
@@ -783,6 +830,10 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     @Override
     public void setErrori(TipErroriImportazione errori) {
         this.errori = errori;
+    }
+    
+    public ZonedDateTime getVersion() {
+        return version;
     }
 
     public void setVersion(ZonedDateTime version) {
