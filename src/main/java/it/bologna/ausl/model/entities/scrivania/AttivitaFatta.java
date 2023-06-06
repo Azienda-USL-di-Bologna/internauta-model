@@ -10,8 +10,8 @@ import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -141,7 +141,7 @@ public class AttivitaFatta implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "urls", columnDefinition = "jsonb")
-    private List<Map<String, String>> urls;
+    private List<HashMap<String, String>> urls;
     
     @Column(name = "aperta")
     private Boolean aperta;
@@ -197,14 +197,14 @@ public class AttivitaFatta implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "dati_aggiuntivi", columnDefinition = "jsonb")
-    private Map<String, String> datiAggiuntivi;
+    private HashMap<String, String> datiAggiuntivi;
     
     @Column(name = "classe", columnDefinition = "text")
     private String classe;
     
     @Type(type = "jsonb")
     @Column(name = "allegati", columnDefinition = "jsonb")
-    private List<Map<String, Object>> allegati;
+    private List<HashMap<String, Object>> allegati;
 
 //    @Version()
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS.SSS")
@@ -294,11 +294,11 @@ public class AttivitaFatta implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public List<Map<String, String>> getUrls() {
+    public List<HashMap<String, String>> getUrls() {
         return urls;
     }
 
-    public void setUrls(List<Map<String, String>> urls) {
+    public void setUrls(List<HashMap<String, String>> urls) {
         this.urls = urls;
     }
 
@@ -406,11 +406,11 @@ public class AttivitaFatta implements Serializable {
         this.tipoOggettoEsternoSecondario = tipoOggettoEsternoSecondario;
     }
 
-    public Map<String, String> getDatiAggiuntivi() {
+    public HashMap<String, String> getDatiAggiuntivi() {
         return datiAggiuntivi;
     }
 
-    public void setDatiAggiuntivi(Map<String, String> datiAggiuntivi) {
+    public void setDatiAggiuntivi(HashMap<String, String> datiAggiuntivi) {
         this.datiAggiuntivi = datiAggiuntivi;
     }
 
@@ -422,11 +422,11 @@ public class AttivitaFatta implements Serializable {
         this.classe = classe;
     }
 
-    public List<Map<String, Object>> getAllegati() {
+    public List<HashMap<String, Object>> getAllegati() {
         return allegati;
     }
 
-    public void setAllegati(List<Map<String, Object>> allegati) {
+    public void setAllegati(List<HashMap<String, Object>> allegati) {
         this.allegati = allegati;
     }
 

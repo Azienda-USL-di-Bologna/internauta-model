@@ -3,6 +3,7 @@ package it.bologna.ausl.model.entities.versatore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -37,7 +38,7 @@ public class Parameter implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "value", columnDefinition = "jsonb")
-    private Map<String, Object> value;
+    private HashMap<String, Object> value;
 
     @Basic(optional = false)
     @Column(name = "description", columnDefinition = "text")
@@ -54,11 +55,11 @@ public class Parameter implements Serializable {
         this.id = id;
     }
 
-    public Map<String, Object> getValue() {
+    public HashMap<String, Object> getValue() {
         return value;
     }
 
-    public void setValue(Map<String, Object> value) {
+    public void setValue(HashMap<String, Object> value) {
         this.value = value;
     }
 

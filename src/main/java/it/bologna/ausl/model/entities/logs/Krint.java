@@ -8,6 +8,7 @@ import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -105,7 +106,7 @@ public class Krint implements Serializable {
     @NotNull
     @Type(type = "jsonb")
     @Column(name = "informazioni_utente", columnDefinition = "jsonb")
-    private Map<String,Object> informazioniUtente;
+    private HashMap<String,Object> informazioniUtente;
     
     @Column(name = "id_real_user")
     private Integer idRealUser;
@@ -116,7 +117,7 @@ public class Krint implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "informazioni_real_user", columnDefinition = "jsonb")
-    private Map<String,Object> informazioniRealUser;
+    private HashMap<String,Object> informazioniRealUser;
     
     @Size(max = 100)
     @Column(name = "id_oggetto")
@@ -132,7 +133,7 @@ public class Krint implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "informazioni_oggetto", columnDefinition = "jsonb")  
-    private Map<String,Object> informazioniOggetto;
+    private HashMap<String,Object> informazioniOggetto;
     
     @Size(max = 100)
     @Column(name = "id_oggetto_contenitore")
@@ -148,7 +149,7 @@ public class Krint implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "informazioni_oggetto_contenitore", columnDefinition = "jsonb")
-    private Map<String,Object> informazioniOggettoContenitore;
+    private HashMap<String,Object> informazioniOggettoContenitore;
     
     @JoinColumn(name = "id_operazione_versionata", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -179,7 +180,7 @@ public class Krint implements Serializable {
 
 
 
-    public Krint(Integer idSessione, Applicazione.Applicazioni applicazione, Integer idUtente, String descrizioneUtente, Map<String,Object> informazioniUtente) {
+    public Krint(Integer idSessione, Applicazione.Applicazioni applicazione, Integer idUtente, String descrizioneUtente, HashMap<String,Object> informazioniUtente) {
         this.applicazione = applicazione.name();
         this.idSessione = idSessione;
         this.idUtente = idUtente;
@@ -228,11 +229,11 @@ public class Krint implements Serializable {
         this.descrizioneUtente = descrizioneUtente;
     }
 
-    public Map<String,Object> getInformazioniUtente() {
+    public HashMap<String,Object> getInformazioniUtente() {
         return informazioniUtente;
     }
 
-    public void setInformazioniUtente(Map<String,Object> informazioniUtente) {
+    public void setInformazioniUtente(HashMap<String,Object> informazioniUtente) {
         this.informazioniUtente = informazioniUtente;
     }
 
@@ -256,7 +257,7 @@ public class Krint implements Serializable {
         return informazioniRealUser;
     }
 
-    public void setInformazioniRealUser(Map<String,Object> informazioniRealUser) {
+    public void setInformazioniRealUser(HashMap<String,Object> informazioniRealUser) {
         this.informazioniRealUser = informazioniRealUser;
     }
 
@@ -289,7 +290,7 @@ public class Krint implements Serializable {
         return informazioniOggetto;
     }
 
-    public void setInformazioniOggetto(Map<String,Object> informazioniOggetto) {
+    public void setInformazioniOggetto(HashMap<String,Object> informazioniOggetto) {
         this.informazioniOggetto = informazioniOggetto;
     }
 
@@ -322,7 +323,7 @@ public class Krint implements Serializable {
         return informazioniOggettoContenitore;
     }
 
-    public void setInformazioniOggettoContenitore(Map<String,Object> informazioniOggettoContenitore) {
+    public void setInformazioniOggettoContenitore(HashMap<String,Object> informazioniOggettoContenitore) {
         this.informazioniOggettoContenitore = informazioniOggettoContenitore;
     }
 

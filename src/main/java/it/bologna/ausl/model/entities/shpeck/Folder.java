@@ -9,6 +9,7 @@ import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Basic;
@@ -123,7 +124,7 @@ public class Folder implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
-    private Map<String,Object> additionalData;
+    private HashMap<String,Object> additionalData;
 
     @Column(name = "unread_messages")
     private Integer unreadMessages = 0;
@@ -237,11 +238,11 @@ public class Folder implements Serializable {
         this.messagePreviousFolderList = messagePreviousFolderList;
     }
 
-    public Map<String,Object> getAdditionalData() {
+    public HashMap<String,Object> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(Map<String,Object> additionalData) {
+    public void setAdditionalData(HashMap<String,Object> additionalData) {
         this.additionalData = additionalData;
     }
 

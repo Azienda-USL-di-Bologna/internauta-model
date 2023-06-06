@@ -8,6 +8,7 @@ import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Basic;
@@ -114,7 +115,7 @@ public class Tag implements Serializable {
     
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
-    private Map<String,Object> additionalData;
+    private HashMap<String,Object> additionalData;
     
     public ZonedDateTime getVersion() {
         return version;
@@ -201,11 +202,11 @@ public class Tag implements Serializable {
         this.messageTagList = messageTagList;
     }
 
-    public Map<String,Object> getAdditionalData() {
+    public HashMap<String,Object> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(Map<String,Object> additionalData) {
+    public void setAdditionalData(HashMap<String,Object> additionalData) {
         this.additionalData = additionalData;
     }
 
