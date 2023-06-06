@@ -7,9 +7,11 @@ import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import it.bologna.ausl.model.entities.baborg.AziendaParametriJson;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Basic;
@@ -78,18 +80,19 @@ public class Attivita implements Serializable {
             return getKey();
         }
     }
-    
-    public enum IdApplicazione{
+
+    public enum IdApplicazione {
         PICO("procton"),
         DETE("dete"),
         DELI("deli"),
         DOWNLOADER("downloader");
-        
+
         private final String key;
-        
+
         IdApplicazione(String key) {
             this.key = key;
         }
+
         public static Attivita.IdApplicazione fromString(String key) {
             return key == null
                     ? null
@@ -135,11 +138,11 @@ public class Attivita implements Serializable {
     private String oggetto;
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
-    
+
     @Type(type = "jsonb")
     @Column(name = "urls", columnDefinition = "jsonb")
-    private List<Map<String,String>> urls;
-    
+    private List<Map<String, String>> urls;
+
     @Column(name = "aperta")
     private Boolean aperta;
     @Basic(optional = false)
@@ -179,15 +182,17 @@ public class Attivita implements Serializable {
     private String oggettoEsternoSecondario;
     @Column(name = "tipo_oggetto_esterno_secondario", columnDefinition = "text")
     private String tipoOggettoEsternoSecondario;
+
     @Type(type = "jsonb")
     @Column(name = "dati_aggiuntivi", columnDefinition = "jsonb")
-    private Map<String,String> datiAggiuntivi;
+    private HashMap<String, Object> datiAggiuntivi;
+    
     @Column(name = "classe", columnDefinition = "text")
     private String classe;
-    
+
     @Type(type = "jsonb")
     @Column(name = "allegati", columnDefinition = "jsonb")
-    private List<Map<String,Object>> allegati;
+    private List<Map<String, Object>> allegati;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -201,7 +206,7 @@ public class Attivita implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
- 
+
     @Transient
     private String compiledUrls;
 
@@ -282,7 +287,7 @@ public class Attivita implements Serializable {
         return urls;
     }
 
-    public void setUrls(List<Map<String,String>> urls) {
+    public void setUrls(List<Map<String, String>> urls) {
         this.urls = urls;
     }
 
@@ -390,11 +395,11 @@ public class Attivita implements Serializable {
         this.tipoOggettoEsternoSecondario = tipoOggettoEsternoSecondario;
     }
 
-    public Map<String, String> getDatiAggiuntivi() {
+    public HashMap<String, Object> getDatiAggiuntivi() {
         return datiAggiuntivi;
     }
 
-    public void setDatiAggiuntivi(Map<String, String> datiAggiuntivi) {
+    public void setDatiAggiuntivi(HashMap<String, Object> datiAggiuntivi) {
         this.datiAggiuntivi = datiAggiuntivi;
     }
 

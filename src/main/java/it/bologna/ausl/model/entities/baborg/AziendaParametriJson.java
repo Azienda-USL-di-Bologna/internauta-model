@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.baborg;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.io.Serializable;
  *
  * @author gdm
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AziendaParametriJson implements Serializable {
 
     private String basePath;
@@ -372,17 +374,19 @@ public class AziendaParametriJson implements Serializable {
         private String driverClass;
         private Integer maximumPoolSize;
         private Integer leakDetectionThreshold;
+        private String codiceAzienda;
 
         public DbConnParams() {
         }
 
-        public DbConnParams(String jdbcUrl, String password, String username, String driverClass, Integer maximumPoolSize, Integer leakDetectionThreshold) {
+        public DbConnParams(String jdbcUrl, String password, String username, String driverClass, Integer maximumPoolSize, Integer leakDetectionThreshold, String codiceAzienda) {
             this.jdbcUrl = jdbcUrl;
             this.password = password;
             this.username = username;
             this.driverClass = driverClass;
             this.maximumPoolSize = maximumPoolSize;
             this.leakDetectionThreshold = leakDetectionThreshold;
+            this.codiceAzienda = codiceAzienda;
         }
 
         public String getJdbcUrl() {
@@ -431,6 +435,14 @@ public class AziendaParametriJson implements Serializable {
 
         public void setLeakDetectionThreshold(Integer leakDetectionThreshold) {
             this.leakDetectionThreshold = leakDetectionThreshold;
+        }
+
+        public String getCodiceAzienda() {
+            return codiceAzienda;
+        }
+
+        public void setCodiceAzienda(String codiceAzienda) {
+            this.codiceAzienda = codiceAzienda;
         }
 
     }
