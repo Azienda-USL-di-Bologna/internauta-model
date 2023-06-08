@@ -2,9 +2,11 @@ package it.bologna.ausl.model.entities.configurazione;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -15,12 +17,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author spritz
  */
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Entity
 @Table(name = "configurazioni_ambiente", catalog = "internauta", schema = "configurazione")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -35,10 +40,14 @@ public class ConfigurazioneAmbiente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Column(name = "nome", columnDefinition = "text")
     private String nome;
-    @Column(name = "valore", columnDefinition = "text")
-    private String valore;
+    
+    @Type(type = "jsonb")
+    @Column(name = "valore", columnDefinition = "jsonb")
+    private Map<String,Object> valore;
+    
     @Column(name = "attiva")
     private Boolean attiva;
         
@@ -78,11 +87,11 @@ public class ConfigurazioneAmbiente implements Serializable {
         this.nome = nome;
     }
 
-    public String getValore() {
+    public Map<String, Object> getValore() {
         return valore;
     }
 
-    public void setValore(String valore) {
+    public void setValore(Map<String, Object> valore) {
         this.valore = valore;
     }
 

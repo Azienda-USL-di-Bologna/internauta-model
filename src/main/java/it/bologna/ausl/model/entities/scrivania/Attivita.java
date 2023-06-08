@@ -2,14 +2,17 @@ package it.bologna.ausl.model.entities.scrivania;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -38,7 +41,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @TypeDefs(
         {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+            @TypeDef(name = "array", typeClass = GenericArrayUserType.class),
+            @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
         }
 )
 @Entity
@@ -47,6 +51,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({"idApplicazione, idAzienda", "idPersona"})
 @DynamicUpdate
+
 public class Attivita implements Serializable {
 
     public enum TipoAttivita {
@@ -74,18 +79,19 @@ public class Attivita implements Serializable {
             return getKey();
         }
     }
-    
-    public enum IdApplicazione{
+
+    public enum IdApplicazione {
         PICO("procton"),
         DETE("dete"),
         DELI("deli"),
         DOWNLOADER("downloader");
-        
+
         private final String key;
-        
+
         IdApplicazione(String key) {
             this.key = key;
         }
+
         public static Attivita.IdApplicazione fromString(String key) {
             return key == null
                     ? null
@@ -131,8 +137,11 @@ public class Attivita implements Serializable {
     private String oggetto;
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
-    @Column(name = "urls", columnDefinition = "text")
-    private String urls;
+
+    @Type(type = "jsonb")
+    @Column(name = "urls", columnDefinition = "jsonb")
+    private List<HashMap<String, String>> urls;
+
     @Column(name = "aperta")
     private Boolean aperta;
     @Basic(optional = false)
@@ -172,12 +181,17 @@ public class Attivita implements Serializable {
     private String oggettoEsternoSecondario;
     @Column(name = "tipo_oggetto_esterno_secondario", columnDefinition = "text")
     private String tipoOggettoEsternoSecondario;
-    @Column(name = "dati_aggiuntivi", columnDefinition = "text")
-    private String datiAggiuntivi;
+
+    @Type(type = "jsonb")
+    @Column(name = "dati_aggiuntivi", columnDefinition = "jsonb")
+    private HashMap<String, Object> datiAggiuntivi;
+    
     @Column(name = "classe", columnDefinition = "text")
     private String classe;
-    @Column(name = "allegati", columnDefinition = "text")
-    private String allegati;
+
+    @Type(type = "jsonb")
+    @Column(name = "allegati", columnDefinition = "jsonb")
+    private List<HashMap<String, Object>> allegati;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -191,7 +205,7 @@ public class Attivita implements Serializable {
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
- 
+
     @Transient
     private String compiledUrls;
 
@@ -268,11 +282,11 @@ public class Attivita implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public String getUrls() {
+    public List<HashMap<String, String>> getUrls() {
         return urls;
     }
 
-    public void setUrls(String urls) {
+    public void setUrls(List<HashMap<String, String>> urls) {
         this.urls = urls;
     }
 
@@ -380,11 +394,11 @@ public class Attivita implements Serializable {
         this.tipoOggettoEsternoSecondario = tipoOggettoEsternoSecondario;
     }
 
-    public String getDatiAggiuntivi() {
+    public HashMap<String, Object> getDatiAggiuntivi() {
         return datiAggiuntivi;
     }
 
-    public void setDatiAggiuntivi(String datiAggiuntivi) {
+    public void setDatiAggiuntivi(HashMap<String, Object> datiAggiuntivi) {
         this.datiAggiuntivi = datiAggiuntivi;
     }
 
@@ -396,11 +410,11 @@ public class Attivita implements Serializable {
         this.classe = classe;
     }
 
-    public String getAllegati() {
+    public List<HashMap<String, Object>> getAllegati() {
         return allegati;
     }
 
-    public void setAllegati(String allegati) {
+    public void setAllegati(List<HashMap<String, Object>> allegati) {
         this.allegati = allegati;
     }
 

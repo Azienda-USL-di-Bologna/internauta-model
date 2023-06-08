@@ -1,7 +1,7 @@
 package it.bologna.ausl.model.entities.shpeck.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.bologna.ausl.model.entities.data.AdditionalData;
+import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
 import java.time.LocalDateTime;
 
 /**
@@ -9,25 +9,14 @@ import java.time.LocalDateTime;
  * @author gdm
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-//    @JsonTypeInfo(
-//        use = JsonTypeInfo.Id.CLASS,
-//        include = JsonTypeInfo.As.PROPERTY,
-//        property = "classType")
-//    @JsonSubTypes({
-//        @JsonSubTypes.Type(value = AdditionalDataArchiviation.class, name = "AdditionalDataArchiviation"),
-//    })
-public class AdditionalDataArchiviation extends AdditionalData {
+public class AdditionalDataArchiviation extends AdditionalDataShpeck {
 
-    public AdditionalDataTagComponent.IdGdDoc idGdDoc;
-    public AdditionalDataTagComponent.idUtente idUtente;
-    public AdditionalDataTagComponent.idAzienda idAzienda;
-    public AdditionalDataTagComponent.idFascicolo idFascicolo;
-    //public AdditionalDataTagComponent.idDoc idDoc;
-    public AdditionalDataTagComponent.idArchivio idArchivio;
-//    @JsonIgnore
-    public LocalDateTime dataArchiviazione;
-    
-//    private String classType;
+    private AdditionalDataTagComponent.IdGdDoc idGdDoc;
+    private AdditionalDataTagComponent.idUtente idUtente;
+    private AdditionalDataTagComponent.idAzienda idAzienda;
+    private AdditionalDataTagComponent.idFascicolo idFascicolo;
+    private AdditionalDataTagComponent.idArchivio idArchivio;
+    private LocalDateTime dataArchiviazione;
 
     public AdditionalDataArchiviation() {
     }
@@ -87,14 +76,6 @@ public class AdditionalDataArchiviation extends AdditionalData {
         this.idArchivio = idArchivio;
     }
 
-//    public AdditionalDataTagComponent.idDoc getIdDoc() {
-//        return idDoc;
-//    }
-//
-//    public void setIdDoc(AdditionalDataTagComponent.idDoc idDoc) {
-//        this.idDoc = idDoc;
-//    }
-
     public LocalDateTime getDataArchiviazione() {
         return dataArchiviazione;
     }
@@ -103,13 +84,4 @@ public class AdditionalDataArchiviation extends AdditionalData {
         this.dataArchiviazione = dataArchiviazione;
     }
 
-//    @Override
-//    public String getClassType() {
-//        return classType;
-//    }
-//
-//    @Override
-//    public void setClassType(String classType) {
-//        this.classType = classType;
-//    }
 }

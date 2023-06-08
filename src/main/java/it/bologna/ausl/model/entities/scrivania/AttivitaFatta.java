@@ -2,14 +2,16 @@ package it.bologna.ausl.model.entities.scrivania;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -36,7 +38,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @TypeDefs(
         {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
+            @TypeDef(name = "array", typeClass = GenericArrayUserType.class),
+            @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
         }
 )
 @Entity
@@ -106,76 +109,102 @@ public class AttivitaFatta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Azienda idAzienda;
+    
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Persona idPersona;
+    
     @Basic(optional = false)
     @NotNull
     @JoinColumn(name = "id_applicazione", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Applicazione idApplicazione;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "tipo", columnDefinition = "text")
     private String tipo;
+    
     @Column(name = "oggetto", columnDefinition = "text")
     private String oggetto;
+    
     @Column(name = "descrizione", columnDefinition = "text")
     private String descrizione;
-    @Column(name = "urls", columnDefinition = "text")
-    private String urls;
+    
+    @Type(type = "jsonb")
+    @Column(name = "urls", columnDefinition = "jsonb")
+    private List<HashMap<String, String>> urls;
+    
     @Column(name = "aperta")
     private Boolean aperta;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime data = ZonedDateTime.now();
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inserimento_riga")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
+    
     @Column(name = "data_ultima_modifica")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataUltimaModifica;
+    
     @Column(name = "note", columnDefinition = "text")
     private String note;
+    
     @Column(name = "provenienza", columnDefinition = "text")
     private String provenienza;
+    
     @Column(name = "data_scadenza")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataScadenza;
+    
     @Column(name = "priorita")
     private Integer priorita;
+    
     @Column(name = "tags", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] tags;
+    
     @Column(name = "oggetto_esterno")
     private String oggettoEsterno;
+    
     @Column(name = "tipo_oggetto_esterno", columnDefinition = "text")
     private String tipoOggettoEsterno;
+    
     @Column(name = "oggetto_esterno_secondario")
     private String oggettoEsternoSecondario;
+    
     @Column(name = "tipo_oggetto_esterno_secondario", columnDefinition = "text")
     private String tipoOggettoEsternoSecondario;
-    @Column(name = "dati_aggiuntivi", columnDefinition = "text")
-    private String datiAggiuntivi;
+    
+    @Type(type = "jsonb")
+    @Column(name = "dati_aggiuntivi", columnDefinition = "jsonb")
+    private HashMap<String, String> datiAggiuntivi;
+    
     @Column(name = "classe", columnDefinition = "text")
     private String classe;
-    @Column(name = "allegati", columnDefinition = "text")
-    private String allegati;
+    
+    @Type(type = "jsonb")
+    @Column(name = "allegati", columnDefinition = "jsonb")
+    private List<HashMap<String, Object>> allegati;
 
 //    @Version()
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS.SSS")
@@ -265,11 +294,11 @@ public class AttivitaFatta implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public String getUrls() {
+    public List<HashMap<String, String>> getUrls() {
         return urls;
     }
 
-    public void setUrls(String urls) {
+    public void setUrls(List<HashMap<String, String>> urls) {
         this.urls = urls;
     }
 
@@ -377,11 +406,11 @@ public class AttivitaFatta implements Serializable {
         this.tipoOggettoEsternoSecondario = tipoOggettoEsternoSecondario;
     }
 
-    public String getDatiAggiuntivi() {
+    public HashMap<String, String> getDatiAggiuntivi() {
         return datiAggiuntivi;
     }
 
-    public void setDatiAggiuntivi(String datiAggiuntivi) {
+    public void setDatiAggiuntivi(HashMap<String, String> datiAggiuntivi) {
         this.datiAggiuntivi = datiAggiuntivi;
     }
 
@@ -393,11 +422,11 @@ public class AttivitaFatta implements Serializable {
         this.classe = classe;
     }
 
-    public String getAllegati() {
+    public List<HashMap<String, Object>> getAllegati() {
         return allegati;
     }
 
-    public void setAllegati(String allegati) {
+    public void setAllegati(List<HashMap<String, Object>> allegati) {
         this.allegati = allegati;
     }
 
