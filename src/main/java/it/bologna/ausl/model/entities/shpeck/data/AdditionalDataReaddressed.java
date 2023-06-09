@@ -36,7 +36,10 @@ public class AdditionalDataReaddressed extends AdditionalDataShpeck {
         this.idPec = idPec;
         this.idUtente = idUtente;
     }
-
+//    @Override
+//    public String getClassType() {
+//        return getClass().getCanonicalName();
+//    }
     public AdditionalDataTagComponent.idPec getIdPec() {
         return idPec;
     }

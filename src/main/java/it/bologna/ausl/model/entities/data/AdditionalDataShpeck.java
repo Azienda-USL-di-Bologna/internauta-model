@@ -34,4 +34,10 @@ public abstract class AdditionalDataShpeck implements Serializable {
         return objectMapper.readValue(value, new TypeReference<List<AdditionalDataShpeck>>() {});
     }
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+    public String getClassType() {
+        return getClass().getSimpleName();
+    }
+ 
+    
 }

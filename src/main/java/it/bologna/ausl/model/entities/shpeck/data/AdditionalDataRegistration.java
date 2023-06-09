@@ -58,7 +58,10 @@ public class AdditionalDataRegistration extends AdditionalDataShpeck {
         
         this.casellaPec = idPec.getIndirizzo();
     }
-
+//    @Override
+//    public String getClassType() {
+//        return getClass().getCanonicalName();
+//    }
     public AdditionalDataTagComponent.idPec getIdPec() {
         return idPec;
     }

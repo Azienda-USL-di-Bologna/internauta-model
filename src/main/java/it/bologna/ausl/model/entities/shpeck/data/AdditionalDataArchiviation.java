@@ -41,6 +41,11 @@ public class AdditionalDataArchiviation extends AdditionalDataShpeck {
         this.dataArchiviazione = dataArchiviazione;
     }
 
+//    @Override
+//    public String getClassType() {
+//        return getClass().getCanonicalName();
+//    }
+
     public AdditionalDataTagComponent.IdGdDoc getIdGdDoc() {
         return idGdDoc;
     }
