@@ -26,20 +26,6 @@ import java.util.List;
 })
 public abstract class AdditionalDataShpeck implements Serializable {
     
-//    protected String classType;
-//
-//    public String getClassType() {
-//        return classType;
-//    }
-//
-//    public void setClassType(String classType) {
-//        this.classType = classType;
-//    }
-
-//    public abstract String getClassType();
-//
-//    public abstract void setClassType(String classType);
-    
     public static String toJsonString(ObjectMapper objectMapper, List<? extends AdditionalDataShpeck> value) throws JsonProcessingException {
         return objectMapper.writerFor(objectMapper.getTypeFactory().constructCollectionType(List.class, AdditionalDataShpeck.class)).writeValueAsString(value);
     }
@@ -47,8 +33,5 @@ public abstract class AdditionalDataShpeck implements Serializable {
     public static List<AdditionalDataShpeck> fromJsonString(ObjectMapper objectMapper, String value) throws JsonProcessingException {
         return objectMapper.readValue(value, new TypeReference<List<AdditionalDataShpeck>>() {});
     }
-    
-//    public static <T extends AdditionalDataShpeck> List<T> fromJsonString(ObjectMapper objectMapper, String value, Class<T> specificAdditionalDataClass ) throws JsonProcessingException {
-//        return objectMapper.readValue(value, new TypeReference<List<T>>() {});
-//    }
+
 }

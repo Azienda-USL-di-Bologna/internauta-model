@@ -1,8 +1,10 @@
 package it.bologna.ausl.model.entities.shpeck.data;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -16,6 +18,9 @@ public class AdditionalDataArchiviation extends AdditionalDataShpeck {
     private AdditionalDataTagComponent.idAzienda idAzienda;
     private AdditionalDataTagComponent.idFascicolo idFascicolo;
     private AdditionalDataTagComponent.idArchivio idArchivio;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime dataArchiviazione;
 
     public AdditionalDataArchiviation() {
