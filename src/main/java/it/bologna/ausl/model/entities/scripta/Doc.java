@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.scripta.projections.generated.NoteVersamentoWithIdPersona;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
@@ -46,7 +47,8 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", 
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList",
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList",
-    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList,archiviDocList"
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList,archiviDocList",
+    "noteVersamentoList"
 })
 @DynamicUpdate
 public class Doc implements Serializable {
@@ -138,6 +140,10 @@ public class Doc implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "messageDocList")
     private List<MessageDoc> messageDocList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "noteVersamento")
+    private List<NoteVersamento> noteVersamentoList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "registroDocList")
@@ -393,6 +399,16 @@ public class Doc implements Serializable {
     public void setPregresso(Boolean pregresso) {
         this.pregresso = pregresso;
     }
+
+    public List<NoteVersamento> getNoteVersamentoList() {
+        return noteVersamentoList;
+    }
+
+    public void setNoteVersamentoList(List<NoteVersamento> noteVersamentoList) {
+        this.noteVersamentoList = noteVersamentoList;
+    }
+
+    
 
     
     
