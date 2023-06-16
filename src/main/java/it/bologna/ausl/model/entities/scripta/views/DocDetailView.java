@@ -246,8 +246,8 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
     private Integer[] idStruttureSegreteria;
 
-    @Column(name = "sulla_scrivania_di", columnDefinition = "jsonb")
     @Type(type = "jsonb")
+    @Column(name = "sulla_scrivania_di", columnDefinition = "jsonb")
     private List<JsonNode> sullaScrivaniaDi;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
