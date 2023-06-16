@@ -91,7 +91,7 @@ public class FirmePersona implements Serializable {
 
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
-    private AdditionalData additionalData;
+    private AdditionalDataFirma additionalData;
     
     @Transient
     private String password;
@@ -156,11 +156,11 @@ public class FirmePersona implements Serializable {
         this.tramite = tramite.toString();
     }
 
-    public AdditionalData getAdditionalData() {
+    public AdditionalDataFirma getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(AdditionalData additionalData) {
+    public void setAdditionalData(AdditionalDataFirma additionalData) {
         this.additionalData = additionalData;
     }
 
@@ -206,7 +206,7 @@ public class FirmePersona implements Serializable {
     }
 
     @JsonInclude(Include.NON_NULL)
-    public static class AdditionalData {
+    public static class AdditionalDataFirma {
 
         private String username;
         private String password;
@@ -216,7 +216,7 @@ public class FirmePersona implements Serializable {
         private String configurazione;
         private Boolean savedCredential;
 
-        public AdditionalData() {
+        public AdditionalDataFirma() {
         }
 
         public String getUsername() {

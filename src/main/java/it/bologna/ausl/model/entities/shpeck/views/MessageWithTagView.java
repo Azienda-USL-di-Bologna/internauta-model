@@ -40,7 +40,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "messages_with_tags_view", catalog = "internauta", schema = "shpeck")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idRecepit, messageAddressList", "messageAddressList, messageFolderList, messageTagList"})
+@GenerateProjections({"idRecepit, messageAddressList", "messageAddressList, messageFolderList, messageTagList, messageDocList"})
 @DynamicUpdate
 public class MessageWithTagView implements Serializable, MessageInterface {
 
