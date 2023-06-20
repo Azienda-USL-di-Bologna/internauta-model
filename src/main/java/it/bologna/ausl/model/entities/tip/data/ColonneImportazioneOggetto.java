@@ -26,13 +26,7 @@ import java.util.List;
     @JsonSubTypes.Type(value = ColonneDetermina.class, name = "ColonneDetermina"),
     @JsonSubTypes.Type(value = ColonneProtocolloEntrata.class, name = "ColonneProtocolloEntrata"),
     @JsonSubTypes.Type(value = ColonneProtocolloUscita.class, name = "ColonneProtocolloUscita")})
-public interface ColonneImportazioneOggetto {
-    
-    /**
-     * torna la lista dei valori associati alla chiave enum (di fatto sono i nomi degli header che rappresentano il campo dell'entità)
-     * @return la lista dei valori associati alla chiave enum
-     */
-    public List<String> getValuesList();
+public interface ColonneImportazioneOggetto extends KeyValueEnum<List<String>> {
     
     /**
      * torna l'enum corretto in base alla tipologia
@@ -69,7 +63,7 @@ public interface ColonneImportazioneOggetto {
         Object[] enumConstants = aEnum.getEnumConstants();
         ColonneImportazioneOggetto[] values = (ColonneImportazioneOggetto[]) enumConstants;
         for (ColonneImportazioneOggetto key : values) {
-            List<String> keyValues = key.getValuesList();
+            List<String> keyValues = key.getValue();
             if (toFind.equals(key.toString().toLowerCase()) || keyValues.contains(toFind)) {
                 foundKey = key;
                 break;

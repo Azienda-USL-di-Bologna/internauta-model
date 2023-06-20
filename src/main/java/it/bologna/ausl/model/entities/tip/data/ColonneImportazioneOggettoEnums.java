@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package it.bologna.ausl.model.entities.tip.data;
 
+import it.bologna.ausl.model.entities.scripta.Mezzo;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,8 +47,12 @@ public class ColonneImportazioneOggettoEnums {
             this.valuesList = values;
         }
         
+        /**
+        * torna la lista dei valori associati alla chiave enum (di fatto sono i nomi degli header che rappresentano il campo dell'entità)
+        * @return la lista dei valori associati alla chiave enum
+        */
         @Override
-        public List<String> getValuesList() {
+        public List<String> getValue() {
             return valuesList;
         }
     }
@@ -102,8 +103,12 @@ public class ColonneImportazioneOggettoEnums {
             this.valuesList = values;
         }
         
+        /**
+        * torna la lista dei valori associati alla chiave enum (di fatto sono i nomi degli header che rappresentano il campo dell'entità)
+        * @return la lista dei valori associati alla chiave enum
+        */
         @Override
-        public List<String> getValuesList() {
+        public List<String> getValue() {
             return valuesList;
         }
     }
@@ -145,8 +150,12 @@ public class ColonneImportazioneOggettoEnums {
             this.valuesList = values;
         }
         
+        /**
+        * torna la lista dei valori associati alla chiave enum (di fatto sono i nomi degli header che rappresentano il campo dell'entità)
+        * @return la lista dei valori associati alla chiave enum
+        */
         @Override
-        public List<String> getValuesList() {
+        public List<String> getValue() {
             return valuesList;
         }
     }
@@ -191,9 +200,52 @@ public class ColonneImportazioneOggettoEnums {
             this.valuesList = values;
         }
         
+        /**
+        * torna la lista dei valori associati alla chiave enum (di fatto sono i nomi degli header che rappresentano il campo dell'entità)
+        * @return la lista dei valori associati alla chiave enum
+        */
         @Override
-        public List<String> getValuesList() {
+        public List<String> getValue() {
             return valuesList;
+        }
+    }
+    
+    public static enum MezziConsentiti implements KeyValueEnum<String>{
+        POSTA_SEMPLICE("posta semplice"),
+        RACCOMANDATA("raccomandata"),
+        EMAIL("email"),
+        PEC("pec");
+        
+        private final String value;
+        
+        MezziConsentiti(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String getValue() {
+            return value;
+        }
+        
+        public Mezzo.CodiciMezzo getCodiceMezzoScripta() {
+            Mezzo.CodiciMezzo res;
+            switch (this) {
+                case POSTA_SEMPLICE:
+                    res = Mezzo.CodiciMezzo.POSTA_ORDINARIA;
+                    break;
+                case RACCOMANDATA:
+                    res = Mezzo.CodiciMezzo.RACCOMANDATA;
+                    break;
+                case EMAIL:
+                    res = Mezzo.CodiciMezzo.MAIL;
+                    break;
+                case PEC:
+                    res = Mezzo.CodiciMezzo.PEC;
+                    break;
+                default:
+                    throw new AssertionError(String.format("mezzo con codice %s non valido", this.name()));
+            }
+            return res;
         }
     }
 }
