@@ -244,6 +244,12 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Basic(optional = false)
     private Boolean versamentoForzabile = false;
     
+    @Column(name = "versamento_forzabile_concordato")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean versamentoForzabileConcordato = false;
+    
+    
     @Column(name = "pregresso")
     private Boolean pregresso;
     
@@ -940,6 +946,16 @@ public class DocDetail implements Serializable, DocDetailInterface {
     public void setVersamentoForzabile(Boolean versamentoForzabile) {
         this.versamentoForzabile = versamentoForzabile;
     }
+
+    public Boolean getVersamentoForzabileConcordato() {
+        return versamentoForzabileConcordato;
+    }
+
+    public void setVersamentoForzabileConcordato(Boolean versamentoForzabileConcordato) {
+        this.versamentoForzabileConcordato = versamentoForzabileConcordato;
+    }
+    
+    
 
     @Override
     public Applicazione getIdApplicazione() {

@@ -317,6 +317,11 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Basic(optional = false)
     private Boolean versamentoForzabile;
     
+    @Column(name = "versamento_forzabile_concordato")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean versamentoForzabileConcordato;
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
     @JsonBackReference(value = "archiviDocList")
     private List<ArchivioDoc> archiviDocList;    
@@ -615,6 +620,15 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.versamentoForzabile = versamentoForzabile;
     }
 
+    public Boolean getVersamentoForzabileConcordato() {
+        return versamentoForzabileConcordato;
+    }
+
+    public void setVersamentoForzabileConcordato(Boolean versamentoForzabileConcordato) {
+        this.versamentoForzabileConcordato = versamentoForzabileConcordato;
+    }
+
+    
 //    public List<Fascicolazione> getFascicolazioni() {
 //        return fascicolazioni;
 //    }
