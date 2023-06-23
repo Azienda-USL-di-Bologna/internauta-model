@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.scripta;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
@@ -349,7 +350,7 @@ public interface DocDetailInterface {
 //        }
 //
 //    }
-
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Firmatario {
 
         String descrizione;
@@ -372,6 +373,7 @@ public interface DocDetailInterface {
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Destinatario {
 
         String nome;
@@ -464,7 +466,7 @@ public interface DocDetailInterface {
 //            this.modalitaApertura = modalitaApertura;
 //        }
 //    }
-
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class PersonaUsante {
 
         Integer idPersona;
