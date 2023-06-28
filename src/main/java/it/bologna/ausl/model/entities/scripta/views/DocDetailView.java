@@ -4,9 +4,6 @@ import it.bologna.ausl.model.entities.scripta.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
@@ -100,11 +97,11 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     private String commandType;
 
     @JoinColumn(name = "id_persona_responsabile_procedimento", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Persona idPersonaResponsabileProcedimento;
 
     @JoinColumn(name = "id_persona_redattrice", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Persona idPersonaRedattrice;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -160,7 +157,7 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     @Type(type = "jsonb")
     @Column(name = "firmatari", columnDefinition = "jsonb")
-    private List<JsonNode> firmatari;
+    private List<Firmatario> firmatari;
 
 //    @Column(name = "firmatari_tscol", columnDefinition = "tsvector")
 //    private String firmatariTscol;
@@ -232,10 +229,6 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
-
-//    @Type(type = "jsonb")
-//    @Column(name = "persone_vedenti", columnDefinition = "jsonb")
-//    private List<JsonNode> personeVedenti;
     
     //@JsonBackReference(value = "personeVedentiList")
     @OneToMany(mappedBy = "idDocDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -248,7 +241,7 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     @Type(type = "jsonb")
     @Column(name = "sulla_scrivania_di", columnDefinition = "jsonb")
-    private List<JsonNode> sullaScrivaniaDi;
+    private List<PersonaUsante> sullaScrivaniaDi;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -535,14 +528,12 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     @Override
     public List<Firmatario> getFirmatari() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(firmatari, new TypeReference<List<DocDetail.Firmatario>>() {
-        });
+        return firmatari;
     }
 
     @Override
     public void setFirmatari(List<Firmatario> firmatari) {
-        this.firmatari = (List<JsonNode>) (Object) firmatari;
+        this.firmatari = firmatari;
     }
 
 //    public String getFirmatariTscol() {
@@ -765,16 +756,6 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.tscol = tscol;
     }
 
-//    public List<PersonaVedente> getPersoneVedenti() {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        return objectMapper.convertValue(personeVedenti, new TypeReference<List<DocList.PersonaVedente>>() {
-//        });
-//    }
-//
-//    public void setPersoneVedenti(List<PersonaVedente> personeVedenti) {
-//        this.personeVedenti = (List<JsonNode>) (Object) personeVedenti;
-//    }
-
     public List<PersonaVedente> getPersoneVedentiList() {
         return personeVedentiList;
     }
@@ -784,13 +765,11 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     }
     
     public List<PersonaUsante> getSullaScrivaniaDi() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(sullaScrivaniaDi, new TypeReference<List<DocDetail.PersonaUsante>>() {
-        });
+        return sullaScrivaniaDi;
     }
 
     public void setSullaScrivaniaDi(List<PersonaUsante> sullaScrivaniaDi) {
-        this.sullaScrivaniaDi = (List<JsonNode>) (Object) sullaScrivaniaDi;
+        this.sullaScrivaniaDi = sullaScrivaniaDi;
     }
 
     public Integer[] getIdStruttureSegreteria() {

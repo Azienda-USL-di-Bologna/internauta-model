@@ -65,4 +65,46 @@ public class ArchivioInfo {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Archivio getIdArchivio() {
+        return idArchivio;
+    }
+
+    public void setIdArchivio(Archivio idArchivio) {
+        this.idArchivio = idArchivio;
+    }
+
+    public ZonedDateTime getDataUltimoUtilizzo() {
+        return dataUltimoUtilizzo;
+    }
+
+    public void setDataUltimoUtilizzo(ZonedDateTime dataUltimoUtilizzo) {
+        this.dataUltimoUtilizzo = dataUltimoUtilizzo;
+    }
+
+    public ZonedDateTime getDataUltimoRicalcoloPermessi() {
+        return dataUltimoRicalcoloPermessi;
+    }
+
+    public void setDataUltimoRicalcoloPermessi(ZonedDateTime dataUltimoRicalcoloPermessi) {
+        this.dataUltimoRicalcoloPermessi = dataUltimoRicalcoloPermessi;
+    }
+
+    public ZonedDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(ZonedDateTime version) {
+        this.version = version;
+    }
+    
+    
 }
