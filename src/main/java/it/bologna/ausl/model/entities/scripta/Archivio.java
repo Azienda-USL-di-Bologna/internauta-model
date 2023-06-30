@@ -66,7 +66,7 @@ public class Archivio {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
     @JsonBackReference(value = "idArchivioDetail")
     private ArchivioDetail idArchivioDetail;
 
