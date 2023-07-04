@@ -70,7 +70,7 @@ public class TipologiaStruttura implements Serializable {
     private String[] ruoli;
     
     @Basic(optional = true)
-    @Column(name = "ruoli", columnDefinition = "text[]")
+    @Column(name = "predicati", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] predicati;
 
