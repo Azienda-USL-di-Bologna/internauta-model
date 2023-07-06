@@ -131,6 +131,7 @@ public class ColonneImportazioneOggettoEnums {
         registro(Arrays.asList("registro")),
         numero(Arrays.asList("numero")),
         anno(Arrays.asList("anno")),
+        
         oggetto(Arrays.asList()),
         idFascicoloPregresso(Arrays.asList("id fascicolo pregresso")),
         fascicolazione(Arrays.asList("cod fascicolo babel")),

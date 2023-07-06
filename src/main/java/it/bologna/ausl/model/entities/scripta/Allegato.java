@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.CaseFormat;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import it.bologna.ausl.model.entities.AbstractJsonType;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.bologna.ausl.model.entities.versatore.VersamentoAllegato;
 import it.nextsw.common.annotations.GenerateProjections;
@@ -14,6 +15,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -330,7 +332,7 @@ public class Allegato implements Serializable {
         }
 
         @JsonIgnore
-        public DettaglioAllegato getByKey(TipoDettaglioAllegato tipoDettaglioAllegato){
+        public DettaglioAllegato getByKey(TipoDettaglioAllegato tipoDettaglioAllegato) {
             switch (tipoDettaglioAllegato) {
                 case ORIGINALE:
                     return this.originale;
@@ -478,7 +480,7 @@ public class Allegato implements Serializable {
         }
     }
     
-    public static class DettaglioAllegato {
+    public static class DettaglioAllegato extends AbstractJsonType {
 
         private String idRepository;
         private String estensione;
@@ -505,6 +507,7 @@ public class Allegato implements Serializable {
 
         public DettaglioAllegato() {
             //ZonedDateTime.from(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'").parse("2022-05-31T15:12:09.000"));
+            dataCreazione = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'").format(ZonedDateTime.now());
         }
         
         public Boolean getDaVersare() {
