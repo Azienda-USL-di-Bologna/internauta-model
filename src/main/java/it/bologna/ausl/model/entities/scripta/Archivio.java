@@ -66,7 +66,7 @@ public class Archivio {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
     @JsonBackReference(value = "idArchivioDetail")
     private ArchivioDetail idArchivioDetail;
 
@@ -166,7 +166,7 @@ public class Archivio {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JsonBackReference(value = "attoriList")
     private List<AttoreArchivio> attoriList;
 
