@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -57,7 +58,7 @@ public class Report implements Serializable {
 
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
-    private Map<String,String> additionalData;
+    private HashMap<String,String> additionalData;
 
     @Column(name = "risolto")
     private Boolean risolto = false;
@@ -101,11 +102,11 @@ public class Report implements Serializable {
         this.dataInserimentoRiga = dataInserimentoRiga;
     }
 
-    public Map<String, String> getAdditionalData() {
+    public HashMap<String, String> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(Map<String, String> additionalData) {
+    public void setAdditionalData(HashMap<String, String> additionalData) {
         this.additionalData = additionalData;
     }
 
