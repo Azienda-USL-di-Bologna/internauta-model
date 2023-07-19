@@ -101,9 +101,13 @@ public interface ArchivioDetailInterface {
 
     public void setIdStruttura(Struttura idStruttura);
     
-    public Integer getIdTitolo();
+    public Titolo getIdTitolo();
     
-    public void setIdTitolo(Integer idTitolo);
+    public void setIdTitolo(Titolo idTitolo);
+    
+    public Massimario getIdMassimario();
+    
+    public void setIdMassimario(Massimario idMassimario);
     
     public Integer[] getIdVicari();
     
