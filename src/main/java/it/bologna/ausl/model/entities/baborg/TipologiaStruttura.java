@@ -68,6 +68,11 @@ public class TipologiaStruttura implements Serializable {
     @Column(name = "ruoli", columnDefinition = "text[]")
     @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
     private String[] ruoli;
+    
+    @Basic(optional = true)
+    @Column(name = "predicati", columnDefinition = "text[]")
+    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    private String[] predicati;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -109,6 +114,15 @@ public class TipologiaStruttura implements Serializable {
         this.ruoli = ruoli;
     }
 
+    public String[] getPredicati() {
+        return predicati;
+    }
+
+    public void setPredicati(String[] predicati) {
+        this.predicati = predicati;
+    }
+
+
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -138,5 +152,6 @@ public class TipologiaStruttura implements Serializable {
     public String toString() {
         return getClass().getCanonicalName() + "[ id=" + id + " ]";
     }
+
 
 }

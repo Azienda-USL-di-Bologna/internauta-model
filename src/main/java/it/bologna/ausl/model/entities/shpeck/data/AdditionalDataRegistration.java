@@ -1,27 +1,23 @@
 package it.bologna.ausl.model.entities.shpeck.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.bologna.ausl.model.entities.data.AdditionalData;
+import it.bologna.ausl.model.entities.baborg.Azienda;
+import it.bologna.ausl.model.entities.baborg.Pec;
+import it.bologna.ausl.model.entities.baborg.Utente;
+import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
 
 /**
  *
  * @author gdm
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-//    @JsonTypeInfo(
-//        use = JsonTypeInfo.Id.NAME,
-//        include = JsonTypeInfo.As.PROPERTY,
-//        property = "classType")
-//    @JsonSubTypes({
-//        @JsonSubTypes.Type(value = AdditionalDataRegistration.class, name = "AdditionalDataRegistration")
-//    })
-public class AdditionalDataRegistration extends AdditionalData {
+public class AdditionalDataRegistration extends AdditionalDataShpeck {
 
-    public AdditionalDataTagComponent.idPec idPec;
-    public AdditionalDataTagComponent.idUtente idUtente;
-    public AdditionalDataTagComponent.idAzienda idAzienda;
-    public AdditionalDataTagComponent.idDocumento idDocumento;
-    public String casellaPec;
+    private AdditionalDataTagComponent.idPec idPec;
+    private AdditionalDataTagComponent.idUtente idUtente;
+    private AdditionalDataTagComponent.idAzienda idAzienda;
+    private AdditionalDataTagComponent.idDocumento idDocumento;
+    private String casellaPec;
 
     public AdditionalDataRegistration() {
     }
@@ -33,7 +29,39 @@ public class AdditionalDataRegistration extends AdditionalData {
         this.idDocumento = idDocumento;
         this.casellaPec = casellaPec;
     }
-
+    
+    /**
+     *
+     * @param idPec
+     * @param idUtente
+     * @param idAzienda
+     * @param casellaPec
+     */
+    public AdditionalDataRegistration(Pec idPec, Utente idUtente, Azienda idAzienda, String casellaPec) {
+        
+        AdditionalDataTagComponent.idPec pec = new AdditionalDataTagComponent.idPec();
+        pec.setId(idPec.getId().toString());
+        pec.setIndirizzo(idPec.getIndirizzo());
+        this.idPec = pec;
+        
+        AdditionalDataTagComponent.idUtente utente = new AdditionalDataTagComponent.idUtente();
+        utente.setId(idUtente.getId());
+        utente.setDescrizione(idUtente.getIdPersona().getDescrizione());
+        this.idUtente = utente;
+        
+        
+        AdditionalDataTagComponent.idAzienda azienda = new AdditionalDataTagComponent.idAzienda();
+        azienda.setId(idAzienda.getId());
+        azienda.setDescrizione(idAzienda.getDescrizione());
+        azienda.setNome(idAzienda.getNome());
+        this.idAzienda = azienda;
+        
+        this.casellaPec = idPec.getIndirizzo();
+    }
+//    @Override
+//    public String getClassType() {
+//        return getClass().getCanonicalName();
+//    }
     public AdditionalDataTagComponent.idPec getIdPec() {
         return idPec;
     }
@@ -66,15 +94,6 @@ public class AdditionalDataRegistration extends AdditionalData {
         this.idDocumento = idDocumento;
     }
 
-//    @Override
-//    public String getClassType() {
-//        return classType;
-//    }
-//
-//    @Override
-//    public void setClassType(String classType) {
-//        this.classType = classType;
-//    }
     public String getCasellaPec() {
         return casellaPec;
     }

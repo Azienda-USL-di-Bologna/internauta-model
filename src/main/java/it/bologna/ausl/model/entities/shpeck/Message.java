@@ -7,7 +7,6 @@ import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
-import it.bologna.ausl.model.entities.scripta.Doc;
 import it.bologna.ausl.model.entities.scripta.MessageDoc;
 import java.io.Serializable;
 import java.time.ZonedDateTime;

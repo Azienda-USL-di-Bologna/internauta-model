@@ -2,11 +2,14 @@ package it.bologna.ausl.model.entities.logs;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -21,6 +24,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -34,6 +39,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable(false)
 @GenerateProjections({})
 @DynamicUpdate
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Krint implements Serializable {
     
     public static enum TipoOggettoKrint {
@@ -74,59 +80,81 @@ public class Krint implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_sessione")
     private Integer idSessione;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "applicazione")
     private String applicazione;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_utente")
     private Integer idUtente;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "descrizione_utente")
     private String descrizioneUtente;
+    
     @Basic(optional = false)
     @NotNull
+    @Type(type = "jsonb")
     @Column(name = "informazioni_utente", columnDefinition = "jsonb")
-    private String informazioniUtente;
+    private HashMap<String,Object> informazioniUtente;
+    
     @Column(name = "id_real_user")
     private Integer idRealUser;
+    
     @Size(max = 2147483647)
     @Column(name = "descrizione_real_user")
     private String descrizioneRealUser;
+    
+    @Type(type = "jsonb")
     @Column(name = "informazioni_real_user", columnDefinition = "jsonb")
-    private String informazioniRealUser;
+    private HashMap<String,Object> informazioniRealUser;
+    
     @Size(max = 100)
     @Column(name = "id_oggetto")
     private String idOggetto;
+    
     @Size(max = 2147483647)
     @Column(name = "tipo_oggetto")
     private String tipoOggetto;
+    
     @Size(max = 2147483647)
     @Column(name = "descrizione_oggetto")
     private String descrizioneOggetto;
+    
+    @Type(type = "jsonb")
     @Column(name = "informazioni_oggetto", columnDefinition = "jsonb")  
-    private String informazioniOggetto;
+    private HashMap<String,Object> informazioniOggetto;
+    
     @Size(max = 100)
     @Column(name = "id_oggetto_contenitore")
     private String idOggettoContenitore;
+    
     @Size(max = 2147483647)
     @Column(name = "tipo_oggetto_contenitore")
     private String tipoOggettoContenitore;
+    
     @Size(max = 2147483647)
     @Column(name = "descrizione_oggetto_contenitore")
     private String descrizioneOggettoContenitore;
+    
+    @Type(type = "jsonb")
     @Column(name = "informazioni_oggetto_contenitore", columnDefinition = "jsonb")
-    private String informazioniOggettoContenitore;
+    private HashMap<String,Object> informazioniOggettoContenitore;
+    
     @JoinColumn(name = "id_operazione_versionata", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private OperazioneVersionataKrint idOperazioneVersionata;
+    
     @Column(name = "dataora_operazione", updatable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -152,7 +180,7 @@ public class Krint implements Serializable {
 
 
 
-    public Krint(Integer idSessione, Applicazione.Applicazioni applicazione, Integer idUtente, String descrizioneUtente, String informazioniUtente) {
+    public Krint(Integer idSessione, Applicazione.Applicazioni applicazione, Integer idUtente, String descrizioneUtente, HashMap<String,Object> informazioniUtente) {
         this.applicazione = applicazione.name();
         this.idSessione = idSessione;
         this.idUtente = idUtente;
@@ -201,11 +229,11 @@ public class Krint implements Serializable {
         this.descrizioneUtente = descrizioneUtente;
     }
 
-    public Object getInformazioniUtente() {
+    public HashMap<String,Object> getInformazioniUtente() {
         return informazioniUtente;
     }
 
-    public void setInformazioniUtente(String informazioniUtente) {
+    public void setInformazioniUtente(HashMap<String,Object> informazioniUtente) {
         this.informazioniUtente = informazioniUtente;
     }
 
@@ -229,7 +257,7 @@ public class Krint implements Serializable {
         return informazioniRealUser;
     }
 
-    public void setInformazioniRealUser(String informazioniRealUser) {
+    public void setInformazioniRealUser(HashMap<String,Object> informazioniRealUser) {
         this.informazioniRealUser = informazioniRealUser;
     }
 
@@ -262,7 +290,7 @@ public class Krint implements Serializable {
         return informazioniOggetto;
     }
 
-    public void setInformazioniOggetto(String informazioniOggetto) {
+    public void setInformazioniOggetto(HashMap<String,Object> informazioniOggetto) {
         this.informazioniOggetto = informazioniOggetto;
     }
 
@@ -295,7 +323,7 @@ public class Krint implements Serializable {
         return informazioniOggettoContenitore;
     }
 
-    public void setInformazioniOggettoContenitore(String informazioniOggettoContenitore) {
+    public void setInformazioniOggettoContenitore(HashMap<String,Object> informazioniOggettoContenitore) {
         this.informazioniOggettoContenitore = informazioniOggettoContenitore;
     }
 
