@@ -22,7 +22,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,20 +30,17 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gdm
  */
 @Entity
-@Table(name = "note_doc", catalog = "internauta", schema = "scripta")
+@Table(name = "docs_annullati", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
-@GenerateProjections({"idPersonaInserente"})
+@GenerateProjections()
 @DynamicUpdate
-
-public class NotaDoc implements Serializable {
+public class DocAnnullato implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    public static enum TipoNotaDoc {
-        ANNULLAMENTO,
-        VERSAMENTO,
-        DOCUMENTO,
-        FLUSSO
+    public static enum TipoAnnullamento {
+        PRE_ANNULLATO,
+        ANNULLATO
     } 
     
     @Id
@@ -57,41 +53,39 @@ public class NotaDoc implements Serializable {
     @Enumerated(EnumType.STRING)
     @Basic(optional = false)
     @NotNull
-    private TipoNotaDoc tipo;
+    private TipoAnnullamento tipo;
     
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data")
     @Basic(optional = false)
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "testo")
-    private String testo;
+    private ZonedDateTime data = ZonedDateTime.now();
     
     @JoinColumn(name = "id_doc", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
     private Doc idDoc;
     
-    @JoinColumn(name = "id_persona_inserente", referencedColumnName = "id")
+    @JoinColumn(name = "id_persona_annullante", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
-    private Persona idPersonaInserente;
+    private Persona idPersonaAnnullante;
     
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
-    @Column(name = "data_inserimento_riga")
-    @Basic(optional = false)
-    private ZonedDateTime dataInserimentoRiga = ZonedDateTime.now();
+    @JoinColumn(name = "idNota", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
+    private NotaDoc idNota;
     
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    public NotaDoc() {
+    public DocAnnullato() {
     }
 
-    public NotaDoc(Doc idDoc, Persona idPersonaInserente, TipoNotaDoc tipo, String testo, ZonedDateTime dataInserimentoRiga) {
+    public DocAnnullato(Doc idDoc, Persona idPersonaAnnullante, TipoAnnullamento tipo, ZonedDateTime data) {
         this.idDoc = idDoc;
-        this.idPersonaInserente = idPersonaInserente;
+        this.idPersonaAnnullante = idPersonaAnnullante;
         this.tipo = tipo;
-        this.testo = testo;
-        this.dataInserimentoRiga = dataInserimentoRiga;
+        this.data = data;
     }
     
     public Integer getId() {
@@ -102,6 +96,22 @@ public class NotaDoc implements Serializable {
         this.id = id;
     }
 
+    public TipoAnnullamento getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoAnnullamento tipo) {
+        this.tipo = tipo;
+    }
+
+    public ZonedDateTime getData() {
+        return data;
+    }
+
+    public void setData(ZonedDateTime data) {
+        this.data = data;
+    }
+
     public Doc getIdDoc() {
         return idDoc;
     }
@@ -110,36 +120,20 @@ public class NotaDoc implements Serializable {
         this.idDoc = idDoc;
     }
 
-    public TipoNotaDoc getTipo() {
-        return tipo;
+    public Persona getIdPersonaAnnullante() {
+        return idPersonaAnnullante;
     }
 
-    public void setTipo(TipoNotaDoc tipo) {
-        this.tipo = tipo;
+    public void setIdPersonaAnnullante(Persona idPersonaAnnullante) {
+        this.idPersonaAnnullante = idPersonaAnnullante;
     }
 
-    public String getTesto() {
-        return testo;
+    public NotaDoc getIdNota() {
+        return idNota;
     }
 
-    public void setTesto(String testo) {
-        this.testo = testo;
-    }
-
-    public Persona getIdPersonaInserente() {
-        return idPersonaInserente;
-    }
-
-    public void setIdPersonaInserente(Persona idPersonaInserente) {
-        this.idPersonaInserente = idPersonaInserente;
-    }
-
-    public ZonedDateTime getDataInserimentoRiga() {
-        return dataInserimentoRiga;
-    }
-
-    public void setDataInserimentoRiga(ZonedDateTime dataInserimentoRiga) {
-        this.dataInserimentoRiga = dataInserimentoRiga;
+    public void setIdNota(NotaDoc idNota) {
+        this.idNota = idNota;
     }
 
     public ZonedDateTime getVersion() {
@@ -153,10 +147,10 @@ public class NotaDoc implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof NotaDoc)) {
+        if (!(object instanceof DocAnnullato)) {
             return false;
         }
-        NotaDoc other = (NotaDoc) object;
+        DocAnnullato other = (DocAnnullato) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 

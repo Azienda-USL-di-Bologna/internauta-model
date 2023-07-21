@@ -29,13 +29,7 @@ public interface DocDetailInterface {
         RGDETE,
         RGDELI
     }
-
-    public static enum CommandType {
-        ROUTING,
-        COMPONENT,
-        URL
-    }
-
+         
     public static enum StatoDoc {
         REDAZIONE,
         CLASSIFICAZIONE,
@@ -58,7 +52,14 @@ public interface DocDetailInterface {
         CONTROLLO_SEGRETERIA,
         SPEDIZIONE_MANUALE,
         APPROVAZIONE,
+        PRE_ANNULLATO,
         ANNULLATO
+    }
+
+    public static enum CommandType {
+        ROUTING,
+        COMPONENT,
+        URL
     }
 
     public static enum StatoUfficioAtti {

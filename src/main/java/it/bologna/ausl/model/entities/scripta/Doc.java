@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
-import it.bologna.ausl.model.entities.scripta.projections.generated.NoteVersamentoWithIdPersona;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
@@ -173,6 +172,14 @@ public class Doc implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDocSorgente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "docsCollegati")
     private List<DocDoc> docsCollegati;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "notaDocList")
+    private List<NotaDoc> notaDocList;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "docAnnullatoList")
+    private List<DocAnnullato> docAnnullatoList;
     
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
@@ -369,6 +376,14 @@ public class Doc implements Serializable {
         this.versamentiList = versamentiList;
     }
 
+    public List<NotaDoc> getNotaDocList() {
+        return notaDocList;
+    }
+
+    public void setNotaDocList(List<NotaDoc> notaDocList) {
+        this.notaDocList = notaDocList;
+    }
+
     public HashMap<String, Object> getAdditionalData() {
         return additionalData;
     }
@@ -399,6 +414,14 @@ public class Doc implements Serializable {
 
     public void setDocsCollegati(List<DocDoc> docsCollegati) {
         this.docsCollegati = docsCollegati;
+    }
+
+    public List<DocAnnullato> getDocAnnullatoList() {
+        return docAnnullatoList;
+    }
+
+    public void setDocAnnullatoList(List<DocAnnullato> docAnnullatoList) {
+        this.docAnnullatoList = docAnnullatoList;
     }
 
     @Override
