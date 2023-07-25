@@ -132,6 +132,11 @@ public class Versamento implements Serializable {
     @Column(name = "data_forzatura")
     private ZonedDateTime dataForzatura;
     
+    @Column(name = "forzabile_concordato")
+    @NotNull
+    @Basic(optional = false)
+    private Boolean forzabileConcordato = false;
+    
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idVersamento", fetch = FetchType.LAZY)
     @JsonBackReference(value = "versamentoAllegatoList")
     private List<VersamentoAllegato> versamentoAllegatoList;
@@ -278,6 +283,14 @@ public class Versamento implements Serializable {
 
     public void setIdVersamentoRitentato(Versamento idVersamentoRitentato) {
         this.idVersamentoRitentato = idVersamentoRitentato;
+    }
+
+    public Boolean getForzabileConcordato() {
+        return forzabileConcordato;
+    }
+
+    public void setForzabileConcordato(Boolean forzabileConcordato) {
+        this.forzabileConcordato = forzabileConcordato;
     }
 
     public List<VersamentoAllegato> getVersamentoAllegatoList() {
