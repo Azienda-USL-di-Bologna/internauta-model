@@ -49,7 +49,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda, idPersonaResponsabile, idPersonaCreazione, idStruttura"
+    "idAzienda, idPersonaResponsabile, idPersonaCreazione, idStruttura",
+    "idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura,idTitolo,idMassimario"
 })
 @DynamicUpdate
 public class ArchivioDetailView implements Serializable, ArchivioDetailInterface {
@@ -152,8 +153,13 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @JsonBackReference(value = "idStruttura")
     private Struttura idStruttura;
     
-    @Column(name = "id_titolo")
-    private Integer idTitolo;
+    @JoinColumn(name = "id_titolo", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Titolo idTitolo;
+    
+    @JoinColumn(name = "id_massimario", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Massimario idMassimario;
     
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
@@ -413,12 +419,20 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
         this.idStruttura = idStruttura;
     }
 
-    public Integer getIdTitolo() {
+    public Titolo getIdTitolo() {
         return idTitolo;
     }
 
-    public void setIdTitolo(Integer idTitolo) {
+    public void setIdTitolo(Titolo idTitolo) {
         this.idTitolo = idTitolo;
+    }
+
+    public Massimario getIdMassimario() {
+        return idMassimario;
+    }
+
+    public void setIdMassimario(Massimario idMassimario) {
+        this.idMassimario = idMassimario;
     }
 
     public String getTscol() {
