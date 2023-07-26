@@ -1,5 +1,6 @@
 package it.bologna.ausl.model.entities.scripta;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.bologna.ausl.model.entities.AbstractJsonType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
@@ -352,6 +353,7 @@ public interface DocDetailInterface {
 //
 //    }
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Firmatario extends AbstractJsonType {
 
         String descrizione;
@@ -375,6 +377,7 @@ public interface DocDetailInterface {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Destinatario extends AbstractJsonType {
 
         String nome;
@@ -468,6 +471,7 @@ public interface DocDetailInterface {
 //        }
 //    }
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class PersonaUsante extends AbstractJsonType {
 
         Integer idPersona;
