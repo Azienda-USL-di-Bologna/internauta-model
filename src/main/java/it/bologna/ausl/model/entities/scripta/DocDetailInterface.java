@@ -1,7 +1,10 @@
 package it.bologna.ausl.model.entities.scripta;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.bologna.ausl.model.entities.AbstractJsonType;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import it.nextsw.common.repositories.AbstractJsonType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
@@ -351,11 +354,18 @@ public interface DocDetailInterface {
 //        }
 //
 //    }
+    
+    /**
+     * Questa classe rappresenta il json di un firmatario.
+     * Estendendo AbstractJsonType si eredita il corretto funzionamento dei filtri
+     * e l'equals che permette di capire se l'oggetto è stato modificato in caso di update dell'entità
+     */
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Firmatario extends AbstractJsonType {
 
-        String descrizione;
-        Integer idPersona;
+        public String descrizione;
+        public Integer idPersona;
 
         public String getDescrizione() {
             return descrizione;
@@ -374,12 +384,18 @@ public interface DocDetailInterface {
         }
     }
 
+    /**
+     * Questa classe rappresenta il json di un destinatario.
+     * Estendendo AbstractJsonType si eredita il corretto funzionamento dei filtri
+     * e l'equals che permette di capire se l'oggetto è stato modificato in caso di update dell'entità
+     */
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Destinatario extends AbstractJsonType {
 
-        String nome;
-        String indirizzo;
-        String tipo;
+        public String nome;
+        public String indirizzo;
+        public String tipo;
 
         public String getNome() {
             return nome;
@@ -404,6 +420,35 @@ public interface DocDetailInterface {
         public void setTipo(String tipo) {
             this.tipo = tipo;
         }        
+    }
+    
+    /**
+     * Questa classe rappresenta il json di una persona che vede/usa il doc.
+     * Estendendo AbstractJsonType si eredita il corretto funzionamento dei filtri
+     * e l'equals che permette di capire se l'oggetto è stato modificato in caso di update dell'entità
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class PersonaUsante extends AbstractJsonType {
+
+        public Integer idPersona;
+        public String descrizione;
+
+        public Integer getIdPersona() {
+            return idPersona;
+        }
+
+        public void setIdPersona(Integer idPersona) {
+            this.idPersona = idPersona;
+        }
+
+        public String getDescrizione() {
+            return descrizione;
+        }
+
+        public void setDescrizione(String descrizione) {
+            this.descrizione = descrizione;
+        }
     }
 
 //    public static class Classificazione {
@@ -467,27 +512,5 @@ public interface DocDetailInterface {
 //            this.modalitaApertura = modalitaApertura;
 //        }
 //    }
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class PersonaUsante extends AbstractJsonType {
 
-        Integer idPersona;
-        String descrizione;
-
-        public Integer getIdPersona() {
-            return idPersona;
-        }
-
-        public void setIdPersona(Integer idPersona) {
-            this.idPersona = idPersona;
-        }
-
-        public String getDescrizione() {
-            return descrizione;
-        }
-
-        public void setDescrizione(String descrizione) {
-            this.descrizione = descrizione;
-        }
-
-    }
 }
