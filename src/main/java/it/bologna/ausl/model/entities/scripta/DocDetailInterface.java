@@ -290,70 +290,7 @@ public interface DocDetailInterface {
     public Boolean getVersamentoForzabile();
     
     public void setVersamentoForzabile(Boolean versamentoForzabile);
-    
-//    public static class Fascicolazione {
-//
-//        String nome;
-//        String numerazione;
-//        String idFascicoloArgo;
-//        String idFascicoloRadiceArgo;
-//
-//        public String getNome() {
-//            return nome;
-//        }
-//
-//        public void setNome(String nome) {
-//            this.nome = nome;
-//        }
-//
-//        public String getNumerazione() {
-//            return numerazione;
-//        }
-//
-//        public void setNumerazione(String numerazione) {
-//            this.numerazione = numerazione;
-//        }
-//
-//        public String getIdFascicoloArgo() {
-//            return idFascicoloArgo;
-//        }
-//
-//        public void setIdFascicoloArgo(String idFascicoloArgo) {
-//            this.idFascicoloArgo = idFascicoloArgo;
-//        }
-//
-//        public String getIdFascicoloRadiceArgo() {
-//            return idFascicoloRadiceArgo;
-//        }
-//
-//        public void setIdFascicoloRadiceArgo(String idFascicoloRadiceArgo) {
-//            this.idFascicoloRadiceArgo = idFascicoloRadiceArgo;
-//        }
-//        
-//    }
-    
-//    public static class Archiviazione {
-//
-//        String descrizione;
-//        Integer idArchivio;
-//
-//        public String getDescrizione() {
-//            return descrizione;
-//        }
-//
-//        public void setDescrizione(String descrizione) {
-//            this.descrizione = descrizione;
-//        }
-//
-//        public Integer getIdArchivio() {
-//            return idArchivio;
-//        }
-//
-//        public void setIdArchivio(Integer idArchivio) {
-//            this.idArchivio = idArchivio;
-//        }
-//
-//    }
+
     
     /**
      * Questa classe rappresenta il json di un firmatario.
@@ -450,7 +387,71 @@ public interface DocDetailInterface {
             this.descrizione = descrizione;
         }
     }
-
+    
+//    public static class Fascicolazione {
+//
+//        String nome;
+//        String numerazione;
+//        String idFascicoloArgo;
+//        String idFascicoloRadiceArgo;
+//
+//        public String getNome() {
+//            return nome;
+//        }
+//
+//        public void setNome(String nome) {
+//            this.nome = nome;
+//        }
+//
+//        public String getNumerazione() {
+//            return numerazione;
+//        }
+//
+//        public void setNumerazione(String numerazione) {
+//            this.numerazione = numerazione;
+//        }
+//
+//        public String getIdFascicoloArgo() {
+//            return idFascicoloArgo;
+//        }
+//
+//        public void setIdFascicoloArgo(String idFascicoloArgo) {
+//            this.idFascicoloArgo = idFascicoloArgo;
+//        }
+//
+//        public String getIdFascicoloRadiceArgo() {
+//            return idFascicoloRadiceArgo;
+//        }
+//
+//        public void setIdFascicoloRadiceArgo(String idFascicoloRadiceArgo) {
+//            this.idFascicoloRadiceArgo = idFascicoloRadiceArgo;
+//        }
+//        
+//    }
+    
+//    public static class Archiviazione {
+//
+//        String descrizione;
+//        Integer idArchivio;
+//
+//        public String getDescrizione() {
+//            return descrizione;
+//        }
+//
+//        public void setDescrizione(String descrizione) {
+//            this.descrizione = descrizione;
+//        }
+//
+//        public Integer getIdArchivio() {
+//            return idArchivio;
+//        }
+//
+//        public void setIdArchivio(Integer idArchivio) {
+//            this.idArchivio = idArchivio;
+//        }
+//
+//    }
+    
 //    public static class Classificazione {
 //
 //        String nome;
