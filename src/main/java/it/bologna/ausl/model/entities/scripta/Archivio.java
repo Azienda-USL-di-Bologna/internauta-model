@@ -49,7 +49,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Archivio {
 
     public static enum TipoArchivio {
-        AFFARE, PROCEDIMENTO, ATTIVITA, SPECIALE
+        AFFARE, PROCEDIMENTO, ATTIVITA, SOGGETTO_FISICO, SOGGETTO_GIURIDICO, SPECIALE
     }
 
     public static enum StatoArchivio {
