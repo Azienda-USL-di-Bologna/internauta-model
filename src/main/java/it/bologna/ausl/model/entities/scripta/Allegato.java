@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.CaseFormat;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.bologna.ausl.model.entities.AbstractJsonType;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.bologna.ausl.model.entities.versatore.VersamentoAllegato;
 import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.repositories.AbstractJsonType;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -480,6 +481,8 @@ public class Allegato implements Serializable {
         }
     }
     
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class DettaglioAllegato extends AbstractJsonType {
 
         private String idRepository;
