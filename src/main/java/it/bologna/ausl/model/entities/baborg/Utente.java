@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import it.bologna.ausl.internauta.model.bds.types.PermessoEntitaStoredProcedure;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.EntityInterface;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
@@ -50,11 +50,8 @@ import org.springframework.security.core.userdetails.UserDetails;
  *
  * @author solidus83
  */
-@TypeDefs(
-        {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-        }
-)
+@TypeDef(name = "string-array", typeClass = StringArrayType.class)
+
 @Entity
 @Table(name = "utenti", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
@@ -141,7 +138,7 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
     private ZonedDateTime version;
 
     @Column(name = "emails", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] emails;
 
     public String[] getEmails() {

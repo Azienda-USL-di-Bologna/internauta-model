@@ -3,8 +3,9 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import it.bologna.ausl.internauta.model.bds.types.PermessoEntitaStoredProcedure;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.EntityInterface;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.configurazione.ImpostazioniApplicazioni;
@@ -44,11 +45,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author solidus83
  */
-@TypeDefs(
-        {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-        }
-)
+
+@TypeDef(name = "int-array", typeClass = IntArrayType.class)
+
 @Entity
 @Table(name = "persone", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -124,7 +123,7 @@ public class Persona implements Serializable, EntityInterface {
     private List<ImpostazioniApplicazioni> impostazioniApplicazioniList;
 
     @Column(name = "messaggi_visti", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] messaggiVisti;
 
     @OneToMany(mappedBy = "idPersonaCreazione", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})

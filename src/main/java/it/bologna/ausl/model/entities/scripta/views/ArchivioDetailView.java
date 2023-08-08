@@ -4,8 +4,8 @@ import it.bologna.ausl.model.entities.scripta.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
@@ -42,7 +42,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gusgus
  */
 @TypeDefs({
-    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class),
+    @TypeDef(name = "int-array", typeClass = IntArrayType.class)
 })
 @Entity
 @Table(name = "archivi_details_view", catalog = "internauta", schema = "scripta")
@@ -189,7 +190,7 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 //    private Integer bitPermesso;
     
     @Column(name = "id_vicari", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idVicari;
     
     @JoinColumn(name = "id_persona", referencedColumnName = "id")

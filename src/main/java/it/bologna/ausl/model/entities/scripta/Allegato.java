@@ -126,23 +126,24 @@ public class Allegato implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "tipo")
-    private String tipo;
-
     @Enumerated(EnumType.STRING)
+    private TipoAllegato tipo = TipoAllegato.ALLEGATO;
+
     @Column(name = "sottotipo")
+    @Enumerated(EnumType.STRING)
     private SottotipoAllegato sottotipo;
     
     @Basic(optional = false)
     @Column(name = "principale")
-    private Boolean principale;
+    private Boolean principale = false;
 
-    @Basic(optional = false)
+//    @Basic(optional = false)
     @Column(name = "ordinale")
     private Integer ordinale;
     
     @Basic(optional = false)
     @Column(name = "firmato")
-    private Boolean firmato;
+    private Boolean firmato = false;
     
     @Column(name = "estraibile")
     private Boolean estraibile = false;
@@ -219,19 +220,11 @@ public class Allegato implements Serializable {
     }
 
     public TipoAllegato getTipo() {
-        if (tipo != null) {
-            return TipoAllegato.valueOf(tipo);
-        } else {
-            return null;
-        }
+        return tipo;
     }
 
     public void setTipo(TipoAllegato tipo) {
-        if (tipo != null) {
-            this.tipo = tipo.toString();
-        } else {
-            this.tipo = null;
-        }
+        this.tipo = tipo;
     }
 
     public SottotipoAllegato getSottotipo() {
@@ -509,6 +502,7 @@ public class Allegato implements Serializable {
         
 
         public DettaglioAllegato() {
+            super();
             //ZonedDateTime.from(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'").parse("2022-05-31T15:12:09.000"));
             dataCreazione = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'").format(ZonedDateTime.now());
         }

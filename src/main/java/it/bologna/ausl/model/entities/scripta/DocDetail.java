@@ -3,8 +3,8 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
@@ -50,7 +50,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gusgus
  */
 @TypeDefs({
-    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class),
+    @TypeDef(name = "int-array", typeClass = IntArrayType.class)
 })
 @Entity
 @Table(name = "docs_details", catalog = "internauta", schema = "scripta")
@@ -271,7 +272,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
     private List<PersonaVedente> personeVedentiList;
 
     @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idStruttureSegreteria;
 
     @Column(name = "sulla_scrivania_di", columnDefinition = "jsonb")
@@ -300,11 +301,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
 //    private List<Archiviazione> archiviazioni;
     
     @Column(name = "id_archivi_antenati", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idArchiviAntenati;
     
     @Column(name = "id_archivi", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idArchivi;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)

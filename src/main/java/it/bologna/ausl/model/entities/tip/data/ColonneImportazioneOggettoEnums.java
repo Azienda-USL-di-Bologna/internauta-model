@@ -215,7 +215,8 @@ public class ColonneImportazioneOggettoEnums {
         POSTA_SEMPLICE("posta semplice"),
         RACCOMANDATA("raccomandata"),
         EMAIL("email"),
-        PEC("pec");
+        PEC("pec"),
+        BABEL("babel");
         
         private final String value;
         

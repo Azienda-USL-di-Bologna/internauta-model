@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
+import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
@@ -184,6 +185,11 @@ public class Doc implements Serializable {
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private HashMap<String,Object> additionalData;
+    
+    @JoinColumn(name = "id_pec_mittente", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference(value = "idPecMittente")
+    private Pec idPecMittente;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -408,13 +414,27 @@ public class Doc implements Serializable {
         this.noteVersamentoList = noteVersamentoList;
     }
 
+    public Pec getIdPecMittente() {
+        return idPecMittente;
+    }
+
+    public void setIdPecMittente(Pec idPecMittente) {
+        this.idPecMittente = idPecMittente;
+    }
+    
     public List<DocDoc> getDocsCollegati() {
         return docsCollegati;
     }
+    
 
     public void setDocsCollegati(List<DocDoc> docsCollegati) {
         this.docsCollegati = docsCollegati;
     }
+    
+
+    
+    
+    
 
     public List<DocAnnullato> getDocAnnullatoList() {
         return docAnnullatoList;

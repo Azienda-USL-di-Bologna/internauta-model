@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,7 +44,7 @@ public class DocumentoDaCollegare implements Serializable {
     private Long id;
 
         
-    @JoinColumn(name = "id_sessione_importazioni", referencedColumnName = "id")
+    @JoinColumn(name = "id_sessione", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private SessioneImportazione idSessioneImportazione;
 
@@ -79,6 +81,7 @@ public class DocumentoDaCollegare implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo_collegamento")
     @NotNull
+    @Enumerated(EnumType.STRING)
     private DocDoc.TipoCollegamentoDoc tipoCollegamento;
 
     public DocumentoDaCollegare() {
