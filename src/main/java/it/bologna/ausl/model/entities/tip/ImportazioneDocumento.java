@@ -41,7 +41,8 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     public static enum StatiImportazioneDocumento {
         VALIDARE,
         IMPORTARE,
-        ANOMALIA,
+        ANOMALIA_VALIDAZIONE,
+        ANOMALIA_IMPORTAZIONE,
         IMPORTATO,
         GIA_IMPORTATO,
         ERRORE_VALIDAZIONE,

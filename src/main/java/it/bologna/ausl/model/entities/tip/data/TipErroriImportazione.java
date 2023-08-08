@@ -99,7 +99,7 @@ public class TipErroriImportazione implements Serializable {
                     res = ImportazioneDocumento.StatiImportazioneDocumento.ERRORE_VALIDAZIONE;
                     break;
                 } else if (value != null && value.getValidazione() != null && StringUtils.hasText(value.getValidazione().getWarning())) {
-                    res = ImportazioneDocumento.StatiImportazioneDocumento.ANOMALIA;
+                    res = ImportazioneDocumento.StatiImportazioneDocumento.ANOMALIA_VALIDAZIONE;
                 } else {
                     res = ImportazioneDocumento.StatiImportazioneDocumento.IMPORTARE;
                 }
@@ -111,7 +111,7 @@ public class TipErroriImportazione implements Serializable {
     @JsonIgnore
     public ImportazioneDocumento.StatiImportazioneDocumento getStatoImportazione(ImportazioneDocumento.StatiImportazioneDocumento statoValidazione) {
         ImportazioneDocumento.StatiImportazioneDocumento res = statoValidazione;
-        if (flussi != null) {
+        if (flussi != null && !flussi.isEmpty()) {
             for (Map.Entry<String, Flusso> entry : flussi.entrySet()) {
                 String key = entry.getKey();
                 Flusso value = entry.getValue();
@@ -119,10 +119,20 @@ public class TipErroriImportazione implements Serializable {
                     res = ImportazioneDocumento.StatiImportazioneDocumento.ERRORE_IMPORTAZIONE;
                     break;
                 } else if (value != null && value.getImportazione() != null && StringUtils.hasText(value.getImportazione().getWarning())) {
-                    res = ImportazioneDocumento.StatiImportazioneDocumento.ANOMALIA;
+                    if (statoValidazione != ImportazioneDocumento.StatiImportazioneDocumento.GIA_IMPORTATO) {
+                        res = ImportazioneDocumento.StatiImportazioneDocumento.ANOMALIA_IMPORTAZIONE;
+                    }
                 } else {
-                    res = ImportazioneDocumento.StatiImportazioneDocumento.IMPORTATO;
+                    if (statoValidazione != ImportazioneDocumento.StatiImportazioneDocumento.GIA_IMPORTATO) {
+                        res = ImportazioneDocumento.StatiImportazioneDocumento.IMPORTATO;
+                    }
+                        
                 }
+            }
+        } else {
+            if (statoValidazione == ImportazioneDocumento.StatiImportazioneDocumento.ANOMALIA_VALIDAZIONE || 
+                    statoValidazione == ImportazioneDocumento.StatiImportazioneDocumento.IMPORTARE) {
+                res = ImportazioneDocumento.StatiImportazioneDocumento.IMPORTATO;
             }
         }
         return res;
