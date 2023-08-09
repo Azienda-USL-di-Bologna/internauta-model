@@ -19,10 +19,12 @@ public class ColonneImportazioneOggettoEnums {
         indirizziDestinatariEsterni(Arrays.asList("indirizzo destinatari esterni")),
         nomiDestinatariEsterni(Arrays.asList("nome destinatari esterni")),
         adottatoDa(Arrays.asList("adottato da")),
-        firmatario(Arrays.asList()),
-        pareri(Arrays.asList()),
+        
         redattore(Arrays.asList()),
+        pareri(Arrays.asList()),
+        firmatario(Arrays.asList()),
         visto(Arrays.asList()),
+        
         idFascicoloPregresso(Arrays.asList("id fascicolo pregresso")),
         fascicolazione(Arrays.asList("cod fascicolo babel")),
         classificazione(Arrays.asList()),
@@ -67,18 +69,20 @@ public class ColonneImportazioneOggettoEnums {
         indirizziDestinatariEsterni(Arrays.asList("indirizzo destinatari esterni")),
         nomiDestinatariEsterni(Arrays.asList("nome destinatari esterni")),
         
+        
+        redattore(Arrays.asList()),
+        pareri(Arrays.asList()),
+        proponente(Arrays.asList("proponente")),
+        visto(Arrays.asList()),
+        direttoreAmministrativo(Arrays.asList("da")),
+        direttoreSanitario(Arrays.asList("ds")),
         direttoreGenerale(Arrays.asList("dg")),
         vicarioDirettoreGenerale(Arrays.asList("vicario dg")),
-        direttoreSanitario(Arrays.asList("ds")),
-        direttoreAmministrativo(Arrays.asList("da")),
+        
         propostoDa(Arrays.asList("proposto da")),
-        proponente(Arrays.asList("proponente")),
         
         controlloRegionale(Arrays.asList("controllo regionale")),
         
-        pareri(Arrays.asList()),
-        redattore(Arrays.asList()),
-        visto(Arrays.asList()),
         idFascicoloPregresso(Arrays.asList("id fascicolo pregresso")),
         fascicolazione(Arrays.asList("cod fascicolo babel")),
         classificazione(Arrays.asList()),

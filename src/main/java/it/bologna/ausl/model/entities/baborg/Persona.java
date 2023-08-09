@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import it.bologna.ausl.internauta.model.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.model.entities.EntityInterface;
 import it.nextsw.common.annotations.GenerateProjections;
@@ -35,10 +34,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -89,7 +86,7 @@ public class Persona implements Serializable, EntityInterface {
     @Basic(optional = false)
     @NotNull
     @Column(name = "bit_ruoli")
-    private Integer bitRuoli;
+    private Integer bitRuoli = 0;
 
     @Basic(optional = false)
     @NotNull
@@ -104,7 +101,7 @@ public class Persona implements Serializable, EntityInterface {
     @Basic(optional = true)
     @Null
     @Column(name = "accessibilita", columnDefinition = "boolean")
-    private Boolean accessibilita;
+    private Boolean accessibilita = false;
 
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteList")

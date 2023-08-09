@@ -61,57 +61,72 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Utente implements Serializable, UserDetails, EntityInterface {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "username")
     private String username;
+    
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 400)
     @Column(name = "email")
     private String email;
+    
     @Size(max = 5)
     @Column(name = "id_inquadramento")
     private String idInquadramento;
+    
     @Size(max = 150)
     @Column(name = "telefono")
     private String telefono;
+    
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 150)
     @Column(name = "fax")
     private String fax;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "omonimia")
-    private Boolean omonimia;
+    private Boolean omonimia = false;
+    
     @Size(max = 200)
     @JsonIgnore
     @Column(name = "password_hash")
     private String passwordHash;
+    
     @Column(name = "dominio")
     private Integer dominio;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "attivo")
     private Boolean attivo;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "bit_ruoli")
-    private Integer bitRuoli;
+    private Integer bitRuoli = 1;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
+    
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Persona idPersona;
+    
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecUtenteList")
     private List<PecUtente> pecUtenteList;
+    
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
