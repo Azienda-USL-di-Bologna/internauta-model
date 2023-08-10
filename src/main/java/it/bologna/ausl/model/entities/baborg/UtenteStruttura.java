@@ -2,7 +2,7 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
 import java.io.Serializable;
@@ -34,11 +34,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author solidus83
  */
-@TypeDefs(
-        {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-        }
-)
+@TypeDef(name = "string-array", typeClass = StringArrayType.class)
+
 @Entity
 @Table(name = "utenti_strutture", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -76,7 +73,7 @@ public class UtenteStruttura implements Serializable {
     private DettaglioContatto idDettaglioContatto;
 
     @Column(name = "attributi", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] attributi;
 
     @Version()

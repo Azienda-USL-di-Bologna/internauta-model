@@ -3,11 +3,11 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
@@ -41,7 +41,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @TypeDefs(
         {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class),
+            @TypeDef(name = "string-array", typeClass = StringArrayType.class),
             @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
         }
 )
@@ -114,7 +114,7 @@ public class Azienda implements Serializable {
     
     @Basic(optional = true)
     @Column(name = "path", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] path;
     
     @Size(min = 1, max = 1000)

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
-import it.bologna.ausl.model.entities.scripta.projections.generated.NoteVersamentoWithIdPersona;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
@@ -18,6 +17,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -92,10 +93,12 @@ public class Doc implements Serializable {
     private ZonedDateTime dataCreazione = ZonedDateTime.now();
     
     @Column(name = "visibilita")
-    private String visibilita = VisibilitaDoc.NORMALE.toString();
+    @Enumerated(EnumType.STRING)
+    private VisibilitaDoc visibilita = VisibilitaDoc.NORMALE;
 
     @Column(name = "tipologia")
-    private String tipologia;
+    @Enumerated(EnumType.STRING)
+    private DocDetailInterface.TipologiaDoc tipologia;
     
     @Column(name = "id_esterno")
     private String idEsterno;
@@ -104,7 +107,8 @@ public class Doc implements Serializable {
     private Boolean pregresso;
     
     @Column(name = "stato_versamento")
-    private String statoVersamento;
+    @Enumerated(EnumType.STRING)
+    private Versamento.StatoVersamento statoVersamento;
     //lista di mittenti che conterra per il momento solo un elemento
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoc", fetch = FetchType.LAZY)
 
@@ -166,6 +170,18 @@ public class Doc implements Serializable {
     @JsonBackReference(value = "versamentiList")
     private List<Versamento> versamentiList;
     
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDocSorgente", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "docsCollegati")
+    private List<DocDoc> docsCollegati;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "notaDocList")
+    private List<NotaDoc> notaDocList;
+    
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "idDoc", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "docAnnullatoList")
+    private List<DocAnnullato> docAnnullatoList;
+    
     @Type(type = "jsonb")
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private HashMap<String,Object> additionalData;
@@ -191,7 +207,7 @@ public class Doc implements Serializable {
         this.dataCreazione = dataCreazione;
     }
 
-    public Doc(String oggetto, Persona idPersonaCreazione, Azienda idAzienda, String tipologia) {
+    public Doc(String oggetto, Persona idPersonaCreazione, Azienda idAzienda, DocDetailInterface.TipologiaDoc tipologia) {
         this.oggetto = oggetto;
         this.idPersonaCreazione = idPersonaCreazione;
         this.idAzienda = idAzienda;
@@ -246,38 +262,22 @@ public class Doc implements Serializable {
         this.dataCreazione = dataCreazione;
     }
 
-    public VisibilitaDoc getStatoUfficioAtti() {
-        if (visibilita != null) {
-            return VisibilitaDoc.valueOf(visibilita);
-        } else {
-            return null;
-        }
+    public VisibilitaDoc getVisibilita() {
+        return visibilita;
     }
 
-    public void setStatoUfficioAtti(VisibilitaDoc visibilita) {
-        if (visibilita != null) {
-            this.visibilita = visibilita.toString();
-        } else {
-            this.visibilita = null;
-        }
+    public void setVisibilita(VisibilitaDoc visibilita) {
+        this.visibilita = visibilita;
     }
-    
+
     public DocDetailInterface.TipologiaDoc getTipologia() {
-        if (tipologia != null) {
-            return DocDetailInterface.TipologiaDoc.valueOf(tipologia);
-        } else {
-            return null;
-        }
+        return tipologia;
     }
 
     public void setTipologia(DocDetailInterface.TipologiaDoc tipologia) {
-        if (tipologia != null) {
-            this.tipologia = tipologia.toString();
-        } else {
-            this.tipologia = null;
-        }
+        this.tipologia = tipologia;
     }
-    
+
     public List<Related> getMittenti() {
         return mittenti;
     }
@@ -357,21 +357,13 @@ public class Doc implements Serializable {
     public void setIdEsterno(String idEsterno) {
         this.idEsterno = idEsterno;
     }
-    
+
     public Versamento.StatoVersamento getStatoVersamento() {
-        if (statoVersamento != null) {
-            return Versamento.StatoVersamento.valueOf(statoVersamento);
-        } else {
-            return null;
-        }
+        return statoVersamento;
     }
 
     public void setStatoVersamento(Versamento.StatoVersamento statoVersamento) {
-        if (statoVersamento != null) {
-            this.statoVersamento = statoVersamento.toString();
-        } else {
-            this.statoVersamento = null;
-        }
+        this.statoVersamento = statoVersamento;
     }
     
     public List<ArchivioDoc> getArchiviDocList() {
@@ -388,6 +380,14 @@ public class Doc implements Serializable {
 
     public void setVersamentiList(List<Versamento> versamentiList) {
         this.versamentiList = versamentiList;
+    }
+
+    public List<NotaDoc> getNotaDocList() {
+        return notaDocList;
+    }
+
+    public void setNotaDocList(List<NotaDoc> notaDocList) {
+        this.notaDocList = notaDocList;
     }
 
     public HashMap<String, Object> getAdditionalData() {
@@ -422,13 +422,27 @@ public class Doc implements Serializable {
         this.idPecMittente = idPecMittente;
     }
     
+    public List<DocDoc> getDocsCollegati() {
+        return docsCollegati;
+    }
+    
+
+    public void setDocsCollegati(List<DocDoc> docsCollegati) {
+        this.docsCollegati = docsCollegati;
+    }
     
 
     
+    
+    
 
-    
-    
-    
+    public List<DocAnnullato> getDocAnnullatoList() {
+        return docAnnullatoList;
+    }
+
+    public void setDocAnnullatoList(List<DocAnnullato> docAnnullatoList) {
+        this.docAnnullatoList = docAnnullatoList;
+    }
 
     @Override
     public int hashCode() {

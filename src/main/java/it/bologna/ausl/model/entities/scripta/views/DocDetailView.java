@@ -4,14 +4,13 @@ import it.bologna.ausl.model.entities.scripta.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
-import it.bologna.ausl.model.entities.scripta.DocDetailInterface.*;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.annotations.GenerateProjections;
 import java.io.Serializable;
@@ -22,6 +21,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,7 +48,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gusgus
  */
 @TypeDefs({
-    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class),
+    @TypeDef(name = "int-array", typeClass = IntArrayType.class)
 })
 @Entity
 @Table(name = "docs_details_view", catalog = "internauta", schema = "scripta")
@@ -82,7 +84,8 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipologia")
-    private String tipologia;
+    @Enumerated(EnumType.STRING)
+    private TipologiaDoc tipologia;
 
     @Basic(optional = false)
     @NotNull
@@ -94,7 +97,8 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "command_type")
-    private String commandType;
+    @Enumerated(EnumType.STRING)
+    private CommandType commandType;
 
     @JoinColumn(name = "id_persona_responsabile_procedimento", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
@@ -187,7 +191,8 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     @Size(max = 2147483647)
     @Column(name = "stato")
-    private String stato;
+    @Enumerated(EnumType.STRING)
+    private StatoDoc stato;
 
     @Column(name = "visibilita_limitata")
     private Boolean visibilitaLimitata;
@@ -222,7 +227,8 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     @Size(max = 2147483647)
     @Column(name = "stato_ufficio_atti")
-    private String statoUfficioAtti;
+    @Enumerated(EnumType.STRING)
+    private StatoUfficioAtti statoUfficioAtti;
 
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
@@ -236,7 +242,7 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     private List<PersonaVedente> personeVedentiList;
 
     @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idStruttureSegreteria;
 
     @Type(type = "jsonb")
@@ -284,18 +290,19 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 //    private List<Archiviazione> archiviazioni;
     
     @Column(name = "id_archivi_antenati", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idArchiviAntenati;
 
     @Column(name = "id_archivi", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idArchivi;
     
     @Column(name = "conservazione")
     private Boolean conservazione;
     
     @Column(name = "stato_ultimo_versamento")
-    private String statoUltimoVersamento;
+    @Enumerated(EnumType.STRING)
+    private Versamento.StatoVersamento statoUltimoVersamento;
     
     @Column(name = "stato_versamento_visto")
     private Boolean statoVersamentoVisto;
@@ -338,7 +345,7 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.id = id;
     }
 
-    public DocDetailView(Integer id, Azienda idAzienda, String tipologia, String openCommand, String commandType, ZonedDateTime dataCreazione, ZonedDateTime dataInserimentoRiga, ZonedDateTime version) {
+    public DocDetailView(Integer id, Azienda idAzienda, TipologiaDoc tipologia, String openCommand, CommandType commandType, ZonedDateTime dataCreazione, ZonedDateTime dataInserimentoRiga, ZonedDateTime version) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.tipologia = tipologia;
@@ -349,18 +356,22 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.version = version;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public Azienda getIdAzienda() {
         return idAzienda;
     }
 
+    @Override
     public void setIdAzienda(Azienda idAzienda) {
         this.idAzienda = idAzienda;
     }
@@ -373,74 +384,53 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.idAziendaDoc = idAziendaDoc;
     }
 
+    @Override
     public String getGuidDocumento() {
         return guidDocumento;
     }
 
+    @Override
     public void setGuidDocumento(String guidDocumento) {
         this.guidDocumento = guidDocumento;
     }
 
-    public TipologiaDoc getTipologia() {
-        if (tipologia != null) {
-            return TipologiaDoc.valueOf(tipologia);
-        } else {
-            return null;
-        }
-    }
-
-    public void setTipologia(TipologiaDoc tipologia) {
-        if (tipologia != null) {
-            this.tipologia = tipologia.toString();
-        } else {
-            this.tipologia = null;
-        }
-    }
-
+    @Override
     public String getOpenCommand() {
         return openCommand;
     }
 
+    @Override
     public void setOpenCommand(String openCommand) {
         this.openCommand = openCommand;
     }
 
-    public CommandType getCommandType() {
-        if (commandType != null) {
-            return CommandType.valueOf(commandType);
-        } else {
-            return null;
-        }
-    }
 
-    public void setCommandType(CommandType commandType) {
-        if (commandType != null) {
-            this.commandType = commandType.toString();
-        } else {
-            this.commandType = null;
-        }
-    }
-
+    @Override
     public Persona getIdPersonaResponsabileProcedimento() {
         return idPersonaResponsabileProcedimento;
     }
 
+    @Override
     public void setIdPersonaResponsabileProcedimento(Persona idPersonaResponsabileProcedimento) {
         this.idPersonaResponsabileProcedimento = idPersonaResponsabileProcedimento;
     }
 
+    @Override
     public Persona getIdPersonaRedattrice() {
         return idPersonaRedattrice;
     }
 
+    @Override
     public void setIdPersonaRedattrice(Persona idPersonaRedattrice) {
         this.idPersonaRedattrice = idPersonaRedattrice;
     }
 
+    @Override
     public ZonedDateTime getDataCreazione() {
         return dataCreazione;
     }
 
+    @Override
     public void setDataCreazione(ZonedDateTime dataCreazione) {
         this.dataCreazione = dataCreazione;
     }
@@ -453,70 +443,87 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.dataCreazioneDoc = dataCreazioneDoc;
     }
 
+    @Override
     public Integer getNumeroProposta() {
         return numeroProposta;
     }
 
+    @Override
     public void setNumeroProposta(Integer numeroProposta) {
         this.numeroProposta = numeroProposta;
     }
 
+    @Override
     public Integer getAnnoProposta() {
         return annoProposta;
     }
 
+    @Override
     public void setAnnoProposta(Integer annoProposta) {
         this.annoProposta = annoProposta;
     }
 
+    @Override
     public Struttura getIdStrutturaRegistrazione() {
         return idStrutturaRegistrazione;
     }
 
+    @Override
     public void setIdStrutturaRegistrazione(Struttura idStrutturaRegistrazione) {
         this.idStrutturaRegistrazione = idStrutturaRegistrazione;
     }
 
+    @Override
     public ZonedDateTime getDataRegistrazione() {
         return dataRegistrazione;
     }
 
+    @Override
     public void setDataRegistrazione(ZonedDateTime dataRegistrazione) {
         this.dataRegistrazione = dataRegistrazione;
     }
 
+    @Override
     public Integer getNumeroRegistrazione() {
         return numeroRegistrazione;
     }
 
+    @Override
     public void setNumeroRegistrazione(Integer numeroRegistrazione) {
         this.numeroRegistrazione = numeroRegistrazione;
     }
 
+    @Override
     public Integer getAnnoRegistrazione() {
         return annoRegistrazione;
     }
 
+    @Override
     public void setAnnoRegistrazione(Integer annoRegistrazione) {
         this.annoRegistrazione = annoRegistrazione;
     }
 
+    @Override
     public ZonedDateTime getDataPubblicazione() {
         return dataPubblicazione;
     }
 
+    @Override
     public void setDataPubblicazione(ZonedDateTime dataPubblicazione) {
         this.dataPubblicazione = dataPubblicazione;
     }
 
+    @Override
     public String getOggetto() {
         return oggetto;
     }
 
+    @Override
     public void setOggetto(String oggetto) {
         this.oggetto = oggetto;
     }
 
+    @Override
     public String getOggettoTscol() {
         return oggettoTscol;
     }
@@ -535,14 +542,7 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     public void setFirmatari(List<Firmatario> firmatari) {
         this.firmatari = firmatari;
     }
-
-//    public String getFirmatariTscol() {
-//        return firmatariTscol;
-//    }
-//
-//    public void setFirmatariTscol(String firmatariTscol) {
-//        this.firmatariTscol = firmatariTscol;
-//    }
+    
     @Override
     public List<Destinatario> getDestinatari() {
         return destinatari;
@@ -561,24 +561,6 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     @Override
     public void setDestinatariTscol(String destinatariTscol) {
         this.destinatariTscol = destinatariTscol;
-    }
-
-    @Override
-    public Versamento.StatoVersamento getStatoUltimoVersamento() {
-        if (statoUltimoVersamento != null) {
-            return Versamento.StatoVersamento.valueOf(statoUltimoVersamento);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
-        if (statoUltimoVersamento != null) {
-            this.statoUltimoVersamento = statoUltimoVersamento.toString();
-        } else {
-            this.statoUltimoVersamento = null;
-        }
     }
     
     @Override
@@ -644,34 +626,32 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 //        this.classificazioni = classificazioni;
 //    }
 
+    @Override
     public StatoDoc getStato() {
-        if (stato != null) {
-            return StatoDoc.valueOf(stato);
-        } else {
-            return null;
-        }
+        return stato;
     }
 
+    @Override
     public void setStato(StatoDoc stato) {
-        if (stato != null) {
-            this.stato = stato.toString();
-        } else {
-            this.stato = null;
-        }
+        this.stato = stato;
     }
 
+    @Override
     public Boolean getVisibilitaLimitata() {
         return visibilitaLimitata;
     }
 
+    @Override
     public void setVisibilitaLimitata(Boolean visibilitaLimitata) {
         this.visibilitaLimitata = visibilitaLimitata;
     }
 
+    @Override
     public Boolean getRiservato() {
         return riservato;
     }
 
+    @Override
     public void setRiservato(Boolean riservato) {
         this.riservato = riservato;
     }
@@ -684,26 +664,32 @@ public class DocDetailView implements Serializable, DocDetailInterface {
         this.conservazione = conservazione;
     }
 
+    @Override
     public Boolean getAnnullato() {
         return annullato;
     }
 
+    @Override
     public void setAnnullato(Boolean annullato) {
         this.annullato = annullato;
     }
 
+    @Override
     public String getProtocolloEsterno() {
         return protocolloEsterno;
     }
 
+    @Override
     public void setProtocolloEsterno(String protocolloEsterno) {
         this.protocolloEsterno = protocolloEsterno;
     }
 
+    @Override
     public String getMittente() {
         return mittente;
     }
 
+    @Override
     public void setMittente(String mittente) {
         this.mittente = mittente;
     }
@@ -730,22 +716,6 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     public void setMailCollegio(String mailCollegio) {
         this.mailCollegio = mailCollegio;
-    }
-
-    public StatoUfficioAtti getStatoUfficioAtti() {
-        if (statoUfficioAtti != null) {
-            return StatoUfficioAtti.valueOf(statoUfficioAtti);
-        } else {
-            return null;
-        }
-    }
-
-    public void setStatoUfficioAtti(StatoUfficioAtti statoUfficioAtti) {
-        if (statoUfficioAtti != null) {
-            this.statoUfficioAtti = statoUfficioAtti.toString();
-        } else {
-            this.statoUfficioAtti = null;
-        }
     }
 
     public String getTscol() {
@@ -939,6 +909,46 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     public void setPregresso(Boolean pregresso) {
         this.pregresso = pregresso;
+    }
+
+    @Override
+    public TipologiaDoc getTipologia() {
+        return tipologia;
+    }
+
+    @Override
+    public void setTipologia(TipologiaDoc tipologia) {
+        this.tipologia = tipologia;
+    }
+
+    @Override
+    public CommandType getCommandType() {
+        return commandType;
+    }
+
+    @Override
+    public void setCommandType(CommandType commandType) {
+        this.commandType = commandType;
+    }
+
+    @Override
+    public StatoUfficioAtti getStatoUfficioAtti() {
+        return statoUfficioAtti;
+    }
+
+    @Override
+    public void setStatoUfficioAtti(StatoUfficioAtti statoUfficioAtti) {
+        this.statoUfficioAtti = statoUfficioAtti;
+    }
+
+    @Override
+    public Versamento.StatoVersamento getStatoUltimoVersamento() {
+        return statoUltimoVersamento;
+    }
+
+    @Override
+    public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
+        this.statoUltimoVersamento = statoUltimoVersamento;
     }
     
     @Override

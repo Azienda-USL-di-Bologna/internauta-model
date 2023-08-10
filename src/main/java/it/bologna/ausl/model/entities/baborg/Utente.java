@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import it.bologna.ausl.internauta.model.bds.types.PermessoEntitaStoredProcedure;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.EntityInterface;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
@@ -50,11 +50,8 @@ import org.springframework.security.core.userdetails.UserDetails;
  *
  * @author solidus83
  */
-@TypeDefs(
-        {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-        }
-)
+@TypeDef(name = "string-array", typeClass = StringArrayType.class)
+
 @Entity
 @Table(name = "utenti", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
@@ -64,57 +61,72 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Utente implements Serializable, UserDetails, EntityInterface {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "username")
     private String username;
+    
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 400)
     @Column(name = "email")
     private String email;
+    
     @Size(max = 5)
     @Column(name = "id_inquadramento")
     private String idInquadramento;
+    
     @Size(max = 150)
     @Column(name = "telefono")
     private String telefono;
+    
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 150)
     @Column(name = "fax")
     private String fax;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "omonimia")
-    private Boolean omonimia;
+    private Boolean omonimia = false;
+    
     @Size(max = 200)
     @JsonIgnore
     @Column(name = "password_hash")
     private String passwordHash;
+    
     @Column(name = "dominio")
     private Integer dominio;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "attivo")
     private Boolean attivo;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "bit_ruoli")
-    private Integer bitRuoli;
+    private Integer bitRuoli = 1;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Azienda idAzienda;
+    
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Persona idPersona;
+    
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "pecUtenteList")
     private List<PecUtente> pecUtenteList;
+    
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "utenteStrutturaList")
     private List<UtenteStruttura> utenteStrutturaList;
@@ -141,7 +153,7 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
     private ZonedDateTime version;
 
     @Column(name = "emails", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] emails;
 
     public String[] getEmails() {
