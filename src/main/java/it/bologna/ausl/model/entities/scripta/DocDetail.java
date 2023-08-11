@@ -3,8 +3,8 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
@@ -21,6 +21,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,7 +50,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gusgus
  */
 @TypeDefs({
-    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class),
+    @TypeDef(name = "int-array", typeClass = IntArrayType.class)
 })
 @Entity
 @Table(name = "docs_details", catalog = "internauta", schema = "scripta")
@@ -86,7 +89,8 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipologia")
-    private String tipologia;
+    @Enumerated(EnumType.STRING)
+    private TipologiaDoc tipologia;
 
     @Basic(optional = false)
     @NotNull
@@ -98,7 +102,8 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "command_type")
-    private String commandType;
+    @Enumerated(EnumType.STRING)
+    private CommandType commandType;
 
     @JoinColumn(name = "id_persona_responsabile_procedimento", referencedColumnName = "id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
@@ -184,7 +189,8 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Size(max = 2147483647)
     @Column(name = "stato")
-    private String stato;
+    @Enumerated(EnumType.STRING)
+    private StatoDoc stato;
 
     @Column(name = "visibilita_limitata")
     private Boolean visibilitaLimitata;
@@ -219,7 +225,8 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Size(max = 2147483647)
     @Column(name = "stato_ufficio_atti")
-    private String statoUfficioAtti;
+    @Enumerated(EnumType.STRING)
+    private StatoUfficioAtti statoUfficioAtti;
 
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
@@ -231,7 +238,8 @@ public class DocDetail implements Serializable, DocDetailInterface {
     private Boolean conservazione;
     
     @Column(name = "stato_ultimo_versamento")
-    private String statoUltimoVersamento;
+    @Enumerated(EnumType.STRING)
+    private Versamento.StatoVersamento statoUltimoVersamento;
     
     @Column(name = "stato_versamento_visto")
     private Boolean statoVersamentoVisto;
@@ -264,7 +272,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
     private List<PersonaVedente> personeVedentiList;
 
     @Column(name = "id_strutture_segreteria", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idStruttureSegreteria;
 
     @Column(name = "sulla_scrivania_di", columnDefinition = "jsonb")
@@ -293,11 +301,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
 //    private List<Archiviazione> archiviazioni;
     
     @Column(name = "id_archivi_antenati", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idArchiviAntenati;
     
     @Column(name = "id_archivi", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idArchivi;
     
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idDoc", fetch = FetchType.LAZY)
@@ -325,7 +333,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
         this.id = id;
     }
 
-    public DocDetail(Integer id, Azienda idAzienda, String tipologia, String openCommand, String commandType, ZonedDateTime dataCreazione, ZonedDateTime dataInserimentoRiga, ZonedDateTime version) {
+    public DocDetail(Integer id, Azienda idAzienda, TipologiaDoc tipologia, String openCommand, CommandType commandType, ZonedDateTime dataCreazione, ZonedDateTime dataInserimentoRiga, ZonedDateTime version) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.tipologia = tipologia;
@@ -368,20 +376,12 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Override
     public TipologiaDoc getTipologia() {
-        if (tipologia != null) {
-            return TipologiaDoc.valueOf(tipologia);
-        } else {
-            return null;
-        }
+        return tipologia;
     }
 
     @Override
     public void setTipologia(TipologiaDoc tipologia) {
-        if (tipologia != null) {
-            this.tipologia = tipologia.toString();
-        } else {
-            this.tipologia = null;
-        }
+        this.tipologia = tipologia;
     }
 
     @Override
@@ -396,20 +396,12 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Override
     public CommandType getCommandType() {
-        if (commandType != null) {
-            return CommandType.valueOf(commandType);
-        } else {
-            return null;
-        }
+        return commandType;
     }
 
     @Override
     public void setCommandType(CommandType commandType) {
-        if (commandType != null) {
-            this.commandType = commandType.toString();
-        } else {
-            this.commandType = null;
-        }
+        this.commandType = commandType;
     }
 
     @Override
@@ -609,20 +601,12 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Override
     public StatoDoc getStato() {
-        if (stato != null) {
-            return StatoDoc.valueOf(stato);
-        } else {
-            return null;
-        }
+        return stato;
     }
 
     @Override
     public void setStato(StatoDoc stato) {
-        if (stato != null) {
-            this.stato = stato.toString();
-        } else {
-            this.stato = null;
-        }
+        this.stato = stato;
     }
 
     @Override
@@ -707,20 +691,12 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Override
     public StatoUfficioAtti getStatoUfficioAtti() {
-        if (statoUfficioAtti != null) {
-            return StatoUfficioAtti.valueOf(statoUfficioAtti);
-        } else {
-            return null;
-        }
+        return statoUfficioAtti;
     }
 
     @Override
     public void setStatoUfficioAtti(StatoUfficioAtti statoUfficioAtti) {
-        if (statoUfficioAtti != null) {
-            this.statoUfficioAtti = statoUfficioAtti.toString();
-        } else {
-            this.statoUfficioAtti = null;
-        }
+        this.statoUfficioAtti = statoUfficioAtti;
     }
 
     @Override
@@ -904,20 +880,12 @@ public class DocDetail implements Serializable, DocDetailInterface {
 
     @Override
     public Versamento.StatoVersamento getStatoUltimoVersamento() {
-        if (statoUltimoVersamento != null) {
-            return Versamento.StatoVersamento.valueOf(statoUltimoVersamento);
-        } else {
-            return null;
-        }
+        return statoUltimoVersamento;
     }
 
     @Override
     public void setStatoUltimoVersamento(Versamento.StatoVersamento statoUltimoVersamento) {
-        if (statoUltimoVersamento != null) {
-            this.statoUltimoVersamento = statoUltimoVersamento.toString();
-        } else {
-            this.statoUltimoVersamento = null;
-        }
+        this.statoUltimoVersamento = statoUltimoVersamento;
     }
     
     @Override
@@ -947,8 +915,6 @@ public class DocDetail implements Serializable, DocDetailInterface {
     public void setVersamentoForzabileConcordato(Boolean versamentoForzabileConcordato) {
         this.versamentoForzabileConcordato = versamentoForzabileConcordato;
     }
-    
-    
 
     @Override
     public Applicazione getIdApplicazione() {
@@ -1006,14 +972,11 @@ public class DocDetail implements Serializable, DocDetailInterface {
             return false;
         }
         DocDetail other = (DocDetail) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "it.bologna.ausl.model.entities.scripta.DocsList[ id=" + id + " ]";
+        return String.format("%s[ id=%s ]", getClass().getCanonicalName(), getId());
     }
 }

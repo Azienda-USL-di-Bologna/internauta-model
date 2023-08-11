@@ -12,6 +12,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -64,8 +66,9 @@ public class Registro implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
+    @Enumerated(EnumType.STRING)
     @Column(name = "codice")
-    private String codice;
+    private CodiceRegistro codice;
     
     @Basic(optional = false)
     @NotNull
@@ -82,7 +85,7 @@ public class Registro implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRegistro", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("idRegistro")
-    private List<RegistroDoc> registroDocList;
+    private List<RegistroDoc> registriDocList;
 
     public Registro() {
     }
@@ -91,7 +94,7 @@ public class Registro implements Serializable {
         this.id = id;
     }
 
-    public Registro(Integer id, Azienda idAzienda, String codice, boolean ufficiale, ZonedDateTime version) {
+    public Registro(Integer id, Azienda idAzienda, CodiceRegistro codice, boolean ufficiale, ZonedDateTime version) {
         this.id = id;
         this.idAzienda = idAzienda;
         this.codice = codice;
@@ -99,6 +102,13 @@ public class Registro implements Serializable {
         this.version = version;
     }
 
+    public Registro(Integer id, Azienda idAzienda, CodiceRegistro codice, Boolean ufficiale, Boolean attivo) {
+        this.idAzienda = idAzienda;
+        this.codice = codice;
+        this.ufficiale = ufficiale;
+        this.attivo = attivo;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -116,19 +126,11 @@ public class Registro implements Serializable {
     }
 
     public CodiceRegistro getCodice() {
-        if (codice != null) {
-            return CodiceRegistro.valueOf(codice);
-        } else {
-            return null;
-        }
+        return codice;
     }
 
     public void setCodice(CodiceRegistro codice) {
-        if (codice != null) {
-            this.codice = codice.toString();
-        } else {
-            this.codice = null;
-        }
+        this.codice = codice;
     }
 
     public boolean getUfficiale() {
@@ -156,11 +158,11 @@ public class Registro implements Serializable {
     }
 
     public List<RegistroDoc> getRegistriDocsList() {
-        return registroDocList;
+        return registriDocList;
     }
 
     public void setRegistriDocsList(List<RegistroDoc> registroDocList) {
-        this.registroDocList = registroDocList;
+        this.registriDocList = registroDocList;
     }
 
     @Override
