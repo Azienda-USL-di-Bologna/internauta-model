@@ -236,6 +236,10 @@ public class Spedizione implements Serializable {
 
         public IndirizzoSpedizione() {
         }
+        
+        public IndirizzoSpedizione(String completo) {
+            this.completo = completo;
+        }
 
         public String getCompleto() {
             return completo;

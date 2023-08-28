@@ -14,6 +14,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,7 +48,8 @@ public class SessioneVersamento implements Serializable {
     public static enum TipologiaVersamento {
         FORZATURA,
         GIORNALIERO,
-        RITENTA;
+        RITENTA,
+        IMPORTATA
     }
     
     public static enum StatoSessioneVersamento {
@@ -65,13 +68,14 @@ public class SessioneVersamento implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "tipologia")
-    private String tipologia;
+    @Enumerated(EnumType.STRING)
+    private TipologiaVersamento tipologia;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "stato")
-    private String stato;
+    @Enumerated(EnumType.STRING)
+    private StatoSessioneVersamento stato;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -103,35 +107,19 @@ public class SessioneVersamento implements Serializable {
     }
 
     public TipologiaVersamento getTipologia() {
-        if (tipologia != null) {
-            return TipologiaVersamento.valueOf(tipologia);
-        } else {
-            return null;
-        }
+        return tipologia;
     }
 
     public void setTipologia(TipologiaVersamento tipologia) {
-        if (tipologia != null) {
-            this.tipologia = tipologia.toString();
-        } else {
-            this.tipologia = null;
-        }
+        this.tipologia = tipologia;
     }
 
     public StatoSessioneVersamento getStato() {
-        if (stato != null) {
-            return StatoSessioneVersamento.valueOf(stato);
-        } else {
-            return null;
-        }
+        return stato;
     }
 
     public void setStato(StatoSessioneVersamento stato) {
-        if (stato != null) {
-            this.stato = stato.toString();
-        } else {
-            this.stato = null;
-        }
+        this.stato = stato;
     }
 
     public Range<ZonedDateTime> getTimeInterval() {

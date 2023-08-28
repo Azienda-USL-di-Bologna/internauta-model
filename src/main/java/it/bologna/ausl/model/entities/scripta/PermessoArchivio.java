@@ -2,7 +2,7 @@ package it.bologna.ausl.model.entities.scripta;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.nextsw.common.annotations.GenerateProjections;
@@ -26,12 +26,15 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author gusgus
  */
+@TypeDef(name = "int-array", typeClass = IntArrayType.class)
+
 @Entity
 @Table(name = "permessi_archivi", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -89,7 +92,7 @@ public class PermessoArchivio implements Serializable {
     
     
     @Column(name = "id_permessi_sorgente", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idPermessiSorgente;
     
     @JoinColumn(name = "id_persona", referencedColumnName = "id")

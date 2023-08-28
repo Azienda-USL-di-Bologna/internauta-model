@@ -2,7 +2,7 @@ package it.bologna.ausl.model.entities.shpeck.views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.shpeck.Message;
@@ -21,12 +21,15 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author Giuseppe Russo <g.russo@nsi.it>
  */
+@TypeDef(name = "string-array", typeClass = StringArrayType.class)
+
 @Entity
 @Table(name = "drafts_lite", schema = "shpeck")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
@@ -51,12 +54,12 @@ public class DraftLite implements Serializable {
     @Column(name = "subject")
     private String subject;
 
-    @Column(name = "to_addresses", columnDefinition = "to_addresses[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Column(name = "to_addresses", columnDefinition = "text[]")
+    @Type(type = "string-array")
     private String[] toAddresses;
 
-    @Column(name = "cc_addresses", columnDefinition = "cc_addresses[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Column(name = "cc_addresses", columnDefinition = "text[]")
+    @Type(type = "string-array")
     private String[] ccAddresses;
 
     @Column(name = "hidden_recipients")
@@ -75,8 +78,8 @@ public class DraftLite implements Serializable {
     @Column(name = "attachments_number")
     private Integer attachmentsNumber;
 
-    @Column(name = "attachments_name", columnDefinition = "attachments_name[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Column(name = "attachments_name", columnDefinition = "text[]")
+    @Type(type = "string-array")
     private String[] attachmentsName;
 
     @Size(max = 2147483647)

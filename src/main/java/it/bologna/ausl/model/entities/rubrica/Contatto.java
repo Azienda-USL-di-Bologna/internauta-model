@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import it.nextsw.common.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
@@ -35,12 +35,15 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author gusgus
  */
+@TypeDef(name = "int-array", typeClass = IntArrayType.class)
+
 @Entity
 @Table(name = "contatti", catalog = "internauta", schema = "rubrica")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -127,7 +130,7 @@ public class Contatto implements Serializable, ContattoInterface {
     @JsonBackReference(value = "idPersonaCreazione")
     private Persona idPersonaCreazione;
     @Column(name = "id_aziende", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idAziende;
     @Size(max = 2147483647)
     @Column(name = "id_esterno")
