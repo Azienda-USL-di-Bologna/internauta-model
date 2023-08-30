@@ -90,7 +90,8 @@ public class ProfiliPredicatiRuoli implements Serializable {
     
     public ProfiliPredicatiRuoli() {
     }
-
+    
+    
     public ProfiliPredicatiRuoli(Integer id, Profili idProfilo, Ruolo idRuolo, String predicato, TipoSoggetto tipoSoggetto, TipoOggetto tipoOggetto, TipoAmbito tipoAmbito, TipoPermesso tipoPermesso) {
         this.id = id;
         this.idProfilo = idProfilo;
