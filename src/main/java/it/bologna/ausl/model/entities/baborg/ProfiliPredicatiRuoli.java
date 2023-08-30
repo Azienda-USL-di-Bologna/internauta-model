@@ -80,7 +80,7 @@ public class ProfiliPredicatiRuoli implements Serializable {
     
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_ambito")
+    @Column(name = "ambito_permesso")
     private TipoAmbito tipoAmbito;
     
     @Basic(optional = false)
