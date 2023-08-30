@@ -35,7 +35,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "sessioni_importazioni", catalog = "internauta", schema = "tip")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections()
+@GenerateProjections({
+    "idAzienda, idStrutturaDefault, idArchivioDefault, idPersonaVicarioDefault"
+})
 @DynamicUpdate
 public class SessioneImportazione implements Serializable {
 
