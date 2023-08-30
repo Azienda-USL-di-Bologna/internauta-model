@@ -53,7 +53,7 @@ public class ProfiliPredicatiRuoli implements Serializable {
     private Integer id;
     
 
-    @JoinColumn(name = "id_profilo", referencedColumnName = "id_profilo", insertable = false, updatable = false)
+    @JoinColumn(name = "id_profilo", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Profili idProfilo;
     
