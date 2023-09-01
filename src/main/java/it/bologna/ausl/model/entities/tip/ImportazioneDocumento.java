@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -290,6 +291,11 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     @Basic(optional = true)
     @Column(name = "id_repo_csv")
     private String idRepoCsv;
+    
+    @Basic(optional = false)
+    @Column(name = "files_importati")
+    @NotNull
+    private Boolean filesImportati = false;
     
     @Basic(optional = false)
     @Column(name = "stato")
@@ -801,6 +807,14 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     @Override
     public void setIdRepoCsv(String idRepoCsv) {
         this.idRepoCsv = idRepoCsv;
+    }
+
+    public Boolean getFilesImportati() {
+        return filesImportati;
+    }
+
+    public void setFilesImportati(Boolean filesImportati) {
+        this.filesImportati = filesImportati;
     }
 
     @Override
