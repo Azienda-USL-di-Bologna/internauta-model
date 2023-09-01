@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -148,6 +149,10 @@ public class Allegato implements Serializable {
     @Column(name = "estraibile")
     private Boolean estraibile = false;
     
+    @Type(type = "jsonb")
+    @Column(name = "additional_data", columnDefinition = "jsonb")
+    private HashMap<String,Object> additionalData;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime dataInserimento = ZonedDateTime.now();
@@ -265,6 +270,14 @@ public class Allegato implements Serializable {
 
     public void setEstraibile(Boolean estraibile) {
         this.estraibile = estraibile;
+    }
+
+    public HashMap<String, Object> getAdditionalData() {
+        return additionalData;
+    }
+
+    public void setAdditionalData(HashMap<String, Object> additionalData) {
+        this.additionalData = additionalData;
     }
 
     public ZonedDateTime getDataInserimento() {
