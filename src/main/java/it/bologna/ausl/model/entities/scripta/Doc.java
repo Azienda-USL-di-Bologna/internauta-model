@@ -49,7 +49,8 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related", 
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList",
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList",
-    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList,archiviDocList",
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList,archiviDocList,notaDocList",
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList,archiviDocList,notaDocList,docAnnullatoList",
     "noteVersamentoList"
 })
 @DynamicUpdate
