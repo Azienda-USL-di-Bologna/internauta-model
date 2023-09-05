@@ -46,17 +46,28 @@ public class TipErroriImportazione implements Serializable {
     }
     
     @JsonIgnore
-    public Flusso getFlusso (ColonneImportazioneOggetto nomeColonna) {
+    private Flusso getFlusso (ColonneImportazioneOggetto nomeColonna) {
         return getFlusso(nomeColonna.toString());
     }
     
     @JsonIgnore
-    public Flusso getFlusso (String nomeColonna) {
+    private Flusso getFlusso (String nomeColonna) {
         Flusso flusso = flussi.get(nomeColonna);
         if (flusso == null) {
             flusso = new Flusso();
             flussi.put(nomeColonna, flusso);
         }
+        return flusso;
+    }
+    
+    @JsonIgnore
+    public Flusso getFlussoIfExists (ColonneImportazioneOggetto nomeColonna) {
+        return getFlussoIfExists(nomeColonna.toString());
+    }
+    
+    @JsonIgnore
+    public Flusso getFlussoIfExists (String nomeColonna) {
+        Flusso flusso = flussi.get(nomeColonna);
         return flusso;
     }
     
