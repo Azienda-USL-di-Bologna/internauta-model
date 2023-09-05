@@ -31,11 +31,12 @@ import org.hibernate.annotations.DynamicUpdate;
 @GenerateProjections({"profiliPredicatiRuoliList"})
 @DynamicUpdate
 public class Profili implements Serializable {
-    
+     
     @Id
     @Basic(optional = false)
     @Column(name = "id")
     private String id;
+    
     
     @Basic(optional = false)
     @Column(name = "descrizione")
@@ -53,11 +54,11 @@ public class Profili implements Serializable {
     public Profili() {
     }
     
-    public String getId() {
+    public String getIdProfilo() {
         return id;
     }
 
-    public void setId(String idProfilo) {
+    public void setIdProfilo(String idProfilo) {
         this.id = idProfilo;
     }
 
