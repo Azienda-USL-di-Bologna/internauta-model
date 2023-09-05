@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,6 +39,17 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     
     private static final long serialVersionUID = 1L;
 
+    public static final String FORMATO_DATA = "dd/MM/yyyy";
+    public static final String DEFAULT_STRING_SEPARATOR = "#";
+    public static final String DEFAULT_ATTORE_SEPARATOR = ":";
+    public static final String REGEX_PREFISSI_ALLEGATI = "VER__\\d+__|RIC_ACC__|RIC_CONS__|RIC_ERR__|ALL_INT__";
+        
+    public static final String MINIO_DOCS_ROOT_PATH = "tip";
+    
+    public static enum PrefissiAllegati {
+        VER__, RIC_ACC__, RIC_CONS__, RIC_ERR__, ALL_INT__
+    }
+    
     public static enum StatiImportazioneDocumento {
         VALIDARE,
         IMPORTARE,
@@ -290,6 +302,11 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     @Basic(optional = true)
     @Column(name = "id_repo_csv")
     private String idRepoCsv;
+    
+    @Basic(optional = false)
+    @Column(name = "files_importati")
+    @NotNull
+    private Boolean filesImportati = false;
     
     @Basic(optional = false)
     @Column(name = "stato")
@@ -801,6 +818,14 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     @Override
     public void setIdRepoCsv(String idRepoCsv) {
         this.idRepoCsv = idRepoCsv;
+    }
+
+    public Boolean getFilesImportati() {
+        return filesImportati;
+    }
+
+    public void setFilesImportati(Boolean filesImportati) {
+        this.filesImportati = filesImportati;
     }
 
     @Override
