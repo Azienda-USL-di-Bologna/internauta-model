@@ -1,6 +1,7 @@
 package it.bologna.ausl.model.entities.tip.data;
 
 import it.bologna.ausl.model.entities.scripta.Mezzo;
+import it.bologna.ausl.model.entities.tip.SessioneImportazione;
 import java.util.Arrays;
 import java.util.List;
 
@@ -259,5 +260,26 @@ public class ColonneImportazioneOggettoEnums {
             }
             return res;
         }
+    }
+    
+    public static ColonneImportazioneOggetto getColonnaFiles(SessioneImportazione.TipologiaPregresso tipologia) {
+        ColonneImportazioneOggetto res;
+        switch (tipologia) {
+            case DELIBERA:
+                res = ColonneDelibera.allegati;
+                break;
+            case DETERMINA:
+                res = ColonneDetermina.allegati;
+                break;
+            case PROTOCOLLO_IN_ENTRATA:
+                res = ColonneProtocolloEntrata.allegati;
+                break;
+            case PROTOCOLLO_IN_USCITA:
+                res = ColonneProtocolloUscita.allegati;
+                break;
+            default:
+                throw new AssertionError("non sono previsti file per questa tipologia");
+        }
+        return res;
     }
 }

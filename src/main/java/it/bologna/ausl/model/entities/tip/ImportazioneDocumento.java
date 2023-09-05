@@ -39,6 +39,17 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     
     private static final long serialVersionUID = 1L;
 
+    public static final String FORMATO_DATA = "dd/MM/yyyy";
+    public static final String DEFAULT_STRING_SEPARATOR = "#";
+    public static final String DEFAULT_ATTORE_SEPARATOR = ":";
+    public static final String REGEX_PREFISSI_ALLEGATI = "VER__\\d+__|RIC_ACC__|RIC_CONS__|RIC_ERR__|ALL_INT__";
+        
+    public static final String MINIO_DOCS_ROOT_PATH = "tip";
+    
+    public static enum PrefissiAllegati {
+        VER__, RIC_ACC__, RIC_CONS__, RIC_ERR__, ALL_INT__
+    }
+    
     public static enum StatiImportazioneDocumento {
         VALIDARE,
         IMPORTARE,
