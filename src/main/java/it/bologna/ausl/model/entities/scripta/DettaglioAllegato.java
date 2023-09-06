@@ -8,7 +8,7 @@
 //import com.fasterxml.jackson.annotation.JsonBackReference;
 //import com.fasterxml.jackson.annotation.JsonFormat;
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import it.nextsw.common.annotations.GenerateProjections;
+//import it.nextsw.common.data.annotations.GenerateProjections;
 //import java.time.ZonedDateTime;
 //import java.util.List;
 //import javax.persistence.Basic;

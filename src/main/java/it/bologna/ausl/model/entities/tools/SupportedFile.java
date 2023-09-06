@@ -2,7 +2,7 @@ package it.bologna.ausl.model.entities.tools;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
