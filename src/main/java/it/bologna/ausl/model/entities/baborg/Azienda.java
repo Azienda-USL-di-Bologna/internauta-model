@@ -8,7 +8,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.scrivania.Attivita;
 import it.bologna.ausl.model.entities.scrivania.AttivitaFatta;
 import it.bologna.ausl.model.entities.scrivania.Menu;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import java.io.Serializable;
