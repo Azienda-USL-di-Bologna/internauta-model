@@ -86,6 +86,13 @@ public class NotaDoc implements Serializable {
     public NotaDoc() {
     }
 
+    public NotaDoc(Doc idDoc, Persona idPersonaInserente, TipoNotaDoc tipo, ZonedDateTime dataInserimentoRiga) {
+        this.idDoc = idDoc;
+        this.idPersonaInserente = idPersonaInserente;
+        this.tipo = tipo;
+        this.dataInserimentoRiga = dataInserimentoRiga;
+    }
+    
     public NotaDoc(Doc idDoc, Persona idPersonaInserente, TipoNotaDoc tipo, String testo, ZonedDateTime dataInserimentoRiga) {
         this.idDoc = idDoc;
         this.idPersonaInserente = idPersonaInserente;
