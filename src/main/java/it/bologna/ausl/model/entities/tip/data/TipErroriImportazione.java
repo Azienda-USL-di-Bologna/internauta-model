@@ -46,12 +46,28 @@ public class TipErroriImportazione implements Serializable {
     }
     
     @JsonIgnore
-    public Flusso getFlusso (ColonneImportazioneOggetto nomeColonna) {
-        Flusso flusso = flussi.get(nomeColonna.toString());
+    private Flusso getFlusso (ColonneImportazioneOggetto nomeColonna) {
+        return getFlusso(nomeColonna.toString());
+    }
+    
+    @JsonIgnore
+    private Flusso getFlusso (String nomeColonna) {
+        Flusso flusso = flussi.get(nomeColonna);
         if (flusso == null) {
             flusso = new Flusso();
-            flussi.put(nomeColonna.toString(), flusso);
+            flussi.put(nomeColonna, flusso);
         }
+        return flusso;
+    }
+    
+    @JsonIgnore
+    public Flusso getFlussoIfExists (ColonneImportazioneOggetto nomeColonna) {
+        return getFlussoIfExists(nomeColonna.toString());
+    }
+    
+    @JsonIgnore
+    public Flusso getFlussoIfExists (String nomeColonna) {
+        Flusso flusso = flussi.get(nomeColonna);
         return flusso;
     }
     
@@ -91,7 +107,7 @@ public class TipErroriImportazione implements Serializable {
     @JsonIgnore
     public ImportazioneDocumento.StatiImportazioneDocumento getStatoValidazione() {
         ImportazioneDocumento.StatiImportazioneDocumento res = ImportazioneDocumento.StatiImportazioneDocumento.VALIDARE;
-        if (flussi != null) {
+        if (flussi != null && !flussi.isEmpty()) {
             for (Map.Entry<String, Flusso> entry : flussi.entrySet()) {
                 String key = entry.getKey();
                 Flusso value = entry.getValue();
@@ -104,6 +120,8 @@ public class TipErroriImportazione implements Serializable {
                     res = ImportazioneDocumento.StatiImportazioneDocumento.IMPORTARE;
                 }
             }
+        } else {
+            res = ImportazioneDocumento.StatiImportazioneDocumento.IMPORTARE;
         }
         return res;
     }

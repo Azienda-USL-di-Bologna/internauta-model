@@ -9,7 +9,7 @@ import com.querydsl.core.annotations.QueryType;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import it.bologna.ausl.internauta.model.bds.types.PermessoEntitaStoredProcedure;
 import it.bologna.ausl.model.entities.EntityInterface;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.ribaltoneutils.RibaltoneDaLanciare;
 import it.bologna.ausl.model.entities.ribaltoneutils.StoricoAttivazione;
 import it.bologna.ausl.model.entities.rubrica.Contatto;

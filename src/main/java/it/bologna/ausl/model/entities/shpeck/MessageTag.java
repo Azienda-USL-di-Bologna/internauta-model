@@ -3,7 +3,7 @@ package it.bologna.ausl.model.entities.shpeck;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import it.bologna.ausl.model.entities.data.AdditionalDataShpeck;
 import it.bologna.ausl.model.entities.shpeck.data.AdditionalDataRegistration;
