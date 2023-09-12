@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.baborg.Persona;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
