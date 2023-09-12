@@ -14,6 +14,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -90,12 +92,14 @@ public class Related implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "tipo")
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoRelated tipo;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "origine")
-    private String origine;
+    @Enumerated(EnumType.STRING)
+    private OrigineRelated origine;
     
     @Basic(optional = false)
     @NotNull
@@ -117,7 +121,7 @@ public class Related implements Serializable {
     public Related() {
     }
 
-    public Related(Integer id, Doc idDoc, Contatto idContatto, Persona idPersonaInserente, Related idGruppo, List<Related> relatedList, List<Spedizione> spedizioneList, String tipo, String origine, String descrizione, ZonedDateTime dataInserimento, ZonedDateTime version) {
+    public Related(Integer id, Doc idDoc, Contatto idContatto, Persona idPersonaInserente, Related idGruppo, List<Related> relatedList, List<Spedizione> spedizioneList, TipoRelated tipo, OrigineRelated origine, String descrizione, ZonedDateTime dataInserimento, ZonedDateTime version) {
         this.id = id;
         this.idDoc = idDoc;
         this.idContatto = idContatto;
@@ -189,35 +193,19 @@ public class Related implements Serializable {
     }
 
     public TipoRelated getTipo() {
-        if (tipo != null) {
-            return TipoRelated.valueOf(tipo);
-        } else {
-            return null;
-        }
+        return tipo;
     }
 
     public void setTipo(TipoRelated tipo) {
-        if (tipo != null) {
-            this.tipo = tipo.toString();
-        } else {
-            this.tipo = null;
-        }
+        this.tipo = tipo;
     }
 
     public OrigineRelated getOrigine() {
-        if (origine != null) {
-            return OrigineRelated.valueOf(origine);
-        } else {
-            return null;
-        }
+        return origine;
     }
 
     public void setOrigine(OrigineRelated origine) {
-        if (origine != null) {
-            this.origine = origine.toString();
-        } else {
-            this.origine = null;
-        }
+        this.origine = origine;
     }
 
     public String getDescrizione() {

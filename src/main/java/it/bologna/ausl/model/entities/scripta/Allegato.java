@@ -4,16 +4,19 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.CaseFormat;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.bologna.ausl.model.entities.versatore.VersamentoAllegato;
 import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.repositories.AbstractJsonType;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -123,23 +126,24 @@ public class Allegato implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "tipo")
-    private String tipo;
-
     @Enumerated(EnumType.STRING)
+    private TipoAllegato tipo = TipoAllegato.ALLEGATO;
+
     @Column(name = "sottotipo")
+    @Enumerated(EnumType.STRING)
     private SottotipoAllegato sottotipo;
     
     @Basic(optional = false)
     @Column(name = "principale")
-    private Boolean principale;
+    private Boolean principale = false;
 
-    @Basic(optional = false)
+//    @Basic(optional = false)
     @Column(name = "ordinale")
     private Integer ordinale;
     
     @Basic(optional = false)
     @Column(name = "firmato")
-    private Boolean firmato;
+    private Boolean firmato = false;
     
     @Column(name = "estraibile")
     private Boolean estraibile = false;
@@ -216,19 +220,11 @@ public class Allegato implements Serializable {
     }
 
     public TipoAllegato getTipo() {
-        if (tipo != null) {
-            return TipoAllegato.valueOf(tipo);
-        } else {
-            return null;
-        }
+        return tipo;
     }
 
     public void setTipo(TipoAllegato tipo) {
-        if (tipo != null) {
-            this.tipo = tipo.toString();
-        } else {
-            this.tipo = null;
-        }
+        this.tipo = tipo;
     }
 
     public SottotipoAllegato getSottotipo() {
@@ -330,7 +326,7 @@ public class Allegato implements Serializable {
         }
 
         @JsonIgnore
-        public DettaglioAllegato getByKey(TipoDettaglioAllegato tipoDettaglioAllegato){
+        public DettaglioAllegato getByKey(TipoDettaglioAllegato tipoDettaglioAllegato) {
             switch (tipoDettaglioAllegato) {
                 case ORIGINALE:
                     return this.originale;
@@ -478,7 +474,9 @@ public class Allegato implements Serializable {
         }
     }
     
-    public static class DettaglioAllegato {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class DettaglioAllegato extends AbstractJsonType {
 
         private String idRepository;
         private String estensione;
@@ -504,7 +502,9 @@ public class Allegato implements Serializable {
         
 
         public DettaglioAllegato() {
+            super();
             //ZonedDateTime.from(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'").parse("2022-05-31T15:12:09.000"));
+            dataCreazione = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'").format(ZonedDateTime.now());
         }
         
         public Boolean getDaVersare() {

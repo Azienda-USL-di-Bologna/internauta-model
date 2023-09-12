@@ -53,7 +53,7 @@ public class ProfiliPredicatiRuoli implements Serializable {
     private Integer id;
     
 
-    @JoinColumn(name = "id_profilo", referencedColumnName = "id_profilo", insertable = false, updatable = false)
+    @JoinColumn(name = "id_profilo", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Profili idProfilo;
     
@@ -80,7 +80,7 @@ public class ProfiliPredicatiRuoli implements Serializable {
     
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_ambito")
+    @Column(name = "ambito_permesso")
     private TipoAmbito tipoAmbito;
     
     @Basic(optional = false)
@@ -90,7 +90,8 @@ public class ProfiliPredicatiRuoli implements Serializable {
     
     public ProfiliPredicatiRuoli() {
     }
-
+    
+    
     public ProfiliPredicatiRuoli(Integer id, Profili idProfilo, Ruolo idRuolo, String predicato, TipoSoggetto tipoSoggetto, TipoOggetto tipoOggetto, TipoAmbito tipoAmbito, TipoPermesso tipoPermesso) {
         this.id = id;
         this.idProfilo = idProfilo;
