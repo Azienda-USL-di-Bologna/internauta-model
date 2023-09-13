@@ -5,7 +5,7 @@
  */
 package it.bologna.ausl.model.entities.logs;
 
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

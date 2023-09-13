@@ -3,7 +3,7 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Persona;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -86,6 +86,13 @@ public class NotaDoc implements Serializable {
     public NotaDoc() {
     }
 
+    public NotaDoc(Doc idDoc, Persona idPersonaInserente, TipoNotaDoc tipo, ZonedDateTime dataInserimentoRiga) {
+        this.idDoc = idDoc;
+        this.idPersonaInserente = idPersonaInserente;
+        this.tipo = tipo;
+        this.dataInserimentoRiga = dataInserimentoRiga;
+    }
+    
     public NotaDoc(Doc idDoc, Persona idPersonaInserente, TipoNotaDoc tipo, String testo, ZonedDateTime dataInserimentoRiga) {
         this.idDoc = idDoc;
         this.idPersonaInserente = idPersonaInserente;

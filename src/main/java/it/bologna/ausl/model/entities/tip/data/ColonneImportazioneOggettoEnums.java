@@ -1,6 +1,7 @@
 package it.bologna.ausl.model.entities.tip.data;
 
 import it.bologna.ausl.model.entities.scripta.Mezzo;
+import it.bologna.ausl.model.entities.tip.SessioneImportazione;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ColonneImportazioneOggettoEnums {
         destinatariInterni(Arrays.asList("destinatari interni")),
         indirizziDestinatariEsterni(Arrays.asList("indirizzo destinatari esterni")),
         nomiDestinatariEsterni(Arrays.asList("nome destinatari esterni")),
-        adottatoDa(Arrays.asList("adottato da")),
+        adottatoDa(Arrays.asList("adottato da", "adottata da")),
         
         redattore(Arrays.asList()),
         pareri(Arrays.asList()),
@@ -30,16 +31,19 @@ public class ColonneImportazioneOggettoEnums {
         classificazione(Arrays.asList()),
         allegati(Arrays.asList()),
         annotazioni(Arrays.asList()),
+        
         numeroPubblicazione(Arrays.asList("numero pubblicazione")),
+        annoPubblicazione(Arrays.asList("anno pubblicazione")),
         dataInizio(Arrays.asList("data inizio")),
         dataFine(Arrays.asList("data fine")),
-        annoPubblicazione(Arrays.asList("anno pubblicazione")),
-        conservato(Arrays.asList("conservato")),
+        dataEsecutivita(Arrays.asList("data esecutivita", "data esecutività")),
+        
         collegamentoPrecedente(Arrays.asList("collegamento precedente")),
         note(Arrays.asList("nota")),
         annullato(Arrays.asList("flag annullato")),
         noteAnnullamento(Arrays.asList("nota annullamento", "note annullamento")),
         dataAnnullamento(Arrays.asList("data annullamento")),
+        conservato(Arrays.asList("conservato")),
         dataInvioConservazione(Arrays.asList("data invio conservazione", "data invio parer")),
         errori(Arrays.asList());
         
@@ -79,7 +83,7 @@ public class ColonneImportazioneOggettoEnums {
         direttoreGenerale(Arrays.asList("dg")),
         vicarioDirettoreGenerale(Arrays.asList("vicario dg")),
         
-        propostoDa(Arrays.asList("proposto da")),
+        propostoDa(Arrays.asList("proposto da", "proposta da")),
         
         controlloRegionale(Arrays.asList("controllo regionale")),
         
@@ -88,16 +92,19 @@ public class ColonneImportazioneOggettoEnums {
         classificazione(Arrays.asList()),
         allegati(Arrays.asList()),
         annotazioni(Arrays.asList()),
+        
         numeroPubblicazione(Arrays.asList("numero pubblicazione")),
+        annoPubblicazione(Arrays.asList("anno pubblicazione")),
         dataInizio(Arrays.asList("data inizio")),
         dataFine(Arrays.asList("data fine")),
-        annoPubblicazione(Arrays.asList("anno pubblicazione")),
-        conservato(Arrays.asList("conservato")),
+        dataEsecutivita(Arrays.asList("data esecutivita", "data esecutività")),
+        
         collegamentoPrecedente(Arrays.asList("collegamento precedente")),
         note(Arrays.asList("nota")),
         annullato(Arrays.asList("flag annullato")),
         noteAnnullamento(Arrays.asList("nota annullamento", "note annullamento")),
         dataAnnullamento(Arrays.asList("data annullamento")),
+        conservato(Arrays.asList("conservato")),
         dataInvioConservazione(Arrays.asList("data invio conservazione", "data invio parer")),
         errori(Arrays.asList());
         
@@ -253,5 +260,26 @@ public class ColonneImportazioneOggettoEnums {
             }
             return res;
         }
+    }
+    
+    public static ColonneImportazioneOggetto getColonnaFiles(SessioneImportazione.TipologiaPregresso tipologia) {
+        ColonneImportazioneOggetto res;
+        switch (tipologia) {
+            case DELIBERA:
+                res = ColonneDelibera.allegati;
+                break;
+            case DETERMINA:
+                res = ColonneDetermina.allegati;
+                break;
+            case PROTOCOLLO_IN_ENTRATA:
+                res = ColonneProtocolloEntrata.allegati;
+                break;
+            case PROTOCOLLO_IN_USCITA:
+                res = ColonneProtocolloUscita.allegati;
+                break;
+            default:
+                throw new AssertionError("non sono previsti file per questa tipologia");
+        }
+        return res;
     }
 }
