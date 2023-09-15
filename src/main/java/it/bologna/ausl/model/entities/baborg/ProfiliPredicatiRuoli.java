@@ -1,7 +1,7 @@
 package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -90,7 +90,8 @@ public class ProfiliPredicatiRuoli implements Serializable {
     
     public ProfiliPredicatiRuoli() {
     }
-
+    
+    
     public ProfiliPredicatiRuoli(Integer id, Profili idProfilo, Ruolo idRuolo, String predicato, TipoSoggetto tipoSoggetto, TipoOggetto tipoOggetto, TipoAmbito tipoAmbito, TipoPermesso tipoPermesso) {
         this.id = id;
         this.idProfilo = idProfilo;

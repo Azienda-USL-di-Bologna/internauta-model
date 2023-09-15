@@ -3,7 +3,7 @@ package it.bologna.ausl.model.entities.tip;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.tip.data.TipErroriImportazione;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
@@ -20,7 +20,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -38,6 +40,17 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     
     private static final long serialVersionUID = 1L;
 
+    public static final String FORMATO_DATA = "dd/MM/yyyy";
+    public static final String DEFAULT_STRING_SEPARATOR = "#";
+    public static final String DEFAULT_ATTORE_SEPARATOR = ":";
+    public static final String REGEX_PREFISSI_ALLEGATI = "VER__\\d+__|RIC_ACC__|RIC_CONS__|RIC_ERR__|ALL_INT__";
+        
+    public static final String MINIO_DOCS_ROOT_PATH = "tip";
+    
+    public static enum PrefissiAllegati {
+        VER__, RIC_ACC__, RIC_CONS__, RIC_ERR__, ALL_INT__
+    }
+    
     public static enum StatiImportazioneDocumento {
         VALIDARE,
         IMPORTARE,
@@ -292,6 +305,11 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     private String idRepoCsv;
     
     @Basic(optional = false)
+    @Column(name = "files_importati")
+    @NotNull
+    private Boolean filesImportati = false;
+    
+    @Basic(optional = false)
     @Column(name = "stato")
     @Enumerated(EnumType.STRING)
     private StatiImportazioneDocumento stato;
@@ -299,6 +317,13 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     @JoinColumn(name = "id_sessione_importazioni", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private SessioneImportazione idSessioneImportazione;
+    
+    
+    @Column(insertable = false, name = "tscol", columnDefinition = "tsvector")
+    private String tscol;
+
+    @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
+    private Double rankingTscol;
     
     @Basic(optional = true)
     @Type(type = "jsonb")
@@ -803,6 +828,14 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
         this.idRepoCsv = idRepoCsv;
     }
 
+    public Boolean getFilesImportati() {
+        return filesImportati;
+    }
+
+    public void setFilesImportati(Boolean filesImportati) {
+        this.filesImportati = filesImportati;
+    }
+
     @Override
     public SessioneImportazione getIdSessioneImportazione() {
         return idSessioneImportazione;
@@ -840,6 +873,23 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
+
+    public String getTscol() {
+        return tscol;
+    }
+
+    public void setTscol(String tscol) {
+        this.tscol = tscol;
+    }
+
+    public Double getRankingTscol() {
+        return rankingTscol;
+    }
+
+    public void setRankingTscol(Double rankingTscol) {
+        this.rankingTscol = rankingTscol;
+    }
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -847,10 +897,7 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
             return false;
         }
         ImportazioneDocumento other = (ImportazioneDocumento) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
