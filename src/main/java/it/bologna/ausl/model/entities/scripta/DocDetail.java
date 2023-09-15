@@ -92,8 +92,7 @@ public class DocDetail implements Serializable, DocDetailInterface {
     @Enumerated(EnumType.STRING)
     private TipologiaDoc tipologia;
 
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
     @Size(min = 1, max = 2147483647)
     @Column(name = "open_command")
     private String openCommand;
