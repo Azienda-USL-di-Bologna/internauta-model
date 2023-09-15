@@ -323,7 +323,7 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     private String tscol;
 
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
-    private Double rankingTscol;
+    private Double ranking;
     
     @Basic(optional = true)
     @Type(type = "jsonb")
@@ -882,12 +882,12 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
         this.tscol = tscol;
     }
 
-    public Double getRankingTscol() {
-        return rankingTscol;
+    public Double getRanking() {
+        return ranking;
     }
 
-    public void setRankingTscol(Double rankingTscol) {
-        this.rankingTscol = rankingTscol;
+    public void setRanking(Double ranking) {
+        this.ranking = ranking;
     }
     
     @Override
