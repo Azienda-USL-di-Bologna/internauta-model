@@ -68,7 +68,7 @@ public class ColonneImportazioneOggettoEnums {
         numero(Arrays.asList("numero")),
         anno(Arrays.asList("anno")),
         oggetto(Arrays.asList()),
-        dataAdozione(Arrays.asList("data di adozione")),
+        dataAdozione(Arrays.asList("data di adozione", "data adozione")),
         destinatariInterni(Arrays.asList("destinatari interni")),
         indirizziDestinatariEsterni(Arrays.asList("indirizzo destinatari esterni")),
         nomiDestinatariEsterni(Arrays.asList("nome destinatari esterni")),
