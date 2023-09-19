@@ -53,7 +53,7 @@ public interface ColonneImportazioneOggetto extends KeyValueEnum<List<String>> {
      * Per farlo viene usato un enum che ha come chiave il nome del campo della classe e come valori i possibili nomi degli header associati
      * @param value il valore del valore enum da cercare (corrisponde al nome dell'header del csv)
      * @param tipologia la tipologia di importazione. Serve per capire in quale enum cercare, dato che ce n'è uno per ogni tipologia
-     * @return il singolo valore enum che si chiama come il campo sull'entità
+     * @return il singolo valore enum che si chiama come il campo sull'entità, null se non la trova
      */
     public static ColonneImportazioneOggetto findKey(String value, SessioneImportazione.TipologiaPregresso tipologia) {
         String toFind = value.toLowerCase();
@@ -71,4 +71,6 @@ public interface ColonneImportazioneOggetto extends KeyValueEnum<List<String>> {
         }
         return foundKey;
     }
+
+    public ColonneImportazioneOggetto getErroriColumn();
 }
