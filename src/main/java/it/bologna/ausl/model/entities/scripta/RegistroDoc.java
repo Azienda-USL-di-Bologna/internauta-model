@@ -33,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "registri_docs", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
-@GenerateProjections({"idRegistro"})
+@GenerateProjections({"idRegistro","idRegistro,idStrutturaRegistrante"})
 @DynamicUpdate
 public class RegistroDoc implements Serializable {
 
