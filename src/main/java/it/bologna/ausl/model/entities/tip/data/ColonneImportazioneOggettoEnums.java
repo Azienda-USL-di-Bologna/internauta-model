@@ -245,6 +245,9 @@ public class ColonneImportazioneOggettoEnums {
     
     public static enum MezziConsentiti implements KeyValueEnum<String>{
         POSTA_SEMPLICE("posta semplice"),
+        FAX("fax"),
+        A_MANO("a mano"),
+        TELEFONO("telefono"),
         RACCOMANDATA("raccomandata"),
         EMAIL("email"),
         PEC("pec"),
@@ -276,6 +279,17 @@ public class ColonneImportazioneOggettoEnums {
                 case PEC:
                     res = Mezzo.CodiciMezzo.PEC;
                     break;
+                case BABEL:
+                    res = Mezzo.CodiciMezzo.BABEL;
+                    break;
+                case A_MANO:
+                    res = Mezzo.CodiciMezzo.A_MANO;
+                    break;
+                case TELEFONO:
+                    res = Mezzo.CodiciMezzo.TELEFONO;
+                    break;
+                case FAX:
+                    res = Mezzo.CodiciMezzo.FAX;
                 default:
                     throw new AssertionError(String.format("mezzo con codice %s non valido", this.name()));
             }
