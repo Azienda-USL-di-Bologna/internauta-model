@@ -146,7 +146,7 @@ public class ColonneImportazioneOggettoEnums {
         dataProtocolloEsterno(Arrays.asList("data protocollo esterno")),
         destinatariInterniA(Arrays.asList("destinatario interni a", "destinatari interni a", "destinatario interno a")),
         destinatariInterniCC(Arrays.asList("destinatario interni cc", "destinatari interni cc", "destinatario interno cc")),
-        visibilitaLimitata(Arrays.asList("visibilita limitata")),
+        visibilitaLimitata(Arrays.asList("visibilita limitata", "visibilità limitata")),
         riservato(Arrays.asList()),
         
         registro(Arrays.asList("registro")),
@@ -203,7 +203,7 @@ public class ColonneImportazioneOggettoEnums {
         
         dataRegistrazione(Arrays.asList("data di registrazione")),
         protocollatoDa(Arrays.asList("protocollato da")),
-        visibilitaLimitata(Arrays.asList("visibilita limitata")),
+        visibilitaLimitata(Arrays.asList("visibilita limitata","visibilità limitata")),
         riservato(Arrays.asList()),
         
         registro(Arrays.asList("registro")),
