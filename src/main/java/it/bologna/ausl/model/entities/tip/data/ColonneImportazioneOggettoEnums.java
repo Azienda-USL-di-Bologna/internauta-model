@@ -290,6 +290,7 @@ public class ColonneImportazioneOggettoEnums {
                     break;
                 case FAX:
                     res = Mezzo.CodiciMezzo.FAX;
+                    break;
                 default:
                     throw new AssertionError(String.format("mezzo con codice %s non valido", this.name()));
             }
