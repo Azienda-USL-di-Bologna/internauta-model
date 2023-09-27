@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -316,6 +317,13 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     @JoinColumn(name = "id_sessione_importazioni", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private SessioneImportazione idSessioneImportazione;
+    
+    
+    @Column(insertable = false, name = "tscol", columnDefinition = "tsvector")
+    private String tscol;
+
+    @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
+    private Double ranking;
     
     @Basic(optional = true)
     @Type(type = "jsonb")
@@ -865,6 +873,23 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
     }
+
+    public String getTscol() {
+        return tscol;
+    }
+
+    public void setTscol(String tscol) {
+        this.tscol = tscol;
+    }
+
+    public Double getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Double ranking) {
+        this.ranking = ranking;
+    }
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -872,10 +897,7 @@ public class ImportazioneDocumento implements Serializable, ImportazioneOggetto 
             return false;
         }
         ImportazioneDocumento other = (ImportazioneDocumento) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

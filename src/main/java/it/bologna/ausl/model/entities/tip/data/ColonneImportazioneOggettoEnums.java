@@ -61,6 +61,11 @@ public class ColonneImportazioneOggettoEnums {
         public List<String> getValue() {
             return valuesList;
         }
+
+        @Override
+        public ColonneImportazioneOggetto getErroriColumn() {
+            return errori;
+        }
     }
     
     public static enum ColonneDelibera implements ColonneImportazioneOggetto { 
@@ -68,7 +73,7 @@ public class ColonneImportazioneOggettoEnums {
         numero(Arrays.asList("numero")),
         anno(Arrays.asList("anno")),
         oggetto(Arrays.asList()),
-        dataAdozione(Arrays.asList("data di adozione")),
+        dataAdozione(Arrays.asList("data di adozione", "data adozione")),
         destinatariInterni(Arrays.asList("destinatari interni")),
         indirizziDestinatariEsterni(Arrays.asList("indirizzo destinatari esterni")),
         nomiDestinatariEsterni(Arrays.asList("nome destinatari esterni")),
@@ -122,6 +127,11 @@ public class ColonneImportazioneOggettoEnums {
         public List<String> getValue() {
             return valuesList;
         }
+        
+        @Override
+        public ColonneImportazioneOggetto getErroriColumn() {
+            return errori;
+        }
     }
     
     public static enum ColonneProtocolloEntrata implements ColonneImportazioneOggetto {
@@ -170,6 +180,11 @@ public class ColonneImportazioneOggettoEnums {
         public List<String> getValue() {
             return valuesList;
         }
+        
+        @Override
+        public ColonneImportazioneOggetto getErroriColumn() {
+            return errori;
+        }
     }
     
     public static enum ColonneProtocolloUscita implements ColonneImportazioneOggetto {
@@ -204,7 +219,8 @@ public class ColonneImportazioneOggettoEnums {
         annullato(Arrays.asList("flag annullato")),
         noteAnnullamento(Arrays.asList("nota annullamento", "note annullamento")),
         dataAnnullamento(Arrays.asList("data annullamento")),
-        dataInvioConservazione(Arrays.asList("data invio conservazione", "data invio parer"));
+        dataInvioConservazione(Arrays.asList("data invio conservazione", "data invio parer")),
+        errori(Arrays.asList());
         
         private final List<String> valuesList;
         
@@ -219,6 +235,11 @@ public class ColonneImportazioneOggettoEnums {
         @Override
         public List<String> getValue() {
             return valuesList;
+        }
+        
+        @Override
+        public ColonneImportazioneOggetto getErroriColumn() {
+            return errori;
         }
     }
     
