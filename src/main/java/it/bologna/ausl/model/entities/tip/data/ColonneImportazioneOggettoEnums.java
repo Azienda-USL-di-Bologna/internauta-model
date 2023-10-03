@@ -140,7 +140,7 @@ public class ColonneImportazioneOggettoEnums {
         anno(Arrays.asList("anno")),
         oggetto(Arrays.asList("oggetto")),
         dataRegistrazione(Arrays.asList("data di registrazione","data registrazione")),
-        dataArrivo(Arrays.asList("data di arrivo")),
+        dataArrivo(Arrays.asList("data di arrivo","data arrivo")),
         destinatariInterniA(Arrays.asList("destinatario interni a", "destinatari interni a", "destinatario interno a")),
         destinatariInterniCC(Arrays.asList("destinatario interni cc", "destinatari interni cc", "destinatario interno cc")),
         protocollatoDa(Arrays.asList("protocollato da")),
