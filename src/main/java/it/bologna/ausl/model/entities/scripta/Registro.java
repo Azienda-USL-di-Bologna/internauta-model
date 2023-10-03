@@ -27,7 +27,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
-import sun.nio.fs.RegistryFileTypeDetector;
 
 /**
  *
