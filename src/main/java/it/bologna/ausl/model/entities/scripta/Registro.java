@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
+import sun.nio.fs.RegistryFileTypeDetector;
 
 /**
  *
@@ -49,7 +50,11 @@ public class Registro implements Serializable {
 	PROP_PG,
 	PROP_DETE,
 	PROP_DELI,
-	PROP_RS
+	PROP_RS,
+        GEDI,
+        RGPICO,
+        RGDETE,
+        RGDELI
     }
 
     private static final long serialVersionUID = 1L;
