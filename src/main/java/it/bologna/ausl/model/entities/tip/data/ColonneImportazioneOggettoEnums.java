@@ -76,11 +76,11 @@ public class ColonneImportazioneOggettoEnums {
         dataAdozione(Arrays.asList("data di adozione", "data adozione")),
         destinatariInterni(Arrays.asList("destinatari interni")),
         indirizziDestinatariEsterni(Arrays.asList("indirizzo destinatari esterni","indirizzi destinatari esterni")),
-        nomiDestinatariEsterni(Arrays.asList("nome destinatari esterni","nomi    destinatari esterni")),
+        nomiDestinatariEsterni(Arrays.asList("nome destinatari esterni","nomi destinatari esterni")),
         
         direttoreGenerale(Arrays.asList("dg","direttore generale")),
         vicarioDirettoreGenerale(Arrays.asList("vicario dg","vicario direttore generale")),
-        direttoreSanitario(Arrays.asList("ds","direttore danitario")),
+        direttoreSanitario(Arrays.asList("ds","direttore sanitario")),
         direttoreAmministrativo(Arrays.asList("da","direttore amministrativo")),
         propostoDa(Arrays.asList("proposto da", "proposta da")),
         proponente(Arrays.asList("proponente")),
