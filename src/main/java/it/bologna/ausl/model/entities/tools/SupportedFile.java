@@ -1,8 +1,8 @@
 package it.bologna.ausl.model.entities.tools;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.nextsw.common.annotations.GenerateProjections;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
@@ -15,11 +15,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 /**
  *
  * @author Top
  */
+@TypeDef(name = "int-array", typeClass = IntArrayType.class)
+
 @Entity
 @Table(name = "supported_files", catalog = "internauta", schema = "tools")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -49,7 +52,7 @@ public class SupportedFile implements Serializable {
     private Boolean anteprimaOriginale = false;
 
     @Column(name = "id_aziende", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idAziende;
     
     @Column(name = "note")

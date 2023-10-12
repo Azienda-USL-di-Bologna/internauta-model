@@ -3,9 +3,9 @@ package it.bologna.ausl.model.entities.rubrica.views;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.baborg.Utente;
@@ -60,7 +60,8 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idPersonaCreazione, idStruttura"})
 @DynamicUpdate
 @TypeDefs({
-    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class),
+    @TypeDef(name = "int-array", typeClass = IntArrayType.class)
 })
 public class ContattoConDettaglioPrincipale implements Serializable, ContattoInterface {
 
@@ -121,7 +122,7 @@ public class ContattoConDettaglioPrincipale implements Serializable, ContattoInt
     private Persona idPersonaCreazione;
     
     @Column(name = "id_aziende", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idAziende;
     
     @Size(max = 2147483647)

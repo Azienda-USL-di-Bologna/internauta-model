@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.versatore.Versamento;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
@@ -49,7 +49,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Archivio {
 
     public static enum TipoArchivio {
-        AFFARE, PROCEDIMENTO, ATTIVITA, SPECIALE
+        AFFARE, PROCEDIMENTO, ATTIVITA, SOGGETTO_FISICO, SOGGETTO_GIURIDICO, SPECIALE
     }
 
     public static enum StatoArchivio {
@@ -66,7 +66,7 @@ public class Archivio {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
     @JsonBackReference(value = "idArchivioDetail")
     private ArchivioDetail idArchivioDetail;
 
@@ -166,7 +166,7 @@ public class Archivio {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JsonBackReference(value = "attoriList")
     private List<AttoreArchivio> attoriList;
 

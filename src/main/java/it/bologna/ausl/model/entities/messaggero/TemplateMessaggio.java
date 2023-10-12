@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.nextsw.common.annotations.GenerateProjections;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.InvasivitaEnum;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.SeveritaEnum;
 import it.bologna.ausl.model.entities.messaggero.AmministrazioneMessaggio.TipologiaEnum;
@@ -33,11 +34,10 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author Giuseppe Russo <g.russo@nsi.it>
  */
-@TypeDefs(
-    {
-        @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-    }
-)
+@TypeDefs({
+    @TypeDef(name = "string-array", typeClass = StringArrayType.class),
+    @TypeDef(name = "int-array", typeClass = IntArrayType.class)
+})
 @Entity
 @Table(name = "template_messaggi", catalog = "internauta", schema = "messaggero")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "authorities"})
@@ -65,20 +65,20 @@ public class TemplateMessaggio implements Serializable {
     @Column(name = "testo")
     private String testo;
     
-    @Column(name = "id_applicazioni", columnDefinition = "id_applicazioni[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Column(name = "id_applicazioni", columnDefinition = "text[]")
+    @Type(type = "string-array")
     private String[] idApplicazioni;
     
-    @Column(name = "id_aziende", columnDefinition = "id_aziende[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Column(name = "id_aziende", columnDefinition = "integer[]")
+    @Type(type = "int-array")
     private Integer[] idAziende;
     
-    @Column(name = "id_strutture", columnDefinition = "id_strutture[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Column(name = "id_strutture", columnDefinition = "integer[]")
+    @Type(type = "int-array")
     private Integer[] idStrutture;
     
-    @Column(name = "id_persone", columnDefinition = "id_persone[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Column(name = "id_persone", columnDefinition = "integer[]")
+    @Type(type = "int-array")
     private Integer[] idPersone;
     
     @Column(name = "per_tutti")

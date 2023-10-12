@@ -3,13 +3,13 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.versatore.Versamento;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -45,7 +45,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * ed è la rappresentazione della tabella partizionata sul db
  */
 @TypeDefs({
-    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class),
+    @TypeDef(name = "int-array", typeClass = IntArrayType.class)
 })
 @Entity
 @Table(name = "archivi_details", catalog = "internauta", schema = "scripta")
@@ -54,7 +55,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @GenerateProjections({
     "idArchivioPadre, archiviFigliList", 
     "archiviFigliList",
-    "idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura"
+    "idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura",
+    "idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura,idTitolo,idMassimario"
 })
 @DynamicUpdate
 public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
@@ -155,8 +157,13 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     @JsonBackReference(value = "idStruttura")
     private Struttura idStruttura;
 
-    @Column(name = "id_titolo")
-    private Integer idTitolo;
+    @JoinColumn(name = "id_titolo", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Titolo idTitolo;
+    
+    @JoinColumn(name = "id_massimario", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Massimario idMassimario;
     
     @Column(name="numero_sottoarchivi")
     private Integer numeroSottoarchivi;
@@ -180,7 +187,7 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     private ZonedDateTime version;
     
     @Column(name = "id_vicari", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idVicari;
     
     @OneToMany(mappedBy = "idArchivioDetail", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -423,14 +430,22 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
         this.idStruttura = idStruttura;
     }
 
-    public Integer getIdTitolo() {
+    public Titolo getIdTitolo() {
         return idTitolo;
     }
 
-    public void setIdTitolo(Integer idTitolo) {
+    public void setIdTitolo(Titolo idTitolo) {
         this.idTitolo = idTitolo;
     }
 
+    public Massimario getIdMassimario() {
+        return idMassimario;
+    }
+
+    public void setIdMassimario(Massimario idMassimario) {
+        this.idMassimario = idMassimario;
+    }
+    
     public String getTscol() {
         return tscol;
     }

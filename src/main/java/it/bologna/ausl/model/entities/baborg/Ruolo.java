@@ -2,7 +2,7 @@ package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
@@ -29,7 +29,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Ruolo implements Serializable {
     
     public static enum CodiciRuolo {
-        UG, MOS, OS, CA, CI, AS, SD, SR, R, RV, IP
+        UG, MOS, OS, CA, CI, AS, SD, SR, R, RV, IP, AG
     }
 
     public static enum ModuliRuolo {

@@ -2,8 +2,7 @@ package it.bologna.ausl.model.entities.shpeck;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
@@ -60,12 +59,12 @@ public class Draft implements Serializable {
     @Column(name = "subject")
     private String subject;
     
-    @Column(name = "to_addresses", columnDefinition = "to_addresses[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Column(name = "to_addresses", columnDefinition = "text[]")
+    @Type(type = "string-array")
     private String[] toAddresses;
     
-    @Column(name = "cc_addresses", columnDefinition = "cc_addresses[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Column(name = "cc_addresses", columnDefinition = "text[]")
+    @Type(type = "string-array")
     private String[] ccAddresses;
     
     @Basic(optional = false)
@@ -88,8 +87,8 @@ public class Draft implements Serializable {
     @Column(name = "attachments_number")
     private Integer attachmentsNumber;
     
-    @Column(name = "attachments_name", columnDefinition = "attachments_name[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Column(name = "attachments_name", columnDefinition = "text[]")
+    @Type(type = "string-array")
     private String[] attachmentsName;
     
     @Size(max = 2147483647)

@@ -2,8 +2,8 @@ package it.bologna.ausl.model.entities.scrivania;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.nextsw.common.annotations.GenerateProjections;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Utente;
 import java.io.Serializable;
@@ -23,12 +23,15 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author gusgus
  */
+@TypeDef(name = "string-array", typeClass = StringArrayType.class)
+
 @Entity
 @Table(name = "richieste_smart_working", catalog = "internauta", schema = "scrivania")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -155,7 +158,7 @@ public class RichiestaSmartWorking implements Serializable {
     @Column(name = "mailict")
     private String mailict;
     @Column(name = "dichiarazioni_finali", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] dichiarazioniFinali;
     @Column(name = "my_sanita")
     private Boolean mySanita;

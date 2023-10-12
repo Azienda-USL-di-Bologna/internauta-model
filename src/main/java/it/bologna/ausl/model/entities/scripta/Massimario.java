@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -35,7 +36,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "massimario", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
-@GenerateProjections({"titoli"})
+@GenerateProjections({
+    "titoli",
+    "idAzienda"
+})
 @DynamicUpdate
 public class Massimario implements Serializable {
 
@@ -75,6 +79,12 @@ public class Massimario implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_titolo"))
     @JsonBackReference("titoli")
     private List<Titolo> titoli = new ArrayList<>();
+    
+    @Column(name = "tscol", columnDefinition = "tsvector")
+    private String tscol;
+
+    @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
+    private Double ranking;
 
     public Massimario() {
     }
@@ -143,6 +153,22 @@ public class Massimario implements Serializable {
 
     public void setIdAzienda(Azienda idAzienda) {
         this.idAzienda = idAzienda;
+    }
+
+    public String getTscol() {
+        return tscol;
+    }
+
+    public void setTscol(String tscol) {
+        this.tscol = tscol;
+    }
+
+    public Double getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Double ranking) {
+        this.ranking = ranking;
     }
 
     @Override

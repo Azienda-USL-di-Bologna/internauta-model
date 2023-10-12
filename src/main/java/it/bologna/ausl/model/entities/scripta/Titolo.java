@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -35,7 +36,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "titoli", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
-@GenerateProjections({})
+@GenerateProjections({
+    "idAzienda"
+})
 @DynamicUpdate
 public class Titolo implements Serializable {
 
@@ -45,14 +48,17 @@ public class Titolo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "nome")
     private String nome;
+    
     @Size(max = 2147483647)
     @Column(name = "classificazione")
     private String classificazione;
+    
     @Column(name = "chiuso")
     private Boolean chiuso;
     
@@ -63,18 +69,28 @@ public class Titolo implements Serializable {
     
     @Column(name = "livello")
     private Integer livello;
+    
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
+    
     @OneToMany(mappedBy = "idTitoloPadre", fetch = FetchType.LAZY)
     @JsonBackReference("titoliList")
     private List<Titolo> titoliList;
+    
     @JoinColumn(name = "id_titolo_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Titolo idTitoloPadre;
+    
     @ManyToMany(mappedBy = "titoli")
     @JsonBackReference("massimario")
     private List<Massimario> massimario = new ArrayList<>();
+    
+    @Column(name = "tscol", columnDefinition = "tsvector")
+    private String tscol;
+
+    @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
+    private Double ranking;
 
     public Titolo() {
     }
@@ -167,6 +183,22 @@ public class Titolo implements Serializable {
 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
+    }
+
+    public String getTscol() {
+        return tscol;
+    }
+
+    public void setTscol(String tscol) {
+        this.tscol = tscol;
+    }
+
+    public Double getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Double ranking) {
+        this.ranking = ranking;
     }
 
     @Override

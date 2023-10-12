@@ -4,13 +4,13 @@ import it.bologna.ausl.model.entities.scripta.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.versatore.Versamento;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -42,14 +42,16 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author gusgus
  */
 @TypeDefs({
-    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+    @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class),
+    @TypeDef(name = "int-array", typeClass = IntArrayType.class)
 })
 @Entity
 @Table(name = "archivi_details_view", catalog = "internauta", schema = "scripta")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Cacheable(false)
 @GenerateProjections({
-    "idAzienda, idPersonaResponsabile, idPersonaCreazione, idStruttura"
+    "idAzienda, idPersonaResponsabile, idPersonaCreazione, idStruttura",
+    "idAzienda,idPersonaCreazione,idPersonaResponsabile,idStruttura,idTitolo,idMassimario"
 })
 @DynamicUpdate
 public class ArchivioDetailView implements Serializable, ArchivioDetailInterface {
@@ -152,8 +154,13 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @JsonBackReference(value = "idStruttura")
     private Struttura idStruttura;
     
-    @Column(name = "id_titolo")
-    private Integer idTitolo;
+    @JoinColumn(name = "id_titolo", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Titolo idTitolo;
+    
+    @JoinColumn(name = "id_massimario", referencedColumnName = "id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private Massimario idMassimario;
     
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
@@ -183,7 +190,7 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 //    private Integer bitPermesso;
     
     @Column(name = "id_vicari", columnDefinition = "integer[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Type(type = "int-array")
     private Integer[] idVicari;
     
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
@@ -413,12 +420,20 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
         this.idStruttura = idStruttura;
     }
 
-    public Integer getIdTitolo() {
+    public Titolo getIdTitolo() {
         return idTitolo;
     }
 
-    public void setIdTitolo(Integer idTitolo) {
+    public void setIdTitolo(Titolo idTitolo) {
         this.idTitolo = idTitolo;
+    }
+
+    public Massimario getIdMassimario() {
+        return idMassimario;
+    }
+
+    public void setIdMassimario(Massimario idMassimario) {
+        this.idMassimario = idMassimario;
     }
 
     public String getTscol() {

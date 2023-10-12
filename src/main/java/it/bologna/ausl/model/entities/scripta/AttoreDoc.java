@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
@@ -44,7 +44,7 @@ public class AttoreDoc implements Serializable {
         PARERI, 
         VISTI, 
         FIRMA,
-	RESPONSABILE_PROCEDIMENTO, DIRETTORE_AMMINISTRATIVO, DIRETTORE_SANITARIO, DIRETTORE_SCIENTIFICO, DIRETTORE_GENERALE,
+	RESPONSABILE_PROCEDIMENTO, DIRETTORE_AMMINISTRATIVO, DIRETTORE_SANITARIO, DIRETTORE_SCIENTIFICO, DIRETTORE_GENERALE, VICARIO_DIRETTORE_GENERALE,
         DIRETTORE_AFFARI_GENERALI_LEGALI,
 	RESCRITTO, SEGRETARIO, ASSEGNATARIO, SPEDIZIONE_MANUALE, RESPONSABILE, UFFICIO_ATTI, APPROVAZIONE, ASSEGNATARIO_INTERNO
         

@@ -3,21 +3,16 @@ package it.bologna.ausl.model.entities.scripta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.model.entities.baborg.Azienda;
-import it.bologna.ausl.model.entities.baborg.Persona;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -39,7 +34,7 @@ public class Mezzo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static enum CodiciMezzo {
-        MAIL, PEC, POSTA_ORDINARIA, FAX, RACCOMANDATA, BABEL, TELEFONO
+        MAIL, PEC, POSTA_ORDINARIA, FAX, RACCOMANDATA, BABEL, TELEFONO, A_MANO
     }
 
     @Id

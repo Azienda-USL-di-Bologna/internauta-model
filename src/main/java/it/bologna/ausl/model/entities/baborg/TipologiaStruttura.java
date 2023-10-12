@@ -3,8 +3,8 @@ package it.bologna.ausl.model.entities.baborg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.nextsw.common.annotations.GenerateProjections;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -34,11 +34,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author solidus83
  */
-@TypeDefs(
-        {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-        }
-)
+@TypeDef(name = "string-array", typeClass = StringArrayType.class)
+
 @Entity
 @Table(name = "tipologie_struttura", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -66,8 +63,13 @@ public class TipologiaStruttura implements Serializable {
     
     @Basic(optional = true)
     @Column(name = "ruoli", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] ruoli;
+    
+    @Basic(optional = true)
+    @Column(name = "predicati", columnDefinition = "text[]")
+    @Type(type = "string-array")
+    private String[] predicati;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -109,6 +111,15 @@ public class TipologiaStruttura implements Serializable {
         this.ruoli = ruoli;
     }
 
+    public String[] getPredicati() {
+        return predicati;
+    }
+
+    public void setPredicati(String[] predicati) {
+        this.predicati = predicati;
+    }
+
+
     public ZonedDateTime getVersion() {
         return version;
     }
@@ -138,5 +149,6 @@ public class TipologiaStruttura implements Serializable {
     public String toString() {
         return getClass().getCanonicalName() + "[ id=" + id + " ]";
     }
+
 
 }

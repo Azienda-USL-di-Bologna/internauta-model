@@ -3,9 +3,9 @@ package it.bologna.ausl.model.entities.scrivania;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import it.bologna.ausl.model.entities.configurazione.Applicazione;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -36,7 +36,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author gusgus
  */
-@TypeDefs({@TypeDef(name = "array", typeClass = GenericArrayUserType.class)})
+@TypeDef(name = "string-array", typeClass = StringArrayType.class)
 @Entity
 @Table(name = "bmenu", catalog = "internauta", schema = "scrivania")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -79,18 +79,18 @@ public class Bmenu implements Serializable {
     private String commandType;
     
     @Column(name = "permessi_sufficienti", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] permessiSufficienti;
     
     @Column(name = "ruoli_sufficienti", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] ruoliSufficienti;
     
     @Column(name = "modulo", columnDefinition = "text")
     private String modulo;
     
     @Column(name = "aziende", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.TEXT_ELEMENT_TYPE))
+    @Type(type = "string-array")
     private String[] aziende;
     
     @Column(name = "scomponi_per_azienda")

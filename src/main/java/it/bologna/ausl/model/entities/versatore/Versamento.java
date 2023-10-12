@@ -71,7 +71,7 @@ public class Versamento implements Serializable {
     private Doc idDoc;
     
     @JoinColumn(name = "id_sessione_versamento", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonBackReference(value = "idSessioneVersamento")
     private SessioneVersamento idSessioneVersamento;
     

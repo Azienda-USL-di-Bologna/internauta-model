@@ -1,7 +1,7 @@
 package it.bologna.ausl.model.entities.logs;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import it.nextsw.common.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Basic;
@@ -138,6 +138,9 @@ public class OperazioneKrint implements Serializable {
         SCRIPTA_ARCHIVIO_SPOSTA_CONTENUTO_DESTINAZIONE,
         SCRIPTA_ARCHIVIO_STATO_CHIUSURA_UPDATE,
         SCRIPTA_ARCHIVIO_TIPO_UPDATE,
+        SCRIPTA_ARCHIVIO_UPDATE_RESPONSABILE_GESTIONE_MASSIVA,
+        SCRIPTA_ARCHIVIO_UPDATE_STRUTTURA_GESTIONE_MASSIVA,
+        SCRIPTA_ARCHIVIO_GESTIONE_MASSIVA_ABILITAZIONI
     }
 
     private static final long serialVersionUID = 1L;

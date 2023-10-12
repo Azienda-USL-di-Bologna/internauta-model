@@ -2,8 +2,8 @@ package it.bologna.ausl.model.entities.shpeck.views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import it.bologna.ausl.internauta.utils.jpa.tools.GenericArrayUserType;
-import it.nextsw.common.annotations.GenerateProjections;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.shpeck.Folder;
 import it.bologna.ausl.model.entities.shpeck.Message;
@@ -30,11 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author gdm
  */
-@TypeDefs(
-        {
-            @TypeDef(name = "array", typeClass = GenericArrayUserType.class)
-        }
-)
+@TypeDef(name = "int-array", typeClass = IntArrayType.class)
 
 @Entity
 @Table(name = "messages_complete", catalog = "internauta", schema = "shpeck")
@@ -119,8 +115,8 @@ public class MessageComplete implements Serializable {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private Folder idTargetFolder;
 
-    @Column(name = "id_tags", columnDefinition = "text[]")
-    @Type(type = "array", parameters = @Parameter(name = "elements-type", value = GenericArrayUserType.INTEGER_ELEMENT_TYPE))
+    @Column(name = "id_tags", columnDefinition = "integer[]")
+    @Type(type = "int-array")
     private Integer[] idTags;
 
     @Column(name = "from")
