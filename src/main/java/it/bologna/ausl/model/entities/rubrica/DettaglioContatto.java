@@ -100,6 +100,10 @@ public class DettaglioContatto implements Serializable, DettaglioContattoInterfa
     @Size(min = 1, max = 2147483647)
     @Column(name = "tipo")
     private String tipo;
+    
+    @NotNull
+    @Column(name = "domicilio_digitale")
+    private Boolean domicilioDigitale = false;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -245,6 +249,15 @@ public class DettaglioContatto implements Serializable, DettaglioContattoInterfa
         }
     }
 
+    public Boolean getDomicilioDigitale() {
+        return domicilioDigitale;
+    }
+
+    public void setDomicilioDigitale(Boolean domicilioDigitale) {
+        this.domicilioDigitale = domicilioDigitale;
+    }
+
+    
     public ZonedDateTime getVersion() {
         return version;
     }
