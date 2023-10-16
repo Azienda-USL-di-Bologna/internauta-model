@@ -63,8 +63,8 @@ public interface DettaglioContattoInterface {
     public void setPrincipale(Boolean principale);
     
     public Boolean getDomicilioDigitale();
-
-    public void setDomicilioDigitale(Boolean principale);
+    
+    public void setDomicilioDigitale(Boolean domicilioDigitale);
 
     public ZonedDateTime getVersion();
 
