@@ -34,7 +34,7 @@ public class Mezzo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static enum CodiciMezzo {
-        MAIL, PEC, POSTA_ORDINARIA, FAX, RACCOMANDATA, BABEL, TELEFONO
+        MAIL, PEC, POSTA_ORDINARIA, FAX, RACCOMANDATA, BABEL, TELEFONO, A_MANO
     }
 
     @Id
