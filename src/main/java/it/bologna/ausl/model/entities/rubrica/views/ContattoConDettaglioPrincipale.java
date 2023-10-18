@@ -160,6 +160,10 @@ public class ContattoConDettaglioPrincipale implements Serializable, ContattoInt
     @Column(name = "contatto_errato")
     private String contattoErrato;
     
+    @NotNull
+    @Column(name = "domicilio_digitale")
+    private Boolean domicilioDigitale = false;
+    
     @Size(max = 2147483647)
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
@@ -167,6 +171,8 @@ public class ContattoConDettaglioPrincipale implements Serializable, ContattoInt
     @Size(max = 2147483647)
     @Column(name = "titolo")
     private String titolo;
+    
+    
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -558,6 +564,14 @@ public class ContattoConDettaglioPrincipale implements Serializable, ContattoInt
 
     public void setTitolo(String titolo) {
         this.titolo = titolo;
+    }
+    
+    public Boolean getDomicilioDigitale() {
+        return domicilioDigitale;
+    }
+
+    public void setDomicilioDigitale(Boolean domicilioDigitale) {
+        this.domicilioDigitale = domicilioDigitale;
     }
 
     public String getDettaglioDescrizione() {
