@@ -160,9 +160,9 @@ public class ContattoConDettaglioPrincipale implements Serializable, ContattoInt
     @Column(name = "contatto_errato")
     private String contattoErrato;
     
-    @NotNull
-    @Column(name = "domicilio_digitale")
-    private Boolean domicilioDigitale = false;
+//    @NotNull
+//    @Column(name = "domicilio_digitale")
+//    private Boolean domicilioDigitale = false;
     
     @Size(max = 2147483647)
     @Column(name = "tscol", columnDefinition = "tsvector")
@@ -566,13 +566,13 @@ public class ContattoConDettaglioPrincipale implements Serializable, ContattoInt
         this.titolo = titolo;
     }
     
-    public Boolean getDomicilioDigitale() {
-        return domicilioDigitale;
-    }
-
-    public void setDomicilioDigitale(Boolean domicilioDigitale) {
-        this.domicilioDigitale = domicilioDigitale;
-    }
+//    public Boolean getDomicilioDigitale() {
+//        return domicilioDigitale;
+//    }
+//
+//    public void setDomicilioDigitale(Boolean domicilioDigitale) {
+//        this.domicilioDigitale = domicilioDigitale;
+//    }
 
     public String getDettaglioDescrizione() {
         return dettaglioDescrizione;
