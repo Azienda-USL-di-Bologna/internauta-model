@@ -3,8 +3,10 @@ package it.bologna.ausl.model.entities.lotti;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import it.bologna.ausl.model.entities.scripta.Doc;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -18,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -70,6 +73,14 @@ public class Lotto implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "data_completamento")
     private LocalDate dataCompletamento;
+    
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime version;
+    
+    @JoinColumn(name = "id_doc", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Doc idDoc;
     
     @OneToMany(mappedBy = "idLotto", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     private List<GruppoLotto> gruppiList;
@@ -152,6 +163,22 @@ public class Lotto implements Serializable {
 
     public void setDataCompletamento(LocalDate dataCompletamento) {
         this.dataCompletamento = dataCompletamento;
+    }
+
+    public ZonedDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(ZonedDateTime version) {
+        this.version = version;
+    }
+
+    public Doc getIdDoc() {
+        return idDoc;
+    }
+
+    public void setIdDoc(Doc idDoc) {
+        this.idDoc = idDoc;
     }
 
     public List<GruppoLotto> getGruppiList() {
