@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
 import it.bologna.ausl.model.entities.baborg.Pec;
 import it.bologna.ausl.model.entities.baborg.Persona;
+import it.bologna.ausl.model.entities.lotti.Lotto;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
@@ -192,6 +193,9 @@ public class Doc implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idPecMittente")
     private Pec idPecMittente;
+    
+    @OneToMany(mappedBy = "idDoc", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Lotto> lottiList;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -428,16 +432,18 @@ public class Doc implements Serializable {
         return docsCollegati;
     }
     
-
     public void setDocsCollegati(List<DocDoc> docsCollegati) {
         this.docsCollegati = docsCollegati;
     }
-    
 
-    
-    
-    
+    public List<Lotto> getLottiList() {
+        return lottiList;
+    }
 
+    public void setLottiList(List<Lotto> lottiList) {
+        this.lottiList = lottiList;
+    }
+    
     public List<DocAnnullato> getDocAnnullatoList() {
         return docAnnullatoList;
     }
