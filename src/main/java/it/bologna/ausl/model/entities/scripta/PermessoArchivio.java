@@ -58,6 +58,10 @@ public class PermessoArchivio implements Serializable {
         PERSONA, STRUTTURA
     }
     
+    public static enum Predicato {
+        PASSAGGIO, VISUALIZZA, MODIFICA, ELIMINA, VICARIO, RESPONSABILE_PROPOSTO, RESPONSABILE
+    }
+    
      public enum DecimalePredicato {
     
         PASSAGGIO(1),

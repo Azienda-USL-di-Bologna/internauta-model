@@ -51,6 +51,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList",
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList,archiviDocList,notaDocList",
     "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList,archiviDocList,notaDocList,docAnnullatoList",
+    "idPersonaCreazione,idAzienda,mittenti,competenti,coinvolti,related,allegati,registroDocList,attoriList,archiviDocList,notaDocList,docAnnullatoList,versamentiList",
     "noteVersamentoList"
 })
 @DynamicUpdate
