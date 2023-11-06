@@ -31,7 +31,6 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -76,6 +75,12 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_creazione_archivio")
+    @Basic(optional = false)
+    private ZonedDateTime dataCreazioneArchivio;
     
     @JoinColumn(name = "id_archivio_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -252,6 +257,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
         this.dataCreazione = dataCreazione;
     }
 
+    public ZonedDateTime getDataCreazioneArchivio() {
+        return dataCreazioneArchivio;
+    }
+
+    public void setDataCreazioneArchivio(ZonedDateTime dataCreazioneArchivio) {
+        this.dataCreazioneArchivio = dataCreazioneArchivio;
+    }
+    
     public ArchivioDetailView getIdArchivioPadre() {
         return idArchivioPadre;
     }
