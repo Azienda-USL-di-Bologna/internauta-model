@@ -105,10 +105,16 @@ public class DettaglioContatto implements Serializable, DettaglioContattoInterfa
     @Column(name = "domicilio_digitale")
     private Boolean domicilioDigitale = false;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_ultimo_aggiornamento_domicilio_digitale")
+    private ZonedDateTime dataUltimoAggiornamentoDomicilioDigitale;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+    
 
     @Size(max = 2147483647)
     @Column(name = "tscol", columnDefinition = "tsvector")
@@ -257,6 +263,13 @@ public class DettaglioContatto implements Serializable, DettaglioContattoInterfa
         this.domicilioDigitale = domicilioDigitale;
     }
 
+    public ZonedDateTime getDataUltimoAggiornamentoDomicilioDigitale() {
+        return dataUltimoAggiornamentoDomicilioDigitale;
+    }
+
+    public void setDataUltimoAggiornamentoDomicilioDigitale(ZonedDateTime dataUltimoAggiornamentoDomicilioDigitale) {
+        this.dataUltimoAggiornamentoDomicilioDigitale = dataUltimoAggiornamentoDomicilioDigitale;
+    }
     
     public ZonedDateTime getVersion() {
         return version;
