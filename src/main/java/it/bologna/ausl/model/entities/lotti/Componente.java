@@ -2,6 +2,7 @@ package it.bologna.ausl.model.entities.lotti;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -35,6 +38,10 @@ public class Componente implements Serializable {
 
     @Column(name = "ragione_sociale")
     private String ragioneSociale;
+    
+    @Version()
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime version;
     
     @JoinColumn(name = "id_ruolo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -66,6 +73,14 @@ public class Componente implements Serializable {
 
     public void setRagioneSociale(String ragioneSociale) {
         this.ragioneSociale = ragioneSociale;
+    }
+
+    public ZonedDateTime getVersion() {
+        return version;
+    }
+
+    public void setVersion(ZonedDateTime version) {
+        this.version = version;
     }
 
     public RuoloComponente getIdRuolo() {

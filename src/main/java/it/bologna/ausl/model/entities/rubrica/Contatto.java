@@ -214,6 +214,9 @@ public class Contatto implements Serializable, ContattoInterface {
     @Transient
     private List<Contatto> contattiContenuti;
     
+    @Transient
+    private List<Contatto> contattiConDomiciliDigitaliModificati;
+    
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
     
@@ -521,7 +524,14 @@ public class Contatto implements Serializable, ContattoInterface {
         this.titolo = titolo;
     }
 
+    public List<Contatto> getContattiConDomiciliDigitaliModificati() {
+        return contattiConDomiciliDigitaliModificati;
+    }
 
+    public void setContattiConDomiciliDigitaliModificati(List<Contatto> contattiConDomiciliDigitaliModificati) {
+        this.contattiConDomiciliDigitaliModificati = contattiConDomiciliDigitaliModificati;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
