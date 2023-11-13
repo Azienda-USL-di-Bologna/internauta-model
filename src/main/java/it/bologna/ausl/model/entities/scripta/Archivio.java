@@ -193,6 +193,10 @@ public class Archivio {
  
     public Archivio() {
     }
+    
+    public Archivio(Integer id) {
+        this.id = id;
+    }
 
     public Archivio(Azienda idAzienda, Archivio idArchivioPadre, Archivio idArchivioRadice, Integer numero, Integer anno, String numerazioneGerarchica, String tipo, Boolean foglia, String oggetto, String stato, Integer livello, Titolo idTitolo, List<AttoreArchivio> attoriList) {
         this.idAzienda = idAzienda;
