@@ -11,6 +11,7 @@ import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.data.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.NextSdrCustomColumnDefinition;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -221,6 +222,10 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @NotNull
     @Basic(optional = false)
     private Boolean versamentoForzabile;
+    
+    @Column(name = "bit_anomalie")
+    @NextSdrCustomColumnDefinition(name = "bit")
+    private Integer bitAnomalie;
     
     public ArchivioDetailView() {
     }
@@ -579,6 +584,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 
     public void setPregresso(Boolean pregresso) {
         this.pregresso = pregresso;
+    }
+    
+    public Integer getBitAnomalie() {
+        return bitAnomalie;
+    }
+
+    public void setBitAnomalie(Integer bitAnomalie) {
+        this.bitAnomalie = bitAnomalie;
     }
     
     @Override
