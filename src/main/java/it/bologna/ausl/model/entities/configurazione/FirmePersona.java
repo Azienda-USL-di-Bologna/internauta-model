@@ -94,6 +94,9 @@ public class FirmePersona implements Serializable {
     private AdditionalDataFirma additionalData;
     
     @Transient
+    private AdditionalDataFirma $additionalData;
+    
+    @Transient
     private String password;
 
     @Version()
@@ -171,6 +174,16 @@ public class FirmePersona implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public AdditionalDataFirma get$additionalData() {
+        return $additionalData;
+    }
+
+    public void set$additionalData(AdditionalDataFirma $additionalData) {
+        this.$additionalData = $additionalData;
+    }
+    
+    
 
     public ZonedDateTime getVersion() {
         return version;
