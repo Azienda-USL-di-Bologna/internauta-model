@@ -54,7 +54,7 @@ public class GruppoLotto implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Lotto idLotto;
     
-    @OneToMany(mappedBy = "idGruppo", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "idGruppo", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Componente> componentiList;
 
     public Integer getId() {
