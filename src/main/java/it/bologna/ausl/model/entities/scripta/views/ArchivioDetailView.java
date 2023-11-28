@@ -70,6 +70,10 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
     
+    @JoinColumn(name = "id_azienda_archivio", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Azienda idAziendaArchivio;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @Column(name = "data_creazione")
@@ -252,6 +256,14 @@ public class ArchivioDetailView implements Serializable, ArchivioDetailInterface
 
     public void setIdAzienda(Azienda idAzienda) {
         this.idAzienda = idAzienda;
+    }
+
+    public Azienda getIdAziendaArchivio() {
+        return idAziendaArchivio;
+    }
+
+    public void setIdAziendaArchivio(Azienda idAziendaArchivio) {
+        this.idAziendaArchivio = idAziendaArchivio;
     }
 
     public ZonedDateTime getDataCreazione() {
