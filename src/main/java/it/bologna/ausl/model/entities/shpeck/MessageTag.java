@@ -89,6 +89,13 @@ public class MessageTag implements Serializable {
         this.id = id;
     }
 
+    public MessageTag(Message idMessage, Tag idTag, Utente idUtente, List<AdditionalDataShpeck> additionalData) {
+        this.idMessage = idMessage;
+        this.idTag = idTag;
+        this.idUtente = idUtente;
+        this.additionalData = additionalData;
+    }
+
     public Integer getId() {
         return id;
     }
