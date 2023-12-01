@@ -10,6 +10,7 @@ import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.data.annotations.GenerateProjections;
+import it.nextsw.common.data.annotations.NextSdrCustomColumnDefinition;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -32,7 +33,6 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -60,6 +60,39 @@ import org.springframework.format.annotation.DateTimeFormat;
 })
 @DynamicUpdate
 public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
+    
+    /**
+     * Bit
+     * Binary  -DEC- PREDICATO
+     * 0000001 - 1 - RESPONSABILE_DISATTIVO
+     * 0000010 - 2 - VICARI_ATTIVI_NON_PRESENTI
+     * 0000100 - 4 - INCOERENZA_STRUTTURA
+     * 0001000 - 8 - CHIUSI_INVISIBILI
+     */
+    
+    public static enum Anomalia {
+        RESPONSABILE_DISATTIVO, 
+        VICARI_ATTIVI_NON_PRESENTI, 
+        INCOERENZA_STRUTTURA, 
+        CHIUSI_INVISIBILI
+    }
+    
+     public enum DecimaleAnomalia {
+        RESPONSABILE_DISATTIVO(1),
+        VICARI_ATTIVI_NON_PRESENTI(2), 
+        INCOERENZA_STRUTTURA(4), 
+        CHIUSI_INVISIBILI(8);
+
+        private Integer typeOfBit;
+
+        DecimaleAnomalia(Integer typeOfBit) {
+            this.typeOfBit = typeOfBit;
+        }
+        
+        public Integer getValue() {
+            return typeOfBit;
+        }
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -212,6 +245,10 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
     
     @Column(name = "pregresso")
     private Boolean pregresso;
+    
+    @Column(name = "bit_anomalie")
+    @NextSdrCustomColumnDefinition(name = "bit")
+    private Integer bitAnomalie;
     
     public ArchivioDetail() {
     }
@@ -548,6 +585,14 @@ public class ArchivioDetail implements Serializable, ArchivioDetailInterface {
 
     public void setPregresso(Boolean pregresso) {
         this.pregresso = pregresso;
+    }
+
+    public Integer getBitAnomalie() {
+        return bitAnomalie;
+    }
+
+    public void setBitAnomalie(Integer bitAnomalie) {
+        this.bitAnomalie = bitAnomalie;
     }
    
     @Override
