@@ -93,8 +93,8 @@ public class FirmePersona implements Serializable {
     @Column(name = "additional_data", columnDefinition = "jsonb")
     private AdditionalDataFirma additionalData;
     
-    @Transient
-    private AdditionalDataFirma $additionalData;
+//    @Transient
+//    private AdditionalDataFirma $additionalData;
     
     @Transient
     private String password;
@@ -175,13 +175,13 @@ public class FirmePersona implements Serializable {
         this.password = password;
     }
 
-    public AdditionalDataFirma get$additionalData() {
-        return $additionalData;
-    }
-
-    public void set$additionalData(AdditionalDataFirma $additionalData) {
-        this.$additionalData = $additionalData;
-    }
+//    public AdditionalDataFirma get$additionalData() {
+//        return $additionalData;
+//    }
+//
+//    public void set$additionalData(AdditionalDataFirma $additionalData) {
+//        this.$additionalData = $additionalData;
+//    }
     
     
 
