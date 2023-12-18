@@ -4,19 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Azienda;
-import it.bologna.ausl.model.entities.scripta.Archivio.ArchivioClonableParams;
-import it.bologna.ausl.model.entities.scripta.annotations.CloneField;
-import it.bologna.ausl.model.entities.scripta.annotations.NextSdrClonable;
-import it.bologna.ausl.model.entities.scripta.annotations.NextSdrClonable.NextSdrClonableParams;
 import it.bologna.ausl.model.entities.versatore.Versamento;
 import it.nextsw.common.data.annotations.GenerateProjections;
-import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -55,8 +46,9 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idTitolo"
 })
 @DynamicUpdate
-public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParams>, Serializable{
+public class Archivio {
 
+    
     public static enum TipoArchivio {
         AFFARE, PROCEDIMENTO, ATTIVITA, SOGGETTO_FISICO, SOGGETTO_GIURIDICO, SPECIALE
     }
@@ -66,7 +58,7 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     }
     
     public static enum ProvenienzaArchivio {
-        GEDI, SIRER, TOOL_IMPORTAZIONE_INTERNAUTA, MECCANISMI_FINE_INIZIO_ANNO
+        GEDI, SIRER, TOOL_IMPORTAZIONE_INTERNAUTA
     }
 
     @Id
@@ -74,12 +66,11 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "idArchivio", fetch = FetchType.LAZY, optional = true)
     @JsonBackReference(value = "idArchivioDetail")
     private ArchivioDetail idArchivioDetail;
 
-    @CloneField(deep = false)
     @JoinColumn(name = "id_azienda", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Azienda idAzienda;
@@ -90,7 +81,7 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     @Basic(optional = false)
     @NotNull
     private ZonedDateTime dataCreazione = ZonedDateTime.now();
-    
+
     @JoinColumn(name = "id_archivio_padre", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idArchivioPadre")
@@ -105,17 +96,15 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     @JsonBackReference(value = "idArchivioRadice")
     private Archivio idArchivioRadice;
 
-    @CloneField(deep = false)
     @Column(name = "tipo")
     private String tipo;
 
     @Column(name = "foglia")
     private Boolean foglia;
-    
-    @CloneField(deep = false)
+
     @Column(name = "riservato")
     private Boolean riservato = false;
-    
+
     @Column(name = "numero")
     private Integer numero;
 
@@ -125,7 +114,6 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     @Column(name = "numerazione_gerarchica")
     private String numerazioneGerarchica;
 
-    @CloneField(deep = false)
     @Column(name = "oggetto", columnDefinition = "text")
     private String oggetto;
 
@@ -135,7 +123,6 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     @Column(name = "livello")
     private Integer livello;
 
-    @CloneField(deep = false)
     @Column(name = "anni_tenuta")
     private Integer anniTenuta;
     
@@ -151,19 +138,16 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     @JsonBackReference(value = "archiviSeguentiList")
     private List<Archivio> archiviSeguentiList;
 
-    @CloneField(deep = false)
     @JoinColumn(name = "id_titolo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idTitolo")
     private Titolo idTitolo;
 
-    @CloneField(deep = false)
     @JoinColumn(name = "id_massimario", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference(value = "idMassimario")
     private Massimario idMassimario;
 
-    @CloneField(deep = false)
     @Column(name = "note")
     private String note;
 
@@ -183,7 +167,6 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
 
-    @CloneField(deep = true)
     @OneToMany(mappedBy = "idArchivio", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JsonBackReference(value = "attoriList")
     private List<AttoreArchivio> attoriList;
@@ -196,7 +179,7 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
 
     @Column(name = "stato_versamento")
     private String statoVersamento;
-     
+    
     @Column(name = "id_archivio_importato")
     private String idArchivioImportato;
     
@@ -544,65 +527,4 @@ public class Archivio implements NextSdrClonable<Archivio, ArchivioClonableParam
     public String toString() {
         return "it.bologna.ausl.model.entities.scripta.Archivio[ id=" + id + " ]";
     }
-
-    
-    
-    @Override
-    public Archivio cloneEntity(ArchivioClonableParams params) throws CloneEntityException {
-        
-        Archivio archivioClonato = new Archivio();
-        
-        List<Field> fieldsFromAnnotation = NextSdrClonable.getFieldsFromAnnotation(this.getClass(), CloneField.class);
-        for (Field field : fieldsFromAnnotation) {
-            if (field.getAnnotation(CloneField.class).deep()){
-                try {
-                    Object value = field.get(this);
-                    if(value != null && NextSdrClonable.isEntityClassFromProxyObject(value.getClass())){
-                    }
-                } catch (IllegalArgumentException | IllegalAccessException ex) {
-                    throw new CloneEntityException("Errore nella clonazione dell'archivio", ex);
-                }
-                
-            }
-        }
-        if (this.livello.equals(1) ) {
-            if (params.isClonaFigli()){
-                archivioClonato.setArchiviFigliList(new ArrayList());
-                for (Archivio archivio : archiviFigliList) {
-                    Archivio figlioClonato = archivio.cloneEntity(params);
-                    archivioClonato.getArchiviFigliList().add(figlioClonato);
-                }
-            }
-        }
-        
-        return null; 
-    }
-    
-   
-    public class ArchivioClonableParams implements NextSdrClonableParams {
-        private boolean clonaFigli = false;
-
-        public ArchivioClonableParams() {
-        }
-        
-        public ArchivioClonableParams(boolean clonaFigli) {
-            this.clonaFigli = clonaFigli;
-        }
-        public boolean isClonaFigli() {
-            return clonaFigli;
-        }
-
-        public void setClonaFigli(boolean clonaFigli) {
-            this.clonaFigli = clonaFigli;
-        }
-        
-    }
-    
-        @Override
-    public <K extends NextSdrClonable> K cloneChild(ArchivioClonableParams params, K value) throws CloneEntityException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-   
-    
-    
 }
