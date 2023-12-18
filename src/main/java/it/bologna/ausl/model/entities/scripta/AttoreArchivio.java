@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.bologna.ausl.model.entities.baborg.Persona;
 import it.bologna.ausl.model.entities.baborg.Struttura;
+import it.bologna.ausl.model.entities.scripta.annotations.NextSdrClonable;
+import it.bologna.ausl.model.entities.scripta.annotations.NextSdrClonable.NextSdrClonableParams;
 import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -37,8 +39,8 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idStruttura, idPersona"
 })
 @DynamicUpdate
-public class AttoreArchivio implements Serializable {
-
+public class AttoreArchivio implements Serializable, NextSdrClonable<AttoreArchivio, NextSdrClonableParams> {
+    
     public static enum RuoloAttoreArchivio {
         RESPONSABILE, CREATORE, VICARIO, RESPONSABILE_PROPOSTO
     }
@@ -192,5 +194,14 @@ public class AttoreArchivio implements Serializable {
     public String toString() {
         return "it.bologna.ausl.model.entities.scripta.AttoreArchivio[ id=" + id + " ]";
     }
+    
+    @Override
+    public <T> T cloneEntity(NextSdrClonableParams params) throws CloneEntityException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
+    @Override
+    public <K extends NextSdrClonable> K cloneChild(NextSdrClonableParams params, K value) throws CloneEntityException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
