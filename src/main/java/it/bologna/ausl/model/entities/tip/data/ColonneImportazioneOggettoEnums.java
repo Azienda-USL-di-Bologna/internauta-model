@@ -38,7 +38,6 @@ public class ColonneImportazioneOggettoEnums {
         annoPubblicazione(Arrays.asList("anno pubblicazione")),
         dataEsecutivita(Arrays.asList("data esecutivita", "data esecutività")),
         
-        conservato(Arrays.asList("conservato")),
         collegamentoPrecedente(Arrays.asList("collegamento precedente")),
         note(Arrays.asList("nota")),
         annullato(Arrays.asList("flag annullato")),
@@ -102,7 +101,6 @@ public class ColonneImportazioneOggettoEnums {
         dataEsecutivita(Arrays.asList("data esecutivita", "data esecutività")),
         
         controlloRegionale(Arrays.asList("controllo regionale")),
-        conservato(Arrays.asList("conservato")),
         collegamentoPrecedente(Arrays.asList("collegamento precedente")),
         
         note(Arrays.asList("nota")),

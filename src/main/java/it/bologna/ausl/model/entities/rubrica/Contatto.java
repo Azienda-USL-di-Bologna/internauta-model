@@ -165,6 +165,11 @@ public class Contatto implements Serializable, ContattoInterface {
     @Size(max = 2147483647)
     @Column(name = "titolo")
     private String titolo;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @Column(name = "data_ultimo_aggiornamento_domicilio_digitale")
+    private ZonedDateTime dataUltimoAggiornamentoDomicilioDigitale;
 
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -523,6 +528,16 @@ public class Contatto implements Serializable, ContattoInterface {
     public void setTitolo(String titolo) {
         this.titolo = titolo;
     }
+
+    public ZonedDateTime getDataUltimoAggiornamentoDomicilioDigitale() {
+        return dataUltimoAggiornamentoDomicilioDigitale;
+    }
+
+    public void setDataUltimoAggiornamentoDomicilioDigitale(ZonedDateTime dataUltimoAggiornamentoDomicilioDigitale) {
+        this.dataUltimoAggiornamentoDomicilioDigitale = dataUltimoAggiornamentoDomicilioDigitale;
+    }
+    
+    
 
     public List<Contatto> getContattiConDomiciliDigitaliModificati() {
         return contattiConDomiciliDigitaliModificati;

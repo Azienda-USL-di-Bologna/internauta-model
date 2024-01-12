@@ -193,4 +193,5 @@ public class AttoreArchivio implements Serializable {
         return "it.bologna.ausl.model.entities.scripta.AttoreArchivio[ id=" + id + " ]";
     }
 
+    
 }

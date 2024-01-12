@@ -83,7 +83,7 @@ public class Lotto implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Doc idDoc;
     
-    @OneToMany(mappedBy = "idLotto", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "idLotto", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GruppoLotto> gruppiList;
 
     public Integer getId() {

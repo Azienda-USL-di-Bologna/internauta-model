@@ -138,4 +138,8 @@ public interface ArchivioDetailInterface {
     public Boolean getVersamentoForzabile();
     
     public void setVersamentoForzabile(Boolean versamentoForzabile);
+    
+    public Integer getBitAnomalie();
+    
+    public void setBitAnomalie(Integer bitAnomalie);
 }

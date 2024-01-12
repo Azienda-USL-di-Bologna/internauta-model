@@ -92,7 +92,8 @@ public class Allegato implements Serializable {
         MITTENTI,
         RELATA,
         BIRD,
-        SINTESI_TRASPARENZA
+        SINTESI_TRASPARENZA,
+        LEGGE190
     }
 
     @Id

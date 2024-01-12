@@ -209,6 +209,16 @@ public class AdditionalDataTagComponent {
             this.dataProposta = dataProposta;
         }
 
+        public idDocumento(String oggetto, String codiceRegistro, String numeroProposta, String dataProposta, String dataProtocollo, String numeroProtocollo, String anno) {
+            this.oggetto = oggetto;
+            this.codiceRegistro = codiceRegistro;
+            this.numeroProposta = numeroProposta;
+            this.dataProposta = dataProposta;
+            this.dataProtocollo = dataProtocollo;
+            this.numeroProtocollo = numeroProtocollo;
+            this.anno = anno;
+        }
+
         public String getOggetto() {
             return oggetto;
         }

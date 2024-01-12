@@ -35,6 +35,10 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 public class DocumentoDaCollegare implements Serializable {
     
+    public enum TipologiaDocumentoDaCollegare {
+        DELIBERA, DETERMINA, PROTOCOLLO, FASCICOLO
+    }
+    
     private static final long serialVersionUID = 1L;
 
     @Id
