@@ -48,6 +48,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DynamicUpdate
 public class Archivio {
 
+    
     public static enum TipoArchivio {
         AFFARE, PROCEDIMENTO, ATTIVITA, SOGGETTO_FISICO, SOGGETTO_GIURIDICO, SPECIALE
     }
