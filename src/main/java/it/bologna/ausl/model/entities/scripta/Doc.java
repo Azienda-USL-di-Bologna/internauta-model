@@ -201,6 +201,10 @@ public class Doc implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     private ZonedDateTime version;
+    
+    @Basic(optional = true)
+    @Column(name = "testo")
+    private String testo;
 
     public Doc() {
     }
@@ -451,6 +455,15 @@ public class Doc implements Serializable {
     public void setDocAnnullatoList(List<DocAnnullato> docAnnullatoList) {
         this.docAnnullatoList = docAnnullatoList;
     }
+
+    public String getTesto() {
+        return testo;
+    }
+
+    public void setTesto(String testo) {
+        this.testo = testo;
+    }
+    
 
     @Override
     public int hashCode() {
