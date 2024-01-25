@@ -1,9 +1,11 @@
 package it.bologna.ausl.model.entities.tools;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Basic;
@@ -19,6 +21,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -55,6 +58,18 @@ public class IntimusCommand implements Serializable {
     @Type(type = "jsonb")
     @Column(name = "dest_objects", columnDefinition = "jsonb")
     private List<Map<String, Object>> destObjects;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "app")
+    private String app;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "insert_ts")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime insertTs = ZonedDateTime.now();
 
     public IntimusCommand() {
     }
@@ -96,6 +111,22 @@ public class IntimusCommand implements Serializable {
 
     public void setDestObjects(List<Map<String, Object>> destObjects) {
         this.destObjects = destObjects;
+    }
+
+    public String getApp() {
+        return app;
+    }
+
+    public void setApp(String app) {
+        this.app = app;
+    }
+
+    public ZonedDateTime getInsertTs() {
+        return insertTs;
+    }
+
+    public void setInsertTs(ZonedDateTime insertTs) {
+        this.insertTs = insertTs;
     }
 
     @Override
