@@ -88,6 +88,9 @@ public class Titolo implements Serializable {
     
     @Column(name = "tscol", columnDefinition = "tsvector")
     private String tscol;
+    
+    @Column(name = "id_classifica_da_esterno")
+    private Integer idClassificaDaEsterno;
 
     @Formula("(select ts_rank(tscol, to_tsquery('italian',$${tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double ranking;
@@ -201,6 +204,14 @@ public class Titolo implements Serializable {
         this.ranking = ranking;
     }
 
+    public Integer getIdClassificaDaEsterno() {
+        return idClassificaDaEsterno;
+    }
+
+    public void setIdClassificaDaEsterno(Integer idClassificaDaEsterno) {
+        this.idClassificaDaEsterno = idClassificaDaEsterno;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

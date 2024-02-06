@@ -158,6 +158,12 @@ public class DocDetailView implements Serializable, DocDetailInterface {
 
     @Formula("(select ts_rank(oggetto_tscol, to_tsquery('italian',$${oggetto_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
     private Double rankingOggetto;
+    
+    @Column(name = "testo_tscol", columnDefinition = "tsvector")
+    private String testoTscol;
+    
+    @Formula("(select ts_rank(testo_tscol, to_tsquery('italian',$${testo_tscol.PLACEHOLDER_TS_RANK}$$), 8 | 1))")
+    private Double rankingTesto;
 
     @Type(type = "jsonb")
     @Column(name = "firmatari", columnDefinition = "jsonb")
@@ -532,6 +538,28 @@ public class DocDetailView implements Serializable, DocDetailInterface {
     public void setOggettoTscol(String oggettoTscol) {
         this.oggettoTscol = oggettoTscol;
     }
+
+    @Override
+    public String getTestoTscol() {
+        return testoTscol;
+    }
+
+    @Override
+    public void setTestoTscol(String testoTscol) {
+        this.testoTscol = testoTscol;
+    }
+
+    @Override
+    public Double getRankingTesto() {
+        return rankingTesto;
+    }
+
+    @Override
+    public void setRankingTesto(Double rankingTesto) {
+        this.rankingTesto = rankingTesto;
+    }
+    
+    
 
     @Override
     public List<Firmatario> getFirmatari() {
