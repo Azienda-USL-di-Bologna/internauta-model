@@ -141,6 +141,10 @@ public interface DocDetailInterface {
     public String getOggettoTscol();
 
     public void setOggettoTscol(String oggettoTscol);
+    
+    public String getTestoTscol();
+    
+    public void setTestoTscol(String testoTscol);
 
     public List<Firmatario> getFirmatari();
 
@@ -233,6 +237,10 @@ public interface DocDetailInterface {
     public Double getRankingOggetto();
 
     public void setRankingOggetto(Double rankingOggetto);
+    
+    public Double getRankingTesto();
+
+    public void setRankingTesto(Double rankingTesto);
 
     public Double getRankingDestinatari();
 
