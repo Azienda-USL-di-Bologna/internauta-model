@@ -24,10 +24,8 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
