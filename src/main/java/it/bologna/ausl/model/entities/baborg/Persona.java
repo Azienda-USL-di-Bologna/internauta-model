@@ -142,6 +142,11 @@ public class Persona implements Serializable, EntityInterface {
     @Column(name = "id_secondario", columnDefinition = "text")
     private String idSecondario;
     
+    @Column(name = "data_spegnimento")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataSpegnimento;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -385,4 +390,11 @@ public class Persona implements Serializable, EntityInterface {
         return "it.bologna.ausl.model.entities.baborg.Persona[ id=" + id + " ]";
     }
 
+    public ZonedDateTime getDataSpegnimento() {
+        return dataSpegnimento;
+    }
+
+    public void setDataSpegnimento(ZonedDateTime dataSpegnimento) {
+        this.dataSpegnimento = dataSpegnimento;
+    }
 }

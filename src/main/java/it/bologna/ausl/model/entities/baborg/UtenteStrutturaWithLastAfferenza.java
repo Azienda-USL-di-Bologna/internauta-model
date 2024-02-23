@@ -1,10 +1,14 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package it.bologna.ausl.model.entities.baborg;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
-import it.nextsw.common.data.annotations.GenerateProjections;
 import it.bologna.ausl.model.entities.rubrica.DettaglioContatto;
+import it.nextsw.common.data.annotations.GenerateProjections;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -30,12 +34,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author solidus83
+ * @author Michele D'Onza
  */
 @TypeDef(name = "string-array", typeClass = StringArrayType.class)
 
 @Entity
-@Table(name = "utenti_strutture", catalog = "internauta", schema = "baborg")
+@Table(name = "utenti_strutture_with_ultima_afferenza", catalog = "internauta", schema = "baborg")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @GenerateProjections({
     "idAfferenzaStruttura, idStruttura",
@@ -45,7 +49,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     "idStruttura",
     "idAfferenzaStruttura, idUtente, idStruttura, idStrutturaVeicolante",})
 @DynamicUpdate
-public class UtenteStruttura implements Serializable {
+public class UtenteStrutturaWithLastAfferenza implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -106,19 +110,19 @@ public class UtenteStruttura implements Serializable {
     @Transient
     private List<Ruolo> ruoliUtenteStruttura;
 
+    public UtenteStrutturaWithLastAfferenza(Integer id) {
+        this.id = id;
+    }
+
+    public UtenteStrutturaWithLastAfferenza() {
+    }
+    
     public ZonedDateTime getVersion() {
         return version;
     }
 
     public void setVersion(ZonedDateTime version) {
         this.version = version;
-    }
-
-    public UtenteStruttura() {
-    }
-
-    public UtenteStruttura(Integer id) {
-        this.id = id;
     }
 
     public Integer getId() {
@@ -129,13 +133,6 @@ public class UtenteStruttura implements Serializable {
         this.id = id;
     }
 
-//    public List<Permesso> getPermessoList() {
-//        return permessoList;
-//    }
-//
-//    public void setPermessoList(List<Permesso> permessoList) {
-//        this.permessoList = permessoList;
-//    }
     public AfferenzaStruttura getIdAfferenzaStruttura() {
         return idAfferenzaStruttura;
     }
@@ -234,10 +231,10 @@ public class UtenteStruttura implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UtenteStruttura)) {
+        if (!(object instanceof UtenteStrutturaWithLastAfferenza)) {
             return false;
         }
-        UtenteStruttura other = (UtenteStruttura) object;
+        UtenteStrutturaWithLastAfferenza other = (UtenteStrutturaWithLastAfferenza) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

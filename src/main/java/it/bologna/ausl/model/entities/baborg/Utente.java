@@ -37,10 +37,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -146,7 +144,12 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
     @OneToMany(mappedBy = "idUtente", fetch = FetchType.LAZY)
     @JsonBackReference(value = "importazioniOrganigrammaList")
     private List<ImportazioniOrganigramma> importazioniOrganigrammaList;
-
+    
+    @Column(name = "data_spegnimento")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
+    private ZonedDateTime dataSpegnimento;
+    
     @Version()
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX'['VV']'")
@@ -496,4 +499,11 @@ public class Utente implements Serializable, UserDetails, EntityInterface {
         return getClass().getCanonicalName() + "[ id=" + id + " ]";
     }
 
+    public ZonedDateTime getDataSpegnimento() {
+        return dataSpegnimento;
+    }
+
+    public void setDataSpegnimento(ZonedDateTime dataSpegnimento) {
+        this.dataSpegnimento = dataSpegnimento;
+    }
 }
